@@ -1,0 +1,167 @@
+//
+//  profileViewController2.swift
+//  abcd
+//
+//  Created by takadahideaki007 on 2019/01/31.
+//  Copyright © 2019 高田英明. All rights reserved.
+//
+
+import UIKit
+import Firebase
+import GoogleMobileAds
+
+
+
+class List: UIViewController, UINavigationControllerDelegate {
+
+
+    @IBOutlet var tableView: UITableView!
+    
+    var names: [[String:String]]? //[[myname, targetname]]
+    //mynameとtargetnameに分けたが分けづにnamesでアクセスした方がいいか
+    //分けた理由は分けた方が自分が分かりやすかったから
+    var myNames: [String]?
+    var targetNames: [String]?
+    var indicatorView = UIActivityIndicatorView()
+    
+
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.tableFooterView = UIView(frame: .zero)
+        self.navigationItem.hidesBackButton = true
+
+
+        UInavigationBar()
+        indicator()
+ 
+        //投稿データが有れば
+        //UD("uniqueNmame") == [[myname, targetname]]
+        if let names = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
+            
+            self.names = names
+            myNames = (names.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
+            targetNames = (names.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
+        }
+        tableView.reloadData()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tabBarController?.tabBar.isHidden = false
+
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+        }
+    }
+}
+
+
+
+extension List: UITableViewDataSource {
+
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return names?.count ?? 0
+    }
+
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
+
+        cell.myName.text = myNames?[indexPath.row] ?? ""
+        cell.targetName.text = targetNames?[indexPath.row] ?? ""
+        return cell
+    }
+
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let myname = myNames?[indexPath.row] ?? ""
+        let targetname = targetNames?[indexPath.row] ?? ""
+        let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
+        let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
+        
+        
+        if editingStyle == .delete {
+            // firebaseのデータ削除
+            ref.removeValue()
+            // fireStorageの写真削除
+            storageRef.delete { error in
+                if let error = error {
+                    let nsError = error as NSError
+                    if nsError.domain == StorageErrorDomain &&
+                        nsError.code == StorageErrorCode.objectNotFound.rawValue {
+                        print("nofile")
+                    }
+                } else {
+                    print("success")
+                }
+            }
+            //UDから削除
+            if var names = names {
+                names.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                UD.set(names, forKey: UdKey.keys.uniqueNmame.rawValue)
+            }
+            tableView.reloadData()
+        }
+    }
+}
+
+
+extension List: UITableViewDelegate {
+
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+
+
+    //EditViewへ
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        indicatorView.startAnimating()
+        
+        let myName = myNames?[indexPath.row] ?? ""
+        let searchName = targetNames?[indexPath.row] ?? ""
+        let edit2: Edit = self.storyboard?.instantiateViewController(withIdentifier: "edit2") as! Edit
+        let ref = Database.database().reference().child("\(myName)/\(searchName)/\(USER_ID!)")
+        
+        ref.observeSingleEvent(of: .value, with: { (DataSnapshot) in
+            
+            var data = DataSnapshot.value as? [String: String]//[message:メッセージ, image:写真]
+            data?["my"] = myName
+            data?["target"] = searchName
+            
+            //写真が投稿されていれば写真データをEditVewのimageに値た渡し
+            if let imageUrl = data?["image"] {
+                let url = URL(string: imageUrl)
+                // image変換
+                do {
+                    let imageData = try Data(contentsOf: url!)
+                    let image = UIImage(data:imageData as Data)
+                    edit2.image = image
+                } catch {
+                    print(error)
+                }
+            }
+            edit2.data = data
+            self.navigationController?.pushViewController(edit2, animated: true)
+            self.indicatorView.stopAnimating()
+        })
+    }
+}

@@ -7,17 +7,94 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
+import GoogleMobileAds
+
+let UD = UserDefaults.standard
+let USER_ID = Auth.auth().currentUser?.uid
+let STORAGE = Storage.storage().reference(forURL: "gs://cychain-6d3b6.appspot.com")
+let ADMB_ID = "ca-app-pub-4828313011342220/3054790632"
+let ADDRESS = "cychaincontact@gmail.com"
+
+
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+    
+    
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
+        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+//        GADMobileAds.configure(withApplicationID: "ca-app-pub-4828313011342220~4730834380")
+//        GADMobileAds.start(startWithCompletionHandler: 4828313011342220~4730834380")
+        GADMobileAds.sharedInstance().start()
+        
+        
+  
+        if Auth.auth().currentUser != nil {
+            print("--Logged in--\(String(describing: Auth.auth().currentUser?.uid))")
+            // ログイン状態ならログイン画面スルー
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboad = UIStoryboard(name: "Main", bundle: nil)
+            let tab1 = storyboad.instantiateViewController(withIdentifier: "tab1")
+            self.window?.rootViewController = tab1
+            self.window?.makeKeyAndVisible()
+
+        } else {
+            // 非ログインならログイン画面へ
+            print("--Logout--")
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboad = UIStoryboard(name: "Main", bundle: nil)
+            self.window?.rootViewController = storyboad.instantiateInitialViewController()
+            self.window?.makeKeyAndVisible()
+        }
         return true
     }
+    
+
+    
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
+        -> Bool {
+            return GIDSignIn.sharedInstance().handle(url,
+                                                     sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+                                                     annotation: [:])
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            print("Error: \(error.localizedDescription)")
+            return
+        }
+
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                       accessToken: authentication.accessToken)
+
+        Auth.auth().signIn(with: credential) { (user, error) in
+            print("---------------------Sign on Firebase successfully")
+
+
+            // ログイン後遷移
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboad = UIStoryboard(name: "Main", bundle: nil)
+            let first = storyboad.instantiateViewController(withIdentifier: "first")
+            self.window?.rootViewController = UINavigationController(rootViewController: first)
+            self.window?.makeKeyAndVisible()
+        }
+    }
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -43,4 +120,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+
+
+
+
+
+
 

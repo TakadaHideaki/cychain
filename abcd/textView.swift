@@ -8,14 +8,14 @@
 
 import UIKit
 
-class textView: UITextView {
+ @IBDesignable class textView: UITextView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let next = next {
+            next.touchesBegan(touches , with: event)
+        } else {
+            super.touchesBegan(touches , with: event)
+        }
     }
-    */
 
 }
