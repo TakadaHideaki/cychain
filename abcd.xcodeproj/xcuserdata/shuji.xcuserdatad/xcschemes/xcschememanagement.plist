@@ -2,14 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>PreferenceSpecifiers</key>
-	<array>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>abcd.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>FooterText</key>
-			<string>Copyright 2019 Google</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
+			<key>orderHint</key>
+			<integer>0</integer>
 		</dict>
-	</array>
+	</dict>
 </dict>
 </plist>

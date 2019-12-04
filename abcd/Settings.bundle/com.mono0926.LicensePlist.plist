@@ -5,6 +5,28 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>Title</key>
+			<string>Licenses</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/abseil</string>
+			<key>Title</key>
+			<string>abseil</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/AppAuth</string>
+			<key>Title</key>
+			<string>AppAuth</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/BoringSSL-GRPC</string>
 			<key>Title</key>
@@ -166,14 +188,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/GoogleToolboxForMac</string>
-			<key>Title</key>
-			<string>GoogleToolboxForMac</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/GoogleUtilities</string>
 			<key>Title</key>
 			<string>GoogleUtilities</string>
@@ -193,6 +207,14 @@
 			<string>com.mono0926.LicensePlist/gRPC-Core</string>
 			<key>Title</key>
 			<string>gRPC-Core</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/GTMAppAuth</string>
+			<key>Title</key>
+			<string>GTMAppAuth</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -241,14 +263,6 @@
 			<string>com.mono0926.LicensePlist/NVActivityIndicatorView</string>
 			<key>Title</key>
 			<string>NVActivityIndicatorView</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/Protobuf</string>
-			<key>Title</key>
-			<string>Protobuf</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

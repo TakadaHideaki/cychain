@@ -13,7 +13,7 @@ import FirebaseAuth
 import GoogleSignIn
 import XLPagerTabStrip
 
-class TabLogIn: UIViewController, FUIAuthDelegate, GIDSignInDelegate, GIDSignInUIDelegate {
+class TabLogIn: UIViewController, FUIAuthDelegate, GIDSignInDelegate /* ,GIDSignInUIDelegate*/ {
   
     
     @IBOutlet weak var mailButton: UIButton!
@@ -25,7 +25,7 @@ class TabLogIn: UIViewController, FUIAuthDelegate, GIDSignInDelegate, GIDSignInU
         super.viewDidLoad()
 
         
-        GIDSignIn.sharedInstance().uiDelegate = self
+        //GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
      
         mailButton.setImage(UIImage(named: "mail2"), for: .normal)
