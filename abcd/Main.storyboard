@@ -72,7 +72,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="google:" destination="xfh-9K-dds" eventType="touchUpInside" id="YoM-HJ-eoO"/>
+                                    <action selector="googleSignInActive:" destination="xfh-9K-dds" eventType="touchUpInside" id="YoM-HJ-eoO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -186,7 +186,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="sginIn:" destination="nAw-VH-pV3" eventType="touchUpInside" id="ecF-lB-qC3"/>
+                                    <action selector="mailSginInAction:" destination="nAw-VH-pV3" eventType="touchUpInside" id="ecF-lB-qC3"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="パスワードが無効です" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjQ-Rm-b1k">
@@ -238,7 +238,7 @@
         <!--ホーム-->
         <scene sceneID="ZDH-MP-OGF">
             <objects>
-                <viewController storyboardIdentifier="first" title="ホーム" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sdv-Hn-fh0" customClass="SelectViewController" customModule="abcd" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="selectVC" title="ホーム" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sdv-Hn-fh0" customClass="SelectViewController" customModule="abcd" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HOq-nG-8DI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3482,7 +3482,7 @@ Cg
         <!--PostCard作成-->
         <scene sceneID="mjv-Io-8ad">
             <objects>
-                <viewController storyboardIdentifier="UserDataInputViewController" title="PostCard作成" id="b7D-4y-fMl" customClass="UserDataInputViewController" customModule="abcd" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserDataInputVC" title="PostCard作成" id="b7D-4y-fMl" customClass="UserDataInputViewController" customModule="abcd" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kc2-rb-Y97">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3835,7 +3835,7 @@ Cg
         <!--Tab Bar Controller-->
         <scene sceneID="jO3-L7-4Go">
             <objects>
-                <tabBarController storyboardIdentifier="tabViewController" automaticallyAdjustsScrollViewInsets="NO" id="F7f-DU-aJa" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabVC" automaticallyAdjustsScrollViewInsets="NO" id="F7f-DU-aJa" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Oxn-vX-54e"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="knb-uZ-jOk">
@@ -3968,7 +3968,7 @@ Cg
         <image name="user12" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h5u-nY-3Kq"/>
+        <segue reference="uXb-d2-VrX"/>
         <segue reference="6ou-0W-eGv"/>
     </inferredMetricsTieBreakers>
 </document>

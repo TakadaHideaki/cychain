@@ -44,7 +44,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         passwordShow_Hide_Button.setImage((hideImage), for: .normal)
         addLeftIcon(textField: emailTextField, andImage: UIImage(named: "mail")!)
         addLeftIcon(textField: passwordTextField, andImage: UIImage(named: "password")!)
-        addEyeButton()
+        addPasswordEyeButton()
     }
     
 
@@ -54,12 +54,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authResult, error) in
             
             if (((authResult?.user) != nil) && error == nil) || Auth.auth().currentUser != nil {
-                let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabViewController")
+                let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
                 self.view.window?.rootViewController = tabVC
             
 //            } else if Auth.auth().currentUser != nil  {
-//                let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tabViewController")
-//                self.view.window?.rootViewController = tab1
+//                let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
+//                self.view.window?.rootViewController = tabVC
             
             } else {
                 self.alert(title: "アカウントが登録できませんでした", message: "", actiontitle: "OK")
@@ -92,7 +92,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         textField.leftViewMode = UITextField.ViewMode.always
     }
     
-    private func addEyeButton() {
+    private func addPasswordEyeButton() {
 
         passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
         passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))

@@ -24,7 +24,8 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+
      
         mailButton.setImage(UIImage(named: "mail2"), for: .normal)
         gmailButton.setImage(UIImage(named: "google"), for: .normal)
@@ -33,7 +34,7 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     
 
     
-    @IBAction func google(_ sender: Any) {
+    @IBAction func googleSignInActive(_ sender: Any) {
         
         GIDSignIn.sharedInstance().signIn()
     }
@@ -42,22 +43,19 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
 
         if let error = error {
-            print("-------エラー\(error.localizedDescription)---------")
+            print("-------エラー\(error.localizedDescription)")
             return
         }
         guard let authentication = user.authentication else { return }
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                        accessToken: authentication.accessToken)
 
-//                    firebaseログイン
+        //firebaseログイン
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if error != nil {
                 print("エラー------")
                 return
             }
-            print("ユーザーはログインしています")
-            let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tabViewController")
-            self.view.window?.rootViewController = tab1  
         }
     }
     
@@ -65,7 +63,7 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     //ログインがキャンセル・失敗した場合
     private func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
                         withError error: NSError!) {
-        print("-----------ログイン失敗-------------")
+        print("ログイン失敗")
         //        失敗した時の処理を書く
     }
 }

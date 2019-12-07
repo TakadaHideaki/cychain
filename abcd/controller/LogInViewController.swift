@@ -46,15 +46,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         emailTextField.underLine(height: 1.0, color: .white)
         passwordTextField.underLine(height: 1.0, color: .white)
         
-        setIcon(textField: emailTextField, andImage: UIImage(named: "mail")!)
-        setIcon(textField: passwordTextField, andImage: UIImage(named: "password")!)
-        addEyeButton()
+        textFieldIconSet(textField: emailTextField, andImage: UIImage(named: "mail")!)
+        textFieldIconSet(textField: passwordTextField, andImage: UIImage(named: "password")!)
+        addPasswordEyeButton()
         passwordShow_Hide_Button.setImage((hideImage), for: .normal)
     }
     
     
 //    メールでログイン
-    @IBAction func sginIn(_ sender: Any) {
+    @IBAction func mailSginInAction(_ sender: Any) {
         
         let mail = emailTextField.text?.deleteSpace() ?? ""
         let pass = passwordTextField.text?.deleteSpace() ?? ""
@@ -63,7 +63,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             if (((authResult?.user) != nil) && error == nil) {
                 print(Auth.auth().currentUser?.uid as Any)
 
-                let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabViewController")
+                let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
                 self.view.window?.rootViewController = tabVC
 
 
@@ -134,7 +134,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    private func setIcon(textField: UITextField, andImage image: UIImage) {
+    private func textFieldIconSet(textField: UITextField, andImage image: UIImage) {
         let iconView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 20 , height: 20))
         let iconMarginView: UIView = UIView(frame:
             CGRect(x: 0, y: 0, width: 30, height: 20))
@@ -144,7 +144,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         textField.leftViewMode = .always
     }
     
-    private func addEyeButton() {
+    private func addPasswordEyeButton() {
 
         passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
         passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))

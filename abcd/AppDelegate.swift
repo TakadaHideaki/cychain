@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import GoogleSignIn
 import GoogleMobileAds
+import XCGLogger
 
 let UD = UserDefaults.standard
 let USER_ID = Auth.auth().currentUser?.uid
@@ -18,14 +19,53 @@ let ADMB_ID = "ca-app-pub-4828313011342220/3054790632"
 let ADDRESS = "cychaincontact@gmail.com"
 
 
+//let log: XCGLogger? = {
+
+let log = XCGLogger.default
+//    let log = XCGLogger(identifier: "advancedLogger", includeDefaultDestinations: false)
+
+
+
+//    let emojiLogFormatter = PrePostFixLogFormatter()
+//        emojiLogFormatter.apply(prefix: "🗯🗯🗯 ", postfix: " 🗯🗯🗯", to: .verbose)
+//        emojiLogFormatter.apply(prefix: "🔹🔹🔹 ", postfix: " 🔹🔹🔹", to: .debug)
+//        emojiLogFormatter.apply(prefix: "ℹ️ℹ️ℹ️ ", postfix: " ℹ️ℹ️ℹ️", to: .info)
+//        emojiLogFormatter.apply(prefix: "✳️✳️✳️ ", postfix: " ✳️✳️✳️", to: .notice)
+//        emojiLogFormatter.apply(prefix: "⚠️⚠️⚠️ ", postfix: " ⚠️⚠️⚠️", to: .warning)
+//        emojiLogFormatter.apply(prefix: "‼️‼️‼️ ", postfix: " ‼️‼️‼️", to: .error)
+//        emojiLogFormatter.apply(prefix: "💣💣💣 ", postfix: " 💣💣💣", to: .severe)
+//        emojiLogFormatter.apply(prefix: "🛑🛑🛑 ", postfix: " 🛑🛑🛑", to: .alert)
+//        emojiLogFormatter.apply(prefix: "🚨🚨🚨 ", postfix: " 🚨🚨🚨", to: .emergency)
+//        log.formatters = [emojiLogFormatter]
+//    return log
+//    }()
+
+
+
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
+//    log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: "path/to/file", fileLevel: .debug)
+    
+    
+
+//    let log: XCGLogger = _xcode_workaround_log
+
+    
     
 
     var window: UIWindow?
+    
+    
+    func toSelectView() {
+      self.window = UIWindow(frame: UIScreen.main.bounds)
+      let storyboad = UIStoryboard(name: "Main", bundle: nil)
+      let tabVC = storyboad.instantiateViewController(withIdentifier: "tabVC")
+      self.window?.rootViewController = tabVC
+      self.window?.makeKeyAndVisible()
+      }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -41,15 +81,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GADMobileAds.sharedInstance().start()
         
         
+
+        
+        
   
         if Auth.auth().currentUser != nil {
             print("--Logged in--\(String(describing: Auth.auth().currentUser?.uid))")
             // ログイン状態ならログイン画面スルー
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboad = UIStoryboard(name: "Main", bundle: nil)
-            let tabVC = storyboad.instantiateViewController(withIdentifier: "tabViewController")
-            self.window?.rootViewController = tabVC
-            self.window?.makeKeyAndVisible()
+            toSelectView()
 
         } else {
             // 非ログインならログイン画面へ
@@ -62,7 +101,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return true
     }
     
-
     
     @available(iOS 9.0, *)
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
@@ -83,15 +121,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                        accessToken: authentication.accessToken)
 
         Auth.auth().signIn(with: credential) { (user, error) in
-            print("---------------------Sign on Firebase successfully")
-
+            print("--Sign on Firebase successfully")
 
             // ログイン後遷移
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboad = UIStoryboard(name: "Main", bundle: nil)
-            let first = storyboad.instantiateViewController(withIdentifier: "first")
-            self.window?.rootViewController = UINavigationController(rootViewController: first)
-            self.window?.makeKeyAndVisible()
+            self.toSelectView()
         }
     }
     

@@ -50,8 +50,8 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate {
         Auth.auth().signIn(with: credential) { (user, error) in
             
             print("ーーーーーーgoogoleアカウント登録ーーーーーーー")
-            let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tabViewContorller")
-            self.view.window?.rootViewController = tab1
+//            let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
+//            self.view.window?.rootViewController = tab1
      
         }
     }
