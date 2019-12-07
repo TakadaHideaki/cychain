@@ -19,6 +19,7 @@ pod 'LicensePlist'
 pod 'TextFieldEffects'
 pod 'XLPagerTabStrip'
 pod 'LTMorphingLabel'
+pod 'XCGLogger', '~> 7.0.0'
 
 
 

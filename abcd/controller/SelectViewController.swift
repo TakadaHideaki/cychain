@@ -19,13 +19,18 @@ class SelectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        log.debug("----------------")
+        log.debug(USER_ID!)
         print(USER_ID!)
+    
+        
+        
         admob()
         customNavigationBar()
     }    
     @IBAction func post(_ sender: Any) {
         
-        let dataInputVC = self.storyboard?.instantiateViewController(withIdentifier: "UserDataInputViewController") as! UserDataInputViewController
+        let dataInputVC = self.storyboard?.instantiateViewController(withIdentifier: "UserDataInputVC") as! UserDataInputViewController
         self.navigationController?.pushViewController(dataInputVC, animated: true)
     }
 }

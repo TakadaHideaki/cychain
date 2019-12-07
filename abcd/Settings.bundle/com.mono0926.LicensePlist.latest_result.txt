@@ -148,6 +148,10 @@ name: NVActivityIndicatorView, nameSpecified:
 body: The MIT License (MIT…
 version: 4.8.0
 
+name: ObjcExceptionBridging, nameSpecified: 
+body: The MIT License (MIT…
+version: 1.0.1
+
 name: RSKImageCropper, nameSpecified: 
 body: Copyright (c) 2014 R…
 version: 2.2.3
@@ -159,6 +163,10 @@ version: 5.3.2
 name: TextFieldEffects, nameSpecified: 
 body: The MIT License (MIT…
 version: 1.6.0
+
+name: XCGLogger, nameSpecified: 
+body: The MIT License (MIT…
+version: 7.0.0
 
 name: XLPagerTabStrip, nameSpecified: 
 body: The MIT License (MIT…

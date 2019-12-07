@@ -356,11 +356,18 @@ PODS:
   - NVActivityIndicatorView (4.8.0):
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
+  - ObjcExceptionBridging (1.0.1):
+    - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
+  - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
   - RSKImageCropper (2.2.3)
   - SDWebImage (5.3.2):
     - SDWebImage/Core (= 5.3.2)
   - SDWebImage/Core (5.3.2)
   - TextFieldEffects (1.6.0)
+  - XCGLogger (7.0.0):
+    - XCGLogger/Core (= 7.0.0)
+  - XCGLogger/Core (7.0.0):
+    - ObjcExceptionBridging
   - XLPagerTabStrip (9.0.0)
 
 DEPENDENCIES:
@@ -375,6 +382,7 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - RSKImageCropper
   - TextFieldEffects
+  - XCGLogger (~> 7.0.0)
   - XLPagerTabStrip
 
 SPEC REPOS:
@@ -411,9 +419,11 @@ SPEC REPOS:
     - LTMorphingLabel
     - nanopb
     - NVActivityIndicatorView
+    - ObjcExceptionBridging
     - RSKImageCropper
     - SDWebImage
     - TextFieldEffects
+    - XCGLogger
     - XLPagerTabStrip
 
 SPEC CHECKSUMS:
@@ -449,11 +459,13 @@ SPEC CHECKSUMS:
   LTMorphingLabel: 22147fb1ec2b0306537ccc348b36ea8617179b03
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
+  ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SDWebImage: 6ac2eb96571bff96ecde31a987172c5934a0eb7d
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
+  XCGLogger: 0434f15e3909cdc450bb63faf638b8792ab782ab
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 84ff7aaab182248e4d7d1ec58057496e744f7822
+PODFILE CHECKSUM: f1e3858a1bd4d35db1e6711565384d730162476d
 
 COCOAPODS: 1.8.4
