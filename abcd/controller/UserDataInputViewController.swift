@@ -14,16 +14,17 @@ import RSKImageCropper
 import TextFieldEffects
 
 
-class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate{
+class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate{
     
     
-    @IBOutlet weak var myName: UITextField!
-    @IBOutlet weak var targetName: UITextField!
-    @IBOutlet weak var message: UITextView!
-    @IBOutlet weak var icon: UIButton!
+    @IBOutlet weak var myNameTextField: UITextField!
+    @IBOutlet weak var targetNameTextField: UITextField!
+    @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet weak var iconRegistButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
     
-    
+    let defaultIconImage = UIImage(named: "user10")
+
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
@@ -33,22 +34,18 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        myName.delegate = self
-        targetName.delegate = self
-        message.delegate = self
+        myNameTextField.delegate = self
+        targetNameTextField.delegate = self
+        messageTextView.delegate = self
         keyBoardtoolBar()
-        UInavigationBar()
-        
-
-
+        customNavigationBar()
         
         //写真投稿ボタンの画像を設定
-        let defaultIcon = UIImage(named: "user10")
-        self.icon.setImage(defaultIcon, for: .normal)
+        self.iconRegistButton.setImage(self.defaultIconImage, for: .normal)
     }
     
     
-    @IBAction func icon(_ sender: Any) {
+    @IBAction func call_PhotoLibrary(_ sender: Any) {
         //iconボタン押した処理
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             let pickerView = UIImagePickerController()
@@ -73,19 +70,18 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
     
     
     //データ入力後の投稿ボタン
-    @IBAction func sendData(_ sender: Any) {
+    @IBAction func postAction(_ sender: Any) {
         
-        
-        let myname = myName.text?.deleteSpace() ?? ""
-        let targetname = targetName.text?.deleteSpace() ?? ""
-        let messageText = message.text ?? ""
-        let image = icon.currentImage ?? UIImage(named: "user10")
+        let myname = myNameTextField.text?.deleteSpace() ?? ""
+        let targetname = targetNameTextField.text?.deleteSpace() ?? ""
+        let messageText = messageTextView.text ?? ""
+        let iconImage = iconRegistButton.currentImage ?? self.defaultIconImage
 
-        var data: [String : Any] = [
+        var registData: [String : Any] = [
             "my": myname,
             "target": targetname,
             "message": messageText,
-            "image": image as Any,
+            "image": iconImage as Any,
         ]
         
         var value: [String: Any] = ["message": messageText]
@@ -94,17 +90,17 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
         //↓で写真保存されてしまっているので最後の”image”は取れない？
         let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
         
-        let postCard: PostCard = self.storyboard?.instantiateViewController(withIdentifier: "postCard") as! PostCard
+        let ResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
         
         
-        func iconImage() {
-            if  image == UIImage(named: "user10") || image == nil {
-                data["image"] = nil
+        func registIconImage() {
+            if iconImage == self.defaultIconImage {
+                registData["image"] = nil
                 ref.setValue(value)
 
             } else {
                 //写真投稿有り→ storageに写真保存
-                if let imageData = image?.pngData() {
+                if let imageData = iconImage?.pngData() {
                     storageRef.putData(imageData, metadata: nil){ (metadata, error)in
 
                         guard metadata != nil else { return }
@@ -132,14 +128,14 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
         } else {
             
             //投稿履歴が有る
-            if var registerName = UD.object(forKey: "uniqueNmame") as? [[String : String]]  {
+            if var registNames = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
                 
                 //投稿数>10で登録数オーバーアラート
-                if registerName.count > 10 {
+                if registNames.count > 10 {
                     
                     let cancel = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: nil)
                     let sendList = UIAlertAction(title: "登録リストへ",style: UIAlertAction.Style.default,handler:{(action:UIAlertAction!) -> Void in
-                        let list = self.storyboard?.instantiateViewController(withIdentifier: "list") as! List
+                        let list = self.storyboard?.instantiateViewController(withIdentifier: "list") as! InputDataListViewController
                         self.navigationController?.pushViewController(list, animated: true)})
                     cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
                     
@@ -147,24 +143,22 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
                 } else {
                     //投稿数<10　(UD.count 0-10)
                     //全く同じ名前の投稿でなければUDに名前保存
-                    if !registerName.contains([myname:targetname]) {
-                        registerName += [[myname:targetname]]
-//                        UD.set(registerName, forKey: "uniqueNmame")
-                        UD.set(registerName, forKey: UdKey.keys.uniqueNmame.rawValue)
-
+                    if !registNames.contains([myname:targetname]) {
+                        registNames += [[myname:targetname]]
+                        UD.set(registNames, forKey: UdKey.keys.uniqueNmame.rawValue)
                     }
-                    iconImage()
+                    registIconImage()
                 }
                 
             } else {
                 //投稿値歴無し
                 UD.set([[myname:targetname]], forKey: UdKey.keys.uniqueNmame.rawValue)
-                iconImage()
+                registIconImage()
             }
             
             //names_messageArray == [myname, targetname, messageText]
-            postCard.data = data
-            self.navigationController?.pushViewController(postCard, animated: true)
+            ResultVC.registData = registData
+            self.navigationController?.pushViewController(ResultVC, animated: true)
         }
         
         // キーボード閉じる
@@ -185,7 +179,7 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
     var lastReplacementString = ""
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        self.previousText = myName.text!
+        self.previousText = myNameTextField.text!
         self.lastReplaceRange = range
         self.lastReplacementString = text
         return true
@@ -232,7 +226,7 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isTouch(touches: touches, view: message) {
+        if isTouch(touches: touches, view: messageTextView) {
             self.configureObserver()
         }
     }
@@ -260,7 +254,7 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
-        let newText: String = (message.text! as NSString).replacingCharacters(in: range, with: text)
+        let newText: String = (messageTextView.text! as NSString).replacingCharacters(in: range, with: text)
         return numberOfLines(orgTextView: textView, newText: newText) <= 6
     }
     
@@ -287,8 +281,8 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        myName.resignFirstResponder()
-        targetName.resignFirstResponder()
+        myNameTextField.resignFirstResponder()
+        targetNameTextField.resignFirstResponder()
         return  true
     }
     
@@ -300,7 +294,7 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
         let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(commitButtonTapped))
         toolBar.items = [spacer, commitButton]
-        message.inputAccessoryView = toolBar // textViewのキーボードにツールバーを設定
+        messageTextView.inputAccessoryView = toolBar // textViewのキーボードにツールバーを設定
 
     }
     @objc func commitButtonTapped() {
@@ -309,7 +303,7 @@ class DataInput: UIViewController, UINavigationControllerDelegate ,UIImagePicker
 }
 
 
-extension DataInput: RSKImageCropViewControllerDelegate {
+extension UserDataInputViewController: RSKImageCropViewControllerDelegate {
     //キャンセル
     func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
         dismiss(animated: true, completion: nil)
@@ -318,7 +312,7 @@ extension DataInput: RSKImageCropViewControllerDelegate {
     //完了を押した後の処理
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
         dismiss(animated: true)
-        icon?.setImage(croppedImage, for: .normal)
+        iconRegistButton?.setImage(croppedImage, for: .normal)
         // imageView.image = croppedImage
 
         //円形画像
@@ -335,7 +329,7 @@ extension DataInput: RSKImageCropViewControllerDelegate {
             let pngData = capturedImage.pngData()!
             //円形で余白透過
             let png = UIImage(data: pngData)!
-            icon?.setImage(png, for: .normal)
+            iconRegistButton?.setImage(png, for: .normal)
         }
     }
 }

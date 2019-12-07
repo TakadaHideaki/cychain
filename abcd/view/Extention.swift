@@ -102,7 +102,7 @@ extension UIViewController {
         view.addSubview(indicatorView)
     }
     
-    func UInavigationBar() {
+    func customNavigationBar() {
 //
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         

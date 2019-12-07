@@ -12,21 +12,21 @@ import FirebaseStorage
 import FirebaseDatabase
 import RSKImageCropper
 
-class Edit: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIScrollViewDelegate {
+class EditViewController: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIScrollViewDelegate {
     
     
     
     @IBOutlet weak var myNameTextField: UITextField!
     @IBOutlet weak var targetNameTextField: UITextField!
     @IBOutlet weak var messageTextView: UITextView!
-    @IBOutlet weak var sender: UIButton!
-    @IBOutlet weak var icon: UIButton!
+    @IBOutlet weak var dataSendButton: UIButton!
+    @IBOutlet weak var iconRegistButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
     
     
     //var data: [String: String]? だと上手くいかなかった
-    var data: [String:String]!
-    var image: UIImage?
+    var userData: [String:String]!
+    var iconImage: UIImage?
 
     
     
@@ -38,39 +38,27 @@ class Edit: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate
         targetNameTextField.delegate = self
         messageTextView.delegate = self
         
-        myNameTextField.text = data["my"]
-        targetNameTextField.text = data["target"]
+        myNameTextField.text = userData["my"]
+        targetNameTextField.text = userData["target"]
         
-        if data["message"] != "" {
-            messageLabel.isHidden = false
-        } else {
+        if userData["message"] != "" {
             messageLabel.isHidden = true
-            messageTextView.text = data["message"]
-        }
-    
-        
-        if data["message"] != "" {
-            messageLabel.isHidden = true
-            messageTextView.text = data["message"]
+            messageTextView.text = userData["message"]
          } else {
             messageLabel.isHidden = false
          }
         
         
-        messageTextView.tag = 124
-        toolBar()
-        UInavigationBar()
+        addKeyBoardtoolBar()
+        customNavigationBar()
         tabBarController?.tabBar.isHidden = true
 
-        let setImage = image ?? UIImage(named: "user10")
-        icon.setImage(setImage, for: .normal)
-        
-
+        let setImage = iconImage ?? UIImage(named: "user10")
+        iconRegistButton.setImage(setImage, for: .normal)
     }
     
     
-    
-    @IBAction func iconButton(_ sender: Any) {
+    @IBAction func call_photoLibrary(_ sender: Any) {
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             let pickerView = UIImagePickerController()
@@ -98,23 +86,23 @@ class Edit: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate
                 
         let myName = myNameTextField.text ?? ""
         let targetName = targetNameTextField.text ?? ""
-        self.data["message"] = messageTextView.text ?? ""
-        image = icon.currentImage ?? UIImage(named: "user10")
-        var value: [String: Any] = ["message": data["message"] as Any]
+        self.userData["message"] = messageTextView.text ?? ""
+        iconImage = iconRegistButton.currentImage ?? UIImage(named: "user10")
+        var value: [String: Any] = ["message": userData["message"] as Any]
         
         
         let ref = Database.database().reference().child("\(myName)/\(targetName)/\(USER_ID!)")
         let storageRef = STORAGE.child("\(myName))/\(targetName))/\(USER_ID!)/\("imageData")")
         
         
-        let postCard: PostCard = self.storyboard?.instantiateViewController(withIdentifier: "postCard") as! PostCard
+        let inputResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultViewController") as! InputResultViewController
         
         //アイコンがデフォルトのまま
-        if  image == UIImage(named: "user10") {
+        if  iconImage == UIImage(named: "user10") {
             ref.setValue(value)
         
         } else {
-            if let imageData = image?.pngData() {
+            if let imageData = iconImage?.pngData() {
                 //  FireStorage Uplode(登録画像）
                 storageRef.putData(imageData, metadata: nil){ (metadata, error)in
                     
@@ -131,8 +119,8 @@ class Edit: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate
             }
         }
         //postCardViewにデータを送って画面遷移
-            postCard.data = data
-            self.navigationController?.pushViewController(postCard, animated: true)
+            inputResultVC.registData = userData
+            self.navigationController?.pushViewController(inputResultVC, animated: true)
 
         
         //        キーボード閉じる
@@ -152,7 +140,7 @@ class Edit: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate
     }
     
     
-    func toolBar() {
+    func addKeyBoardtoolBar() {
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
         toolBar.barStyle = UIBarStyle.default
@@ -278,7 +266,7 @@ class Edit: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate
 
 
 
-extension Edit: RSKImageCropViewControllerDelegate {
+extension EditViewController: RSKImageCropViewControllerDelegate {
     //キャンセルを押した時の処理
     func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
         dismiss(animated: true, completion: nil)
@@ -286,7 +274,7 @@ extension Edit: RSKImageCropViewControllerDelegate {
     //完了を押した後の処理
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
         dismiss(animated: true)
-        icon?.setImage(croppedImage, for: .normal)
+        iconRegistButton?.setImage(croppedImage, for: .normal)
         //        imageView.image = croppedImage
         //もし円形で画像を切り取りし、その画像自体を加工などで利用したい場合
         if controller.cropMode == .circle {
@@ -302,7 +290,7 @@ extension Edit: RSKImageCropViewControllerDelegate {
             let pngData = capturedImage.pngData()!
             //このImageは円形で余白は透過です。
             let png = UIImage(data: pngData)!
-            icon?.setImage(png, for: .normal)
+            iconRegistButton?.setImage(png, for: .normal)
         }
     }
 }

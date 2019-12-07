@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Policy: UIViewController {
+class PolicyViewController: UIViewController {
     
  
     

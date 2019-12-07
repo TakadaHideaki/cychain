@@ -9,13 +9,13 @@
 import UIKit
 import GoogleMobileAds
 
-class ManyResult: UIViewController, UINavigationControllerDelegate  {
+class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDelegate  {
     
     var names: [String]?
-    var account = [String]()
+    var userID = [String]()
     var value = [[String:Any]]()
     var indicatorView = UIActivityIndicatorView()
-    var data = [String: [String: Any]]()
+    var mutchingUserData = [String: [String: Any]]()
 
     
     @IBOutlet weak var tableView: UITableView!
@@ -23,8 +23,8 @@ class ManyResult: UIViewController, UINavigationControllerDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        data.forEach {
-            account += [$0.key]
+        mutchingUserData.forEach {
+            userID += [$0.key]
             value += [$0.value]
         }
         tableView.delegate = self
@@ -35,7 +35,7 @@ class ManyResult: UIViewController, UINavigationControllerDelegate  {
         
         admob()
         indicator()
-        UInavigationBar()
+        customNavigationBar()
         tableView.reloadData()
     }
     
@@ -49,11 +49,11 @@ class ManyResult: UIViewController, UINavigationControllerDelegate  {
     }
 }
 
-extension ManyResult: UITableViewDataSource {
+extension SeachResultListViewCOntroller: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return account.count
+        return userID.count
     }
     
     
@@ -64,17 +64,17 @@ extension ManyResult: UITableViewDataSource {
     }
 }
 
-extension ManyResult: UITableViewDelegate {
+extension SeachResultListViewCOntroller: UITableViewDelegate {
     
     func  tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         indicatorView.startAnimating()
         
-        let result3: ManyResult2 = self.storyboard?.instantiateViewController(withIdentifier: "result3") as! ManyResult2
-        result3.names = names
-        result3.value = value[indexPath.row]
-        result3.account = account[indexPath.row]
-        self.navigationController?.pushViewController(result3, animated: true)
+        let SeachResultMultipleVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultMultipleViewCOntroller") as! SeachResultMultipleViewCOntroller
+        SeachResultMultipleVC.names = names
+        SeachResultMultipleVC.value = value[indexPath.row]
+        SeachResultMultipleVC.account = userID[indexPath.row]
+        self.navigationController?.pushViewController(SeachResultMultipleVC, animated: true)
         self.indicatorView.stopAnimating()
     }
 }

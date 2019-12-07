@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Terms: UIViewController {
+class TermsViewController: UIViewController {
     
     
     

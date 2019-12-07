@@ -10,14 +10,14 @@ import UIKit
 import LTMorphingLabel
 import XLPagerTabStrip
 
-class Tab: ButtonBarPagerTabStripViewController {
+class InitialViewController: ButtonBarPagerTabStripViewController {
 
     @IBOutlet weak var label: LTMorphingLabel!
     
 
     override func viewDidLoad() {
         
-        UInavigationBar()
+        customNavigationBar()
         
         settings.style.buttonBarBackgroundColor = .clear
         settings.style.buttonBarItemBackgroundColor = .clear

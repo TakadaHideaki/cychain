@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMobileAds
 
-class FirstView: UIViewController {
+class SelectViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
@@ -21,12 +21,12 @@ class FirstView: UIViewController {
         super.viewDidLoad()
         print(USER_ID!)
         admob()
-        UInavigationBar()
+        customNavigationBar()
     }    
     @IBAction func post(_ sender: Any) {
         
-        let dataInput = self.storyboard?.instantiateViewController(withIdentifier: "DataInput1") as! DataInput
-        self.navigationController?.pushViewController(dataInput, animated: true)
+        let dataInputVC = self.storyboard?.instantiateViewController(withIdentifier: "UserDataInputViewController") as! UserDataInputViewController
+        self.navigationController?.pushViewController(dataInputVC, animated: true)
     }
 }
 

@@ -10,7 +10,7 @@ import UIKit
 import GoogleMobileAds
 
 
-class PostCard: UIViewController, UIImagePickerControllerDelegate {
+class InputResultViewController: UIViewController, UIImagePickerControllerDelegate {
 
     
     override func viewWillAppear(_ animated: Bool) {
@@ -20,7 +20,7 @@ class PostCard: UIViewController, UIImagePickerControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
 
-    var data: [String: Any]?
+    var registData: [String: Any]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +30,13 @@ class PostCard: UIViewController, UIImagePickerControllerDelegate {
         
         tableView.tableFooterView = UIView(frame: .zero)
         admob()
-        UInavigationBar()
-        print(data!)
+        customNavigationBar()
     }
 }
 
 
     
-extension PostCard: UITableViewDataSource {
+extension InputResultViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -55,9 +54,9 @@ extension PostCard: UITableViewDataSource {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "postcardCell", for: indexPath) as! postcardCell
 
-            cell.mynameLabael.text = data?["my"] as? String ?? ""
-            cell.targerNameLabel.text = data?["target"] as? String ?? ""
-            cell.photoImage.image = data?["image"] as? UIImage ?? UIImage(named: "user12")
+            cell.mynameLabael.text = registData?["my"] as? String ?? ""
+            cell.targerNameLabel.text = registData?["target"] as? String ?? ""
+            cell.photoImage.image = registData?["image"] as? UIImage ?? UIImage(named: "user12")
             cell.mynameLabael.adjustsFontSizeToFitWidth = true
             cell.targerNameLabel.adjustsFontSizeToFitWidth = true
             cell.mynameLabael.minimumScaleFactor = 0.5
@@ -68,7 +67,7 @@ extension PostCard: UITableViewDataSource {
         } else {
             
             let messagecell = tableView.dequeueReusableCell(withIdentifier: "messagecell", for: indexPath) as! MessageCell
-            messagecell.messageLabel.text = data?["message"] as? String ?? ""//メッセージ
+            messagecell.messageLabel.text = registData?["message"] as? String ?? ""//メッセージ
             return messagecell
         }
     }
@@ -76,7 +75,7 @@ extension PostCard: UITableViewDataSource {
 
 
 
-extension PostCard: UITableViewDelegate {
+extension InputResultViewController: UITableViewDelegate {
     
     func  tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         

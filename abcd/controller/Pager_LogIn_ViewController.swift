@@ -13,7 +13,7 @@ import FirebaseAuth
 import GoogleSignIn
 import XLPagerTabStrip
 
-class TabLogIn: UIViewController, FUIAuthDelegate, GIDSignInDelegate /* ,GIDSignInUIDelegate*/ {
+class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDelegate {
   
     
     @IBOutlet weak var mailButton: UIButton!
@@ -24,8 +24,6 @@ class TabLogIn: UIViewController, FUIAuthDelegate, GIDSignInDelegate /* ,GIDSign
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        //GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
      
         mailButton.setImage(UIImage(named: "mail2"), for: .normal)
@@ -57,8 +55,8 @@ class TabLogIn: UIViewController, FUIAuthDelegate, GIDSignInDelegate /* ,GIDSign
                 print("エラー------")
                 return
             }
-            print( "ユーザーはログインしています。　　User is signed in")
-            let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tab1")
+            print("ユーザーはログインしています")
+            let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tabViewController")
             self.view.window?.rootViewController = tab1  
         }
     }
@@ -75,7 +73,7 @@ class TabLogIn: UIViewController, FUIAuthDelegate, GIDSignInDelegate /* ,GIDSign
 
 
 
-extension TabLogIn: IndicatorInfoProvider{
+extension Pager_LogIn_ViewController: IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "ログイン") // 親のButtonBarで使われる名前
     }

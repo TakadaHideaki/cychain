@@ -11,20 +11,19 @@ import Firebase
 import FirebaseAuth
 
 
-class LogIn: UIViewController, UITextFieldDelegate {
+class LogInViewController: UIViewController, UITextFieldDelegate {
  
  
     
-    @IBOutlet var email: UITextField!
-    @IBOutlet var password: UITextField!
-    @IBOutlet weak var pwErrorLabel: UILabel!
-    @IBOutlet weak var acErrorLabel: UILabel!
-    @IBOutlet weak var login:Button!
+    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet weak var passwordErrorLabel: UILabel!
+    @IBOutlet weak var accountErrorLabel: UILabel!
+    @IBOutlet weak var loginButton:Button!
     
-    let eyeButton = UIButton(type: .custom)
-    let openEye = UIImage(named: "eye5")
-    let closeeye = UIImage(named: "eye4")
-    var iconClick = true
+    let passwordShow_Hide_Button = UIButton(type: .custom)
+    let showImage = UIImage(named: "eye5")
+    let hideImage = UIImage(named: "eye4")
     
 
     override func viewWillAppear(_ animated: Bool) {
@@ -36,36 +35,36 @@ class LogIn: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        email.delegate = self
-        password.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         
-        pwErrorLabel.isHidden = true
-        acErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+        accountErrorLabel.isHidden = true
         
-        password.isSecureTextEntry = true
+        passwordTextField.isSecureTextEntry = true
         
-        email.underLine(height: 1.0, color: .white)
-        password.underLine(height: 1.0, color: .white)
+        emailTextField.underLine(height: 1.0, color: .white)
+        passwordTextField.underLine(height: 1.0, color: .white)
         
-        setIcon(textField: email, andImage: UIImage(named: "mail")!)
-        setIcon(textField: password, andImage: UIImage(named: "password")!)
+        setIcon(textField: emailTextField, andImage: UIImage(named: "mail")!)
+        setIcon(textField: passwordTextField, andImage: UIImage(named: "password")!)
         addEyeButton()
-        eyeButton.setImage((closeeye), for: .normal)
+        passwordShow_Hide_Button.setImage((hideImage), for: .normal)
     }
     
     
 //    メールでログイン
     @IBAction func sginIn(_ sender: Any) {
         
-        let mail = email.text?.deleteSpace() ?? ""
-        let pass = password.text?.deleteSpace() ?? ""
+        let mail = emailTextField.text?.deleteSpace() ?? ""
+        let pass = passwordTextField.text?.deleteSpace() ?? ""
         
         Auth.auth().signIn(withEmail: mail, password: pass) { (authResult, error) in
             if (((authResult?.user) != nil) && error == nil) {
                 print(Auth.auth().currentUser?.uid as Any)
 
-                let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tab1")
-                self.view.window?.rootViewController = tab1
+                let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabViewController")
+                self.view.window?.rootViewController = tabVC
 
 
             } else {
@@ -73,12 +72,12 @@ class LogIn: UIViewController, UITextFieldDelegate {
                 switch errorMessage {
 
                 case ("The password is invalid or the user does not have a password."):
-                    self.pwErrorLabel.isHidden = false
+                    self.passwordErrorLabel.isHidden = false
                     self.alert(title: "パスワードは６文字以上で入力して下さい", message: "", actiontitle: "OK")
 
                     
                 case ("There is no user record corresponding to this identifier. The user may have been deleted."):
-                    self.acErrorLabel.isHidden = false
+                    self.accountErrorLabel.isHidden = false
                     self.alert(title: "メールアドレスが正しくありません", message: "", actiontitle: "OK")
 
                     
@@ -94,7 +93,7 @@ class LogIn: UIViewController, UITextFieldDelegate {
     
     @IBAction func passwordReset(_ sender: Any) {
         
-        let mail = email.text?.deleteSpace() ?? ""
+        let mail = emailTextField.text?.deleteSpace() ?? ""
 
         if mail.isEmpty {
             self.alert(title: "メールをアドレスを入力して下さい", message: "", actiontitle: "OK")
@@ -117,14 +116,14 @@ class LogIn: UIViewController, UITextFieldDelegate {
     @objc
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        pwErrorLabel.isHidden = true
-        acErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+        accountErrorLabel.isHidden = true
     }
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        email.resignFirstResponder()
-        password.resignFirstResponder()
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
         // 今フォーカスが当たっているテキストボックスからフォーカスを外す
         textField.resignFirstResponder()
         // 次のTag番号を持っているテキストボックスがあれば、フォーカスする
@@ -147,18 +146,20 @@ class LogIn: UIViewController, UITextFieldDelegate {
     
     private func addEyeButton() {
 
-        eyeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
-        eyeButton.frame = CGRect(x: CGFloat(password.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-        eyeButton.addTarget(self, action: #selector(self.security), for: .touchUpInside)
-        password.rightView = eyeButton
-        password.rightViewMode = .always
+        passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
+        passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+        passwordShow_Hide_Button.addTarget(self, action: #selector(self.security), for: .touchUpInside)
+        passwordTextField.rightView = passwordShow_Hide_Button
+        passwordTextField.rightViewMode = .always
     }
     
     @objc func security(_ sender: Any) {
-        password.isSecureTextEntry.toggle()
-        iconClick.toggle()
-        let eye = iconClick ? closeeye: openEye
-        eyeButton.setImage(eye, for: .normal)
+        var show = true
+
+        passwordTextField.isSecureTextEntry.toggle()
+        show.toggle()
+        let show_hideImage = show ? hideImage: showImage
+        passwordShow_Hide_Button.setImage(show_hideImage, for: .normal)
     }
 
 

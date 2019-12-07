@@ -47,8 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             // ログイン状態ならログイン画面スルー
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboad = UIStoryboard(name: "Main", bundle: nil)
-            let tab1 = storyboad.instantiateViewController(withIdentifier: "tab1")
-            self.window?.rootViewController = tab1
+            let tabVC = storyboad.instantiateViewController(withIdentifier: "tabViewController")
+            self.window?.rootViewController = tabVC
             self.window?.makeKeyAndVisible()
 
         } else {

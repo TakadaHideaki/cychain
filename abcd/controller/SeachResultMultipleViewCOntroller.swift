@@ -1,50 +1,48 @@
 //
-//  result.swift
+//  result3.swift
 //  abcd
 //
-//  Created by takadahideaki007 on 2019/04/14.
+//  Created by takadahideaki007 on 2019/04/15.
 //  Copyright © 2019 高田英明. All rights reserved.
 //
 
 import UIKit
-import MessageUI
-import FirebaseUI
 import GoogleMobileAds
+import FirebaseUI
+import MessageUI
 
-
-class Result: UIViewController, UIImagePickerControllerDelegate, MFMailComposeViewControllerDelegate {
+class SeachResultMultipleViewCOntroller: UIViewController, UIImagePickerControllerDelegate, MFMailComposeViewControllerDelegate {
+    
     
     @IBOutlet weak var tableView: UITableView!
     
-    var names: [String]?//[nyname, searchname]
-    var account: String?//UID
-    var value = [String: Any]()//[message:メッセージ、image:写真]
-    var data = [String: [String: Any]]()//[UID: [message:メッセージ、image:写真]]
+    var value: [String:Any]?
+    var names: [String]?
+    var account: String?
+    var indicatorView = UIActivityIndicatorView()
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        account = data.map{$0.0}[0]
-        value = data.map{$0.1}[0]
-        
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.tableFooterView = UIView(frame: .zero)
-        self.navigationItem.hidesBackButton = true
         admob()
-        UInavigationBar()
+        customNavigationBar()
+        tableView.reloadData()
     }
     
     
-    //navigationbar右上にブロック+通報のボタン設置
+    
     @IBAction func report(_ sender: Any) {
         
         guard let my = self.names?[0] else { return }
         guard let target = self.names?[1] else { return }
-        //通報
-        let alert: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle:  UIAlertController.Style.actionSheet)        
+        
+        let alert: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle:  UIAlertController.Style.actionSheet)
+        
         let report: UIAlertAction = UIAlertAction(title: "投稿者を通報", style: UIAlertAction.Style.default, handler:{
             (action: UIAlertAction!) -> Void in
             
@@ -52,19 +50,20 @@ class Result: UIViewController, UIImagePickerControllerDelegate, MFMailComposeVi
             if MFMailComposeViewController.canSendMail() {
                 let mail = MFMailComposeViewController()
                 mail.mailComposeDelegate = self
-                mail.setToRecipients([ADDRESS])
-                mail.setSubject("通報")
+                mail.setToRecipients([ADDRESS]) //送り先adless
+                mail.setSubject("通報") //件名
                 //メッセージ本文
-                if let messegaText = self.value["message"] as? String {
+                if let messegaText = self.value?["message"] as? String {
                     mail.setMessageBody("通報理由(任意)\n\n\n投稿者名:\(my)\n投稿相手名:\(target)\nmessage:\(messegaText)", isHTML: false)
                 } else {
                     mail.setMessageBody("通報理由(任意)\n\n\n投稿者名:\(my)\n投稿相手名:\(target)", isHTML: false)
                 }
-                self.present(mail, animated: true)
+                //メールを表示
+                self.present(mail, animated: true, completion: nil)
                 
             } else {
                 //メール送信が不可能
-                self.alert(title: "メールアカウントを設定してください", message: "", actiontitle: "OK")
+                self.alert(title: "Please set up mail accounts", message: "", actiontitle: "OK")
             }
             
             //エラー処理
@@ -77,7 +76,7 @@ class Result: UIViewController, UIImagePickerControllerDelegate, MFMailComposeVi
             }
         })
         
-        //投稿ユーザーブッロク（検索に引っかからないようにする）
+        
         let block: UIAlertAction = UIAlertAction(title: "投稿者をブロック", style: UIAlertAction.Style.default, handler:{
             (action: UIAlertAction!) -> Void in
             
@@ -95,10 +94,10 @@ class Result: UIViewController, UIImagePickerControllerDelegate, MFMailComposeVi
                 }
             }
             
-            let alert = UIAlertController(title: "この投稿をしたユーザーをブロックしました", message: "", preferredStyle: .alert)
+            let alert = UIAlertController(title: "ブロック", message: "この投稿をしたユーザーをブロックしました", preferredStyle: .alert)
             self.present(alert, animated: true, completion: {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                    alert.dismiss(animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                    alert.dismiss(animated: true, completion: nil)
                 })
             })
         })
@@ -109,19 +108,17 @@ class Result: UIViewController, UIImagePickerControllerDelegate, MFMailComposeVi
         alert.addAction(report)
         alert.addAction(block)
         alert.addAction(cancelAction)
-        self.present(alert, animated: true)
+        self.present(alert, animated: true, completion: nil)
     }
 }
-    
-    
 
 
-extension Result: UITableViewDataSource {
+extension SeachResultMultipleViewCOntroller: UITableViewDataSource {
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -131,8 +128,7 @@ extension Result: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResultCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "resultPostCardCell2", for: indexPath) as! ResultCell2
             
             cell.myName.text = names?[0] ?? ""
             cell.targetName.text = names?[1] ?? ""
@@ -143,41 +139,46 @@ extension Result: UITableViewDataSource {
             cell.targetName.minimumScaleFactor = 0.5
             
             
-            guard let profileImage: String = value["image"] as? String else { return cell }
+            guard let profileImage: String = value?["image"] as? String else { return cell }
             
+            if profileImage != "" {
                 let url = URL(string: profileImage)
-                // image変換
+                //            image変換
                 DispatchQueue.global().async {
                     do {
                         let imageData = try Data(contentsOf: url!)
                         DispatchQueue.main.async {
                             let image = UIImage(data:imageData as Data)
-                            cell.profileImage.image = image
+                            cell.profaleIcon.image = image
                         }
                     } catch {
                         return
                     }
                 }
+            }
             return cell
+            
             
         } else {
             
             let messagecell = tableView.dequeueReusableCell(withIdentifier: "messagecell", for: indexPath) as! MessageCell
-            messagecell.messageLabel.text = value["message"] as? String ?? ""
+
+            messagecell.messageLabel.text = value?["message"] as? String ?? ""
             return messagecell
         }
     }
 }
-
-extension Result:UITableViewDelegate {
+    
+    extension SeachResultMultipleViewCOntroller: UITableViewDelegate {
+        
     
     func  tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
         let label = UILabel()
-        label.backgroundColor = .clear
-        label.textColor = .gray
+        label.backgroundColor = UIColor.clear
+        label.textColor = UIColor.gray
         label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         
         switch section {
         case 0: label.text = "posting card"

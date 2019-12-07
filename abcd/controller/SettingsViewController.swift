@@ -14,7 +14,7 @@ import FirebaseDatabase
 import GoogleSignIn
 import MessageUI
 
-class Setting: UIViewController, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate  {
+class SettingsViewController: UIViewController, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate  {
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -30,7 +30,7 @@ class Setting: UIViewController, UINavigationControllerDelegate, MFMailComposeVi
         
         tableView.dataSource = self
         tableView.delegate = self
-        UInavigationBar()
+        customNavigationBar()
         tableView.tableFooterView = UIView(frame: .zero)
     }
     
@@ -45,7 +45,7 @@ class Setting: UIViewController, UINavigationControllerDelegate, MFMailComposeVi
 
 
 
-extension Setting: UITableViewDataSource {
+extension SettingsViewController: UITableViewDataSource {
 
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -85,7 +85,7 @@ extension Setting: UITableViewDataSource {
 
 
     
-extension Setting: UITableViewDelegate {
+extension SettingsViewController: UITableViewDelegate {
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -142,11 +142,11 @@ extension Setting: UITableViewDelegate {
                 if error != nil {
                     self.alert(title: "アカウント削除エラー", message: "再ログインして削除してください。それでも削除でいない時は「お問い合わせ」から連絡下さい", actiontitle: "OK")
                 } else {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "tab")
-                    
-                    self.view.window?.rootViewController?.present(vc!, animated: true)
+//                    let initialVC = self.storyboard?.instantiateViewController(withIdentifier: "InitialViewController") as! InitialViewController
+//
+//                    self.view.window?.rootViewController?.present(initialVC, animated: true)
 
-//                    self.sendAlert(title: "アカウント削除", message: "データは全て削除されました", vcId: "tab")
+                    self.sendAlert(title: "アカウント削除", message: "データは全て削除されました", vcId: "InitialViewController")
                     
                 }
             }

@@ -12,12 +12,12 @@ import GoogleMobileAds
 
 
 
-class List: UIViewController, UINavigationControllerDelegate {
+class InputDataListViewController: UIViewController, UINavigationControllerDelegate {
 
 
     @IBOutlet var tableView: UITableView!
     
-    var names: [[String:String]]? //[[myname, targetname]]
+    var namesList: [[String:String]]? //[[myname, targetname]]
     //mynameとtargetnameに分けたが分けづにnamesでアクセスした方がいいか
     //分けた理由は分けた方が自分が分かりやすかったから
     var myNames: [String]?
@@ -36,17 +36,16 @@ class List: UIViewController, UINavigationControllerDelegate {
         tableView.tableFooterView = UIView(frame: .zero)
         self.navigationItem.hidesBackButton = true
 
-
-        UInavigationBar()
+        customNavigationBar()
         indicator()
  
         //投稿データが有れば
         //UD("uniqueNmame") == [[myname, targetname]]
-        if let names = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
+        if let UDNamesList = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
             
-            self.names = names
-            myNames = (names.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
-            targetNames = (names.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
+            self.namesList = UDNamesList
+            myNames = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
+            targetNames = (UDNamesList.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
         }
         tableView.reloadData()
     }
@@ -65,7 +64,7 @@ class List: UIViewController, UINavigationControllerDelegate {
 
 
 
-extension List: UITableViewDataSource {
+extension InputDataListViewController: UITableViewDataSource {
 
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,7 +73,7 @@ extension List: UITableViewDataSource {
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return names?.count ?? 0
+        return namesList?.count ?? 0
     }
 
 
@@ -112,7 +111,7 @@ extension List: UITableViewDataSource {
                 }
             }
             //UDから削除
-            if var names = names {
+            if var names = namesList {
                 names.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 UD.set(names, forKey: UdKey.keys.uniqueNmame.rawValue)
@@ -123,7 +122,7 @@ extension List: UITableViewDataSource {
 }
 
 
-extension List: UITableViewDelegate {
+extension InputDataListViewController: UITableViewDelegate {
 
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -138,29 +137,29 @@ extension List: UITableViewDelegate {
         
         let myName = myNames?[indexPath.row] ?? ""
         let searchName = targetNames?[indexPath.row] ?? ""
-        let edit2: Edit = self.storyboard?.instantiateViewController(withIdentifier: "edit2") as! Edit
+        let editVC = self.storyboard?.instantiateViewController(withIdentifier: "DataEditVC") as! EditViewController
         let ref = Database.database().reference().child("\(myName)/\(searchName)/\(USER_ID!)")
         
         ref.observeSingleEvent(of: .value, with: { (DataSnapshot) in
             
-            var data = DataSnapshot.value as? [String: String]//[message:メッセージ, image:写真]
-            data?["my"] = myName
-            data?["target"] = searchName
+            var UserData = DataSnapshot.value as? [String: String]//[message:メッセージ, image:写真]
+            UserData?["my"] = myName
+            UserData?["target"] = searchName
             
             //写真が投稿されていれば写真データをEditVewのimageに値た渡し
-            if let imageUrl = data?["image"] {
+            if let imageUrl = UserData?["image"] {
                 let url = URL(string: imageUrl)
                 // image変換
                 do {
                     let imageData = try Data(contentsOf: url!)
                     let image = UIImage(data:imageData as Data)
-                    edit2.image = image
+                    editVC.iconImage = image
                 } catch {
                     print(error)
                 }
             }
-            edit2.data = data
-            self.navigationController?.pushViewController(edit2, animated: true)
+            editVC.userData = UserData
+            self.navigationController?.pushViewController(editVC, animated: true)
             self.indicatorView.stopAnimating()
         })
     }

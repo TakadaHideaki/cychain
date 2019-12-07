@@ -14,18 +14,18 @@ import NVActivityIndicatorView
 import GoogleMobileAds
 
 
-class Search: UIViewController, UITextFieldDelegate {
+class SearchViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet var myNameTextField: UITextField!
     @IBOutlet var searchNameTextField: UITextField!
-    @IBOutlet weak var label: labele!
-    @IBOutlet weak var label2: UILabel!
+    @IBOutlet weak var mutchLabel: labele!
+    @IBOutlet weak var mutchLabel2: UILabel!
     @IBOutlet weak var noPostLabel: UILabel!
     @IBOutlet weak var searchButton: Button!
     @IBOutlet weak var indicator: NVActivityIndicatorView!
     
-    lazy var data = [String: [String: Any]]()
+    lazy var mutchiUserData = [String: [String: Any]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +35,7 @@ class Search: UIViewController, UITextFieldDelegate {
         admob()
         indicator()
         labelHidden()
-        UInavigationBar()
+        customNavigationBar()
     }
     
     
@@ -47,8 +47,7 @@ class Search: UIViewController, UITextFieldDelegate {
     }
     
     
-    @IBAction func searchButton(_ sender: Any) {
-        
+    @IBAction func searchAction(_ sender: Any) {
         
         //textfieldのnil対策をしているが,強制アンラップは避けた方がいいか？
         //(56行目で空ならアラートの処理をしている)
@@ -75,18 +74,21 @@ class Search: UIViewController, UITextFieldDelegate {
                     //マッチ有り
                     //dataは [UID: [message: メッセージ, profile: 投稿写真]]
                     //強制キャストの解除が上手くいかない
-                    //self.dataじゃなくて　var dataの方がいいか？
-                    self.data = DataSnapshot.value as! [String: [String : Any]]
+                    //self.mutchingUserDataじゃなくて
+                    //このスコープ何の変数を作って最後にself.mutchingUserDataに代入した方がいいのか？
+                    self.mutchiUserData = DataSnapshot.value as! [String: [String : Any]]
 
-                    //blockアカウントがUDに有ればdataから削除
-                    if let blockAccount = UD.array(forKey: UdKey.keys.block.rawValue) as? [String]  {
-                        blockAccount.forEach {
-                            if self.data.keys.contains($0) {
-                                self.data[$0] = nil // [UID　(←コレがblockなら削除): [message: メッセージ, profile: 投稿写真]]
+                    //もしもブロックユーザー登録があれば
+                    if let blockUserID = UD.array(forKey: UdKey.keys.block.rawValue) as? [String]  {
+                        blockUserID.forEach {
+                            //マッチしたユーザーとブロックユーザーが一致したら
+                            //ブロックユーザーをひ表示させない様にする
+                            if self.mutchiUserData.keys.contains($0) {
+                                self.mutchiUserData[$0] = nil // [UID　(←コレがblockなら削除): [message: メッセージ, profile: 投稿写真]]
                             }
                         }
                     }
-                    if self.data.isEmpty {
+                    if self.mutchiUserData.isEmpty {
                         self.nomutch() //ブロックアカウント削除後マッチ無し
                     } else {
                         self.mutch() //ブロックアカウント削除後マッチ有り
@@ -100,26 +102,26 @@ class Search: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var matchbutton: UIButton!
     @IBAction func matchbutton(_ sender: Any) {
         
-        self.indicator.startAnimating()
+//        self.indicator.startAnimating()
         
         guard let myName = myNameTextField.text?.deleteSpace() else { return }
         guard let searchName = searchNameTextField.text?.deleteSpace() else { return }
         
-        let result = self.storyboard?.instantiateViewController(withIdentifier: "result") as! Result
-        let manyResult = self.storyboard?.instantiateViewController(withIdentifier: "result2") as! ManyResult
+        let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultVC") as! SeachResultViewCotroller
+        let resultListVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultListVC") as! SeachResultListViewCOntroller
         
-        switch self.data.count {
+        switch self.mutchiUserData.count {
         case 1: //マッチ１件
-            result.names = [myName, searchName]
-            result.data = self.data
-            self.navigationController?.pushViewController(result, animated: true)
+            resultVC.names = [myName, searchName]
+            resultVC.mutchiUserData = self.mutchiUserData
+            self.navigationController?.pushViewController(resultVC, animated: true)
             
         default: //マッチ複数件
-            manyResult.names = [myName, searchName]
-            manyResult.data = self.data
-            self.navigationController?.pushViewController(manyResult, animated: true)
+            resultListVC.names = [myName, searchName]
+            resultListVC.mutchingUserData = self.mutchiUserData
+            self.navigationController?.pushViewController(resultListVC, animated: true)
         }
-        self.indicator.stopAnimating()
+//        self.indicator.stopAnimating()
     }
     
     
@@ -139,8 +141,8 @@ class Search: UIViewController, UITextFieldDelegate {
         AudioServicesDisposeSystemSoundID(1003)
         self.noPostLabel.isHidden = true
         self.matchbutton.isHidden = false
-        self.label.isHidden = false
-        self.label2.isHidden = false
+        self.mutchLabel.isHidden = false
+        self.mutchLabel2.isHidden = false
     }
     
     
@@ -148,16 +150,16 @@ class Search: UIViewController, UITextFieldDelegate {
         self.indicator.stopAnimating()
         self.noPostLabel.isHidden = false
         self.matchbutton.isHidden = true
-        self.label.isHidden = true
-        self.label2.isHidden = true
+        self.mutchLabel.isHidden = true
+        self.mutchLabel2.isHidden = true
     }
     
     
     private func labelHidden() {
         noPostLabel.isHidden = true
         matchbutton.isHidden = true
-        label.isHidden = true
-        label2.isHidden = true
+        mutchLabel.isHidden = true
+        mutchLabel2.isHidden = true
     }
     
 

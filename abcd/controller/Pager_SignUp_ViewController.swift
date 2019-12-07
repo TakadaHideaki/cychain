@@ -12,20 +12,18 @@ import FirebaseAuth
 import GoogleSignIn
 import XLPagerTabStrip
 
-class TabSignUp: UIViewController, GIDSignInDelegate/*, GIDSignInUIDelegate*/ {
+class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate {
   
 
     @IBOutlet weak var mailButton: Button!
     @IBOutlet weak var gmailButton: UIButton!
     
-
-    
- 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //GIDSignIn.sharedInstance().uiDelegate = self
+//        GIDSignIn.sharedInstance()?.delegate = self
 
         
         mailButton.setImage(UIImage(named: "mail2"), for: .normal)
@@ -33,7 +31,7 @@ class TabSignUp: UIViewController, GIDSignInDelegate/*, GIDSignInUIDelegate*/ {
     }
     
     
-    @IBAction func google(_ sender: Any) {
+    @IBAction func googleLogInActive(_ sender: Any) {
         
         GIDSignIn.sharedInstance().signIn()
     }
@@ -52,7 +50,7 @@ class TabSignUp: UIViewController, GIDSignInDelegate/*, GIDSignInUIDelegate*/ {
         Auth.auth().signIn(with: credential) { (user, error) in
             
             print("ーーーーーーgoogoleアカウント登録ーーーーーーー")
-            let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tab1")
+            let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tabViewContorller")
             self.view.window?.rootViewController = tab1
      
         }
@@ -69,7 +67,7 @@ class TabSignUp: UIViewController, GIDSignInDelegate/*, GIDSignInUIDelegate*/ {
 
 }
 
-extension TabSignUp: IndicatorInfoProvider{
+extension Pager_SignUp_ViewController: IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "登録")
     }
