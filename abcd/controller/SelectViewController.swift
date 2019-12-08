@@ -19,11 +19,9 @@ class SelectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        log.debug("----------------")
-        log.debug(USER_ID!)
-        print(USER_ID!)
-    
-        
+   
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.XCGloger?.debug(USER_ID!)
         
         admob()
         customNavigationBar()
