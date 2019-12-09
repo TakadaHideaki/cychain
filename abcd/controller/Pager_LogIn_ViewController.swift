@@ -43,7 +43,8 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
 
         if let error = error {
-            print("-------エラー\(error.localizedDescription)")
+            
+            print("-エラー\(error.localizedDescription)")
             return
         }
         guard let authentication = user.authentication else { return }
