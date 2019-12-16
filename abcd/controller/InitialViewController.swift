@@ -46,8 +46,16 @@ class InitialViewController: ButtonBarPagerTabStripViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        // NotificationCenterに監視対象として登録
+        NotificationCenter.default.addObserver(self, selector: #selector(loginCompleted), name: LoginCompletedNotification, object: nil)
     }
     
+    @objc func loginCompleted(notification: NSNotification){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabVC = storyboard.instantiateViewController(withIdentifier: "tabVC")
+        tabVC.modalPresentationStyle = .fullScreen
+        self.present(tabVC, animated: true)
+    }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         
@@ -57,7 +65,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController {
         
         return [sighUp, logIn]
     }
-    
+        
 
 }
     

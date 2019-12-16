@@ -17,7 +17,24 @@ let USER_ID = Auth.auth().currentUser?.uid
 let STORAGE = Storage.storage().reference(forURL: "gs://cychain-6d3b6.appspot.com")
 let ADMB_ID = "ca-app-pub-4828313011342220/3054790632"
 let ADDRESS = "cychaincontact@gmail.com"
+let LoginCompletedNotification = Notification.Name("LoginCompletedNotification")
 
+let log: XCGLogger = {
+let log = XCGLogger.default
+    log.setup()
+    let emojiLogFormatter = PrePostFixLogFormatter()
+        emojiLogFormatter.apply(prefix: "🗯🗯🗯 ", postfix: " 🗯🗯🗯", to: .verbose)
+        emojiLogFormatter.apply(prefix: "🔹🔹🔹 ", postfix: " 🔹🔹🔹", to: .debug)
+        emojiLogFormatter.apply(prefix: "ℹ️ℹ️ℹ️ ", postfix: " ℹ️ℹ️ℹ️", to: .info)
+        emojiLogFormatter.apply(prefix: "✳️✳️✳️ ", postfix: " ✳️✳️✳️", to: .notice)
+        emojiLogFormatter.apply(prefix: "⚠️⚠️⚠️ ", postfix: " ⚠️⚠️⚠️", to: .warning)
+        emojiLogFormatter.apply(prefix: "‼️‼️‼️ ", postfix: " ‼️‼️‼️", to: .error)
+        emojiLogFormatter.apply(prefix: "💣💣💣 ", postfix: " 💣💣💣", to: .severe)
+        emojiLogFormatter.apply(prefix: "🛑🛑🛑 ", postfix: " 🛑🛑🛑", to: .alert)
+        emojiLogFormatter.apply(prefix: "🚨🚨🚨 ", postfix: " 🚨🚨🚨", to: .emergency)
+        log.formatters = [emojiLogFormatter]
+    return log
+}()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -25,35 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     
 
-    let XCGloger: XCGLogger? = {
-    let log = XCGLogger.default
-        log.setup()
-        let emojiLogFormatter = PrePostFixLogFormatter()
-            emojiLogFormatter.apply(prefix: "🗯🗯🗯 ", postfix: " 🗯🗯🗯", to: .verbose)
-            emojiLogFormatter.apply(prefix: "🔹🔹🔹 ", postfix: " 🔹🔹🔹", to: .debug)
-            emojiLogFormatter.apply(prefix: "ℹ️ℹ️ℹ️ ", postfix: " ℹ️ℹ️ℹ️", to: .info)
-            emojiLogFormatter.apply(prefix: "✳️✳️✳️ ", postfix: " ✳️✳️✳️", to: .notice)
-            emojiLogFormatter.apply(prefix: "⚠️⚠️⚠️ ", postfix: " ⚠️⚠️⚠️", to: .warning)
-            emojiLogFormatter.apply(prefix: "‼️‼️‼️ ", postfix: " ‼️‼️‼️", to: .error)
-            emojiLogFormatter.apply(prefix: "💣💣💣 ", postfix: " 💣💣💣", to: .severe)
-            emojiLogFormatter.apply(prefix: "🛑🛑🛑 ", postfix: " 🛑🛑🛑", to: .alert)
-            emojiLogFormatter.apply(prefix: "🚨🚨🚨 ", postfix: " 🚨🚨🚨", to: .emergency)
-            log.formatters = [emojiLogFormatter]
-        return log
-    }()
+
 
 
     var window: UIWindow?
     
-    func toSelectView() {
-      self.window = UIWindow(frame: UIScreen.main.bounds)
-      let storyboad = UIStoryboard(name: "Main", bundle: nil)
-      let tabVC = storyboad.instantiateViewController(withIdentifier: "tabVC")
-      self.window?.rootViewController = tabVC
-      self.window?.makeKeyAndVisible()
-      }
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
@@ -66,24 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 //        GADMobileAds.start(startWithCompletionHandler: 4828313011342220~4730834380")
         GADMobileAds.sharedInstance().start()
         
-        
-
-        
-        
   
-        if Auth.auth().currentUser != nil {
-            print("--Logged in--\(String(describing: Auth.auth().currentUser?.uid))")
-            // ログイン状態ならログイン画面スルー
-            toSelectView()
-
-        } else {
             // 非ログインならログイン画面へ
             print("--Logout--")
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboad = UIStoryboard(name: "Main", bundle: nil)
             self.window?.rootViewController = storyboad.instantiateInitialViewController()
             self.window?.makeKeyAndVisible()
-        }
         return true
     }
     
@@ -110,7 +92,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("--Sign on Firebase successfully")
 
             // ログイン後遷移
-            self.toSelectView()
+            // NotificationCenterに通知,画面遷移はInitialViewControllerが行う
+            NotificationCenter.default.post(name: LoginCompletedNotification, object: user)
         }
     }
     
