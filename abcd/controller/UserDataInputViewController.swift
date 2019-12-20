@@ -173,7 +173,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
 
     
     //textviewを６行までに制限
-    let maxLength = 4
+    let maxLength = 6
     var previousText = ""
     var lastReplaceRange: NSRange!
     var lastReplacementString = ""
@@ -201,7 +201,8 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
             selector: #selector(self.keyboardWillHide(notification:)),
             name: UIResponder.keyboardWillHideNotification,
             object: nil
-        )}
+        )
+    }
     
     // Notificationを削除
     func removeObserver() {

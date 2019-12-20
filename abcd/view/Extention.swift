@@ -39,11 +39,10 @@ extension UIViewController {
     
     
     
-    func sendAlert(title:String,message:String,vcId: String) {
+    func sendInitialViewAlert(title:String,message:String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let sendButton = UIAlertAction(title: "ok", style: UIAlertAction.Style.default, handler:{(action:UIAlertAction!) -> Void in
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: vcId)
-            self.navigationController?.pushViewController(vc!, animated: true)
+            self.dismiss(animated: true, completion: nil)
         })
         alert.addAction(sendButton)
         self.present(alert, animated: true)

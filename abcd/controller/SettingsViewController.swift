@@ -98,18 +98,16 @@ extension SettingsViewController: UITableViewDelegate {
             let firebaseAuth = Auth.auth()
             do {
                 try firebaseAuth.signOut()
-                let alert = UIAlertController(title: "ログアウト", message: "ログアウトしました", preferredStyle: .alert)
-                let sendButton = UIAlertAction(title: "ok", style: UIAlertAction.Style.default, handler:{(action:UIAlertAction!) -> Void in
-                    self.view.window?.rootViewController = self.storyboard?.instantiateInitialViewController()
-                })
+                sendInitialViewAlert(title: "ログアウトしました", message: "")
+  
                 
-                alert.addAction(sendButton)
-                self.present(alert, animated: true)
-            
             } catch let signOutError as NSError {
                 print ("Error signing out: %@", signOutError)
                 alert(title: "ログアウト失敗", message: "ログアウト出来ませんでした「お問い合わせ」から問い合わせ下さい", actiontitle: "OK")
             }            
+            
+            
+            
             
         case ("アカウント削除"):
             
@@ -142,14 +140,10 @@ extension SettingsViewController: UITableViewDelegate {
                 if error != nil {
                     self.alert(title: "アカウント削除エラー", message: "再ログインして削除してください。それでも削除でいない時は「お問い合わせ」から連絡下さい", actiontitle: "OK")
                 } else {
-//                    let initialVC = self.storyboard?.instantiateViewController(withIdentifier: "InitialViewController") as! InitialViewController
-//
-//                    self.view.window?.rootViewController?.present(initialVC, animated: true)
-
-                    self.sendAlert(title: "アカウント削除", message: "データは全て削除されました", vcId: "InitialViewController")
-                    
+                    self.sendInitialViewAlert(title: "アカウントを削除しました", message: "")
                 }
             }
+            
             
         case ("問い合わせ"): sendMail()
         case ("利用規約"): switchVC(view: "terms1")

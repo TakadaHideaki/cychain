@@ -113,6 +113,7 @@ extension InputDataListViewController: UITableViewDataSource {
             //UDから削除
             if var names = namesList {
                 names.remove(at: indexPath.row)
+                self.namesList = names
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 UD.set(names, forKey: UdKey.keys.uniqueNmame.rawValue)
             }

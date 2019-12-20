@@ -19,6 +19,9 @@ let ADMB_ID = "ca-app-pub-4828313011342220/3054790632"
 let ADDRESS = "cychaincontact@gmail.com"
 let LoginCompletedNotification = Notification.Name("LoginCompletedNotification")
 
+//test
+
+
 let log: XCGLogger = {
 let log = XCGLogger.default
     log.setup()
@@ -38,12 +41,6 @@ let log = XCGLogger.default
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
-    
-    
-    
-
-
-
 
     var window: UIWindow?
     
@@ -55,17 +52,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GIDSignIn.sharedInstance().delegate = self
         
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-//        GADMobileAds.configure(withApplicationID: "ca-app-pub-4828313011342220~4730834380")
-//        GADMobileAds.start(startWithCompletionHandler: 4828313011342220~4730834380")
         GADMobileAds.sharedInstance().start()
         
-  
-            // 非ログインならログイン画面へ
-            print("--Logout--")
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboad = UIStoryboard(name: "Main", bundle: nil)
-            self.window?.rootViewController = storyboad.instantiateInitialViewController()
-            self.window?.makeKeyAndVisible()
+        
+        
+         if Auth.auth().currentUser != nil {
+            log.debug("logging in")
+        }
+        
+        // 非ログインならログイン画面へ
+//        log.debug("Not Logged in")
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        let storyboad = UIStoryboard(name: "Main", bundle: nil)
+//        self.window?.rootViewController = storyboad.instantiateInitialViewController()
+//        self.window?.makeKeyAndVisible()
         return true
     }
     
@@ -74,13 +74,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
         -> Bool {
             return GIDSignIn.sharedInstance().handle(url)
-                                                     //sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-                                                     //annotation: [:])
     }
+    
+    
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            print("Error: \(error.localizedDescription)")
+            log.debug("Error: \(error.localizedDescription)")
             return
         }
 
@@ -89,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                        accessToken: authentication.accessToken)
 
         Auth.auth().signIn(with: credential) { (user, error) in
-            print("--Sign on Firebase successfully")
+            log.debug("--Sign on Firebase successfully")
 
             // ログイン後遷移
             // NotificationCenterに通知,画面遷移はInitialViewControllerが行う
