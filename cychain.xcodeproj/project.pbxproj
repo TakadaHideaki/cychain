@@ -80,7 +80,7 @@
 		8C50ACDA23928F5C00FAFBC4 /* SeachResultListViewCOntroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeachResultListViewCOntroller.swift; sourceTree = "<group>"; };
 		8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		8C50ACEE23953A3300FAFBC4 /* abcd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "abcd-Bridging-Header.h"; sourceTree = "<group>"; };
-		8C7B1EBA21D925BC00AFE846 /* abcd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = abcd.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C7B1EBA21D925BC00AFE846 /* cychain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cychain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C7B1EBD21D925BC00AFE846 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C7B1EC421D925BC00AFE846 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C7B1EC721D925BC00AFE846 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 		8C7B1EB121D925BC00AFE846 = {
 			isa = PBXGroup;
 			children = (
-				8C7B1EBC21D925BC00AFE846 /* abcd */,
+				8C7B1EBC21D925BC00AFE846 /* cychain */,
 				8C7B1EBB21D925BC00AFE846 /* Products */,
 				AB5EAD48F66CACFAFBF82A26 /* Frameworks */,
 				8C50ACEE23953A3300FAFBC4 /* abcd-Bridging-Header.h */,
@@ -169,12 +169,12 @@
 		8C7B1EBB21D925BC00AFE846 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8C7B1EBA21D925BC00AFE846 /* abcd.app */,
+				8C7B1EBA21D925BC00AFE846 /* cychain.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8C7B1EBC21D925BC00AFE846 /* abcd */ = {
+		8C7B1EBC21D925BC00AFE846 /* cychain */ = {
 			isa = PBXGroup;
 			children = (
 				8C7B1EBD21D925BC00AFE846 /* AppDelegate.swift */,
@@ -192,7 +192,7 @@
 				8C7B1EC921D925BC00AFE846 /* Info.plist */,
 				8C27C19022FD8CF9006C9C7E /* GoogleService-Info.plist */,
 			);
-			path = abcd;
+			path = cychain;
 			sourceTree = "<group>";
 		};
 		AB5EAD48F66CACFAFBF82A26 /* Frameworks */ = {
@@ -211,9 +211,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8C7B1EB921D925BC00AFE846 /* abcd */ = {
+		8C7B1EB921D925BC00AFE846 /* cychain */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8C7B1ECC21D925BC00AFE846 /* Build configuration list for PBXNativeTarget "abcd" */;
+			buildConfigurationList = 8C7B1ECC21D925BC00AFE846 /* Build configuration list for PBXNativeTarget "cychain" */;
 			buildPhases = (
 				62D55A7D63D8F7C9E3CCB10C /* [CP] Check Pods Manifest.lock */,
 				8C7B1EB621D925BC00AFE846 /* Sources */,
@@ -227,9 +227,9 @@
 			);
 			dependencies = (
 			);
-			name = abcd;
+			name = cychain;
 			productName = abcd;
-			productReference = 8C7B1EBA21D925BC00AFE846 /* abcd.app */;
+			productReference = 8C7B1EBA21D925BC00AFE846 /* cychain.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -253,7 +253,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8C7B1EB521D925BC00AFE846 /* Build configuration list for PBXProject "abcd" */;
+			buildConfigurationList = 8C7B1EB521D925BC00AFE846 /* Build configuration list for PBXProject "cychain" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -266,7 +266,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8C7B1EB921D925BC00AFE846 /* abcd */,
+				8C7B1EB921D925BC00AFE846 /* cychain */,
 			);
 		};
 /* End PBXProject section */
@@ -542,7 +542,7 @@
 				DEVELOPMENT_TEAM = 83M974TQ66;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = abcd/Info.plist;
+				INFOPLIST_FILE = cychain/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -569,7 +569,7 @@
 				DEVELOPMENT_TEAM = 83M974TQ66;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = abcd/Info.plist;
+				INFOPLIST_FILE = cychain/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -586,7 +586,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8C7B1EB521D925BC00AFE846 /* Build configuration list for PBXProject "abcd" */ = {
+		8C7B1EB521D925BC00AFE846 /* Build configuration list for PBXProject "cychain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8C7B1ECA21D925BC00AFE846 /* Debug */,
@@ -595,7 +595,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8C7B1ECC21D925BC00AFE846 /* Build configuration list for PBXNativeTarget "abcd" */ = {
+		8C7B1ECC21D925BC00AFE846 /* Build configuration list for PBXNativeTarget "cychain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8C7B1ECD21D925BC00AFE846 /* Debug */,

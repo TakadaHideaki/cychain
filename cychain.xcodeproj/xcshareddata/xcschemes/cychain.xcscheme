@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8C7B1EB921D925BC00AFE846"
-               BuildableName = "abcd.app"
-               BlueprintName = "abcd"
-               ReferencedContainer = "container:abcd.xcodeproj">
+               BuildableName = "cychain.app"
+               BlueprintName = "cychain"
+               ReferencedContainer = "container:cychain.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,15 +27,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8C7B1EB921D925BC00AFE846"
-            BuildableName = "abcd.app"
-            BlueprintName = "abcd"
-            ReferencedContainer = "container:abcd.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -54,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8C7B1EB921D925BC00AFE846"
-            BuildableName = "abcd.app"
-            BlueprintName = "abcd"
-            ReferencedContainer = "container:abcd.xcodeproj">
+            BuildableName = "cychain.app"
+            BlueprintName = "cychain"
+            ReferencedContainer = "container:cychain.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -71,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8C7B1EB921D925BC00AFE846"
-            BuildableName = "abcd.app"
-            BlueprintName = "abcd"
-            ReferencedContainer = "container:abcd.xcodeproj">
+            BuildableName = "cychain.app"
+            BlueprintName = "cychain"
+            ReferencedContainer = "container:cychain.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
