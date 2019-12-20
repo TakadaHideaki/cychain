@@ -19,7 +19,6 @@ let ADMB_ID = "ca-app-pub-4828313011342220/3054790632"
 let ADDRESS = "cychaincontact@gmail.com"
 let LoginCompletedNotification = Notification.Name("LoginCompletedNotification")
 
-//test
 
 
 let log: XCGLogger = {
