@@ -32,7 +32,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         myNameTextField.delegate = self
         searchNameTextField.delegate = self
-        admob()
         indicator()
         labelHidden()
         customNavigationBar()
@@ -45,6 +44,13 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         searchNameTextField.text = ""
         labelHidden()
     }
+    
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
+        admob()
+    }()
     
     
     @IBAction func searchAction(_ sender: Any) {

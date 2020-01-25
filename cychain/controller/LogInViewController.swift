@@ -64,7 +64,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                 print(Auth.auth().currentUser?.uid as Any)
 
                 let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
-                self.view.window?.rootViewController = tabVC
+                tabVC!.modalPresentationStyle = .fullScreen
+                self.present(tabVC!, animated: true)
 
 
             } else {

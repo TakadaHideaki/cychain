@@ -15,7 +15,16 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
     
     override func viewWillAppear(_ animated: Bool) {
           self.tabBarController?.tabBar.isHidden = false
+        
+        log.debug(UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]])
       }
+    
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
+        admob()
+    }()
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -29,8 +38,8 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         tableView.dataSource = self
         
         tableView.tableFooterView = UIView(frame: .zero)
-        admob()
         customNavigationBar()
+        tableView.reloadData()
     }
 }
 

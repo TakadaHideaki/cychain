@@ -13,11 +13,11 @@ import RSKImageCropper
 import XCGLogger
 
 
-
-
-class Extention: UIViewController {
-    
-}
+//
+//
+//class Extention: UIViewController {
+//
+//}
 
 extension UIViewController {
     
@@ -46,6 +46,8 @@ extension UIViewController {
         })
         alert.addAction(sendButton)
         self.present(alert, animated: true)
+        log.debug("test")
+
     }
     
     
@@ -77,18 +79,23 @@ extension UIViewController {
  
     
     func admob() {
-
+        
         var admobView = GADBannerView()
         admobView = GADBannerView(adSize:kGADAdSizeBanner)
         admobView.adUnitID = ADMB_ID
-        let tabBarHeight = self.tabBarController?.tabBar.frame.size.height
-        admobView.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - tabBarHeight! - admobView.frame.height)
-        admobView.frame.size = CGSize(width:self.view.frame.width, height:admobView.frame.height)
         
+        
+//        admobView.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - 80 - admobView.frame.height)
+
+        
+        let safeAreaHeight = self.view.safeAreaInsets.bottom
+        
+        admobView.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - safeAreaHeight - admobView.frame.height)
+        admobView.frame.size = CGSize(width:self.view.frame.width, height:admobView.frame.height)
         admobView.rootViewController = self
         admobView.load(GADRequest())
         self.view.addSubview(admobView)
-        print()
+        log.debug("admob")
     }
     
     
@@ -113,7 +120,6 @@ extension UIViewController {
         bar?.setBackgroundImage(UIImage(), for: .default)
         bar?.shadowImage = UIImage()
     }
-    
 }
 
 
@@ -142,6 +148,13 @@ struct UdKey {
         enum keys: String {
         case uniqueNmame
         case block
+    }
+}
+
+
+class DismissControllerSegue: UIStoryboardSegue {
+    override func perform() {
+        self.source.dismiss(animated: true, completion: nil)
     }
 }
 

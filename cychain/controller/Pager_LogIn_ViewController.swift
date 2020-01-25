@@ -43,8 +43,7 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
 
         if let error = error {
-            
-            print("-エラー\(error.localizedDescription)")
+            log.debug("-エラー\(error.localizedDescription)")
             return
         }
         guard let authentication = user.authentication else { return }
@@ -53,10 +52,7 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
 
         //firebaseログイン
         Auth.auth().signIn(with: credential) { (authResult, error) in
-            if error != nil {
-                print("エラー------")
-                return
-            }
+            if error != nil { return }
         }
     }
     

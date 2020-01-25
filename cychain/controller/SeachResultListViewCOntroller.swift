@@ -33,7 +33,6 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
         tableView.tableFooterView = UIView(frame: .zero)
         self.navigationItem.hidesBackButton = true
         
-        admob()
         indicator()
         customNavigationBar()
         tableView.reloadData()
@@ -47,6 +46,14 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
     }
+    
+    
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
+        admob()
+    }()
 }
 
 extension SeachResultListViewCOntroller: UITableViewDataSource {

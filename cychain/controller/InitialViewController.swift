@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import FirebaseAuth
 import LTMorphingLabel
 import XLPagerTabStrip
 
-class InitialViewController: ButtonBarPagerTabStripViewController {
+class InitialViewController: ButtonBarPagerTabStripViewController  {
+  
+    
 
     @IBOutlet weak var label: LTMorphingLabel!
     
@@ -18,7 +21,6 @@ class InitialViewController: ButtonBarPagerTabStripViewController {
     override func viewDidLoad() {
         
         customNavigationBar()
-        
         settings.style.buttonBarBackgroundColor = .clear
         settings.style.buttonBarItemBackgroundColor = .clear
         settings.style.buttonBarItemFont = .systemFont(ofSize: 16)
@@ -40,16 +42,27 @@ class InitialViewController: ButtonBarPagerTabStripViewController {
         
         label.text = "c y c h a i n"
         self.navigationItem.hidesBackButton = true
+        
+        
+        
+        if Auth.auth().currentUser != nil {
+            log.debug("logging in")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let tabVC = storyboard.instantiateViewController(withIdentifier: "tabVC")
+            tabVC.modalPresentationStyle = .fullScreen
+            self.present(tabVC, animated: true)
+        }
     }
-    
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.isNavigationBarHidden = true
+        
         // NotificationCenterに監視対象として登録
         NotificationCenter.default.addObserver(self, selector: #selector(loginCompleted), name: LoginCompletedNotification, object: nil)
-    }
+      }
     
     @objc func loginCompleted(notification: NSNotification){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -57,6 +70,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController {
         tabVC.modalPresentationStyle = .fullScreen
         self.present(tabVC, animated: true)
     }
+    
     
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {

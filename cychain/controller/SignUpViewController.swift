@@ -49,17 +49,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
 
 
-    //    アカウント作成
-    @IBAction func sighUp(_ sender: Any) {
+    //    メールでアカウント作成
+    @IBAction func mailSignUp(_ sender: Any) {
         Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authResult, error) in
             
             if (((authResult?.user) != nil) && error == nil) || Auth.auth().currentUser != nil {
                 let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
-                self.view.window?.rootViewController = tabVC
-            
-//            } else if Auth.auth().currentUser != nil  {
-//                let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
-//                self.view.window?.rootViewController = tabVC
+                tabVC!.modalPresentationStyle = .fullScreen
+                self.present(tabVC!, animated: true)
             
             } else {
                 self.alert(title: "アカウントが登録できませんでした", message: "", actiontitle: "OK")

@@ -94,15 +94,15 @@ extension SettingsViewController: UITableViewDelegate {
         
         switch titles {
         case ("ログアウト"):
-            print("ログアウト")
             let firebaseAuth = Auth.auth()
             do {
+                log.debug("ログアウト成功")
+
                 try firebaseAuth.signOut()
                 sendInitialViewAlert(title: "ログアウトしました", message: "")
   
-                
             } catch let signOutError as NSError {
-                print ("Error signing out: %@", signOutError)
+                log.debug("ログアウト失敗")
                 alert(title: "ログアウト失敗", message: "ログアウト出来ませんでした「お問い合わせ」から問い合わせ下さい", actiontitle: "OK")
             }            
             

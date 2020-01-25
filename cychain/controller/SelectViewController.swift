@@ -11,23 +11,30 @@ import GoogleMobileAds
 
 class SelectViewController: UIViewController {
     
+        
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
     }
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-   
-        
+        //navigationBar下線削除
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+    }
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
         admob()
-        customNavigationBar()
-    }    
-    @IBAction func post(_ sender: Any) {
-        
-        let dataInputVC = self.storyboard?.instantiateViewController(withIdentifier: "UserDataInputVC") as! UserDataInputViewController
-        self.navigationController?.pushViewController(dataInputVC, animated: true)
+    }()
+
+    
+    @IBAction func search(_ sender: Any) {
+        //tab切り替えで画面遷移
+        let UINavigationController = tabBarController?.viewControllers?[1]
+        tabBarController?.selectedViewController = UINavigationController
     }
 }
 

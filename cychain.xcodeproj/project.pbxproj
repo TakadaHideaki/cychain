@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7830350A44A6BB9F2FED4ED2 /* Pods_abcd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FA2537329C9E98713C68AF /* Pods_abcd.framework */; };
+		4EBBACCCD90A50341E661C39 /* Pods_cychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1F406F8A45EAE86A839763 /* Pods_cychain.framework */; };
 		8C0392EE2285887E00E41FBF /* labele.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0392ED2285887E00E41FBF /* labele.swift */; };
 		8C0C345422F51889005014F8 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C0C345322F51888005014F8 /* MessageUI.framework */; };
 		8C41189022A21CFB000010D8 /* textView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C41188F22A21CFB000010D8 /* textView.swift */; };
@@ -47,8 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14FA2537329C9E98713C68AF /* Pods_abcd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_abcd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		217B54E0B9F0868657B7FEF1 /* Pods-abcd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-abcd.debug.xcconfig"; path = "Target Support Files/Pods-abcd/Pods-abcd.debug.xcconfig"; sourceTree = "<group>"; };
+		803307405E46CA147539503B /* Pods-cychain.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cychain.release.xcconfig"; path = "Target Support Files/Pods-cychain/Pods-cychain.release.xcconfig"; sourceTree = "<group>"; };
 		8C0392ED2285887E00E41FBF /* labele.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = labele.swift; sourceTree = "<group>"; };
 		8C083C1922C6F9080004BAA3 /* SwiftSVG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftSVG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C0C345322F51888005014F8 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -93,6 +93,8 @@
 		8CDC413023362D2A0001F798 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		8CFB79CA22AE54AC00DD9511 /* textField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textField.swift; sourceTree = "<group>"; };
 		CB92F4E4AB19CC1467D9D53D /* Pods-abcd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-abcd.release.xcconfig"; path = "Target Support Files/Pods-abcd/Pods-abcd.release.xcconfig"; sourceTree = "<group>"; };
+		E7A38FB7B8838086C2396D56 /* Pods-cychain.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cychain.debug.xcconfig"; path = "Target Support Files/Pods-cychain/Pods-cychain.debug.xcconfig"; sourceTree = "<group>"; };
+		FF1F406F8A45EAE86A839763 /* Pods_cychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C0C345422F51889005014F8 /* MessageUI.framework in Frameworks */,
-				7830350A44A6BB9F2FED4ED2 /* Pods_abcd.framework in Frameworks */,
+				4EBBACCCD90A50341E661C39 /* Pods_cychain.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +115,8 @@
 			children = (
 				217B54E0B9F0868657B7FEF1 /* Pods-abcd.debug.xcconfig */,
 				CB92F4E4AB19CC1467D9D53D /* Pods-abcd.release.xcconfig */,
+				E7A38FB7B8838086C2396D56 /* Pods-cychain.debug.xcconfig */,
+				803307405E46CA147539503B /* Pods-cychain.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -203,7 +207,7 @@
 				8C9D74F5226C38EF004D34F7 /* Security.framework */,
 				8C9D74F3226C38D6004D34F7 /* CoreTelephony.framework */,
 				8C9D74F0226C3599004D34F7 /* LineSDK.framework */,
-				14FA2537329C9E98713C68AF /* Pods_abcd.framework */,
+				FF1F406F8A45EAE86A839763 /* Pods_cychain.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -301,7 +305,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-abcd-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-cychain-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -331,15 +335,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-abcd/Pods-abcd-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-cychain/Pods-cychain-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-abcd/Pods-abcd-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-cychain/Pods-cychain-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-abcd/Pods-abcd-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cychain/Pods-cychain-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C573BCC373E62F0BFACB4BF3 /* [CP] Embed Pods Frameworks */ = {
@@ -348,15 +352,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-abcd/Pods-abcd-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-cychain/Pods-cychain-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-abcd/Pods-abcd-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-cychain/Pods-cychain-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-abcd/Pods-abcd-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cychain/Pods-cychain-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -532,13 +536,14 @@
 		};
 		8C7B1ECD21D925BC00AFE846 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 217B54E0B9F0868657B7FEF1 /* Pods-abcd.debug.xcconfig */;
+			baseConfigurationReference = E7A38FB7B8838086C2396D56 /* Pods-cychain.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.8;
 				DEVELOPMENT_TEAM = 83M974TQ66;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -547,6 +552,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cychaincontact.cychain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -559,13 +565,14 @@
 		};
 		8C7B1ECE21D925BC00AFE846 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB92F4E4AB19CC1467D9D53D /* Pods-abcd.release.xcconfig */;
+			baseConfigurationReference = 803307405E46CA147539503B /* Pods-cychain.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.8;
 				DEVELOPMENT_TEAM = 83M974TQ66;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -574,6 +581,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cychaincontact.cychain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import Firebase
 import GoogleSignIn
 import GoogleMobileAds
+import Firebase
 import XCGLogger
 
 let UD = UserDefaults.standard
@@ -53,18 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         GADMobileAds.sharedInstance().start()
         
-        
-        
-         if Auth.auth().currentUser != nil {
-            log.debug("logging in")
-        }
-        
-        // 非ログインならログイン画面へ
-//        log.debug("Not Logged in")
-//        self.window = UIWindow(frame: UIScreen.main.bounds)
-//        let storyboad = UIStoryboard(name: "Main", bundle: nil)
-//        self.window?.rootViewController = storyboad.instantiateInitialViewController()
-//        self.window?.makeKeyAndVisible()
         return true
     }
     

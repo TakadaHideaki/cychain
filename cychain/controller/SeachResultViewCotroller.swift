@@ -8,7 +8,6 @@
 
 import UIKit
 import MessageUI
-import FirebaseUI
 import GoogleMobileAds
 
 
@@ -34,9 +33,15 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
         
         tableView.tableFooterView = UIView(frame: .zero)
         self.navigationItem.hidesBackButton = true
-        admob()
         customNavigationBar()
     }
+    
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
+        admob()
+    }()
     
     
     //navigationbar右上にブロック+通報のボタン設置

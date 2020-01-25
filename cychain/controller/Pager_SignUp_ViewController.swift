@@ -22,8 +22,8 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //GIDSignIn.sharedInstance().uiDelegate = self
-//        GIDSignIn.sharedInstance()?.delegate = self
+
+        GIDSignIn.sharedInstance()?.presentingViewController = self
 
         
         mailButton.setImage(UIImage(named: "mail2"), for: .normal)
@@ -37,7 +37,6 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate {
     }
     
     
-    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         
         if error != nil {
@@ -48,11 +47,8 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate {
                                                        accessToken: authentication.accessToken)
         // Firebaseにログインする。
         Auth.auth().signIn(with: credential) { (user, error) in
-            
-            print("ーーーーーーgoogoleアカウント登録ーーーーーーー")
-//            let tab1 = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
-//            self.view.window?.rootViewController = tab1
-     
+            log.debug("googoleアカウント登録")
+
         }
     }
     

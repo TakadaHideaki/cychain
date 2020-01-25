@@ -8,7 +8,6 @@
 
 import UIKit
 import GoogleMobileAds
-import FirebaseUI
 import MessageUI
 
 class SeachResultMultipleViewCOntroller: UIViewController, UIImagePickerControllerDelegate, MFMailComposeViewControllerDelegate {
@@ -29,10 +28,16 @@ class SeachResultMultipleViewCOntroller: UIViewController, UIImagePickerControll
         tableView.delegate = self
         tableView.dataSource = self
         
-        admob()
         customNavigationBar()
         tableView.reloadData()
     }
+    
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
+        admob()
+    }()
     
     
     

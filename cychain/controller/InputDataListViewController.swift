@@ -38,17 +38,15 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
 
         customNavigationBar()
         indicator()
- 
-        //投稿データが有れば
-        //UD("uniqueNmame") == [[myname, targetname]]
-        if let UDNamesList = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
-            
-            self.namesList = UDNamesList
-            myNames = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
-            targetNames = (UDNamesList.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
-        }
-        tableView.reloadData()
     }
+    
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
+        admob()
+    }()
+
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +57,16 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
+        
+        //投稿データが有れば
+        if let UDNamesList = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
+
+              self.namesList = UDNamesList
+              myNames = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
+              targetNames = (UDNamesList.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
+              log.debug(UDNamesList)
+          }
+        tableView.reloadData()
     }
 }
 
