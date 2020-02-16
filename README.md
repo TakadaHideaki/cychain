@@ -5,4 +5,4 @@
 
 テスト用ログインメールアカウント  
 adress：test@mail.com  
-password：estuser1  
+password：testuser1  
