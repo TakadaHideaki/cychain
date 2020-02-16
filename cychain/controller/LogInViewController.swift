@@ -61,7 +61,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         Auth.auth().signIn(withEmail: mail, password: pass) { (authResult, error) in
             if (((authResult?.user) != nil) && error == nil) {
-                print(Auth.auth().currentUser?.uid as Any)
+                log.debug(Auth.auth().currentUser?.uid as Any)
 
                 let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
                 tabVC!.modalPresentationStyle = .fullScreen
@@ -72,18 +72,20 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                 let errorMessage = error?.localizedDescription
                 switch errorMessage {
 
+                    //パスワード文字数不足
                 case ("The password is invalid or the user does not have a password."):
                     self.passwordErrorLabel.isHidden = false
                     self.alert(title: "パスワードは６文字以上で入力して下さい", message: "", actiontitle: "OK")
 
-                    
+                    //無効アドレス
                 case ("There is no user record corresponding to this identifier. The user may have been deleted."):
                     self.accountErrorLabel.isHidden = false
                     self.alert(title: "メールアドレスが正しくありません", message: "", actiontitle: "OK")
 
                     
                 default:
-                    print("エラーーデフォルトーーー\(String(describing: errorMessage))")
+                    //登録アドレス無し
+                    log.debug("\(String(describing: errorMessage))")
                     self.alert(title: "登録がありません", message: "", actiontitle: "OK")
                     return
                 }
@@ -91,7 +93,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
+    //　パスワードを忘れた
     @IBAction func passwordReset(_ sender: Any) {
         
         let mail = emailTextField.text?.deleteSpace() ?? ""
@@ -115,7 +117,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     
     @objc
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         passwordErrorLabel.isHidden = true
         accountErrorLabel.isHidden = true
@@ -125,9 +126,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
-        // 今フォーカスが当たっているテキストボックスからフォーカスを外す
+        // 今フォーカスが当たっているTextFieldからフォーカスを外す
         textField.resignFirstResponder()
-        // 次のTag番号を持っているテキストボックスがあれば、フォーカスする
+        // 次のTag番号を持っているTextFieldがあれば、フォーカスする
         let nextTag = textField.tag + 1
         if let nextTextField = self.view.viewWithTag(nextTag) {
             nextTextField.becomeFirstResponder()
@@ -135,6 +136,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    //textFildの左アイコン設置
     private func textFieldIconSet(textField: UITextField, andImage image: UIImage) {
         let iconView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 20 , height: 20))
         let iconMarginView: UIView = UIView(frame:
@@ -145,8 +147,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         textField.leftViewMode = .always
     }
     
+    //passwordTextFieldの左に伏せ字よ用目のアイコン設置
     private func addPasswordEyeButton() {
-
         passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
         passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
         passwordShow_Hide_Button.addTarget(self, action: #selector(self.security), for: .touchUpInside)

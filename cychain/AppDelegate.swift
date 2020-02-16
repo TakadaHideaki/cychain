@@ -14,10 +14,12 @@ import XCGLogger
 
 let UD = UserDefaults.standard
 let USER_ID = Auth.auth().currentUser?.uid
-let STORAGE = Storage.storage().reference(forURL: "gs://cychain-6d3b6.appspot.com")
+//#elseif cychain-dev
+let STORAGE = Storage.storage().reference(forURL: "gs://cychain-dev.appspot.com")
 let ADMB_ID = "ca-app-pub-4828313011342220/3054790632"
 let ADDRESS = "cychaincontact@gmail.com"
 let LoginCompletedNotification = Notification.Name("LoginCompletedNotification")
+let CL = AppDelegate()
 
 
 
@@ -63,8 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             return GIDSignIn.sharedInstance().handle(url)
     }
     
-    
-    
+    //googleログイン処理
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             log.debug("Error: \(error.localizedDescription)")

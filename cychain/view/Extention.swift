@@ -13,15 +13,10 @@ import RSKImageCropper
 import XCGLogger
 
 
-//
-//
-//class Extention: UIViewController {
-//
-//}
 
 extension UIViewController {
     
-    
+    //viewの切り替え
     func switchVC(view: String) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: view)
         self.navigationController?.pushViewController(vc!, animated: true)
@@ -29,7 +24,7 @@ extension UIViewController {
     
     
     
-    
+    //アラート（アラートを出すだけ）
     func alert(title:String,message:String,actiontitle:String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: actiontitle, style: .default))
@@ -37,8 +32,7 @@ extension UIViewController {
     }
     
     
-    
-    
+    //アラート（アラートを出してviewを切り替える）
     func sendInitialViewAlert(title:String,message:String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let sendButton = UIAlertAction(title: "ok", style: UIAlertAction.Style.default, handler:{(action:UIAlertAction!) -> Void in
@@ -46,7 +40,6 @@ extension UIViewController {
         })
         alert.addAction(sendButton)
         self.present(alert, animated: true)
-        log.debug("test")
 
     }
     
@@ -60,7 +53,7 @@ extension UIViewController {
     
     
     
-    
+    //問合せ
     func sendMail() {
         
         if MFMailComposeViewController.canSendMail() {
@@ -95,7 +88,6 @@ extension UIViewController {
         admobView.rootViewController = self
         admobView.load(GADRequest())
         self.view.addSubview(admobView)
-        log.debug("admob")
     }
     
     
@@ -109,8 +101,8 @@ extension UIViewController {
         view.addSubview(indicatorView)
     }
     
+
     func customNavigationBar() {
-//
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         let bar = self.navigationController?.navigationBar
@@ -143,7 +135,7 @@ extension String {
 }
 
 
-
+//userDefaultのキーname
 struct UdKey {
         enum keys: String {
         case uniqueNmame

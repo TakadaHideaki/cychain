@@ -18,9 +18,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var sinupButton: Button!
     
     
-    let passwordShow_Hide_Button = UIButton(type: .custom)
-    let showImage = UIImage(named: "eye5")
-    let hideImage = UIImage(named: "eye4")
+    let passwordShow_Hide_Button = UIButton(type: .custom) //パスワードを伏せ字にするボタン
+    let showImage = UIImage(named: "eye5") //目のマーク
+    let hideImage = UIImage(named: "eye4") //目にスラッシュ（伏せ字用）
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +49,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
 
 
-    //    メールでアカウント作成
+    //メールでアカウント作成
     @IBAction func mailSignUp(_ sender: Any) {
         Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authResult, error) in
             
@@ -67,7 +67,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     
 
-    
+    //mail入力後passwordにカーソルを自動移動
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
@@ -78,7 +78,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    
+    //textFieldの左にアイコン設置
     private func addLeftIcon(textField: UITextField, andImage image: UIImage) {
         let iconView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 20 , height: 20))
         let iconMarginView: UIView = UIView(frame:
@@ -89,15 +89,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         textField.leftViewMode = UITextField.ViewMode.always
     }
     
+    //paswprdTextFieldの左に伏せ字用の目のマーク設置
     private func addPasswordEyeButton() {
-
         passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
         passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
         passwordShow_Hide_Button.addTarget(self, action: #selector(self.security), for: .touchUpInside)
         passwordTextField.rightView = passwordShow_Hide_Button
         passwordTextField.rightViewMode = .always
     }
-    
+    //伏せ字の処理
     @objc func security(_ sender: Any) {
         var show = true
         passwordTextField.isSecureTextEntry.toggle()

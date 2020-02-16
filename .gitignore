@@ -1,4 +1,6 @@
 Pods/*
 abcd.xcworkspace/xcuserdata
-GoogleService-Info.plist
 cychain.xcodeproj
+abcd.xcworkspace
+GoogleService-Info-Product/
+

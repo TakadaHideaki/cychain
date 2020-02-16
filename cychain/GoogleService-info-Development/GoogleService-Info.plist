@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>745841308658-c7ac9eunag29un82igoe7gbdqeujsoqe.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.745841308658-c7ac9eunag29un82igoe7gbdqeujsoqe</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB4K0IZq-XAZQiZ_TD8BaxMM5OMJEd74TU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>745841308658</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cychaincontact.cychain</string>
+	<key>PROJECT_ID</key>
+	<string>cychain-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cychain-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:745841308658:ios:92c56ce2faa4c0115cb16b</string>
+	<key>DATABASE_URL</key>
+	<string>https://cychain-dev.firebaseio.com</string>
+</dict>
+</plist>

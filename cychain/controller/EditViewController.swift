@@ -92,8 +92,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         
         
         let ref = Database.database().reference().child("\(myName)/\(targetName)/\(USER_ID!)")
-        let storageRef = STORAGE.child("\(myName))/\(targetName))/\(USER_ID!)/\("imageData")")
-        
+        let storageRef = STORAGE.child("\(myName))/\(targetName))/\(USER_ID!)/\("imageData")")        
         
         let inputResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultViewController") as! InputResultViewController
         

@@ -20,6 +20,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
 
     override func viewDidLoad() {
         
+        //ナビゲーションバーデザイン
         customNavigationBar()
         settings.style.buttonBarBackgroundColor = .clear
         settings.style.buttonBarItemBackgroundColor = .clear
@@ -43,8 +44,8 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         label.text = "c y c h a i n"
         self.navigationItem.hidesBackButton = true
         
-        
-        
+        //ユーザーがログインしていたらログイン画面省略する
+        //モーダルで本体に画面遷移
         if Auth.auth().currentUser != nil {
             log.debug("logging in")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -63,7 +64,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         // NotificationCenterに監視対象として登録
         NotificationCenter.default.addObserver(self, selector: #selector(loginCompleted), name: LoginCompletedNotification, object: nil)
       }
-    
+
     @objc func loginCompleted(notification: NSNotification){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabVC = storyboard.instantiateViewController(withIdentifier: "tabVC")
@@ -76,6 +77,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        //タブバーの登録
         let sighUp = storyBoard.instantiateViewController(withIdentifier: "bSighUp")
         let logIn = storyBoard.instantiateViewController(withIdentifier: "bLogin")
         return [sighUp, logIn]

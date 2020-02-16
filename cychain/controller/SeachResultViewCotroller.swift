@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageUI
-import GoogleMobileAds
+//import GoogleMobileAds
 
 
 class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegate, MFMailComposeViewControllerDelegate {

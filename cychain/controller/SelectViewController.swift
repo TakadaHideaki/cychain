@@ -22,7 +22,15 @@ class SelectViewController: UIViewController {
         //navigationBar下線削除
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-    }
+        //BuildTARGET確認
+        #if cychain
+        log.debug("cychain")
+        #elseif cychaincopy
+        log.debug("cychaincopy")
+        #endif
+        }
+    
+        
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
     }

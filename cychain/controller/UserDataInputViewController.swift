@@ -23,7 +23,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var iconRegistButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
     
-    let defaultIconImage = UIImage(named: "user10")
+    let defaultIconImage = UIImage(named: "user10")//写真登録のアイコンイメージ
 
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,14 +39,11 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         messageTextView.delegate = self
         keyBoardtoolBar()
         customNavigationBar()
-        
-        //写真投稿ボタンの画像を設定
-        self.iconRegistButton.setImage(self.defaultIconImage, for: .normal)
+        self.iconRegistButton.setImage(self.defaultIconImage, for: .normal) //写真投稿ボタンの画像を設定
     }
     
-    
+    //アイコン登録ボタン押した処理(フォトライブラリ呼び出し)
     @IBAction func call_PhotoLibrary(_ sender: Any) {
-        //iconボタン押した処理
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             let pickerView = UIImagePickerController()
             pickerView.sourceType = .photoLibrary
@@ -77,6 +74,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         let messageText = messageTextView.text ?? ""
         let iconImage = iconRegistButton.currentImage ?? self.defaultIconImage
 
+        //入力データを格納
         var registData: [String : Any] = [
             "my": myname,
             "target": targetname,
@@ -87,16 +85,18 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         var value: [String: Any] = ["message": messageText]
         
         let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
-        //↓で写真保存されてしまっているので最後の”image”は取れない？
+        
+        //最後のimageDataは無用だがこれでリリースしたので変更しない
         let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
         
         let ResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
         
         
+        //アイコン写真を登録しなかっ場合
         func registIconImage() {
             if iconImage == self.defaultIconImage {
-                registData["image"] = nil
-                ref.setValue(value)
+                registData["image"] = nil //登録データに写真を登録しない
+                ref.setValue(value) //Firebaseに登録
 
             } else {
                 //写真投稿有り→ storageに写真保存
@@ -114,20 +114,21 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
                         }
                     }
                 }
-            } //nil対策は必要か？　else if image == nil || image == UIImage(named: "user10")
+            }
         }
         
+        //名前未入力で登録ボタンが押された時
         if myname.isEmpty || targetname.isEmpty {
             alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
             
-            
+            //名前の入力文字数ーオーバー
         } else if myname.count >= 13 || targetname.count >= 13 {
             alert(title: "名前は１３文字までです", message: "", actiontitle: "OK")
             
             
         } else {
             
-            //投稿履歴が有る
+            //投稿履歴が有る時
             if var registNames = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
                 
                 //投稿数>10で登録数オーバーアラート
@@ -252,7 +253,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         return false
     }
     
-    
+    //メッセージを６行に制限
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         let newText: String = (messageTextView.text! as NSString).replacingCharacters(in: range, with: text)
@@ -287,7 +288,8 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         return  true
     }
     
-    
+    //キーボードにツールバーを設置して閉じるをボタンを追加
+    //textFieldのエンターは閉じるじゃ無くて改行になるから
     func keyBoardtoolBar() {
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
         toolBar.barStyle = UIBarStyle.default
@@ -295,7 +297,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(commitButtonTapped))
         toolBar.items = [spacer, commitButton]
-        messageTextView.inputAccessoryView = toolBar // textViewのキーボードにツールバーを設定
+        messageTextView.inputAccessoryView = toolBar // textViewのキーボード上部にツールバーを設定
 
     }
     @objc func commitButtonTapped() {
@@ -303,14 +305,14 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     }   
 }
 
-
+//アイコンの写真を丸くする処理
 extension UserDataInputViewController: RSKImageCropViewControllerDelegate {
-    //キャンセル
+    //キャンセルボタンが押されたらフォトライブラリをdissmiss
     func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
         dismiss(animated: true, completion: nil)
     }
 
-    //完了を押した後の処理
+    //完了を押したらフォトライブラリを閉じてアイコンボタンに選択した写真をセット
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
         dismiss(animated: true)
         iconRegistButton?.setImage(croppedImage, for: .normal)

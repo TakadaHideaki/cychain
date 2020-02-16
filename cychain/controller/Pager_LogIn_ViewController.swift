@@ -61,7 +61,7 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     private func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
                         withError error: NSError!) {
         print("ログイン失敗")
-        //        失敗した時の処理を書く
+        // 失敗した時の処理を書く
     }
 }
 
