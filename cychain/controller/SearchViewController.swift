@@ -29,7 +29,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initialazeUI()
+    }
+    
+    func initialazeUI() {
         myNameTextField.delegate = self
         searchNameTextField.delegate = self
         indicator()

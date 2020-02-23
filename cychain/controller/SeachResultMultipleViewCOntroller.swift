@@ -24,12 +24,18 @@ class SeachResultMultipleViewCOntroller: UIViewController, UIImagePickerControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initializeUI()
+        initializeTableView()
+        tableView.reloadData()
+    }
+    
+    func initializeUI() {
+        customNavigationBar()
+    }
+    
+    func initializeTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        
-        customNavigationBar()
-        tableView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {

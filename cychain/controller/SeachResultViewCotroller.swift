@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageUI
-//import GoogleMobileAds
+import GoogleMobileAds
 
 
 class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegate, MFMailComposeViewControllerDelegate {
@@ -24,16 +24,21 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initializeUI()
+        initalizeTableView()
         mutchUserID = mutchiUserData.map{$0.0}[0]
         message_image_Data = mutchiUserData.map{$0.1}[0]
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.tableFooterView = UIView(frame: .zero)
+    }
+    
+    func initializeUI() {
         self.navigationItem.hidesBackButton = true
         customNavigationBar()
+    }
+    
+    func initalizeTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.tableFooterView = UIView(frame: .zero)
     }
     
     override func viewWillLayoutSubviews() {

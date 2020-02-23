@@ -33,7 +33,10 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initializeUI()
+    }
+    
+    func initializeUI() {
         myNameTextField.delegate = self
         targetNameTextField.delegate = self
         messageTextView.delegate = self
@@ -204,7 +207,6 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
             object: nil
         )
     }
-    
     // Notificationを削除
     func removeObserver() {
         NotificationCenter.default.removeObserver(self)

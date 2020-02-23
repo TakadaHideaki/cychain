@@ -24,20 +24,21 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
     var targetNames: [String]?
     var indicatorView = UIActivityIndicatorView()
     
-
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initializeUI()
+        initializeTableView()
+    }
+    
+    func initializeUI() {
+        self.navigationItem.hidesBackButton = true
+        customNavigationBar()
+    }
+    
+    func initializeTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        
         tableView.tableFooterView = UIView(frame: .zero)
-        self.navigationItem.hidesBackButton = true
-
-        customNavigationBar()
-        indicator()
     }
     
     override func viewWillLayoutSubviews() {
@@ -53,19 +54,17 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = false
-
+        
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
         
         //投稿データが有れば
         if let UDNamesList = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
-
-              self.namesList = UDNamesList
-              myNames = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
-              targetNames = (UDNamesList.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
-              log.debug(UDNamesList)
-          }
+            self.namesList = UDNamesList
+            myNames = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
+            targetNames = (UDNamesList.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
+        }
         tableView.reloadData()
     }
 }
@@ -137,7 +136,6 @@ extension InputDataListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-
 
     //EditViewへ
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -23,19 +23,19 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        initializeUI()
         GIDSignIn.sharedInstance()?.presentingViewController = self
-
-     
+    }
+    
+    
+    func initializeUI() {
         mailButton.setImage(UIImage(named: "mail2"), for: .normal)
         gmailButton.setImage(UIImage(named: "google"), for: .normal)
-        
     }
     
 
     
     @IBAction func googleSignInActive(_ sender: Any) {
-        
         GIDSignIn.sharedInstance().signIn()
     }
     
@@ -60,8 +60,7 @@ class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDe
     //ログインがキャンセル・失敗した場合
     private func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
                         withError error: NSError!) {
-        print("ログイン失敗")
-        // 失敗した時の処理を書く
+        log.debug("ログイン失敗")
     }
 }
 

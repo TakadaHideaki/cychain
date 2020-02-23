@@ -22,20 +22,26 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initalizeUI()
+        initializeTableView()
+        indicator()
         
         mutchingUserData.forEach {
             userID += [$0.key]
             value += [$0.value]
         }
+        tableView.reloadData()
+    }
+    
+    func initalizeUI() {
+        self.navigationItem.hidesBackButton = true
+        customNavigationBar()
+    }
+    
+    func initializeTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        
-        tableView.tableFooterView = UIView(frame: .zero)
-        self.navigationItem.hidesBackButton = true
-        
-        indicator()
-        customNavigationBar()
-        tableView.reloadData()
+        tableView.tableFooterView = UIView(frame: .zero)  
     }
     
     

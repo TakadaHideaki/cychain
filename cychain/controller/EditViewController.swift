@@ -28,31 +28,28 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     var userData: [String:String]!
     var iconImage: UIImage?
 
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initialazeUI()
+    }
+    
+    func initialazeUI() {
         myNameTextField.delegate = self
         targetNameTextField.delegate = self
         messageTextView.delegate = self
+        tabBarController?.tabBar.isHidden = true
+        addKeyBoardtoolBar()
+        customNavigationBar()
+        
         
         myNameTextField.text = userData["my"]
         targetNameTextField.text = userData["target"]
-        
         if userData["message"] != "" {
             messageLabel.isHidden = true
             messageTextView.text = userData["message"]
-         } else {
+        } else {
             messageLabel.isHidden = false
-         }
-        
-        
-        addKeyBoardtoolBar()
-        customNavigationBar()
-        tabBarController?.tabBar.isHidden = true
-
+        }
         let setImage = iconImage ?? UIImage(named: "user10")
         iconRegistButton.setImage(setImage, for: .normal)
     }

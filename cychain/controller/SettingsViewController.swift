@@ -27,10 +27,17 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initializeUI()
+        initializeTableview()
+    }
+    
+    func initializeUI() {
+        customNavigationBar()
+    }
+    
+    func initializeTableview() {
         tableView.dataSource = self
         tableView.delegate = self
-        customNavigationBar()
         tableView.tableFooterView = UIView(frame: .zero)
     }
     

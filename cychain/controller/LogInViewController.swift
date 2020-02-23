@@ -31,16 +31,16 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.isNavigationBarHidden = false
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initializeUI()
+    }
+    
+    func initializeUI() {
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        
         passwordErrorLabel.isHidden = true
         accountErrorLabel.isHidden = true
-        
         passwordTextField.isSecureTextEntry = true
         
         emailTextField.underLine(height: 1.0, color: .white)
@@ -51,6 +51,46 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         addPasswordEyeButton()
         passwordShow_Hide_Button.setImage((hideImage), for: .normal)
     }
+    
+    //mail入力後passwordにカーソルを自動移動
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        textField.resignFirstResponder() // 今フォーカスが当たっているTextFieldからフォーカスを外す
+        let nextTag = textField.tag + 1  // 次のTag番号を持っているTextFieldがあれば、フォーカスする
+        if let nextTextField = self.view.viewWithTag(nextTag) {
+            nextTextField.becomeFirstResponder()
+        }
+        return true
+    }
+    
+    //textFildの左アイコン設置
+    private func textFieldIconSet(textField: UITextField, andImage image: UIImage) {
+        let iconView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 20 , height: 20))
+        let iconMarginView: UIView = UIView(frame:
+            CGRect(x: 0, y: 0, width: 30, height: 20))
+        iconMarginView.addSubview(iconView)
+        iconView.image = image
+        textField.leftView = iconMarginView
+        textField.leftViewMode = .always
+    }
+    
+    //passwordTextFieldの左に伏せ字用目のアイコン設置
+    private func addPasswordEyeButton() {
+        passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
+        passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+        passwordShow_Hide_Button.addTarget(self, action: #selector(self.security), for: .touchUpInside)
+        passwordTextField.rightView = passwordShow_Hide_Button
+        passwordTextField.rightViewMode = .always
+    }
+    @objc func security(_ sender: Any) {
+        var show = true
+        passwordTextField.isSecureTextEntry.toggle()
+        show.toggle()
+        let show_hideImage = show ? hideImage: showImage
+        passwordShow_Hide_Button.setImage(show_hideImage, for: .normal)
+    }
+    
     
     
 //    メールでログイン
@@ -114,56 +154,12 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
-    
-    @objc
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    @objc func textFieldDidBeginEditing(_ textField: UITextField) {
         passwordErrorLabel.isHidden = true
         accountErrorLabel.isHidden = true
     }
     
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        emailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        // 今フォーカスが当たっているTextFieldからフォーカスを外す
-        textField.resignFirstResponder()
-        // 次のTag番号を持っているTextFieldがあれば、フォーカスする
-        let nextTag = textField.tag + 1
-        if let nextTextField = self.view.viewWithTag(nextTag) {
-            nextTextField.becomeFirstResponder()
-        }
-        return true
-    }
-    
-    //textFildの左アイコン設置
-    private func textFieldIconSet(textField: UITextField, andImage image: UIImage) {
-        let iconView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 20 , height: 20))
-        let iconMarginView: UIView = UIView(frame:
-            CGRect(x: 0, y: 0, width: 30, height: 20))
-        iconMarginView.addSubview(iconView)
-        iconView.image = image
-        textField.leftView = iconMarginView
-        textField.leftViewMode = .always
-    }
-    
-    //passwordTextFieldの左に伏せ字よ用目のアイコン設置
-    private func addPasswordEyeButton() {
-        passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
-        passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-        passwordShow_Hide_Button.addTarget(self, action: #selector(self.security), for: .touchUpInside)
-        passwordTextField.rightView = passwordShow_Hide_Button
-        passwordTextField.rightViewMode = .always
-    }
-    
-    @objc func security(_ sender: Any) {
-        var show = true
 
-        passwordTextField.isSecureTextEntry.toggle()
-        show.toggle()
-        let show_hideImage = show ? hideImage: showImage
-        passwordShow_Hide_Button.setImage(show_hideImage, for: .normal)
-    }
 
 
 }

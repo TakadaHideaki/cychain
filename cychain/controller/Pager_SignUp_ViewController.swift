@@ -21,11 +21,12 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
+        initializeUI()
         GIDSignIn.sharedInstance()?.presentingViewController = self
-
-        
+    }
+    
+    
+    func initializeUI() {
         mailButton.setImage(UIImage(named: "mail2"), for: .normal)
         gmailButton.setImage(UIImage(named: "google"), for: .normal)
     }
