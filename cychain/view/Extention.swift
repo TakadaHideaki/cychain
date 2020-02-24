@@ -102,6 +102,7 @@ extension UIViewController {
     }
     
 
+    //ナビゲーションバー
     func customNavigationBar() {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
