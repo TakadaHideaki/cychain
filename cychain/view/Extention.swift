@@ -76,10 +76,7 @@ extension UIViewController {
         var admobView = GADBannerView()
         admobView = GADBannerView(adSize:kGADAdSizeBanner)
         admobView.adUnitID = ADMB_ID
-        
-        
 //        admobView.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - 80 - admobView.frame.height)
-
         
         let safeAreaHeight = self.view.safeAreaInsets.bottom
         
@@ -93,7 +90,6 @@ extension UIViewController {
     
     
     func indicator() {
-        
         let indicatorView = UIActivityIndicatorView()
         indicatorView.center = view.center
         indicatorView.style = .whiteLarge

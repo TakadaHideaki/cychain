@@ -3507,6 +3507,9 @@ Cg
                                 <rect key="frame" x="67" y="359" width="280" height="160"/>
                                 <color key="backgroundColor" red="0.9323908299" green="0.9323908299" blue="0.9323908299" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="0QP-It-Mb0"/>
                                 </constraints>

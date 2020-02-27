@@ -14,7 +14,8 @@ import RSKImageCropper
 import TextFieldEffects
 
 
-class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate{
+class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate {
+ 
     
     
     @IBOutlet weak var myNameTextField: UITextField!
@@ -93,7 +94,6 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
         
         let ResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
-        
         
         //アイコン写真を登録しなかっ場合
         func registIconImage() {
@@ -190,9 +190,9 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     }
     
     
-    // Notificationを設定
+//         func Notificationを設定
     func configureObserver() {
-        
+
         let notification = NotificationCenter.default
         notification.addObserver(
             self,
@@ -207,12 +207,12 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
             object: nil
         )
     }
-    // Notificationを削除
+//     Notificationを削除
     func removeObserver() {
         NotificationCenter.default.removeObserver(self)
     }
-    
-    // キーボードが現れたときにviewをずらす
+//
+//     キーボードが現れたときにviewをずらす
     @objc func keyboardWillShow(notification: Notification?) {
         let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
         let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
@@ -220,21 +220,31 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
             self.view.transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
         }
     }
-    // キーボードが消えたときにviewを戻す
+//     キーボードが消えたときにviewを戻す
     @objc func keyboardWillHide(notification: Notification?) {
         let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
         UIView.animate(withDuration: duration!) {
             self.view.transform = CGAffineTransform.identity
         }
     }
-    
-    
+
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isTouch(touches: touches, view: messageTextView) {
-            self.configureObserver()
+            configureObserver()
         }
     }
-
+    
+    func isTouch(touches: Set<UITouch>, view:UIView) -> Bool{
+        for touch: AnyObject in touches {
+            let t: UITouch = touch as! UITouch
+            if t.view?.tag == view.tag {
+                messageLabel.isHidden = true
+                return true
+            }
+        }
+        return false
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         removeObserver()
@@ -243,17 +253,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
 
     
     
-    func isTouch(touches: Set<UITouch>, view:UIView) -> Bool{
-        for touch: AnyObject in touches {
-            let t: UITouch = touch as! UITouch
-            if t.view?.tag == view.tag {
-                self.configureObserver()
-                messageLabel.isHidden = true
-                return true
-            }
-        }
-        return false
-    }
+
     
     //メッセージを６行に制限
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

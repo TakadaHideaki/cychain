@@ -10,7 +10,7 @@ import UIKit
 import GoogleMobileAds
 
 
-class InputResultViewController: UIViewController, UIImagePickerControllerDelegate {
+class InputResultViewController: UIViewController, UIImagePickerControllerDelegate{
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -24,7 +24,6 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
     lazy var initViewLayout : Void = {
         admob()
     }()
-    
     
     @IBOutlet weak var tableView: UITableView!
     
