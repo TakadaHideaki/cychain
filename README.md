@@ -1,5 +1,6 @@
 # cychain
-![2020-02-27](https://user-images.githubusercontent.com/56917581/75442673-517e6280-59a3-11ea-960c-1144bd2b87d6.png)
+![Group(1)](https://user-images.githubusercontent.com/56917581/75443708-547a5280-59a5-11ea-9abd-8e2095d6159c.png)
+
 
 ## Usage
 開発用TARGET：cychain copy  
