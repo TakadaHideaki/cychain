@@ -36,7 +36,7 @@ Design
 - NVActivityIndicatorView
 
 Deploy
-- GoogleFormsAppStore
+"-"GoogleFormsAppStore
 - Figma
 - MakeAppIcon
 - GitHubPages
