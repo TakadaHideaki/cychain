@@ -46,7 +46,7 @@ Design
 - XLPagerTabStrip
 - NVActivityIndicatorView
 
-- Deploy
+Deploy
 - GoogleFormsAppStore
 - Figma
 - MakeAppIcon
