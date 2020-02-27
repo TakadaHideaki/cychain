@@ -20,9 +20,9 @@ MarketApp is compatible with iOS 13.0+.
 ## Technologies
 
 mBaaS / Firebase
--RealtimeDataBase
--Firebase Authentication
--FireStorage
+- RealtimeDataBase
+- Firebase Authentication
+- FireStorage
 
 License / LicensePlist
 
@@ -34,23 +34,25 @@ Photo processing / RSKImageCropper
 
 UX/UI / XLPagerTabStrip
 
-Design
--LTMorphingLabel 
--XLPagerTabStrip
--NVActivityIndicatorView
-
-Deploy
--GoogleFormsAppStore
--Figma
--MakeAppIcon
--GitHubPages
-
 GUI / SourceTree
+
+
+Design
+- LTMorphingLabel 
+- XLPagerTabStrip
+- NVActivityIndicatorView
+
+- Deploy
+   - GoogleFormsAppStore
+   - Figma
+   - MakeAppIcon
+   - GitHubPages
+
 
 
 ## author
 Hideaki Takada (高田英明)
-[wantedly](https://www.wantedly.com/user/profile/edit)
-[Twitter](https://twitter.com/HideakiTakada/)
-[Portfolio](https://takadahideaki.github.io/Portfolio.github.io/)
+- [wantedly](https://www.wantedly.com/user/profile/edit)
+- [Twitter](https://twitter.com/HideakiTakada/)
+- [Portfolio](https://takadahideaki.github.io/Portfolio.github.io/)
 
