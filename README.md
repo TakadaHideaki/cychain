@@ -15,26 +15,20 @@ MarketApp is compatible with iOS 13.0+.
 
 ## Technologies
 
-mBaaS 
-Firebase
+mBaaS / Firebase
 - RealtimeDataBase
 - Firebase Authentication
 - FireStorage
 
-License
-- LicensePlist
+License / LicensePlist
 
-Logger
-- Logger
+Logger / Logger
 
-Advertisement
-- Google AdMob
+Advertisement / Google AdMob
 
-Photo processing
-- RSKImageCropper
+Photo processing / RSKImageCropper
 
-UX/UI
-- XLPagerTabStrip
+UX/UI / XLPagerTabStrip
 
 Design
 - LTMorphingLabel 
@@ -47,7 +41,6 @@ Deploy
 - MakeAppIcon
 - GitHubPages
 
-GUI
-- SourceTree
+GUI / SourceTree
 
 
