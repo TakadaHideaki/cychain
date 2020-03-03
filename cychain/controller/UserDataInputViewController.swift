@@ -14,7 +14,7 @@ import RSKImageCropper
 import TextFieldEffects
 
 
-class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate {
+class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
  
     
     
@@ -174,85 +174,75 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         }
     }
     
+ 
 
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+////        if isTouch(touches: touches, view: messageTextView) {
+//
+//
+//        if ((targetNameTextField.markedTextRange) != nil) {
+//            log.debug("hennshuutyhou")
+//            // 変換中の場合
+//        }
+//
+//        configureObserver()
+//        messageLabel.isHidden = true
+////        }
+//    }
+    
+
+
+    
+     func textFieldDidBeginEditing(_ textField: UITextField)  {
+         messageTextView.isSelectable = false
+         self.messageLabel.isHidden = false
+        log.debug("dDidBeginEditing")
+
+     }
+    
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            messageTextView.isSelectable = true
+            messageTextView.isEditable = true
+            myNameTextField.resignFirstResponder()
+            targetNameTextField.resignFirstResponder()
+            log.debug("ShouldReturn")
+            return  true
+        }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        log.debug("textViewShouldBeginEditing")
+        configureObserver()
+        return  true
+    }
+   
+
+    
+//    func isTouch(touches: Set<UITouch>, view:UIView) -> Bool{
+//        for touch: AnyObject in touches {
+//            let t: UITouch = touch as! UITouch
+//            if t.view?.tag == view.tag {
+//                messageLabel.isHidden = true
+//                return true
+//            }
+//        }
+//        return false
+//    }
+    
+ 
+    
     
     //textviewを６行までに制限
-    let maxLength = 6
-    var previousText = ""
-    var lastReplaceRange: NSRange!
-    var lastReplacementString = ""
-    
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        self.previousText = myNameTextField.text!
-        self.lastReplaceRange = range
-        self.lastReplacementString = text
-        return true
-    }
-    
-    
-//         func Notificationを設定
-    func configureObserver() {
-
-        let notification = NotificationCenter.default
-        notification.addObserver(
-            self,
-            selector: #selector(self.keyboardWillShow(notification:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        notification.addObserver(
-            self,
-            selector: #selector(self.keyboardWillHide(notification:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-//     Notificationを削除
-    func removeObserver() {
-        NotificationCenter.default.removeObserver(self)
-    }
-//
-//     キーボードが現れたときにviewをずらす
-    @objc func keyboardWillShow(notification: Notification?) {
-        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
-        UIView.animate(withDuration: duration!) {
-            self.view.transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
-        }
-    }
-//     キーボードが消えたときにviewを戻す
-    @objc func keyboardWillHide(notification: Notification?) {
-        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
-        UIView.animate(withDuration: duration!) {
-            self.view.transform = CGAffineTransform.identity
-        }
-    }
-
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isTouch(touches: touches, view: messageTextView) {
-            configureObserver()
-        }
-    }
-    
-    func isTouch(touches: Set<UITouch>, view:UIView) -> Bool{
-        for touch: AnyObject in touches {
-            let t: UITouch = touch as! UITouch
-            if t.view?.tag == view.tag {
-                messageLabel.isHidden = true
-                return true
-            }
-        }
-        return false
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        removeObserver()
-        self.messageLabel.isHidden = false
-    }
-
-    
-    
+     let maxLength = 6
+     var previousText = ""
+     var lastReplaceRange: NSRange!
+     var lastReplacementString = ""
+     
+     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+         self.previousText = myNameTextField.text!
+         self.lastReplaceRange = range
+         self.lastReplacementString = text
+         return true
+     }
 
     
     //メッセージを６行に制限
@@ -284,11 +274,6 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     }
     
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        myNameTextField.resignFirstResponder()
-        targetNameTextField.resignFirstResponder()
-        return  true
-    }
     
     //キーボードにツールバーを設置して閉じるをボタンを追加
     //textFieldのエンターは閉じるじゃ無くて改行になるから

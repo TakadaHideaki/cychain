@@ -13,10 +13,9 @@ import GoogleMobileAds
 class InputResultViewController: UIViewController, UIImagePickerControllerDelegate{
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
-        log.debug(UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]])
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        self.tabBarController?.tabBar.isHidden = false
+//    }
     
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
@@ -29,11 +28,18 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
     
     var registData: [String: Any]?
     
+    
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
         initializeTableView()
         tableView.reloadData()
+        
+        if self.presentingViewController != nil {
+        }
     }
     
     func initializeUI() {

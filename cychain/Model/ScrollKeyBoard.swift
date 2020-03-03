@@ -17,20 +17,37 @@ extension ScrollKeyBoard where Self: UIViewController {
     
     
     func configureObserver() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (notification) in
+        
+        let center = NotificationCenter.default
+        let mainQueue = OperationQueue.main
+        var token: NSObjectProtocol?
+        var token1: NSObjectProtocol?
+        
+        token = center.addObserver(forName: UIResponder.keyboardWillShowNotification,
+                                   object: nil,
+                                   queue: mainQueue
+        ) { (notification) in do {
             self.keyboardWillShow(notification)
+            }
+            center.removeObserver(token as Any)
         }
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { notification in
+        
+        
+        token1 = center.addObserver(forName: UIResponder.keyboardWillHideNotification,
+                                    object: nil,
+                                    queue: mainQueue
+        ) { (notification) in do {
             self.keyboardWillHide(notification)
+            }
+            center.removeObserver(token1 as Any)
         }
     }
     
     // キーボードが現れたときにviewをずらす
     func keyboardWillShow(_ notification: Notification) {
-        let rect = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
         let duration: TimeInterval? = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
         UIView.animate(withDuration: duration!) {
-            self.view.transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+            self.view.transform = CGAffineTransform(translationX: 0, y: -240)
         }
     }
     

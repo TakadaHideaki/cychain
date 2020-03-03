@@ -3,6 +3,16 @@ body:
                    …
 version: 0.20190808
 
+name: abseil, nameSpecified: 
+body: 
+                   …
+version: 0.20190808
+
+name: AppAuth, nameSpecified: 
+body: 
+                   …
+version: 1.3.0
+
 name: AppAuth, nameSpecified: 
 body: 
                    …
@@ -12,7 +22,19 @@ name: BoringSSL-GRPC, nameSpecified:
 body: BoringSSL is a fork …
 version: 0.0.3
 
+name: BoringSSL-GRPC, nameSpecified: 
+body: BoringSSL is a fork …
+version: 0.0.3
+
 name: FBSDKCoreKit, nameSpecified: 
+body: Copyright (c) 2014-p…
+version: 5.11.1
+
+name: FBSDKCoreKit, nameSpecified: 
+body: Copyright (c) 2014-p…
+version: 5.11.1
+
+name: FBSDKLoginKit, nameSpecified: 
 body: Copyright (c) 2014-p…
 version: 5.11.1
 
@@ -25,9 +47,23 @@ body:
                    …
 version: 6.13.0
 
+name: Firebase, nameSpecified: 
+body: 
+                   …
+version: 6.13.0
+
 name: FirebaseAnalytics, nameSpecified: 
 body: Copyright 2019 Googl…
 version: 6.1.6
+
+name: FirebaseAnalytics, nameSpecified: 
+body: Copyright 2019 Googl…
+version: 6.1.6
+
+name: FirebaseAuth, nameSpecified: 
+body: 
+                   …
+version: 6.4.0
 
 name: FirebaseAuth, nameSpecified: 
 body: 
@@ -39,10 +75,25 @@ body:
                    …
 version: 1.0.0
 
+name: FirebaseAuthInterop, nameSpecified: 
+body: 
+                   …
+version: 1.0.0
+
 name: FirebaseCore, nameSpecified: 
 body: 
                    …
 version: 6.4.0
+
+name: FirebaseCore, nameSpecified: 
+body: 
+                   …
+version: 6.4.0
+
+name: FirebaseCoreDiagnostics, nameSpecified: 
+body: 
+                   …
+version: 1.1.2
 
 name: FirebaseCoreDiagnostics, nameSpecified: 
 body: 
@@ -54,10 +105,25 @@ body:
                    …
 version: 1.1.0
 
+name: FirebaseCoreDiagnosticsInterop, nameSpecified: 
+body: 
+                   …
+version: 1.1.0
+
 name: FirebaseDatabase, nameSpecified: 
 body: 
                    …
 version: 6.1.2
+
+name: FirebaseDatabase, nameSpecified: 
+body: 
+                   …
+version: 6.1.2
+
+name: FirebaseFirestore, nameSpecified: 
+body: 
+                   …
+version: 1.8.1
 
 name: FirebaseFirestore, nameSpecified: 
 body: 
@@ -69,6 +135,16 @@ body:
                    …
 version: 4.2.7
 
+name: FirebaseInstanceID, nameSpecified: 
+body: 
+                   …
+version: 4.2.7
+
+name: FirebaseStorage, nameSpecified: 
+body: 
+                   …
+version: 3.4.2
+
 name: FirebaseStorage, nameSpecified: 
 body: 
                    …
@@ -79,6 +155,15 @@ body:
                    …
 version: 8.4.0
 
+name: FirebaseUI, nameSpecified: 
+body: 
+                   …
+version: 8.4.0
+
+name: Google-Mobile-Ads-SDK, nameSpecified: 
+body: Copyright 2019 Googl…
+version: 7.52.0
+
 name: Google-Mobile-Ads-SDK, nameSpecified: 
 body: Copyright 2019 Googl…
 version: 7.52.0
@@ -86,6 +171,15 @@ version: 7.52.0
 name: GoogleAppMeasurement, nameSpecified: 
 body: Copyright 2019 Googl…
 version: 6.1.6
+
+name: GoogleAppMeasurement, nameSpecified: 
+body: Copyright 2019 Googl…
+version: 6.1.6
+
+name: GoogleDataTransport, nameSpecified: 
+body: 
+                   …
+version: 3.2.0
 
 name: GoogleDataTransport, nameSpecified: 
 body: 
@@ -97,9 +191,23 @@ body:
                    …
 version: 1.2.2
 
+name: GoogleDataTransportCCTSupport, nameSpecified: 
+body: 
+                   …
+version: 1.2.2
+
 name: GoogleSignIn, nameSpecified: 
 body: Copyright 2019 Googl…
 version: 5.0.2
+
+name: GoogleSignIn, nameSpecified: 
+body: Copyright 2019 Googl…
+version: 5.0.2
+
+name: GoogleUtilities, nameSpecified: 
+body: 
+                   …
+version: 6.3.2
 
 name: GoogleUtilities, nameSpecified: 
 body: 
@@ -111,10 +219,25 @@ body:
                    …
 version: 
 
+name: gRPC-C++, nameSpecified: 
+body: 
+                   …
+version: 
+
 name: gRPC-Core, nameSpecified: 
 body: 
                    …
 version: 1.21.0
+
+name: gRPC-Core, nameSpecified: 
+body: 
+                   …
+version: 1.21.0
+
+name: GTMAppAuth, nameSpecified: 
+body: 
+                   …
+version: 1.0.0
 
 name: GTMAppAuth, nameSpecified: 
 body: 
@@ -126,9 +249,24 @@ body:
                    …
 version: 1.3.0
 
+name: GTMSessionFetcher, nameSpecified: 
+body: 
+                   …
+version: 1.3.0
+
 name: leveldb-library, nameSpecified: 
 body: Copyright (c) 2011 T…
 version: 1.22
+
+name: leveldb-library, nameSpecified: 
+body: Copyright (c) 2011 T…
+version: 1.22
+
+name: LicensePlist, nameSpecified: 
+body: MIT License
+
+Copyrig…
+version: 2.9.0
 
 name: LicensePlist, nameSpecified: 
 body: MIT License
@@ -140,9 +278,21 @@ name: LTMorphingLabel, nameSpecified:
 body: The MIT License (MIT…
 version: 0.7.0
 
+name: LTMorphingLabel, nameSpecified: 
+body: The MIT License (MIT…
+version: 0.7.0
+
 name: nanopb, nameSpecified: 
 body: Copyright (c) 2011 P…
 version: 0.3.9011
+
+name: nanopb, nameSpecified: 
+body: Copyright (c) 2011 P…
+version: 0.3.9011
+
+name: NVActivityIndicatorView, nameSpecified: 
+body: The MIT License (MIT…
+version: 4.8.0
 
 name: NVActivityIndicatorView, nameSpecified: 
 body: The MIT License (MIT…
@@ -152,9 +302,21 @@ name: ObjcExceptionBridging, nameSpecified:
 body: The MIT License (MIT…
 version: 1.0.1
 
+name: ObjcExceptionBridging, nameSpecified: 
+body: The MIT License (MIT…
+version: 1.0.1
+
 name: RSKImageCropper, nameSpecified: 
 body: Copyright (c) 2014 R…
 version: 2.2.3
+
+name: RSKImageCropper, nameSpecified: 
+body: Copyright (c) 2014 R…
+version: 2.2.3
+
+name: SDWebImage, nameSpecified: 
+body: Copyright (c) 2009-2…
+version: 5.3.2
 
 name: SDWebImage, nameSpecified: 
 body: Copyright (c) 2009-2…
@@ -164,9 +326,21 @@ name: TextFieldEffects, nameSpecified:
 body: The MIT License (MIT…
 version: 1.6.0
 
+name: TextFieldEffects, nameSpecified: 
+body: The MIT License (MIT…
+version: 1.6.0
+
 name: XCGLogger, nameSpecified: 
 body: The MIT License (MIT…
 version: 7.0.0
+
+name: XCGLogger, nameSpecified: 
+body: The MIT License (MIT…
+version: 7.0.0
+
+name: XLPagerTabStrip, nameSpecified: 
+body: The MIT License (MIT…
+version: 9.0.0
 
 name: XLPagerTabStrip, nameSpecified: 
 body: The MIT License (MIT…

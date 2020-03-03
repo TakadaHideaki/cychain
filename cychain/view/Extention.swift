@@ -35,7 +35,7 @@ extension UIViewController {
     //アラート（アラートを出してviewを切り替える）
     func sendInitialViewAlert(title:String,message:String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let sendButton = UIAlertAction(title: "ok", style: UIAlertAction.Style.default, handler:{(action:UIAlertAction!) -> Void in
+        let sendButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{(action:UIAlertAction!) -> Void in
             self.dismiss(animated: true, completion: nil)
         })
         alert.addAction(sendButton)
@@ -136,6 +136,7 @@ extension String {
 struct UdKey {
         enum keys: String {
         case uniqueNmame
+        case selectCell
         case block
     }
 }

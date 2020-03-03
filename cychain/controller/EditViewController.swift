@@ -12,7 +12,7 @@ import FirebaseStorage
 import FirebaseDatabase
 import RSKImageCropper
 
-class EditViewController: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIScrollViewDelegate {
+class EditViewController: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIScrollViewDelegate, ScrollKeyBoard {
     
     
     
@@ -24,13 +24,13 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     @IBOutlet weak var messageLabel: UILabel!
     
     
-    //var data: [String: String]? だと上手くいかなかった
-    var userData: [String:String]!
+    var userData: [String: Any]?
     var iconImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initialazeUI()
+        userDataSet()
     }
     
     func initialazeUI() {
@@ -40,18 +40,44 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         tabBarController?.tabBar.isHidden = true
         addKeyBoardtoolBar()
         customNavigationBar()
+    }
         
+        //UserDataを表示
+    func userDataSet() {
+        guard let data = UD.object(forKey:  UdKey.keys.selectCell.rawValue),
+            let castData = data as? [String: Any],
+            let My = castData["my"] as? String,
+            let Target = castData["target"] as? String,
+            let Message = castData["message"] as? String
+            else { return }
         
-        myNameTextField.text = userData["my"]
-        targetNameTextField.text = userData["target"]
-        if userData["message"] != "" {
+        myNameTextField.text = My
+        targetNameTextField.text = Target
+        
+        if Message != "" {
             messageLabel.isHidden = true
-            messageTextView.text = userData["message"]
+            messageTextView.text = castData["message"] as? String
         } else {
             messageLabel.isHidden = false
         }
-        let setImage = iconImage ?? UIImage(named: "user10")
-        iconRegistButton.setImage(setImage, for: .normal)
+        
+        if let imageUrl = castData["image"] {
+            let url = URL(string: imageUrl as! String)
+            // image変換
+            do {
+                let imageData = try Data(contentsOf: url!)
+                let image = UIImage(data:imageData as Data)
+                iconRegistButton.setImage(image, for: .normal)
+                iconImage = image
+            } catch {
+                log.debug("error")
+            }
+        } else {
+            iconRegistButton.setImage(UIImage(named: "user10"), for: .normal)
+        }
+        
+        userData = castData
+        UD.removeObject(forKey: UdKey.keys.selectCell.rawValue)
     }
     
     
@@ -83,15 +109,15 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
                 
         let myName = myNameTextField.text ?? ""
         let targetName = targetNameTextField.text ?? ""
-        self.userData["message"] = messageTextView.text ?? ""
+        self.userData!["message"] = messageTextView.text ?? ""
         iconImage = iconRegistButton.currentImage ?? UIImage(named: "user10")
-        var value: [String: Any] = ["message": userData["message"] as Any]
+        var value: [String: Any] = ["message": userData!["message"] as Any]
         
         
         let ref = Database.database().reference().child("\(myName)/\(targetName)/\(USER_ID!)")
         let storageRef = STORAGE.child("\(myName))/\(targetName))/\(USER_ID!)/\("imageData")")        
         
-        let inputResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultViewController") as! InputResultViewController
+        let inputResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
         
         //アイコンがデフォルトのまま
         if  iconImage == UIImage(named: "user10") {
@@ -115,9 +141,8 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
             }
         }
         //postCardViewにデータを送って画面遷移
-            inputResultVC.registData = userData
-            self.navigationController?.pushViewController(inputResultVC, animated: true)
-
+        inputResultVC.registData = userData
+        self.navigationController?.pushViewController(inputResultVC, animated: true)
         
         //        キーボード閉じる
         func keyboardWillHide(notification: Notification?) {
@@ -129,30 +154,13 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        myNameTextField.resignFirstResponder()
-        targetNameTextField.resignFirstResponder()
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        configureObserver()
         return  true
     }
+
     
-    
-    func addKeyBoardtoolBar() {
-        
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.sizeToFit()
-        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-        let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(commitButtonTapped))
-        toolBar.items = [spacer, commitButton]
-        messageTextView.inputAccessoryView = toolBar
-    }
-    @objc func commitButtonTapped() {
-        self.view.endEditing(true)
-    }
-    
-    
-    
-    let maxLength = 4
+    let maxLength = 6
     var previousText = ""
     var lastReplaceRange: NSRange!
     var lastReplacementString = ""
@@ -168,65 +176,6 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         if myNameTextField.markedTextRange != nil {
             return
         }
-    }
-    
-    // Notificationを設定
-    func configureObserver() {
-        let notification = NotificationCenter.default
-        notification.addObserver(
-            self,
-            selector: #selector(self.keyboardWillShow(notification:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        notification.addObserver(
-            self,
-            selector: #selector(self.keyboardWillHide(notification:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )}
-    
-    func removeObserver() {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    
-    @objc func keyboardWillShow(notification: Notification?) {
-        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
-        UIView.animate(withDuration: duration!) {
-            self.view.transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: Notification?) {
-        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
-        UIView.animate(withDuration: duration!) {
-            self.view.transform = CGAffineTransform.identity
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isTouch(touches: touches, view: messageTextView) {
-            self.configureObserver()
-        }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        removeObserver()
-        messageLabel.isHidden = false
-    }
-    
-    func isTouch(touches: Set<UITouch>, view:UIView) -> Bool{
-        for touch: AnyObject in touches {
-            let t: UITouch = touch as! UITouch
-            if t.view?.tag == view.tag {
-                self.configureObserver()
-                messageLabel.isHidden = true
-                return true
-            }
-        }
-        return false
     }
     
     
@@ -256,6 +205,21 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         }
         return numberOfLines
     }
+    
+    
+    func addKeyBoardtoolBar() {
+           
+           let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
+           toolBar.barStyle = UIBarStyle.default
+           toolBar.sizeToFit()
+           let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+           let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(commitButtonTapped))
+           toolBar.items = [spacer, commitButton]
+           messageTextView.inputAccessoryView = toolBar
+       }
+       @objc func commitButtonTapped() {
+           self.view.endEditing(true)
+       }
 }
 
 

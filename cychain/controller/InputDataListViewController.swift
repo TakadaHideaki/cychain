@@ -49,7 +49,6 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
     }()
 
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -72,7 +71,6 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
 
 
 extension InputDataListViewController: UITableViewDataSource {
-
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -131,12 +129,12 @@ extension InputDataListViewController: UITableViewDataSource {
 
 
 extension InputDataListViewController: UITableViewDelegate {
-
-
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-
+    
     //EditViewへ
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -144,7 +142,7 @@ extension InputDataListViewController: UITableViewDelegate {
         
         let myName = myNames?[indexPath.row] ?? ""
         let searchName = targetNames?[indexPath.row] ?? ""
-        let editVC = self.storyboard?.instantiateViewController(withIdentifier: "DataEditVC") as! EditViewController
+        let EditNC = (self.storyboard?.instantiateViewController(withIdentifier: "EditNC"))!
         let ref = Database.database().reference().child("\(myName)/\(searchName)/\(USER_ID!)")
         
         ref.observeSingleEvent(of: .value, with: { (DataSnapshot) in
@@ -153,21 +151,9 @@ extension InputDataListViewController: UITableViewDelegate {
             UserData?["my"] = myName
             UserData?["target"] = searchName
             
-            //写真が投稿されていれば写真データをEditVewのimageに値た渡し
-            if let imageUrl = UserData?["image"] {
-                let url = URL(string: imageUrl)
-                // image変換
-                do {
-                    let imageData = try Data(contentsOf: url!)
-                    let image = UIImage(data:imageData as Data)
-                    editVC.iconImage = image
-                } catch {
-                    print(error)
-                }
-            }
-            editVC.userData = UserData
-            self.navigationController?.pushViewController(editVC, animated: true)
-            self.indicatorView.stopAnimating()
+            UD.set(UserData, forKey: UdKey.keys.selectCell.rawValue)
+            EditNC.modalPresentationStyle = .fullScreen
+            self.present(EditNC, animated: true)
         })
     }
 }
