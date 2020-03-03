@@ -174,62 +174,24 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         }
     }
     
- 
-
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-////        if isTouch(touches: touches, view: messageTextView) {
-//
-//
-//        if ((targetNameTextField.markedTextRange) != nil) {
-//            log.debug("hennshuutyhou")
-//            // 変換中の場合
-//        }
-//
-//        configureObserver()
-//        messageLabel.isHidden = true
-////        }
-//    }
     
-
-
+    func textFieldDidBeginEditing(_ textField: UITextField)  {
+        messageTextView.isSelectable = false
+        self.messageLabel.isHidden = false
+    }
     
-     func textFieldDidBeginEditing(_ textField: UITextField)  {
-         messageTextView.isSelectable = false
-         self.messageLabel.isHidden = false
-        log.debug("dDidBeginEditing")
-
-     }
-    
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            messageTextView.isSelectable = true
-            messageTextView.isEditable = true
-            myNameTextField.resignFirstResponder()
-            targetNameTextField.resignFirstResponder()
-            log.debug("ShouldReturn")
-            return  true
-        }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        messageTextView.isSelectable = true
+        messageTextView.isEditable = true
+        myNameTextField.resignFirstResponder()
+        targetNameTextField.resignFirstResponder()
+        return  true
+    }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        log.debug("textViewShouldBeginEditing")
         configureObserver()
         return  true
     }
-   
-
-    
-//    func isTouch(touches: Set<UITouch>, view:UIView) -> Bool{
-//        for touch: AnyObject in touches {
-//            let t: UITouch = touch as! UITouch
-//            if t.view?.tag == view.tag {
-//                messageLabel.isHidden = true
-//                return true
-//            }
-//        }
-//        return false
-//    }
-    
- 
-    
     
     //textviewを６行までに制限
      let maxLength = 6
