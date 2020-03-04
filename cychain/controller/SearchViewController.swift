@@ -88,7 +88,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
                     self.mutchiUserData = DataSnapshot.value as! [String: [String : Any]]
 
                     //もしもブロックユーザー登録があれば
-                    if let blockUserID = UD.array(forKey: UdKey.keys.block.rawValue) as? [String]  {
+                    if let blockUserID = UD.array(forKey: UDKey.keys.block.rawValue) as? [String]  {
                         blockUserID.forEach {
                             //マッチしたユーザーとブロックユーザーが一致したら
                             //ブロックユーザーをひ表示させない様にする

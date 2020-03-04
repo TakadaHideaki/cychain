@@ -6,6 +6,7 @@ target 'cychain' do
 
 
 
+
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
@@ -25,6 +26,27 @@ pod 'LTMorphingLabel'
 pod 'XCGLogger', '~> 7.0.0'
 
 end
+
+target 'cychain copy' do
+
+  use_frameworks!
+
+pod 'Firebase/Database'
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'FirebaseUI'
+pod 'Firebase/Storage'
+pod 'RSKImageCropper'
+pod 'NVActivityIndicatorView'
+pod 'Firebase/AdMob'
+pod 'LicensePlist'
+pod 'TextFieldEffects'
+pod 'XLPagerTabStrip'
+pod 'LTMorphingLabel'
+pod 'XCGLogger', '~> 7.0.0'
+
+end
+
 
 
 

@@ -44,7 +44,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         
         //UserDataを表示
     func userDataSet() {
-        guard let data = UD.object(forKey:  UdKey.keys.selectCell.rawValue),
+        guard let data = UD.object(forKey:  UDKey.keys.selectCell.rawValue),
             let castData = data as? [String: Any],
             let My = castData["my"] as? String,
             let Target = castData["target"] as? String,
@@ -77,7 +77,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         }
         
         userData = castData
-        UD.removeObject(forKey: UdKey.keys.selectCell.rawValue)
+        UD.removeObject(forKey: UDKey.keys.selectCell.rawValue)
     }
     
     
@@ -156,6 +156,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         configureObserver()
+        messageLabel.isHidden = true
         return  true
     }
 

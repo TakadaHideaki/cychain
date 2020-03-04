@@ -59,7 +59,7 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
         }
         
         //投稿データが有れば
-        if let UDNamesList = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
+        if let UDNamesList = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
             self.namesList = UDNamesList
             myNames = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
             targetNames = (UDNamesList.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
@@ -120,7 +120,7 @@ extension InputDataListViewController: UITableViewDataSource {
                 names.remove(at: indexPath.row)
                 self.namesList = names
                 tableView.deleteRows(at: [indexPath], with: .fade)
-                UD.set(names, forKey: UdKey.keys.uniqueNmame.rawValue)
+                UD.set(names, forKey: UDKey.keys.uniqueNmame.rawValue)
             }
             tableView.reloadData()
         }
@@ -151,7 +151,7 @@ extension InputDataListViewController: UITableViewDelegate {
             UserData?["my"] = myName
             UserData?["target"] = searchName
             
-            UD.set(UserData, forKey: UdKey.keys.selectCell.rawValue)
+            UD.set(UserData, forKey: UDKey.keys.selectCell.rawValue)
             EditNC.modalPresentationStyle = .fullScreen
             self.present(EditNC, animated: true)
         })

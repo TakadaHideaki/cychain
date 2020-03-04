@@ -94,15 +94,15 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
             
             //ブロックUIDをUDに保存
             //ブロックり履歴有り
-            if  var blocksUserID = UD.array(forKey: UdKey.keys.block.rawValue),
+            if  var blocksUserID = UD.array(forKey: UDKey.keys.block.rawValue),
                 let userID = self.mutchUserID {
                 blocksUserID += [userID]
-                UD.set(blocksUserID, forKey: UdKey.keys.block.rawValue)
+                UD.set(blocksUserID, forKey: UDKey.keys.block.rawValue)
                 
             }  else {
                 //初ブロック
                 if let account = self.mutchUserID {
-                    UD.set([account], forKey: UdKey.keys.block.rawValue)
+                    UD.set([account], forKey: UDKey.keys.block.rawValue)
                 }
             }
             

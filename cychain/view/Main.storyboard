@@ -3845,7 +3845,14 @@ Cg
                         <viewLayoutGuide key="safeArea" id="ybd-Vy-zqp"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="Kyy-no-cKB"/>
+                    <navigationItem key="navigationItem" title="編集" id="a8r-c7-nNs" userLabel="編集">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="Z3h-li-1sh">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="qoR-G0-sTD" kind="custom" customClass="DismissControllerSegue" customModule="cychain" customModuleProvider="target" id="f2Y-zl-2AR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dataSendButton" destination="g7H-cg-eQS" id="t8b-wv-tgm"/>

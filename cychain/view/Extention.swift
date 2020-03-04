@@ -132,16 +132,6 @@ extension String {
 }
 
 
-//userDefaultのキーname
-struct UdKey {
-        enum keys: String {
-        case uniqueNmame
-        case selectCell
-        case block
-    }
-}
-
-
 class DismissControllerSegue: UIStoryboardSegue {
     override func perform() {
         self.source.dismiss(animated: true, completion: nil)

@@ -132,7 +132,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         } else {
             
             //投稿履歴が有る時
-            if var registNames = UD.object(forKey: UdKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
+            if var registNames = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
                 
                 //投稿数>10で登録数オーバーアラート
                 if registNames.count > 10 {
@@ -149,14 +149,14 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
                     //全く同じ名前の投稿でなければUDに名前保存
                     if !registNames.contains([myname:targetname]) {
                         registNames += [[myname:targetname]]
-                        UD.set(registNames, forKey: UdKey.keys.uniqueNmame.rawValue)
+                        UD.set(registNames, forKey: UDKey.keys.uniqueNmame.rawValue)
                     }
                     registIconImage()
                 }
                 
             } else {
                 //投稿値歴無し
-                UD.set([[myname:targetname]], forKey: UdKey.keys.uniqueNmame.rawValue)
+                UD.set([[myname:targetname]], forKey: UDKey.keys.uniqueNmame.rawValue)
                 registIconImage()
             }
             
@@ -177,7 +177,6 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     
     func textFieldDidBeginEditing(_ textField: UITextField)  {
         messageTextView.isSelectable = false
-        self.messageLabel.isHidden = false
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -190,6 +189,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         configureObserver()
+        self.messageLabel.isHidden = true
         return  true
     }
     
