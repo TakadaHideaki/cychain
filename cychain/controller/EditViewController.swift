@@ -44,24 +44,24 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         
         //UserDataを表示
     func userDataSet() {
-        guard let data = UD.object(forKey:  UDKey.keys.selectCell.rawValue),
-            let castData = data as? [String: Any],
-            let My = castData["my"] as? String,
-            let Target = castData["target"] as? String,
-            let Message = castData["message"] as? String
-            else { return }
+        guard let UDdata = UD.object(forKey:  UDKey.keys.selectCell.rawValue) else { return }
+        userData = UDdata as? [String: Any]
         
-        myNameTextField.text = My
-        targetNameTextField.text = Target
+        myNameTextField.text = userData?["my"] as? String ?? ""
+        targetNameTextField.text = userData?["target"] as? String ?? ""
         
-        if Message != "" {
-            messageLabel.isHidden = true
-            messageTextView.text = castData["message"] as? String
+        
+        if let Message = userData?["message"] as? String {
+            if Message != "" {
+                messageLabel.isHidden = true
+                messageTextView.text = Message
+            }
         } else {
             messageLabel.isHidden = false
         }
         
-        if let imageUrl = castData["image"] {
+        
+        if let imageUrl = userData?["image"] {
             let url = URL(string: imageUrl as! String)
             // image変換
             do {
@@ -69,14 +69,13 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
                 let image = UIImage(data:imageData as Data)
                 iconRegistButton.setImage(image, for: .normal)
                 iconImage = image
+                userData?["image"] = image
             } catch {
                 log.debug("error")
             }
         } else {
             iconRegistButton.setImage(UIImage(named: "user10"), for: .normal)
         }
-        
-        userData = castData
         UD.removeObject(forKey: UDKey.keys.selectCell.rawValue)
     }
     

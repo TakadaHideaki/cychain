@@ -12,10 +12,9 @@ import GoogleMobileAds
 
 class InputResultViewController: UIViewController, UIImagePickerControllerDelegate{
     
+    @IBOutlet weak var tableView: UITableView!
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        self.tabBarController?.tabBar.isHidden = false
-//    }
+    var registData: [String: Any]?
     
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
@@ -24,19 +23,20 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         admob()
     }()
     
-    @IBOutlet weak var tableView: UITableView!
-    
-    var registData: [String: Any]?
-    
-    
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
         initializeTableView()
         tableView.reloadData()
+        
+        
+        if registData?["image"] == nil {
+            log.debug("nil")
+        } else {
+            log.debug("Notnil")
+
+        }
+        
         
         if self.presentingViewController != nil {
         }
