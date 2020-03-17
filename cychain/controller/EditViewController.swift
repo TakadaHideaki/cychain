@@ -15,7 +15,6 @@ import RSKImageCropper
 class EditViewController: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIScrollViewDelegate, ScrollKeyBoard {
     
     
-    
     @IBOutlet weak var myNameTextField: UITextField!
     @IBOutlet weak var targetNameTextField: UITextField!
     @IBOutlet weak var messageTextView: UITextView!
@@ -24,44 +23,45 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     @IBOutlet weak var messageLabel: UILabel!
     
     
-    var userData: [String: Any]?
+    var editUserData: [String: Any]?
     var iconImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initialazeUI()
         userDataSet()
-    }
+        }
     
     func initialazeUI() {
         myNameTextField.delegate = self
         targetNameTextField.delegate = self
         messageTextView.delegate = self
         tabBarController?.tabBar.isHidden = true
-        addKeyBoardtoolBar()
+        messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
     }
         
         //UserDataを表示
     func userDataSet() {
-        guard let UDdata = UD.object(forKey:  UDKey.keys.selectCell.rawValue) else { return }
-        userData = UDdata as? [String: Any]
         
-        myNameTextField.text = userData?["my"] as? String ?? ""
-        targetNameTextField.text = userData?["target"] as? String ?? ""
+        guard let userData = EditData.sharedInstance.SingletonUserData else { return }
+        editUserData = userData
         
+        myNameTextField.text = userData["my"] as? String ?? ""
+        targetNameTextField.text = userData["target"] as? String ?? ""
+
         
-        if let Message = userData?["message"] as? String {
-            if Message != "" {
+        if let message = userData["message"] as? String {
+            if message != "" {
                 messageLabel.isHidden = true
-                messageTextView.text = Message
+                messageTextView.text = message
             }
         } else {
             messageLabel.isHidden = false
         }
         
         
-        if let imageUrl = userData?["image"] {
+        if let imageUrl = userData["image"] {
             let url = URL(string: imageUrl as! String)
             // image変換
             do {
@@ -69,15 +69,16 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
                 let image = UIImage(data:imageData as Data)
                 iconRegistButton.setImage(image, for: .normal)
                 iconImage = image
-                userData?["image"] = image
+                editUserData?["image"] = image
             } catch {
                 log.debug("error")
             }
         } else {
             iconRegistButton.setImage(UIImage(named: "user10"), for: .normal)
         }
-        UD.removeObject(forKey: UDKey.keys.selectCell.rawValue)
     }
+    
+    
     
     
     @IBAction func call_photoLibrary(_ sender: Any) {
@@ -105,52 +106,53 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     
     
     @IBAction func senderData(_ sender: Any) {
-                
-        let myName = myNameTextField.text ?? ""
-        let targetName = targetNameTextField.text ?? ""
-        self.userData!["message"] = messageTextView.text ?? ""
+        
+        guard let data = editUserData,
+            let my = data["my"] as? String ,
+            let target = data["target"] as? String
+            else { return }
+        
+        self.editUserData!["message"] = messageTextView.text ?? ""
+
         iconImage = iconRegistButton.currentImage ?? UIImage(named: "user10")
-        var value: [String: Any] = ["message": userData!["message"] as Any]
+        editUserData?["image"] = iconImage
         
-        
-        let ref = Database.database().reference().child("\(myName)/\(targetName)/\(USER_ID!)")
-        let storageRef = STORAGE.child("\(myName))/\(targetName))/\(USER_ID!)/\("imageData")")        
-        
+        var message_image: [String: Any] = ["message": editUserData!["message"] as Any]
+        let ref = Database.database().reference().child("\(my)/\(target)/\(USER_ID!)")
+        let storageRef = STORAGE.child("\(my)/\(target)/\(USER_ID!)/\("imageData")")
         let inputResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
-        
-        //アイコンがデフォルトのまま
+
+//        //アイコンがデフォルトのまま
         if  iconImage == UIImage(named: "user10") {
-            ref.setValue(value)
-        
+            ref.setValue(message_image)
+
         } else {
             if let imageData = iconImage?.pngData() {
-                //  FireStorage Uplode(登録画像）
+                //  FireStorage 画像更新
                 storageRef.putData(imageData, metadata: nil){ (metadata, error)in
-                    
+
                     guard metadata != nil else { return }
                     storageRef.downloadURL { (url, error) in
                         guard let downloadURL = url else { return }
                         let profileimage = downloadURL.absoluteString
-                        
-                        value["image"] = profileimage
+
+                        message_image["image"] = profileimage
                     }
                 }
-                ref.updateChildValues(value)
-            
+                ref.updateChildValues(message_image)
             }
         }
-        //postCardViewにデータを送って画面遷移
-        inputResultVC.registData = userData
+       //postCardViewにデータを送って画面遷移
+        inputResultVC.registData = editUserData
         self.navigationController?.pushViewController(inputResultVC, animated: true)
-        
-        //        キーボード閉じる
+
+        // キーボード閉じる
         func keyboardWillHide(notification: Notification?) {
             let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
             UIView.animate(withDuration: duration!) {
                 self.view.transform = CGAffineTransform.identity
             }
         }
-        
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
@@ -206,22 +208,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         return numberOfLines
     }
     
-    
-    func addKeyBoardtoolBar() {
-           
-           let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
-           toolBar.barStyle = UIBarStyle.default
-           toolBar.sizeToFit()
-           let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-           let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(commitButtonTapped))
-           toolBar.items = [spacer, commitButton]
-           messageTextView.inputAccessoryView = toolBar
-       }
-       @objc func commitButtonTapped() {
-           self.view.endEditing(true)
-       }
 }
-
 
 
 

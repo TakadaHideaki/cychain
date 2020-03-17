@@ -124,6 +124,25 @@ extension UITextField {
 }
 
 
+extension UITextView {
+    //textFieldのエンターは閉じるじゃ無くて改行になるから
+    func keyBoardtoolBar(textView: UITextView) {
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
+        toolBar.barStyle = .default
+        toolBar.sizeToFit()
+        
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let commitButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(commitButtonTapped))
+        toolBar.items = [spacer, commitButton]
+        textView.inputAccessoryView = toolBar // textViewのキーボード上部にツールバーを設定
+    }
+    @objc func commitButtonTapped() {
+        self.resignFirstResponder()
+    }
+}
+
+
+
 extension String {
      
     func deleteSpace() -> String {

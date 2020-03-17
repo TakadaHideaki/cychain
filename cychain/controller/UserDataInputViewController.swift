@@ -15,8 +15,7 @@ import TextFieldEffects
 
 
 class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
- 
-    
+
     
     @IBOutlet weak var myNameTextField: UITextField!
     @IBOutlet weak var targetNameTextField: UITextField!
@@ -25,13 +24,11 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var messageLabel: UILabel!
     
     let defaultIconImage = UIImage(named: "user10")//写真登録のアイコンイメージ
-
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
     }
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
@@ -41,7 +38,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         myNameTextField.delegate = self
         targetNameTextField.delegate = self
         messageTextView.delegate = self
-        keyBoardtoolBar()
+        messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIconImage, for: .normal) //写真投稿ボタンの画像を設定
     }
@@ -56,11 +53,11 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         }
     }
     
-    // 写真を選んだ後に呼ばれる処理
+    // 写真選択後
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as! UIImage  // 選択した写真を取得する
         self.dismiss(animated: true)
-        
+
         let imageCropVC = RSKImageCropViewController(image: image, cropMode: .circle)
         imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
         imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
@@ -68,7 +65,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         imageCropVC.delegate = self
         present(imageCropVC, animated: true)
     }
-    
+     
     
     //データ入力後の投稿ボタン
     @IBAction func postAction(_ sender: Any) {
@@ -89,7 +86,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         var value: [String: Any] = ["message": messageText]
         
         let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
-        
+
         //最後のimageDataは無用だがこれでリリースしたので変更しない
         let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
         
@@ -234,24 +231,6 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
         }
         return numberOfLines
     }
-    
-    
-    
-    //キーボードにツールバーを設置して閉じるをボタンを追加
-    //textFieldのエンターは閉じるじゃ無くて改行になるから
-    func keyBoardtoolBar() {
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.sizeToFit()
-        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-        let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(commitButtonTapped))
-        toolBar.items = [spacer, commitButton]
-        messageTextView.inputAccessoryView = toolBar // textViewのキーボード上部にツールバーを設定
-
-    }
-    @objc func commitButtonTapped() {
-        self.view.endEditing(true)
-    }   
 }
 
 //アイコンの写真を丸くする処理
@@ -265,7 +244,6 @@ extension UserDataInputViewController: RSKImageCropViewControllerDelegate {
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
         dismiss(animated: true)
         iconRegistButton?.setImage(croppedImage, for: .normal)
-        // imageView.image = croppedImage
 
         //円形画像
         if controller.cropMode == .circle {

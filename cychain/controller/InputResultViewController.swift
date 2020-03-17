@@ -28,18 +28,6 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         initializeUI()
         initializeTableView()
         tableView.reloadData()
-        
-        
-        if registData?["image"] == nil {
-            log.debug("nil")
-        } else {
-            log.debug("Notnil")
-
-        }
-        
-        
-        if self.presentingViewController != nil {
-        }
     }
     
     func initializeUI() {

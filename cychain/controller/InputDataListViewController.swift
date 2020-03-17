@@ -11,18 +11,17 @@ import Firebase
 import GoogleMobileAds
 
 
-
 class InputDataListViewController: UIViewController, UINavigationControllerDelegate {
-
+    
 
     @IBOutlet var tableView: UITableView!
     
     var namesList: [[String:String]]? //[[myname, targetname]]
-    //mynameとtargetnameに分けたが分けづにnamesでアクセスした方がいいか
-    //分けた理由は分けた方が自分が分かりやすかったから
     var myNames: [String]?
     var targetNames: [String]?
     var indicatorView = UIActivityIndicatorView()
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +57,7 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
         
-        //投稿データが有れば
+        //投稿履歴が有ればtableに表示
         if let UDNamesList = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
             self.namesList = UDNamesList
             myNames = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
@@ -99,7 +98,6 @@ extension InputDataListViewController: UITableViewDataSource {
         let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
         let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
         
-        
         if editingStyle == .delete {
             // firebaseのデータ削除
             ref.removeValue()
@@ -109,20 +107,18 @@ extension InputDataListViewController: UITableViewDataSource {
                     let nsError = error as NSError
                     if nsError.domain == StorageErrorDomain &&
                         nsError.code == StorageErrorCode.objectNotFound.rawValue {
-                        print("nofile")
+                        log.debug("Storage Nofile")
                     }
                 } else {
-                    print("success")
+                    log.debug("Storege Delete Success")
                 }
             }
             //UDから削除
-            if var names = namesList {
-                names.remove(at: indexPath.row)
-                self.namesList = names
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                UD.set(names, forKey: UDKey.keys.uniqueNmame.rawValue)
-            }
-            tableView.reloadData()
+            namesList?.remove(at: indexPath.row)
+            myNames?.remove(at: indexPath.row)
+            targetNames?.remove(at: indexPath.row)
+            UD.set(namesList, forKey: UDKey.keys.uniqueNmame.rawValue)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 }
@@ -138,20 +134,22 @@ extension InputDataListViewController: UITableViewDelegate {
     //EditViewへ
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        indicatorView.startAnimating()
-        
         let myName = myNames?[indexPath.row] ?? ""
         let searchName = targetNames?[indexPath.row] ?? ""
+        
+        
         let EditNC = (self.storyboard?.instantiateViewController(withIdentifier: "EditNC"))!
         let ref = Database.database().reference().child("\(myName)/\(searchName)/\(USER_ID!)")
-        
+
         ref.observeSingleEvent(of: .value, with: { (DataSnapshot) in
-            
+
             var UserData = DataSnapshot.value as? [String: String]//[message:メッセージ, image:写真]
             UserData?["my"] = myName
             UserData?["target"] = searchName
+             
+            let singleton = EditData.sharedInstance
+            singleton.SingletonUserData = UserData
             
-            UD.set(UserData, forKey: UDKey.keys.selectCell.rawValue)
             EditNC.modalPresentationStyle = .fullScreen
             self.present(EditNC, animated: true)
         })

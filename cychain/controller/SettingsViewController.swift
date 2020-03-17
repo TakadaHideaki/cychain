@@ -130,9 +130,9 @@ extension SettingsViewController: UITableViewDelegate {
                         let storageRef = STORAGE.child("\($0)/\($1)/\(USER_ID!)/\("imageData")")
                         storageRef.delete { error in
                             if error != nil {
-                                print("ストレージ削除エラー")
+                                log.debug("Strage delete error")
                             } else {
-                                print("ストレージ削除おk")
+                                log.debug("Strage delete success")
                             }
                         }
                     }
