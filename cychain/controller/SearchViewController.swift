@@ -12,6 +12,7 @@ import FirebaseUI
 import AudioToolbox
 import NVActivityIndicatorView
 import GoogleMobileAds
+import Lottie
 
 
 class SearchViewController: UIViewController, UITextFieldDelegate {
@@ -24,8 +25,11 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var noPostLabel: UILabel!
     @IBOutlet weak var searchButton: Button!
     @IBOutlet weak var indicator: NVActivityIndicatorView!
+    @IBOutlet weak var animationView: AnimationView!
+    @IBOutlet weak var popButton: UIButton!
     
     lazy var mutchiUserData = [String: [String: Any]]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +46,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     
     override func viewWillDisappear(_ animated: Bool) {
-        
         myNameTextField.text = ""
         searchNameTextField.text = ""
         labelHidden()
@@ -146,21 +149,30 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     private func mutch() {
         self.indicator.stopAnimating()
+        animationView.isHidden = false
+        animationView.play()
         AudioServicesPlaySystemSound(1003)
         AudioServicesDisposeSystemSoundID(1003)
-        self.noPostLabel.isHidden = true
-        self.matchbutton.isHidden = false
-        self.mutchLabel.isHidden = false
-        self.mutchLabel2.isHidden = false
+        noPostLabel.isHidden = true
+        popButton.isHidden = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.animationView.isHidden = false
+            self.matchbutton.isHidden = false
+            self.mutchLabel.isHidden = false
+            self.mutchLabel2.isHidden = false
+        }
     }
     
     
     private func nomutch() {
         self.indicator.stopAnimating()
-        self.noPostLabel.isHidden = false
-        self.matchbutton.isHidden = true
-        self.mutchLabel.isHidden = true
-        self.mutchLabel2.isHidden = true
+        noPostLabel.isHidden = false
+        popButton.isHidden = false
+        matchbutton.isHidden = true
+        mutchLabel.isHidden = true
+        mutchLabel2.isHidden = true
+        animationView.isHidden = true
     }
     
     
@@ -169,6 +181,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         matchbutton.isHidden = true
         mutchLabel.isHidden = true
         mutchLabel2.isHidden = true
+        popButton.isHidden = true
+        animationView.isHidden = true
+        
     }
     
 

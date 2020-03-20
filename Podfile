@@ -24,6 +24,7 @@ pod 'TextFieldEffects'
 pod 'XLPagerTabStrip'
 pod 'LTMorphingLabel'
 pod 'XCGLogger', '~> 7.0.0'
+pod 'lottie-ios'
 
 end
 
@@ -44,6 +45,7 @@ pod 'TextFieldEffects'
 pod 'XLPagerTabStrip'
 pod 'LTMorphingLabel'
 pod 'XCGLogger', '~> 7.0.0'
+pod 'lottie-ios'
 
 end
 
