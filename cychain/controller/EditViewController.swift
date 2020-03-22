@@ -79,8 +79,6 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     }
     
     
-    
-    
     @IBAction func call_photoLibrary(_ sender: Any) {
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
@@ -90,6 +88,8 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
             self.present(pickerView, animated: true)
         }
     }
+    
+    
     // 写真を選んだ後に呼ばれる処理
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
        

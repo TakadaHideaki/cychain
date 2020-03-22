@@ -26,8 +26,9 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
         super.viewDidLoad()
         initializeUI()
         initalizeTableView()
-        mutchUserID = mutchiUserData.map{$0.0}[0]
-        message_image_Data = mutchiUserData.map{$0.1}[0]
+        userDataSet()
+//        mutchUserID = mutchiUserData.map{$0.0}[0]
+//        message_image_Data = mutchiUserData.map{$0.1}[0]
     }
     
     func initializeUI() {
@@ -40,6 +41,18 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
         tableView.dataSource = self
         tableView.tableFooterView = UIView(frame: .zero)
     }
+    
+    func userDataSet() {
+        
+        guard let userName = MatchData.sharedInstance.SingletonNames,
+            let userData = MatchData.sharedInstance.SingletonUserData
+            else { return }
+        
+        names = userName
+        mutchUserID = userData.map{$0.0}[0]
+        message_image_Data = userData.map{$0.1}[0]
+    }
+    
     
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout

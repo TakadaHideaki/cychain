@@ -15,25 +15,27 @@ import GoogleMobileAds
 import Lottie
 
 
+
+
 class SearchViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet var myNameTextField: UITextField!
     @IBOutlet var searchNameTextField: UITextField!
-    @IBOutlet weak var mutchLabel: labele!
-    @IBOutlet weak var mutchLabel2: UILabel!
     @IBOutlet weak var noPostLabel: UILabel!
     @IBOutlet weak var searchButton: Button!
     @IBOutlet weak var indicator: NVActivityIndicatorView!
     @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var popButton: UIButton!
     
+    
     lazy var mutchiUserData = [String: [String: Any]]()
-    
-    
+    var muchPopUpVC: MuchPopUpVC?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         initialazeUI()
+        muchPopUpVC = self.storyboard?.instantiateViewController(withIdentifier: "MuchPopUpVC") as? MuchPopUpVC
     }
     
     func initialazeUI() {
@@ -51,6 +53,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         labelHidden()
     }
     
+    
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
     }
@@ -59,10 +62,31 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     }()
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let presented = self.presentedViewController {
+            if type(of: presented) == MuchPopUpVC.self {
+                if muchPopUpVC?.backFlag == true {
+                    muchPopUpVC?.backFlag = false
+                    
+                    if self.mutchiUserData.count == 1 {
+                        let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultVC") as! SeachResultViewCotroller
+                        self.navigationController?.pushViewController(resultVC, animated: false)
+                        
+                    } else {
+                        let resultListVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultListVC") as! SeachResultListViewCOntroller
+                        self.navigationController?.pushViewController(resultListVC, animated: false)
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
     @IBAction func searchAction(_ sender: Any) {
         
-        //textfieldのnil対策をしているが,強制アンラップは避けた方がいいか？
-        //(56行目で空ならアラートの処理をしている)
         let myName = myNameTextField.text?.deleteSpace() ?? ""
         let searchName = searchNameTextField.text?.deleteSpace() ?? ""
         
@@ -84,17 +108,14 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
                     
                 } else {
                     //マッチ有り
-                    //dataは [UID: [message: メッセージ, profile: 投稿写真]]
-                    //強制キャストの解除が上手くいかない
-                    //self.mutchingUserDataじゃなくて
-                    //このスコープ何の変数を作って最後にself.mutchingUserDataに代入した方がいいのか？
+                    //data == [UID: [message: メッセージ, profile: 投稿写真]]
                     self.mutchiUserData = DataSnapshot.value as! [String: [String : Any]]
 
-                    //もしもブロックユーザー登録があれば
+                    //ブロックユーザー登録があったま場合
                     if let blockUserID = UD.array(forKey: UDKey.keys.block.rawValue) as? [String]  {
                         blockUserID.forEach {
                             //マッチしたユーザーとブロックユーザーが一致したら
-                            //ブロックユーザーをひ表示させない様にする
+                            //ブロックユーザーを表示させない処理
                             if self.mutchiUserData.keys.contains($0) {
                                 self.mutchiUserData[$0] = nil // [UID　(←コレがblockなら削除): [message: メッセージ, profile: 投稿写真]]
                             }
@@ -111,36 +132,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     }
 
     
-    @IBOutlet weak var matchbutton: UIButton!
-    @IBAction func matchbutton(_ sender: Any) {
-        
-//        self.indicator.startAnimating()
-        
-        guard let myName = myNameTextField.text?.deleteSpace() else { return }
-        guard let searchName = searchNameTextField.text?.deleteSpace() else { return }
-        
-        let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultVC") as! SeachResultViewCotroller
-        let resultListVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultListVC") as! SeachResultListViewCOntroller
-        
-        switch self.mutchiUserData.count {
-        case 1: //マッチ１件
-            resultVC.names = [myName, searchName]
-            resultVC.mutchiUserData = self.mutchiUserData
-            self.navigationController?.pushViewController(resultVC, animated: true)
-            
-        default: //マッチ複数件
-            resultListVC.names = [myName, searchName]
-            resultListVC.mutchingUserData = self.mutchiUserData
-            self.navigationController?.pushViewController(resultListVC, animated: true)
-        }
-//        self.indicator.stopAnimating()
-    }
-    
-    
-    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         myNameTextField.resignFirstResponder()
         searchNameTextField.resignFirstResponder()
         return  true
@@ -156,11 +149,18 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         noPostLabel.isHidden = true
         popButton.isHidden = true
         
+        guard let myName = myNameTextField.text?.deleteSpace(),
+            let searchName = searchNameTextField.text?.deleteSpace()
+            else { return }
+        
+        let singleton = MatchData.sharedInstance
+        singleton.SingletonUserData = self.mutchiUserData
+        singleton.SingletonNames = [myName, searchName]
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.animationView.isHidden = false
-            self.matchbutton.isHidden = false
-            self.mutchLabel.isHidden = false
-            self.mutchLabel2.isHidden = false
+            if let muchPopUpVC = self.muchPopUpVC {                
+                self.present(muchPopUpVC, animated: false)
+            }
         }
     }
     
@@ -169,24 +169,14 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         self.indicator.stopAnimating()
         noPostLabel.isHidden = false
         popButton.isHidden = false
-        matchbutton.isHidden = true
-        mutchLabel.isHidden = true
-        mutchLabel2.isHidden = true
         animationView.isHidden = true
     }
-    
     
     private func labelHidden() {
         noPostLabel.isHidden = true
-        matchbutton.isHidden = true
-        mutchLabel.isHidden = true
-        mutchLabel2.isHidden = true
         popButton.isHidden = true
         animationView.isHidden = true
-        
     }
     
-
-
 
 }

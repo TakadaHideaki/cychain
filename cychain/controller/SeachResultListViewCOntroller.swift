@@ -26,10 +26,12 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
         initializeTableView()
         indicator()
         
-        mutchingUserData.forEach {
-            userID += [$0.key]
-            value += [$0.value]
-        }
+        userDataSet()
+        
+//        mutchingUserData.forEach {
+//            userID += [$0.key]
+//            value += [$0.value]
+//        }
         tableView.reloadData()
     }
     
@@ -52,6 +54,20 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
     }
+    
+    
+    func userDataSet() {
+        guard let userName = MatchData.sharedInstance.SingletonNames,
+               let userData = MatchData.sharedInstance.SingletonUserData
+               else { return }
+        names = userName
+        
+        userData.forEach {
+            userID += [$0.key]
+            value += [$0.value]
+        }
+    }
+
     
     
     override func viewWillLayoutSubviews() {
@@ -85,8 +101,8 @@ extension SeachResultListViewCOntroller: UITableViewDelegate {
         
         let SeachResultMultipleVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultMultipleViewCOntroller") as! SeachResultMultipleViewCOntroller
         SeachResultMultipleVC.names = names
-        SeachResultMultipleVC.value = value[indexPath.row]
         SeachResultMultipleVC.account = userID[indexPath.row]
+        SeachResultMultipleVC.value = value[indexPath.row]
         self.navigationController?.pushViewController(SeachResultMultipleVC, animated: true)
         self.indicatorView.stopAnimating()
     }
