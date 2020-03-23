@@ -27,8 +27,6 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
         initializeUI()
         initalizeTableView()
         userDataSet()
-//        mutchUserID = mutchiUserData.map{$0.0}[0]
-//        message_image_Data = mutchiUserData.map{$0.1}[0]
     }
     
     func initializeUI() {

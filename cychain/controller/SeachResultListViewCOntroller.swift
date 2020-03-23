@@ -25,13 +25,7 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
         initalizeUI()
         initializeTableView()
         indicator()
-        
         userDataSet()
-        
-//        mutchingUserData.forEach {
-//            userID += [$0.key]
-//            value += [$0.value]
-//        }
         tableView.reloadData()
     }
     
@@ -67,7 +61,6 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
             value += [$0.value]
         }
     }
-
     
     
     override func viewWillLayoutSubviews() {
