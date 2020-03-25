@@ -11,9 +11,10 @@ import Lottie
 
 class MuchPopUpVC: UIViewController {
     
-    var backFlag: Bool = false    
+    var backFlag: Bool?
     
     @IBOutlet weak var animationView: AnimationView!
+    @IBOutlet weak var contentView: contentView!
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -21,6 +22,8 @@ class MuchPopUpVC: UIViewController {
         animationView.loopMode = .loop
         animationView.play()
     }
+    
+
     
     
     @IBAction func dismissButton(_ sender: Any) {
