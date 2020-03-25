@@ -15,8 +15,7 @@ import XCGLogger
 let UD = UserDefaults.standard
 let USER_ID = Auth.auth().currentUser?.uid
 //#elseif cychain-dev
-//let STORAGE = Storage.storage().reference(forURL: "gs://cychain-dev.appspot.com")
-let STORAGE = Storage.storage().reference(forURL: "gs://cychain-6d3b6.appspot.com")
+let STORAGE = Storage.storage().reference(forURL: "gs://cychain-dev.appspot.com")
 
 
 
