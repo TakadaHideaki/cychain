@@ -35,6 +35,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialazeUI()
+
         muchPopUpVC = self.storyboard?.instantiateViewController(withIdentifier: "MuchPopUpVC") as? MuchPopUpVC
     }
     
@@ -64,24 +65,21 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let presented = self.presentedViewController {
+
+        guard let presented = self.presentedViewController else { return }
             if type(of: presented) == MuchPopUpVC.self {
                 if muchPopUpVC?.backFlag == true {
                     muchPopUpVC?.backFlag = false
-                    
+
                     if self.mutchiUserData.count == 1 {
-                        let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultVC") as! SeachResultViewCotroller
-                        self.navigationController?.pushViewController(resultVC, animated: false)
-                        
+                        switchVC(view: "SeachResultVC", animation: false)
                     } else {
-                        let resultListVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultListVC") as! SeachResultListViewCOntroller
-                        self.navigationController?.pushViewController(resultListVC, animated: false)
+                        switchVC(view: "SeachResultListVC", animation: false)
                     }
                 }
             }
         }
-    }
+    
     
     
     
@@ -158,7 +156,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         singleton.SingletonNames = [myName, searchName]
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if let muchPopUpVC = self.muchPopUpVC {                
+            if let muchPopUpVC = self.muchPopUpVC {
                 self.present(muchPopUpVC, animated: false)
             }
         }

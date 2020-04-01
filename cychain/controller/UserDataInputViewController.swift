@@ -14,7 +14,13 @@ import RSKImageCropper
 import TextFieldEffects
 
 
-class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
+class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard, modelDelegate {
+    
+    
+    func did() {
+        log.debug("a")
+    }
+    
 
     
     @IBOutlet weak var myNameTextField: UITextField!
@@ -24,6 +30,8 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var messageLabel: UILabel!
     
     let defaultIconImage = UIImage(named: "user10")//写真登録のアイコンイメージ
+    let model = UserDataModel()
+
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
@@ -32,6 +40,9 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
+        
+//        model = UserDataModel()
+        model.delegate = self
     }
     
     func initializeUI() {
@@ -70,28 +81,60 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     //データ入力後の投稿ボタン
     @IBAction func postAction(_ sender: Any) {
         
+
+//        model.setName(name2: "aaa")
+   
+        
+
         let myname = myNameTextField.text?.deleteSpace() ?? ""
         let targetname = targetNameTextField.text?.deleteSpace() ?? ""
         let messageText = messageTextView.text ?? ""
         let iconImage = iconRegistButton.currentImage ?? self.defaultIconImage
 
         //入力データを格納
-        var registData: [String : Any] = [
-            "my": myname,
-            "target": targetname,
-            "message": messageText,
-            "image": iconImage as Any,
+//        var registData: [String: Any] = [
+//            "my":      myname,
+//            "target":  targetname,
+//            "message":  messageText,
+//            "image":    iconImage as Any,
+//        ]
+        
+        var registData: [String: Any] = [
+            "my":     myNameTextField.text?.deleteSpace() ?? "",
+            "target":  targetNameTextField.text?.deleteSpace() ?? "",
+            "message": messageTextView.text ?? "",
+            "image":   iconRegistButton.currentImage ?? self.defaultIconImage as Any,
         ]
         
-        var value: [String: Any] = ["message": messageText]
+        model.set(my: myNameTextField.text?.deleteSpace() ?? "",
+                  target: targetNameTextField.text?.deleteSpace() ?? "",
+                  message: messageTextView.text ?? "",
+                  icon: iconRegistButton.currentImage ?? self.defaultIconImage!
+        )
         
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        var value: [String: Any] = ["message": messageText]
+
         let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
 
         //最後のimageDataは無用だがこれでリリースしたので変更しない
         let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
-        
+
         let ResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
-        
+
         //アイコン写真を登録しなかっ場合
         func registIconImage() {
             if iconImage == self.defaultIconImage {
@@ -116,31 +159,31 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
                 }
             }
         }
-        
+
         //名前未入力で登録ボタンが押された時
         if myname.isEmpty || targetname.isEmpty {
             alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
-            
+
             //名前の入力文字数ーオーバー
         } else if myname.count >= 13 || targetname.count >= 13 {
             alert(title: "名前は１３文字までです", message: "", actiontitle: "OK")
-            
-            
+
+
         } else {
-            
+
             //投稿履歴が有る時
             if var registNames = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
-                
+
                 //投稿数>10で登録数オーバーアラート
                 if registNames.count > 10 {
-                    
+
                     let cancel = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: nil)
                     let sendList = UIAlertAction(title: "登録リストへ",style: UIAlertAction.Style.default,handler:{(action:UIAlertAction!) -> Void in
-                        let list = self.storyboard?.instantiateViewController(withIdentifier: "list") as! InputDataListViewController
-                        self.navigationController?.pushViewController(list, animated: true)})
+                        self.switchVC(view: "list", animation: true)
+                    })
                     cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
-                    
-                    
+
+
                 } else {
                     //投稿数<10　(UD.count 0-10)
                     //全く同じ名前の投稿でなければUDに名前保存
@@ -150,26 +193,23 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
                     }
                     registIconImage()
                 }
-                
+
             } else {
                 //投稿値歴無し
                 UD.set([[myname:targetname]], forKey: UDKey.keys.uniqueNmame.rawValue)
                 registIconImage()
             }
-            
+
             //names_messageArray == [myname, targetname, messageText]
             ResultVC.registData = registData
             self.navigationController?.pushViewController(ResultVC, animated: true)
         }
-        
-        // キーボード閉じる
-        func keyboardWillHide(notification: Notification?) {
-            let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
-            UIView.animate(withDuration: duration!) {
-                self.view.transform = CGAffineTransform.identity
-            }
-        }
+        // フォーカスは外す　＆　キーボード閉じる　&　View戻す
+        messageTextView.resignFirstResponder()
+        configureObserver()
     }
+    
+    
     
     
     func textFieldDidBeginEditing(_ textField: UITextField)  {

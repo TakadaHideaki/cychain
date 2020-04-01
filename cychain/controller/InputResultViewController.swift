@@ -10,7 +10,8 @@ import UIKit
 import GoogleMobileAds
 
 
-class InputResultViewController: UIViewController, UIImagePickerControllerDelegate{
+class InputResultViewController: UIViewController, UIImagePickerControllerDelegate {
+      
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,6 +30,7 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         initializeTableView()
         tableView.reloadData()
     }
+
     
     func initializeUI() {
         customNavigationBar()
@@ -40,7 +42,6 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         tableView.tableFooterView = UIView(frame: .zero)
     }
 }
-
 
     
 extension InputResultViewController: UITableViewDataSource {

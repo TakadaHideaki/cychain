@@ -11,15 +11,22 @@ import GoogleMobileAds
 import MessageUI
 import RSKImageCropper
 import XCGLogger
+import Firebase
 
 
 
 extension UIViewController {
     
     //viewの切り替え
-    func switchVC(view: String) {
+    func switchVC(view: String, animation: Bool) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: view)
-        self.navigationController?.pushViewController(vc!, animated: true)
+        self.navigationController?.pushViewController(vc!, animated: animation)
+    }
+    
+    func presentVC(view: String, animation: Bool) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: view)
+        self.present(vc, animated: animation)
     }
     
     
@@ -159,6 +166,20 @@ class DismissControllerSegue: UIStoryboardSegue {
 
 
 
+func aa(icon: UIImage, ref: StorageReference) -> String {
+    var profileimage = ""
+    if let imageData = icon.pngData() {
+        ref.putData(imageData, metadata: nil){ (metadata, error)in
+            
+            guard metadata != nil else { return }
+            ref.downloadURL { (url, error) in
+                guard let downloadURL = url else { return }
+                profileimage = downloadURL.absoluteString
+            }
+        }
+    }
+    return profileimage
+}
 
 
 

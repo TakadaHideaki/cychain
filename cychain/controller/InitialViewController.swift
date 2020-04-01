@@ -66,10 +66,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         //モーダルで本体に画面遷移
         if Auth.auth().currentUser != nil {
             log.debug("logging in")
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let tabVC = storyboard.instantiateViewController(withIdentifier: "tabVC")
-            tabVC.modalPresentationStyle = .fullScreen
-            self.present(tabVC, animated: true)
+            self.presentVC(view: "tabVC", animation: true)
         }
     }
     
@@ -84,10 +81,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
        }
 
      @objc func loginCompleted(notification: NSNotification){
-         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-         let tabVC = storyboard.instantiateViewController(withIdentifier: "tabVC")
-         tabVC.modalPresentationStyle = .fullScreen
-         self.present(tabVC, animated: true)
+        self.presentVC(view: "tabVC", animation: true)
      }
     
     

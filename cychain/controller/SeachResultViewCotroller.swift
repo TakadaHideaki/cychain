@@ -92,7 +92,7 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
             //エラー処理
             func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
                 if error != nil {
-                    print(error!)//送信失敗
+                    log.debug(error!)//送信失敗
                 } else {
                     controller.dismiss(animated: true, completion: nil)
                 }

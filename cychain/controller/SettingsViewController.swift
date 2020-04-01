@@ -153,8 +153,8 @@ extension SettingsViewController: UITableViewDelegate {
             
             
         case ("問い合わせ"): sendMail()
-        case ("利用規約"): switchVC(view: "terms1")
-        case ("プライバシーポリシー"): switchVC(view: "privacyPolicy")
+        case ("利用規約"): switchVC(view: "terms1", animation: true)
+        case ("プライバシーポリシー"): switchVC(view: "privacyPolicy", animation: true)
         default: break
         }
     }

@@ -3891,7 +3891,7 @@ Cg
         <!--編集-->
         <scene sceneID="KEy-8c-eej">
             <objects>
-                <viewController storyboardIdentifier="DataEditVC" title="編集" id="qoR-G0-sTD" customClass="EditViewController" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DataEditVC" title="編集" modalPresentationStyle="fullScreen" id="qoR-G0-sTD" customClass="EditViewController" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NpR-vf-e56">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4081,7 +4081,7 @@ Cg
         <!--Tab Bar Controller-->
         <scene sceneID="jO3-L7-4Go">
             <objects>
-                <tabBarController storyboardIdentifier="tabVC" automaticallyAdjustsScrollViewInsets="NO" id="F7f-DU-aJa" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabVC" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="F7f-DU-aJa" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Oxn-vX-54e"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="knb-uZ-jOk">
@@ -4183,7 +4183,7 @@ Cg
         <!--Navigation Controller-->
         <scene sceneID="vrI-7Y-gJ6">
             <objects>
-                <navigationController storyboardIdentifier="EditNC" automaticallyAdjustsScrollViewInsets="NO" id="tqO-xB-G7d" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="EditNC" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="tqO-xB-G7d" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Sa1-rV-acb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

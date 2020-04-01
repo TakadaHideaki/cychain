@@ -136,9 +136,6 @@ extension InputDataListViewController: UITableViewDelegate {
         
         let myName = myNames?[indexPath.row] ?? ""
         let searchName = targetNames?[indexPath.row] ?? ""
-        
-        
-        let EditNC = (self.storyboard?.instantiateViewController(withIdentifier: "EditNC"))!
         let ref = Database.database().reference().child("\(myName)/\(searchName)/\(USER_ID!)")
 
         ref.observeSingleEvent(of: .value, with: { (DataSnapshot) in
@@ -150,8 +147,7 @@ extension InputDataListViewController: UITableViewDelegate {
             let singleton = EditData.sharedInstance
             singleton.SingletonUserData = UserData
             
-            EditNC.modalPresentationStyle = .fullScreen
-            self.present(EditNC, animated: true)
+            self.presentVC(view: "EditNC", animation: true)
         })
     }
 }
