@@ -472,7 +472,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="あなたの名前" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LVn-Du-Ewk" customClass="MadokaTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="40" y="79" width="334" height="60"/>
+                                <rect key="frame" x="40" y="123" width="334" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -494,7 +494,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="相手の名前" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uEi-FH-5am" customClass="MadokaTextField" customModule="TextFieldEffects">
-                                <rect key="frame" x="40" y="154" width="334" height="60"/>
+                                <rect key="frame" x="40" y="198" width="334" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -516,14 +516,14 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kxz-3v-Oml" customClass="AnimationView" customModule="Lottie">
-                                <rect key="frame" x="0.0" y="254" width="414" height="458"/>
+                                <rect key="frame" x="0.0" y="298" width="414" height="365"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="matchAnimateion"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなた宛のPostCardはまだありません" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cs0-5L-nIf">
-                                <rect key="frame" x="40" y="311" width="296" height="21"/>
+                                <rect key="frame" x="40" y="355" width="296" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="duV-Uf-iXI"/>
                                 </constraints>
@@ -532,7 +532,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILi-bF-TIs" customClass="Button" customModule="cychain" customModuleProvider="target">
-                                <rect key="frame" x="40" y="236" width="334" height="50"/>
+                                <rect key="frame" x="40" y="280" width="334" height="50"/>
                                 <color key="backgroundColor" red="0.29404956760000001" green="0.55683230709999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="aED-og-JWP"/>
@@ -572,7 +572,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UfI-NU-3ze" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
-                                <rect key="frame" x="192" y="209" width="30" height="30"/>
+                                <rect key="frame" x="192" y="253" width="30" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="jaQ-5K-61B"/>
@@ -586,7 +586,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5CM-hF-gLn" userLabel="info">
-                                <rect key="frame" x="341" y="309.5" width="25" height="24"/>
+                                <rect key="frame" x="341" y="353.5" width="25" height="24"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <segue destination="JSH-Si-jNS" kind="presentation" id="Brs-1b-JDc"/>
@@ -965,7 +965,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="mailSignUp:" destination="meJ-kP-YoM" eventType="touchUpInside" id="1Vt-Vw-c7i"/>
+                                    <action selector="signUpButtonTapped:" destination="meJ-kP-YoM" eventType="touchUpInside" id="1Vt-Vw-c7i"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -4106,7 +4106,7 @@ Cg
         <!--search-->
         <scene sceneID="t9h-qT-wf2">
             <objects>
-                <navigationController storyboardIdentifier="naviSearch" automaticallyAdjustsScrollViewInsets="NO" id="GYe-XM-Gxu" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="naviSearch" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="GYe-XM-Gxu" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="search" image="search" selectedImage="search" id="v11-Lg-GIn">
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
@@ -4210,6 +4210,6 @@ Cg
         <image name="user12" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="N0k-Rs-K8Q"/>
+        <segue reference="h5u-nY-3Kq"/>
     </inferredMetricsTieBreakers>
 </document>

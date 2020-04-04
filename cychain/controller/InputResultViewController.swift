@@ -11,7 +11,7 @@ import GoogleMobileAds
 
 
 class InputResultViewController: UIViewController, UIImagePickerControllerDelegate {
-      
+        
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -30,7 +30,6 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         initializeTableView()
         tableView.reloadData()
     }
-
     
     func initializeUI() {
         customNavigationBar()

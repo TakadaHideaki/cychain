@@ -166,8 +166,9 @@ class DismissControllerSegue: UIStoryboardSegue {
 
 
 
-func aa(icon: UIImage, ref: StorageReference) -> String {
-    var profileimage = ""
+func setIconStorage(icon: UIImage, ref: StorageReference) -> String {
+    
+    var profileimage: String?
     if let imageData = icon.pngData() {
         ref.putData(imageData, metadata: nil){ (metadata, error)in
             
@@ -178,7 +179,7 @@ func aa(icon: UIImage, ref: StorageReference) -> String {
             }
         }
     }
-    return profileimage
+    return profileimage ?? ""
 }
 
 

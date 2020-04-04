@@ -14,12 +14,8 @@ import RSKImageCropper
 import TextFieldEffects
 
 
-class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard, modelDelegate {
+class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
     
-    
-    func did() {
-        log.debug("a")
-    }
     
 
     
@@ -30,8 +26,6 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var messageLabel: UILabel!
     
     let defaultIconImage = UIImage(named: "user10")//写真登録のアイコンイメージ
-    let model = UserDataModel()
-
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
@@ -40,9 +34,6 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
-        
-//        model = UserDataModel()
-        model.delegate = self
     }
     
     func initializeUI() {
@@ -81,133 +72,202 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     //データ入力後の投稿ボタン
     @IBAction func postAction(_ sender: Any) {
         
-
-//        model.setName(name2: "aaa")
-   
-        
-
         let myname = myNameTextField.text?.deleteSpace() ?? ""
         let targetname = targetNameTextField.text?.deleteSpace() ?? ""
         let messageText = messageTextView.text ?? ""
         let iconImage = iconRegistButton.currentImage ?? self.defaultIconImage
-
+        
         //入力データを格納
+        let registData: [String: Any] = [
+            "my": myname,
+            "target": targetname,
+            "message": messageText,
+            "image": iconImage as Any,
+        ]
+        
+        let model = UserDataModel(data: registData)
+
+        //名前未入力アラート
+        if myname.isEmpty || targetname.isEmpty {
+            noNameAlert()
+        }
+        //名前文字数オーバーアラート
+        if myname.count >= 13 || targetname.count >= 13 {
+            overCharacterAlert()
+        }
+        //投稿履歴有り
+        if var registData = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
+
+            switch registData.count {
+            case 0 ... 10:
+                //同じ名前が登録されていたらUDには保存しない
+                if !registData.contains([myname:targetname]) {
+                    registData += [[myname:targetname]]
+                    UD.set(registData, forKey: UDKey.keys.uniqueNmame.rawValue)
+                }
+                model.setFirebase()
+
+            default: UDregistationAlert() //登録数オーバーアラート
+            }
+
+        } else {
+            //投稿値歴無し
+            UD.set([[myname:targetname]], forKey: UDKey.keys.uniqueNmame.rawValue)
+            model.setFirebase()
+        }
+        
+//
+//
+//        //names_messageArray == [myname, targetname, messageText]
+        let ResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
+        ResultVC.registData = registData
+//        switchVC(view: "InputResultVC", animation: true)
+        
+        // フォーカスは外す　＆　キーボード閉じる　&　View戻す
+        messageTextView.resignFirstResponder()
+        configureObserver()
+    }
+    
+    
+    func noNameAlert() {
+        alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
+    }
+    
+    func overCharacterAlert() {
+        alert(title: "名前は１３文字までです", message: "", actiontitle: "OK")
+    }
+    
+    func UDregistationAlert(){
+        let cancel = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: nil)
+        let sendList = UIAlertAction(title: "登録リストへ",style: UIAlertAction.Style.default,handler:{(action:UIAlertAction!) -> Void in
+            self.switchVC(view: "list", animation: true)
+        })
+        cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//
+//        let myname = myNameTextField.text?.deleteSpace() ?? ""
+//        let targetname = targetNameTextField.text?.deleteSpace() ?? ""
+//        let messageText = messageTextView.text ?? ""
+//        let iconImage = iconRegistButton.currentImage ?? self.defaultIconImage
+//
+//        //入力データを格納
 //        var registData: [String: Any] = [
 //            "my":      myname,
 //            "target":  targetname,
 //            "message":  messageText,
 //            "image":    iconImage as Any,
 //        ]
-        
-        var registData: [String: Any] = [
-            "my":     myNameTextField.text?.deleteSpace() ?? "",
-            "target":  targetNameTextField.text?.deleteSpace() ?? "",
-            "message": messageTextView.text ?? "",
-            "image":   iconRegistButton.currentImage ?? self.defaultIconImage as Any,
-        ]
-        
-        model.set(my: myNameTextField.text?.deleteSpace() ?? "",
-                  target: targetNameTextField.text?.deleteSpace() ?? "",
-                  message: messageTextView.text ?? "",
-                  icon: iconRegistButton.currentImage ?? self.defaultIconImage!
-        )
-        
-        
-        
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-        var value: [String: Any] = ["message": messageText]
-
-        let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
-
-        //最後のimageDataは無用だがこれでリリースしたので変更しない
-        let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
-
-        let ResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
-
-        //アイコン写真を登録しなかっ場合
-        func registIconImage() {
-            if iconImage == self.defaultIconImage {
-                registData["image"] = nil //登録データに写真を登録しない
-                ref.setValue(value) //Firebaseに登録
-
-            } else {
-                //写真投稿有り→ storageに写真保存
-                if let imageData = iconImage?.pngData() {
-                    storageRef.putData(imageData, metadata: nil){ (metadata, error)in
-
-                        guard metadata != nil else { return }
-                        storageRef.downloadURL { (url, error) in
-                            guard let downloadURL = url else { return }
-                            let profileimage = downloadURL.absoluteString
-
-                            // Firebaseに写真とmessageを保存
-                            value["image"] = profileimage
-                            ref.updateChildValues(value)
-                        }
-                    }
-                }
-            }
-        }
-
-        //名前未入力で登録ボタンが押された時
-        if myname.isEmpty || targetname.isEmpty {
-            alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
-
-            //名前の入力文字数ーオーバー
-        } else if myname.count >= 13 || targetname.count >= 13 {
-            alert(title: "名前は１３文字までです", message: "", actiontitle: "OK")
-
-
-        } else {
-
-            //投稿履歴が有る時
-            if var registNames = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
-
-                //投稿数>10で登録数オーバーアラート
-                if registNames.count > 10 {
-
-                    let cancel = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: nil)
-                    let sendList = UIAlertAction(title: "登録リストへ",style: UIAlertAction.Style.default,handler:{(action:UIAlertAction!) -> Void in
-                        self.switchVC(view: "list", animation: true)
-                    })
-                    cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
-
-
-                } else {
-                    //投稿数<10　(UD.count 0-10)
-                    //全く同じ名前の投稿でなければUDに名前保存
-                    if !registNames.contains([myname:targetname]) {
-                        registNames += [[myname:targetname]]
-                        UD.set(registNames, forKey: UDKey.keys.uniqueNmame.rawValue)
-                    }
-                    registIconImage()
-                }
-
-            } else {
-                //投稿値歴無し
-                UD.set([[myname:targetname]], forKey: UDKey.keys.uniqueNmame.rawValue)
-                registIconImage()
-            }
-
-            //names_messageArray == [myname, targetname, messageText]
-            ResultVC.registData = registData
-            self.navigationController?.pushViewController(ResultVC, animated: true)
-        }
-        // フォーカスは外す　＆　キーボード閉じる　&　View戻す
-        messageTextView.resignFirstResponder()
-        configureObserver()
-    }
+//
+//        model.set(my: myNameTextField.text?.deleteSpace() ?? "",
+//                  target: targetNameTextField.text?.deleteSpace() ?? "",
+//                  message: messageTextView.text ?? "",
+//                  icon: iconRegistButton.currentImage ?? self.defaultIconImage!
+//        )
+//
+//
+//        var value: [String: Any] = ["message": messageText]
+//
+//        let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
+//
+//        //最後のimageDataは無用だがこれでリリースしたので変更しない
+//        let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
+//
+//
+//        //アイコン写真を登録しなかっ場合
+//        func registIconImage() {
+//            if iconImage == self.defaultIconImage {
+//                registData["image"] = nil //登録データに写真を登録しない
+//                ref.setValue(value) //Firebaseに登録
+//
+//            } else {
+//                //写真投稿有り→ storageに写真保存
+//                if let imageData = iconImage?.pngData() {
+//                    storageRef.putData(imageData, metadata: nil){ (metadata, error)in
+//
+//                        guard metadata != nil else { return }
+//                        storageRef.downloadURL { (url, error) in
+//                            guard let downloadURL = url else { return }
+//                            let profileimage = downloadURL.absoluteString
+//
+//                            // Firebaseに写真とmessageを保存
+//                            value["image"] = profileimage
+//                            ref.updateChildValues(value)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        //名前未入力で登録ボタンが押された時
+//        if myname.isEmpty || targetname.isEmpty {
+//            alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
+//
+//            //名前の入力文字数ーオーバー
+//        } else if myname.count >= 13 || targetname.count >= 13 {
+//            alert(title: "名前は１３文字までです", message: "", actiontitle: "OK")
+//
+//
+//        } else {
+//
+//            //投稿履歴が有る時
+//            if var registData = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
+//
+//                //投稿数>10で登録数オーバーアラート
+//                if registData.count > 10 {
+//
+//                    let cancel = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: nil)
+//                    let sendList = UIAlertAction(title: "登録リストへ",style: UIAlertAction.Style.default,handler:{(action:UIAlertAction!) -> Void in
+//                        self.switchVC(view: "list", animation: true)
+//                    })
+//                    cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
+//
+//
+//                } else {
+//                    //投稿数<10　(UD.count 0-10)
+//                    //全く同じ名前の投稿でなければUDに名前保存
+//                    if !registData.contains([myname:targetname]) {
+//                        registData += [[myname:targetname]]
+//                        UD.set(registData, forKey: UDKey.keys.uniqueNmame.rawValue)
+//                    }
+//                    registIconImage()
+//                }
+//
+//            } else {
+//                //投稿値歴無し
+//                UD.set([[myname:targetname]], forKey: UDKey.keys.uniqueNmame.rawValue)
+//                registIconImage()
+//            }
+//
+//            //names_messageArray == [myname, targetname, messageText]
+//            let ResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
+//            ResultVC.registData = registData
+//            switchVC(view: "InputResultVC", animation: true)
+////           self.navigationController?.pushViewController(ResultVC, animated: true)
+//        }
+//        // フォーカスは外す　＆　キーボード閉じる　&　View戻す
+//        messageTextView.resignFirstResponder()
+//        configureObserver()
+    
     
     
     
@@ -248,7 +308,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         let newText: String = (messageTextView.text! as NSString).replacingCharacters(in: range, with: text)
-        return numberOfLines(orgTextView: textView, newText: newText) <= 6
+        return numberOfLines(orgTextView: textView, newText: newText) <= maxLength
     }
     
     

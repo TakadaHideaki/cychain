@@ -11,7 +11,6 @@ import GoogleMobileAds
 
 class SelectViewController: UIViewController {
     
-    
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
     }
@@ -29,6 +28,7 @@ class SelectViewController: UIViewController {
         #endif
     }
     
+    
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
     }
@@ -43,5 +43,7 @@ class SelectViewController: UIViewController {
         tabBarController?.selectedViewController = UINavigationController
     }
 }
+
+
 
 

@@ -12,27 +12,47 @@ import FirebaseStorage
 import FirebaseDatabase
 
 
-protocol modelDelegate {
-    func did()
-}
-
 class UserDataModel {
     
-    var delegate: modelDelegate?
-
     var my: String?
     var target: String?
     var message: String?
     var icon: UIImage?
     
     
-    func set(my: String, target: String, message: String, icon: UIImage){
-        self.my = my as String
-        self.target = target
-        self.message = message
-        self.icon = icon
+//     init(my: String, target: String, message: String, icon: UIImage){
+//           self.my = my as String
+//           self.target = target
+//           self.message = message
+//           self.icon = icon
+//        super.init(nibName: nil, bundle: nil)
+//       }
+    
+   
+    
+
+    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
+    
+
+    
+    init(data: [String: Any]) {
+        self.my = data["my"] as? String
+        self.target = data["target"] as? String
+        self.message = data["message"] as? String
+        self.icon = data["image"] as? UIImage
     }
     
+//
+//    func set(my: String, target: String, message: String, icon: UIImage){
+//        self.my = my as String
+//        self.target = target
+//        self.message = message
+//        self.icon = icon
+//    }
     
     
     func setFirebase() {
@@ -42,28 +62,54 @@ class UserDataModel {
         let defaultIcon = UIImage(named: "user10")
         
         switch icon {
-        case defaultIcon: ref.setValue(message)
-        
+        case defaultIcon:
+            ref.setValue(message)
         default:
-//            if let imageData = icon?.pngData() {
-//                storageRef.putData(imageData, metadata: nil){ (metadata, error)in
-//
-//                    guard metadata != nil else { return }
-//                    storageRef.downloadURL { (url, error) in
-//                        guard let downloadURL = url else { return }
-//                        let profileimage = downloadURL.absoluteString
-           let aaa = aa(icon: self.icon!, ref: storageRef)
-        
-                
-                        
-                        // Firebaseに写真 + message保存
-//                        ref.updateChildValues(["message": self.message as Any, "image": profileimage])
-            ref.updateChildValues(["message": self.message as Any, "image": aaa])
+            let iconImage = setIconStorage(icon: self.icon!, ref: storageRef)
+            ref.updateChildValues(["message": self.message as Any, "image": iconImage])
+        }
+    }
+    
+ 
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
             
-                    }
-                }
-            }
+            
+            //            if let imageData = icon?.pngData() {
+            //                storageRef.putData(imageData, metadata: nil){ (metadata, error)in
+            //
+            //                    guard metadata != nil else { return }
+            //                    storageRef.downloadURL { (url, error) in
+            //                        guard let downloadURL = url else { return }
+            //                        let profileimage = downloadURL.absoluteString
+            
+            // Firebaseに写真 + message保存
+            //   ref.updateChildValues(["message": self.message as Any, "image": profileimage])
+//        }
+//    }
+//}
         
     
     

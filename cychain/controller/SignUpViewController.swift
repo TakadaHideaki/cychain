@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var sinupButton: Button!
     
     
+    var authModel: AuthModel?
     let passwordShow_Hide_Button = UIButton(type: .custom) //パスワードを伏せ字にするボタン
     let showImage = UIImage(named: "eye5") //目のマーク
     let hideImage = UIImage(named: "eye4") //目にスラッシュ（伏せ字用）
@@ -27,20 +28,26 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        intializeModel()
         initializeUI()
+    }
+    
+    func intializeModel() {
+        authModel = AuthModel()
+        authModel?.delegate = self
     }
     
     func initializeUI() {
         emailTextField.delegate = self
         passwordTextField.delegate = self
         passwordTextField.isSecureTextEntry = true
-
+        
         emailTextField.underLine(height: 1.0, color: .white)
         passwordTextField.underLine(height: 1.0, color: .white)
-
+        
         passwordShow_Hide_Button.setImage((hideImage), for: .normal)
         addLeftIcon(textField: emailTextField, andImage: UIImage(named: "mail")!)
         addLeftIcon(textField: passwordTextField, andImage: UIImage(named: "password")!)
@@ -48,7 +55,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     //paswprdTextFieldの左に伏せ字用の目のマーク設置
-     func addPasswordEyeButton() {
+    func addPasswordEyeButton() {
         passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
         passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
         passwordShow_Hide_Button.addTarget(self, action: #selector(self.security), for: .touchUpInside)
@@ -84,21 +91,24 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-
-
+    
+    
     //メールでアカウント作成
-    @IBAction func mailSignUp(_ sender: Any) {
-        Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authResult, error) in
-            
-            if (((authResult?.user) != nil) && error == nil) || Auth.auth().currentUser != nil {
-                let tabVC = self.storyboard?.instantiateViewController(withIdentifier: "tabVC")
-                tabVC!.modalPresentationStyle = .fullScreen
-                self.present(tabVC!, animated: true)
-            
-            } else {
-                self.alert(title: "アカウントが登録できませんでした", message: "", actiontitle: "OK")
-                return
-            }
-        }
+    @IBAction func signUpButtonTapped(_ sender: Any) {
+        
+        guard let email = emailTextField.text,
+            let passord = passwordTextField.text
+            else { return }
+        authModel?.signUp(emai: email, password: passord)
     }
 }
+
+
+
+extension SignUpViewController: AuthModelDelegate {
+    
+    func didSignUp() {
+        presentVC(view: "tabVC", animation: true)
+    }
+}
+
