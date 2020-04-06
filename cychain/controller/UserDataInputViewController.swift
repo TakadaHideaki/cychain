@@ -116,8 +116,7 @@ class UserDataInputViewController: UIViewController, UINavigationControllerDeleg
             model.setFirebase()
         }
         
-//
-//
+
 //        //names_messageArray == [myname, targetname, messageText]
         let ResultVC = self.storyboard?.instantiateViewController(withIdentifier: "InputResultVC") as! InputResultViewController
         ResultVC.registData = registData

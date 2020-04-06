@@ -7,108 +7,127 @@
 //
 
 import UIKit
-import Firebase
 import FirebaseAuth
 
-class SignUpViewController: UIViewController, UITextFieldDelegate {
-    
-    
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var sinupButton: Button!
-    
+class SignUpViewController: UIViewController {
     
     var authModel: AuthModel?
-    let passwordShow_Hide_Button = UIButton(type: .custom) //パスワードを伏せ字にするボタン
-    let showImage = UIImage(named: "eye5") //目のマーク
-    let hideImage = UIImage(named: "eye4") //目にスラッシュ（伏せ字用）
-    
+    var authView: AuthView?
+    let logInView = AuthView.instance()
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        logInView.frame = self.view.frame
+        self.view.addSubview(logInView)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        intializeModel()
+        set_View_Model()
         initializeUI()
     }
     
-    func intializeModel() {
+    func set_View_Model() {
         authModel = AuthModel()
+        authView = AuthView()
         authModel?.delegate = self
+        authView?.delegate = self
     }
     
     func initializeUI() {
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        passwordTextField.isSecureTextEntry = true
+        logInView.emailTextField.delegate = self
+        logInView.passwordTextField.delegate = self
+        logInView.passwordTextField.isSecureTextEntry = true
+        logInView.textFieldUnderLine()   // textFieldをアンダーラインのみ
+        logInView.textFieldLeftIconSet() // メール、パスワードアイコン設置
+        logInView.addPasswordEyeButton() // 伏せ字用アイマーク設置
+        logInView.loginButtonInvalid()  // signUpボタン無効
+        logInView.signUpUI() //signUp用にラベル等を非表示
+        logInView.logInButton.setTitle("Sign Up", for: .normal)
+    }
+}
+
+
+extension SignUpViewController: AuthViewDelegate {
+    func text(email: String, password: String) {
         
-        emailTextField.underLine(height: 1.0, color: .white)
-        passwordTextField.underLine(height: 1.0, color: .white)
+        authModel?.signUp(emai: email, password: password)
+    }
+}
+
+
+extension SignUpViewController: AuthModelDelegate {
+
+    //Home画面へ
+    func toHome() {
+        presentVC(view: "tabVC", animation: true)
+    }
+    
+    //ahthのエラーハンドリング
+    func errorDidOccur(error: Error){
         
-        passwordShow_Hide_Button.setImage((hideImage), for: .normal)
-        addLeftIcon(textField: emailTextField, andImage: UIImage(named: "mail")!)
-        addLeftIcon(textField: passwordTextField, andImage: UIImage(named: "password")!)
-        addPasswordEyeButton()
+        let errorCode = AuthErrorCode(rawValue: error._code)
+        
+        switch errorCode {
+        case .weakPassword://パスワード文字数不足
+            weakPasswordAlert()
+            
+        case .invalidEmail://無効アドレス
+            invalidEmailAlert()
+            
+        case .emailAlreadyInUse://既につ使われているアドレス
+            emailAlreadyInUseAlert()
+            
+        default: noRegistationAlert()
+        }
     }
+    func weakPasswordAlert() {
+          self.alert(title: "パスワードは６文字以上で入力して下さい", message: "", actiontitle: "OK")
+      }
+    func invalidEmailAlert() {
+          self.alert(title: "メールアドレスが正しくありません", message: "", actiontitle: "OK")
+      }
+    func emailAlreadyInUseAlert() {
+        self.alert(title: "このメールアドレスはすでに使われています", message: "", actiontitle: "OK")
+    }
+    func noRegistationAlert() {
+          self.alert(title: "エラー", message: " エラーが起きました\nしばらくしてから再度お試し下さい", actiontitle: "OK")
+      }
+    func passwordErrorAlert(){}
+    func passwordResetSuccessAlert(){}
+}
+
+
+extension SignUpViewController: UITextFieldDelegate {
     
-    //paswprdTextFieldの左に伏せ字用の目のマーク設置
-    func addPasswordEyeButton() {
-        passwordShow_Hide_Button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
-        passwordShow_Hide_Button.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-        passwordShow_Hide_Button.addTarget(self, action: #selector(self.security), for: .touchUpInside)
-        passwordTextField.rightView = passwordShow_Hide_Button
-        passwordTextField.rightViewMode = .always
-    }
-    //伏せ字の処理
-    @objc func security(_ sender: Any) {
-        var show = true
-        passwordTextField.isSecureTextEntry.toggle()
-        show.toggle()
-        let show_hideImage = show ? hideImage: showImage
-        passwordShow_Hide_Button.setImage(show_hideImage, for: .normal)
-    }
-    
-    //textField左にアイコン設置
-    func addLeftIcon(textField: UITextField, andImage image: UIImage) {
-        let iconView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 20 , height: 20))
-        let iconMarginView: UIView = UIView(frame:
-            CGRect(x: 0, y: 0, width: 30, height: 20))
-        iconMarginView.addSubview(iconView)
-        iconView.image = image
-        textField.leftView = iconMarginView
-        textField.leftViewMode = UITextField.ViewMode.always
-    }
-    
-    //mail入力後passwordにカーソルを自動移動
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        let nextTag = textField.tag + 1
-        if let nextTextField = self.view.viewWithTag(nextTag) {
-            nextTextField.becomeFirstResponder()
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        //signUpボタン有効無効切替
+        if logInView.emailTextField.text!.isEmpty || logInView.passwordTextField.text!.isEmpty {
+            logInView.loginButtonInvalid()
+        } else {
+            logInView.loginButtonEnabled()
         }
         return true
     }
     
-    
-    //メールでアカウント作成
-    @IBAction func signUpButtonTapped(_ sender: Any) {
-        
-        guard let email = emailTextField.text,
-            let passord = passwordTextField.text
-            else { return }
-        authModel?.signUp(emai: email, password: passord)
-    }
+    //    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    //        logInView.emailTextField.resignFirstResponder()
+    //        logInView.passwordTextField.resignFirstResponder()
+    //        //mail入力後passwordにカーソルを自動移動
+    //        textField.resignFirstResponder() // 今フォーカスが当たっているTextFieldからフォーカスを外す
+    //        let nextTag = textField.tag + 1  // 次のTag番号を持っているTextFieldがあれば、フォーカスする
+    //        if let nextTextField = self.view.viewWithTag(nextTag) {
+    //            nextTextField.becomeFirstResponder()
+    //        }
+    //        return true
+    //    }
 }
 
 
-
-extension SignUpViewController: AuthModelDelegate {
-    
-    func didSignUp() {
-        presentVC(view: "tabVC", animation: true)
-    }
-}
 

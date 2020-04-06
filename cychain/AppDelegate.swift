@@ -15,7 +15,9 @@ import XCGLogger
 let UD = UserDefaults.standard
 let USER_ID = Auth.auth().currentUser?.uid
 //#elseif cychain-dev
-let STORAGE = Storage.storage().reference(forURL: "gs://cychain-dev.appspot.com")
+//let STORAGE = Storage.storage().reference(forURL: "gs://cychain-dev.appspot.com")
+let STORAGE = Storage.storage().reference(forURL: "gs://cychain-6d3b6.appspot.com")
+
 
 
 
@@ -52,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
         FirebaseApp.configure()
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID

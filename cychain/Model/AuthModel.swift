@@ -9,7 +9,10 @@
 import Firebase
 
 protocol AuthModelDelegate: class {
-    func didSignUp()
+    func toHome()
+    func errorDidOccur(error: Error)
+    func passwordErrorAlert()
+    func passwordResetSuccessAlert()
 }
 
 class AuthModel {
@@ -22,10 +25,42 @@ class AuthModel {
         Auth.auth().createUser(withEmail: emai, password: password) { (authResult, error) in
             
             if (((authResult?.user) != nil) && error == nil) || Auth.auth().currentUser != nil {
-                self.delegate?.didSignUp()
+                self.delegate?.toHome()
+            } else {
+                if let e = error {
+                    self.delegate?.errorDidOccur(error: e)
+                }
             }
         }
     }
     
+    func LogIn(mail: String, pass: String) {
+        
+        Auth.auth().signIn(withEmail: mail, password: pass) { (authResult, error) in
+            
+            if (((authResult?.user) != nil) && error == nil) {
+                self.delegate?.toHome()
+                
+            } else {
+                if let e = error {
+                    self.delegate?.errorDidOccur(error: e)
+                }
+            }
+        }
+    }
+    
+    func passwordReset(email: String) {
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            DispatchQueue.main.async {
+                if error != nil {
+                    self.delegate?.passwordErrorAlert()
+                } else {
+                    self.delegate?.passwordResetSuccessAlert()
+                }
+            }
+        }
+    }
     
 }
+

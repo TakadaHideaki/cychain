@@ -166,7 +166,7 @@
                                     <constraint firstAttribute="height" constant="40" id="Jvp-QH-PDH"/>
                                     <constraint firstAttribute="width" constant="300" id="feu-se-XfE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="log in">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -900,94 +900,12 @@
                     <view key="view" contentMode="redraw" id="dRI-MF-dUR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" alpha="0.90000000000000002" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-mail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NAu-j4-ZuT" customClass="textField" customModule="cychain" customModuleProvider="target">
-                                <rect key="frame" x="57" y="50" width="300" height="30"/>
-                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="IIS-5k-0Tb"/>
-                                    <constraint firstAttribute="width" constant="300" id="MTD-UY-MAj"/>
-                                </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
-                                        <integer key="value" value="30"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
-                            <textField opaque="NO" alpha="0.90000000000000002" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Passwprd " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4OI-0X-379" customClass="textField" customModule="cychain" customModuleProvider="target">
-                                <rect key="frame" x="57" y="120" width="300" height="30"/>
-                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="S7j-Sy-26t"/>
-                                    <constraint firstAttribute="height" constant="30" id="viw-0v-8Km"/>
-                                </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
-                                        <integer key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DEf-CJ-09Y" customClass="Button" customModule="cychain" customModuleProvider="target">
-                                <rect key="frame" x="57" y="200" width="300" height="40"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Yy5-XN-7xN"/>
-                                    <constraint firstAttribute="width" constant="300" id="smX-0c-cAx"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="アカウントを作成する">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                        <size key="value" width="2" height="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="signUpButtonTapped:" destination="meJ-kP-YoM" eventType="touchUpInside" id="1Vt-Vw-c7i"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" red="0.2869438231" green="0.52198284859999999" blue="0.91376918549999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <constraints>
-                            <constraint firstItem="NAu-j4-ZuT" firstAttribute="top" secondItem="Hi7-gA-dq1" secondAttribute="top" constant="50" id="01V-gU-g38"/>
-                            <constraint firstItem="DEf-CJ-09Y" firstAttribute="top" secondItem="4OI-0X-379" secondAttribute="bottom" constant="50" id="SRw-gM-Dqn"/>
-                            <constraint firstItem="NAu-j4-ZuT" firstAttribute="centerX" secondItem="dRI-MF-dUR" secondAttribute="centerX" id="dyC-Ph-xiI"/>
-                            <constraint firstItem="4OI-0X-379" firstAttribute="top" secondItem="NAu-j4-ZuT" secondAttribute="bottom" constant="40" id="rWg-C9-HUn"/>
-                            <constraint firstItem="DEf-CJ-09Y" firstAttribute="centerX" secondItem="dRI-MF-dUR" secondAttribute="centerX" id="x0M-JY-mhc"/>
-                            <constraint firstItem="4OI-0X-379" firstAttribute="centerX" secondItem="dRI-MF-dUR" secondAttribute="centerX" id="yaN-qC-WnV"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Hi7-gA-dq1"/>
                     </view>
                     <navigationItem key="navigationItem" title="アカウント作成" id="fqA-Oo-dPF">
                         <barButtonItem key="backBarButtonItem" title="戻る" id="afq-8Y-Nh5"/>
                     </navigationItem>
-                    <connections>
-                        <outlet property="emailTextField" destination="NAu-j4-ZuT" id="I1L-7d-80Q"/>
-                        <outlet property="passwordTextField" destination="4OI-0X-379" id="kNe-mg-6XJ"/>
-                        <outlet property="sinupButton" destination="DEf-CJ-09Y" id="ZEc-Wp-XuK"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IhH-VK-Flo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
