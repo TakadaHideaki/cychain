@@ -85,25 +85,26 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func searchAction(_ sender: Any) {
         
+
         let myName = myNameTextField.text?.deleteSpace() ?? ""
         let searchName = searchNameTextField.text?.deleteSpace() ?? ""
-        
+
         self.view.endEditing(true)
-        
+
         if myName.isEmpty || searchName.isEmpty {
             self.alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
             return
-            
+
         } else {
-            
+
             indicator.startAnimating()
-            
+
             let ref = Database.database().reference().child("\(myName)/\(searchName)/")
             ref.observeSingleEvent(of: .value, with: { (DataSnapshot) in
                 //マッチ無し
                 if DataSnapshot.value is NSNull {
                     self.nomutch()//マッチ無しラベルを表示
-                    
+
                 } else {
                     //マッチ有り
                     //data == [UID: [message: メッセージ, profile: 投稿写真]]

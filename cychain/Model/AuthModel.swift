@@ -10,7 +10,8 @@ import Firebase
 
 protocol AuthModelDelegate: class {
     func toHome()
-    func errorDidOccur(error: Error)
+    func signUperrorDidOccur(error: Error)
+    func logInerrorDidOccur(error: Error)
     func passwordErrorAlert()
     func passwordResetSuccessAlert()
 }
@@ -18,32 +19,34 @@ protocol AuthModelDelegate: class {
 class AuthModel {
     
     weak var delegate: AuthModelDelegate?
-    
-    
-    func signUp(emai: String, password: String) {
         
+    func signUp(emai: String, password: String) {
+
         Auth.auth().createUser(withEmail: emai, password: password) { (authResult, error) in
-            
+
             if (((authResult?.user) != nil) && error == nil) || Auth.auth().currentUser != nil {
                 self.delegate?.toHome()
             } else {
                 if let e = error {
-                    self.delegate?.errorDidOccur(error: e)
+                    self.delegate?.signUperrorDidOccur(error: e)
                 }
             }
         }
     }
     
     func LogIn(mail: String, pass: String) {
+        log.debug(mail)
         
         Auth.auth().signIn(withEmail: mail, password: pass) { (authResult, error) in
             
             if (((authResult?.user) != nil) && error == nil) {
                 self.delegate?.toHome()
+                log.debug("login sacsess")
                 
             } else {
                 if let e = error {
-                    self.delegate?.errorDidOccur(error: e)
+                    self.delegate?.logInerrorDidOccur(error: e)
+                    log.debug("login error")
                 }
             }
         }
@@ -63,4 +66,6 @@ class AuthModel {
     }
     
 }
+
+
 

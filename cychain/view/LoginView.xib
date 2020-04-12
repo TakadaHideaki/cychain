@@ -14,6 +14,34 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Nf-hv-rYf" customClass="Button" customModule="cychain" customModuleProvider="target">
+                    <rect key="frame" x="57" y="254" width="300" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="BlJ-mq-YZz"/>
+                        <constraint firstAttribute="width" constant="300" id="eSV-Ky-8qf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                            <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                            <real key="value" value="0.40000000000000002"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                            <size key="value" width="2" height="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="logInButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="WiK-rg-7Du"/>
+                    </connections>
+                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9HQ-DP-Typ" customClass="Button" customModule="cychain" customModuleProvider="target">
                     <rect key="frame" x="57" y="254" width="300" height="40"/>
                     <constraints>
@@ -101,6 +129,9 @@
                     <state key="normal" title="パスワードを忘れた">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="passwordResetButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="ab8-l7-lEf"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.29411764709999999" green="0.5568627451" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -114,23 +145,26 @@
                 <constraint firstItem="G6J-WL-lLk" firstAttribute="top" secondItem="UcE-wf-aOH" secondAttribute="bottom" constant="3" id="VAR-Te-5Jf"/>
                 <constraint firstItem="X5f-d2-m8b" firstAttribute="top" secondItem="AXu-0A-QnC" secondAttribute="bottom" constant="3" id="bS3-hp-ZaS"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="X5f-d2-m8b" secondAttribute="trailing" constant="40" id="bWo-eL-aWN"/>
+                <constraint firstItem="9Nf-hv-rYf" firstAttribute="top" secondItem="UcE-wf-aOH" secondAttribute="bottom" constant="50" id="dna-Fl-VIz"/>
                 <constraint firstItem="9HQ-DP-Typ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hVT-22-eA1"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wsR-eP-I7f" secondAttribute="trailing" constant="34" id="haQ-KZ-FvY"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="G6J-WL-lLk" secondAttribute="trailing" constant="40" id="jda-zB-YVu"/>
                 <constraint firstItem="wsR-eP-I7f" firstAttribute="top" secondItem="UcE-wf-aOH" secondAttribute="bottom" constant="15" id="l6b-Ru-2XM"/>
                 <constraint firstItem="UcE-wf-aOH" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mrV-ns-4sx"/>
+                <constraint firstItem="9Nf-hv-rYf" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="r4S-TF-HDS"/>
                 <constraint firstItem="X5f-d2-m8b" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="40" id="tWz-fx-i9X"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="authErrorLabel" destination="X5f-d2-m8b" id="bRh-KV-T2d"/>
                 <outlet property="emailTextField" destination="AXu-0A-QnC" id="ygy-a1-dik"/>
-                <outlet property="logInButton" destination="9HQ-DP-Typ" id="DAu-5H-n2R"/>
+                <outlet property="logInButton" destination="9Nf-hv-rYf" id="XNP-AP-7RJ"/>
                 <outlet property="passwordErrorLabel" destination="G6J-WL-lLk" id="FpI-Vy-OJ5"/>
                 <outlet property="passwordResetButton" destination="wsR-eP-I7f" id="Wfq-Wx-Bkc"/>
                 <outlet property="passwordTextField" destination="UcE-wf-aOH" id="Q1y-PH-b2t"/>
+                <outlet property="signUpButton" destination="9HQ-DP-Typ" id="DAu-5H-n2R"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="90.401785714285708"/>
+            <point key="canvasLocation" x="143" y="99"/>
         </view>
     </objects>
 </document>
