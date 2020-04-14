@@ -33,7 +33,7 @@ class AuthView: UIView {
     
     
     class func instance() -> AuthView {
-          return UINib(nibName: "LoginView", bundle: nil).instantiate(withOwner: self, options: nil)[0] as! AuthView
+          return UINib(nibName: "AuthView", bundle: nil).instantiate(withOwner: self, options: nil)[0] as! AuthView
       }
     
     //textFieldをアンダーラインのみにする

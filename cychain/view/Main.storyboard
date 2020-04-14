@@ -42,7 +42,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="nAw-VH-pV3" kind="show" id="RlJ-Q7-tuC"/>
+                                    <segue destination="nAw-VH-pV3" kind="show" id="pye-B0-h1F"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0J9-PE-VtE" customClass="Button" customModule="cychain" customModuleProvider="target">
@@ -72,7 +72,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="googleSignInActive:" destination="xfh-9K-dds" eventType="touchUpInside" id="YoM-HJ-eoO"/>
+                                    <action selector="googleLogInButtonTapped:" destination="xfh-9K-dds" eventType="touchUpInside" id="SEo-M8-fih"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -90,8 +90,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="Zvx-1e-gMO"/>
                     <connections>
-                        <outlet property="gmailButton" destination="0J9-PE-VtE" id="nzl-MO-fKX"/>
-                        <outlet property="mailButton" destination="Gpv-hC-YEV" id="rKX-28-Wqg"/>
+                        <outlet property="gmailLogInButton" destination="0J9-PE-VtE" id="i3V-dT-VEu"/>
+                        <outlet property="mailLogInButton" destination="Gpv-hC-YEV" id="2cx-nv-tq5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XDE-SI-xWA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -718,7 +718,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="googleLogInActive:" destination="hXT-Pz-nMY" eventType="touchUpInside" id="NBG-41-GQi"/>
+                                    <action selector="googleSignUpButtonTapped:" destination="hXT-Pz-nMY" eventType="touchUpInside" id="NBG-41-GQi"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zeK-GZ-RZ7" customClass="Button" customModule="cychain" customModuleProvider="target">
@@ -747,9 +747,6 @@
                                         <size key="value" width="10" height="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="meJ-kP-YoM" kind="show" id="Vsf-Vg-UDf"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.2925565242767334" green="0.5411641001701355" blue="0.95298689603805542" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -766,8 +763,8 @@
                         <viewLayoutGuide key="safeArea" id="O48-v8-asQ"/>
                     </view>
                     <connections>
-                        <outlet property="gmailButton" destination="xcd-IT-VRU" id="pWe-Nv-RVP"/>
-                        <outlet property="mailButton" destination="zeK-GZ-RZ7" id="5iF-Sf-S43"/>
+                        <outlet property="gmaiSignUplButton" destination="xcd-IT-VRU" id="pWe-Nv-RVP"/>
+                        <outlet property="mailSignUpButton" destination="zeK-GZ-RZ7" id="eFT-Kr-vqT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LN2-m1-qDG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -779,7 +776,7 @@
             <objects>
                 <viewController storyboardIdentifier="sighUp" title="サインアップ" id="meJ-kP-YoM" customClass="SignUpViewController" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="redraw" id="dRI-MF-dUR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.2869438231" green="0.52198284859999999" blue="0.91376918549999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="Hi7-gA-dq1"/>
@@ -820,10 +817,10 @@
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="topColor">
-                                                            <color key="value" red="0.33630105850000003" green="0.62540513279999999" blue="0.96866911649999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <color key="value" red="0.33725490196078434" green="0.62352941176470589" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="bottomColor">
-                                                            <color key="value" red="0.4481652975" green="0.48648017640000002" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <color key="value" red="0.44705882352941173" green="0.48627450980392156" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="5"/>
@@ -904,8 +901,8 @@
                                                 <constraint firstItem="C8Q-N4-ftG" firstAttribute="centerY" secondItem="ghF-ae-gTD" secondAttribute="centerY" id="czS-UV-Mqq"/>
                                                 <constraint firstItem="bnQ-5Z-c4E" firstAttribute="leading" secondItem="mRi-KW-Yed" secondAttribute="leading" id="dYS-PI-EF0"/>
                                                 <constraint firstItem="ghF-ae-gTD" firstAttribute="centerX" secondItem="glX-OL-Mmo" secondAttribute="centerX" id="iKq-Cd-qKe"/>
+                                                <constraint firstItem="C8Q-N4-ftG" firstAttribute="leading" secondItem="glX-OL-Mmo" secondAttribute="leadingMargin" constant="45" id="iZP-6b-lF5"/>
                                                 <constraint firstItem="bnQ-5Z-c4E" firstAttribute="trailing" secondItem="mRi-KW-Yed" secondAttribute="trailing" id="mij-4a-xRx"/>
-                                                <constraint firstItem="C8Q-N4-ftG" firstAttribute="leading" secondItem="glX-OL-Mmo" secondAttribute="leadingMargin" constant="45" id="ua8-6R-iOT"/>
                                                 <constraint firstItem="g50-ZC-nvt" firstAttribute="leading" secondItem="C8Q-N4-ftG" secondAttribute="trailing" constant="10" id="wMX-oS-dxk"/>
                                             </constraints>
                                         </tableViewCellContentView>

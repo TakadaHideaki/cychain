@@ -29,6 +29,8 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         initializeUI()
         initializeTableView()
         tableView.reloadData()
+        tableView.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
+
     }
     
     func initializeUI() {
@@ -57,26 +59,47 @@ extension InputResultViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        
+        let cell2 = tableView.dequeueReusableCell(withIdentifier: "PostCardeTableViewCell", for: indexPath) as! PostCardeTableViewCell
+
+        
         if indexPath.section == 0 {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "postcardCell", for: indexPath) as! postcardCell
-
-            cell.mynameLabael.text = registData?["my"] as? String ?? ""
-            cell.targerNameLabel.text = registData?["target"] as? String ?? ""
-            cell.photoImage.image = registData?["image"] as? UIImage ?? UIImage(named: "user12")
-            cell.mynameLabael.adjustsFontSizeToFitWidth = true
-            cell.targerNameLabel.adjustsFontSizeToFitWidth = true
-            cell.mynameLabael.minimumScaleFactor = 0.5
-            cell.targerNameLabel.minimumScaleFactor = 0.5
-
-            return cell
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "postcardCell", for: indexPath) as! postcardCell
             
-        } else {
             
-            let messagecell = tableView.dequeueReusableCell(withIdentifier: "messagecell", for: indexPath) as! MessageCell
-            messagecell.messageLabel.text = registData?["message"] as? String ?? ""//メッセージ
-            return messagecell
+            guard let myName = registData?["my"] as? String,
+                let targetName = registData?["target"] as? String,
+                let profile = registData?["image"] as? UIImage ?? UIImage(named: "user12")
+                else { return cell2 }
+            
+            cell2.mynameLabel.text = myName
+            cell2.targetLabel.text = targetName
+            cell2.profileImage.image = profile
+            
+            cell2.mynameLabel.adjustsFontSizeToFitWidth = true
+            cell2.targetLabel.adjustsFontSizeToFitWidth = true
+            cell2.mynameLabel.minimumScaleFactor = 0.5
+            cell2.targetLabel.minimumScaleFactor = 0.5
+
+//            cell.mynameLabael.text = registData?["my"] as? String ?? ""
+//            cell.targerNameLabel.text = registData?["target"] as? String ?? ""
+//            cell.photoImage.image = registData?["image"] as? UIImage ?? UIImage(named: "user12")
+//            cell.mynameLabael.adjustsFontSizeToFitWidth = true
+//            cell.targerNameLabel.adjustsFontSizeToFitWidth = true
+//            cell.mynameLabael.minimumScaleFactor = 0.5
+//            cell.targerNameLabel.minimumScaleFactor = 0.5
+
+            return cell2
+            
         }
+        return cell2
+//        else {
+//
+//            let messagecell = tableView.dequeueReusableCell(withIdentifier: "messagecell", for: indexPath) as! MessageCell
+//            messagecell.messageLabel.text = registData?["message"] as? String ?? ""//メッセージ
+//            return messagecell
+//        }
     }
 }
 

@@ -13,62 +13,32 @@ import FirebaseAuth
 import GoogleSignIn
 import XLPagerTabStrip
 
-class Pager_LogIn_ViewController: UIViewController, FUIAuthDelegate, GIDSignInDelegate {
-  
+class Pager_LogIn_ViewController: Pager_SignUp_ViewController, FUIAuthDelegate {
     
-    @IBOutlet weak var mailButton: UIButton!
-    @IBOutlet weak var gmailButton: Button!
-    
-
+    @IBOutlet weak var mailLogInButton: Button!
+    @IBOutlet weak var gmailLogInButton: Button!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeUI()
-        GIDSignIn.sharedInstance()?.presentingViewController = self
+        setImageButton()
     }
     
-    
-    func initializeUI() {
-        mailButton.setImage(UIImage(named: "mail2"), for: .normal)
-        gmailButton.setImage(UIImage(named: "google"), for: .normal)
+    override func setImageButton() {
+        mailLogInButton.setImage(UIImage(named: "mail"), for: .normal)
+        gmailLogInButton.setImage(UIImage(named: "google"), for: .normal)
     }
     
-
-    
-    @IBAction func googleSignInActive(_ sender: Any) {
+    @IBAction func googleLogInButtonTapped(_ sender: Any) {
         GIDSignIn.sharedInstance().signIn()
     }
     
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-
-        if let error = error {
-            log.debug("-エラー\(error.localizedDescription)")
-            return
-        }
-        guard let authentication = user.authentication else { return }
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
-                                                       accessToken: authentication.accessToken)
-
-        //firebaseログイン
-        Auth.auth().signIn(with: credential) { (authResult, error) in
-            if error != nil { return }
-        }
-    }
-    
-    
     //ログインがキャンセル・失敗した場合
-    private func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
-                        withError error: NSError!) {
-        log.debug("ログイン失敗")
+     func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
+                withError error: NSError!) {
+        alert(title: "ログインができませんでした", message: "", actiontitle: "OK")
     }
-}
-
-
-
-
-extension Pager_LogIn_ViewController: IndicatorInfoProvider{
-    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+    
+    override func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "ログイン") // 親のButtonBarで使われる名前
     }
 }
