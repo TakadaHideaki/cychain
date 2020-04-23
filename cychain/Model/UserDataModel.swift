@@ -12,12 +12,87 @@ import FirebaseStorage
 import FirebaseDatabase
 
 
-class UserDataModel {
+//class UserDataModel {
+struct UserDataModel {
     
+    var userInputData: [String: Any]?
     var my: String?
     var target: String?
     var message: String?
     var icon: UIImage?
+    
+    init(data: [String: Any]) {
+        self.userInputData = data
+        self.my = data["my"] as? String
+        self.target = data["target"] as? String
+        self.message = data["message"] as? String
+        self.icon = data["image"] as? UIImage
+    }
+
+
+    
+}
+
+class UserDataModelSingleton {
+    
+    var userDataModel = UserDataModel(data: ["" : (Any).self])
+    static let sharead = UserDataModelSingleton()
+    private init() {}
+    
+    
+    func setData(userData: [String: Any]) {
+        userDataModel.userInputData = userData
+    }
+    
+    
+    func getData() -> [String: Any] {
+        return userDataModel.userInputData!
+    }
+    
+    
+    func setUserDfault(my: String, target: String) {
+        
+        if var UDData = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String : String]] {
+            
+            if !UDData.contains([my:target]) {
+                UDData += [[my:target]]
+                UD.set(UDData, forKey: UDKey.keys.uniqueNmame.rawValue)
+            }
+        } else {
+            UD.set([[my:target]], forKey: UDKey.keys.uniqueNmame.rawValue)
+        }
+    }
+    
+    
+    func setFirebase(userData: [String: Any]) {
+        
+        guard let my = userData["my"] as? String,
+            let target = userData["target"] as? String,
+            let message = userData["message"] as? String,
+            let icon = userData["image"] as? UIImage
+            else { return }
+        
+        let ref = Database.database().reference().child("\(my)/\(target)/\(USER_ID!)")
+        let storageRef = STORAGE.child("\(my)/\(target)/\(USER_ID!)/\("imageData")")
+        let defaultIcon = UIImage(named: "user10")
+        
+        switch icon {
+        case defaultIcon:
+            ref.setValue(message)
+            
+        default:
+            setIconStorage(icon: icon, ref: storageRef, complete: { imageURL in
+                ref.setValue(["message": message as Any, "image": imageURL])
+            })
+        }
+    }
+    
+}
+
+
+
+
+
     
     
 //     init(my: String, target: String, message: String, icon: UIImage){
@@ -39,12 +114,7 @@ class UserDataModel {
     
 
     
-    init(data: [String: Any]) {
-        self.my = data["my"] as? String
-        self.target = data["target"] as? String
-        self.message = data["message"] as? String
-        self.icon = data["image"] as? UIImage
-    }
+
     
 //
 //    func set(my: String, target: String, message: String, icon: UIImage){
@@ -55,33 +125,11 @@ class UserDataModel {
 //    }
     
     
-    func setFirebase() {
-        
-        let ref = Database.database().reference().child("\(my!)/\(target!)/\(USER_ID!)")
-        let storageRef = STORAGE.child("\(my!)/\(target!)/\(USER_ID!)/\("imageData")")
-        let defaultIcon = UIImage(named: "user10")
-        
-        switch icon {
-        case defaultIcon:
-            ref.setValue(message)
-        default:
-            let iconImage = setIconStorage(icon: self.icon!, ref: storageRef)
-            ref.updateChildValues(["message": self.message as Any, "image": iconImage])
-        }
-    }
+    //""messageが　as Any にキャストできなかったら↓
+    //    mutaing func setFirebase() {
     
- 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}
+
 
 
 

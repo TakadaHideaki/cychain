@@ -747,6 +747,9 @@
                                         <size key="value" width="10" height="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="meJ-kP-YoM" kind="show" id="a1x-Zh-UMb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.2925565242767334" green="0.5411641001701355" blue="0.95298689603805542" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -776,7 +779,7 @@
             <objects>
                 <viewController storyboardIdentifier="sighUp" title="サインアップ" id="meJ-kP-YoM" customClass="SignUpViewController" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="redraw" id="dRI-MF-dUR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.2869438231" green="0.52198284859999999" blue="0.91376918549999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="Hi7-gA-dq1"/>
@@ -875,6 +878,8 @@
                                                     <rect key="frame" x="65" y="68.5" width="60" height="60"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="0dG-KX-Weo"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="3g9-lN-HuI"/>
                                                         <constraint firstAttribute="width" constant="60" id="C3G-qH-WEB"/>
                                                         <constraint firstAttribute="height" constant="60" id="JgJ-IX-2Rb"/>
                                                     </constraints>
@@ -902,6 +907,7 @@
                                                 <constraint firstItem="bnQ-5Z-c4E" firstAttribute="leading" secondItem="mRi-KW-Yed" secondAttribute="leading" id="dYS-PI-EF0"/>
                                                 <constraint firstItem="ghF-ae-gTD" firstAttribute="centerX" secondItem="glX-OL-Mmo" secondAttribute="centerX" id="iKq-Cd-qKe"/>
                                                 <constraint firstItem="C8Q-N4-ftG" firstAttribute="leading" secondItem="glX-OL-Mmo" secondAttribute="leadingMargin" constant="45" id="iZP-6b-lF5"/>
+                                                <constraint firstItem="ghF-ae-gTD" firstAttribute="top" secondItem="glX-OL-Mmo" secondAttribute="topMargin" constant="5" id="kZo-el-YO7"/>
                                                 <constraint firstItem="bnQ-5Z-c4E" firstAttribute="trailing" secondItem="mRi-KW-Yed" secondAttribute="trailing" id="mij-4a-xRx"/>
                                                 <constraint firstItem="g50-ZC-nvt" firstAttribute="leading" secondItem="C8Q-N4-ftG" secondAttribute="trailing" constant="10" id="wMX-oS-dxk"/>
                                             </constraints>
@@ -1004,7 +1010,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x1l-PW-wFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6536" y="-3954"/>
+            <point key="canvasLocation" x="-6536.2318840579719" y="-3954.2410714285711"/>
         </scene>
         <!--アカウント·その他-->
         <scene sceneID="2ly-yp-KjJ">

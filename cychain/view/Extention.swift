@@ -165,22 +165,34 @@ class DismissControllerSegue: UIStoryboardSegue {
 }
 
 
-
-func setIconStorage(icon: UIImage, ref: StorageReference) -> String {
+func setIconStorage(icon: UIImage, ref: StorageReference, complete: @escaping (String) -> ()) {
     
-    var profileimage: String?
+    var imageURL: String?
+    
     if let imageData = icon.pngData() {
-        ref.putData(imageData, metadata: nil){ (metadata, error)in
+        
+        ref.putData(imageData, metadata: nil) { (metadata, error) in
             
             guard metadata != nil else { return }
+            
             ref.downloadURL { (url, error) in
+                
                 guard let downloadURL = url else { return }
-                profileimage = downloadURL.absoluteString
+                
+                imageURL = downloadURL.absoluteString
+                complete(imageURL ?? "")
             }
         }
     }
-    return profileimage ?? ""
 }
+
+
+
+    
+
+
+
+
 
 
 
