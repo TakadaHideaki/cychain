@@ -20,34 +20,25 @@ class PostCardeTableViewCell: UITableViewCell {
     @IBOutlet weak var to: UILabel!
     
     
-    func setProfileCell(whit model: UserDataModel) {
-        guard let my = model.my,
-            let target = model.target,
-            let icon = model.icon
-            else { return }
-        
-        mynameLabel.text = my
-        targetLabel.text = target
-        
-        if icon == UIImage(named: "user10") {
-            profileImage.image = UIImage(named: "user12")
-        } else {
-            profileImage.image = icon
-        }
-    }
+//    func setProfileCell(whit model: UserDataModel) {
+//        guard let my = model.my,
+//            let target = model.target,
+//            let icon = model.icon
+//            else { return }
+//
+//        mynameLabel.text = my
+//        targetLabel.text = target
+//
+//        if icon == UIImage(named: "user10") {
+//            profileImage.image = UIImage(named: "user12")
+//        } else {
+//            profileImage.image = icon
+//        }
+//    }
+    
     
     
     
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
 }

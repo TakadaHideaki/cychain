@@ -13,15 +13,14 @@ import GoogleMobileAds
 
 class InputDataListViewController: UIViewController, UINavigationControllerDelegate {
     
-
+    
     @IBOutlet var tableView: UITableView!
     
     var namesList: [[String:String]]? //[[myname, targetname]]
     var myNames: [String]?
     var targetNames: [String]?
     var indicatorView = UIActivityIndicatorView()
-    
-
+    var dataListModel: DataListModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +31,8 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
     func initializeUI() {
         self.navigationItem.hidesBackButton = true
         customNavigationBar()
+        dataListModel = DataListModel.sharead
+        dataListModel?.setUserDataList()
     }
     
     func initializeTableView() {
@@ -46,7 +47,7 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
     lazy var initViewLayout : Void = {
         admob()
     }()
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -55,13 +56,6 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
         
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
-        }
-        
-        //投稿履歴が有ればtableに表示
-        if let UDNamesList = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
-            self.namesList = UDNamesList
-            myNames = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
-            targetNames = (UDNamesList.map{$0.values.sorted()}).flatMap{$0} //targetだけのarray
         }
         tableView.reloadData()
     }
@@ -77,7 +71,7 @@ extension InputDataListViewController: UITableViewDataSource {
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return namesList?.count ?? 0
+        return dataListModel?.list?.count ?? 0
     }
 
 
@@ -85,41 +79,43 @@ extension InputDataListViewController: UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
 
-        cell.myName.text = myNames?[indexPath.row] ?? ""
-        cell.targetName.text = targetNames?[indexPath.row] ?? ""
+        cell.myName.text = dataListModel?.myArray?[indexPath.row] ?? ""
+        cell.targetName.text = dataListModel?.targetArray?[indexPath.row] ?? ""
         return cell
     }
 
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        let myname = myNames?[indexPath.row] ?? ""
-        let targetname = targetNames?[indexPath.row] ?? ""
-        let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
-        let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
+        dataListModel?.row = indexPath.row
+        dataListModel?.rowDelerte()
         
-        if editingStyle == .delete {
-            // firebaseのデータ削除
-            ref.removeValue()
-            // fireStorageの写真削除
-            storageRef.delete { error in
-                if let error = error {
-                    let nsError = error as NSError
-                    if nsError.domain == StorageErrorDomain &&
-                        nsError.code == StorageErrorCode.objectNotFound.rawValue {
-                        log.debug("Storage Nofile")
-                    }
-                } else {
-                    log.debug("Storege Delete Success")
-                }
-            }
-            //UDから削除
-            namesList?.remove(at: indexPath.row)
-            myNames?.remove(at: indexPath.row)
-            targetNames?.remove(at: indexPath.row)
-            UD.set(namesList, forKey: UDKey.keys.uniqueNmame.rawValue)
+//        let myname = myNames?[indexPath.row] ?? ""
+//        let targetname = targetNames?[indexPath.row] ?? ""
+//        let ref = Database.database().reference().child("\(myname)/\(targetname)/\(USER_ID!)")
+//        let storageRef = STORAGE.child("\(myname)/\(targetname)/\(USER_ID!)/\("imageData")")
+//
+//        if editingStyle == .delete {
+//            // firebaseのデータ削除
+//            ref.removeValue()
+//            // fireStorageの写真削除
+//            storageRef.delete { error in
+//                if let error = error {
+//                    let nsError = error as NSError
+//                    if nsError.domain == StorageErrorDomain &&
+//                        nsError.code == StorageErrorCode.objectNotFound.rawValue {
+//                        log.debug("Storage Nofile")
+//                    }
+//                } else {
+//                    log.debug("Storege Delete Success")
+//                }
+//            }
+//            //UDから削除
+//            namesList?.remove(at: indexPath.row)
+//            myNames?.remove(at: indexPath.row)
+//            targetNames?.remove(at: indexPath.row)
+//            UD.set(namesList, forKey: UDKey.keys.uniqueNmame.rawValue)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        }
     }
 }
 
@@ -134,20 +130,28 @@ extension InputDataListViewController: UITableViewDelegate {
     //EditViewへ
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let myName = myNames?[indexPath.row] ?? ""
-        let searchName = targetNames?[indexPath.row] ?? ""
-        let ref = Database.database().reference().child("\(myName)/\(searchName)/\(USER_ID!)")
+        dataListModel?.row = indexPath.row
+        dataListModel?.getFirebase(complete: { userData in
 
-        ref.observeSingleEvent(of: .value, with: { (DataSnapshot) in
-
-            var UserData = DataSnapshot.value as? [String: String]//[message:メッセージ, image:写真]
-            UserData?["my"] = myName
-            UserData?["target"] = searchName
-             
             let singleton = EditData.sharedInstance
-            singleton.SingletonUserData = UserData
-            
+            singleton.SingletonUserData = userData
             self.presentVC(view: "EditNC", animation: true)
         })
+        
+//        let myName = myNames?[indexPath.row] ?? ""
+//        let searchName = targetNames?[indexPath.row] ?? ""
+//        let ref = Database.database().reference().child("\(myName)/\(searchName)/\(USER_ID!)")
+
+//        ref.observeSingleEvent(of: .value, with: { (DataSnapshot) in
+//
+//            var UserData = DataSnapshot.value as? [String: String]//[message:メッセージ, image:写真]
+//            UserData?["my"] = myName
+//            UserData?["target"] = searchName
+//
+//            let singleton = EditData.sharedInstance
+//            singleton.SingletonUserData = UserData
+
+//            self.presentVC(view: "EditNC", animation: true)
+//        })
     }
 }

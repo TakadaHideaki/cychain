@@ -17,6 +17,7 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
     
     var registData: [String: Any]?
     var userInputData: [String: Any]?
+    var userDataModel: UserDataModel?
 
     
     override func viewWillLayoutSubviews() {
@@ -31,8 +32,12 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         initializeUI()
         initializeTableView()
         tableView.reloadData()
-        let singleton = UserDataModelSingleton.sharead
-        userInputData = singleton.getData()
+//        let singleton = UserDataModelSingleton.sharead
+//        userInputData = singleton.getData()
+        userDataModel = UserDataModel.sharead
+     
+        
+        
     }
     
     func initializeUI() {
@@ -67,29 +72,21 @@ extension InputResultViewController: UITableViewDataSource {
             
         case 0:
             let profileCell = tableView.dequeueReusableCell(withIdentifier: "PostCardeTableViewCell", for: indexPath) as! PostCardeTableViewCell
+            userDataModel = UserDataModel.sharead
+
+//            let userInputData = userDataModel?.getData()
+
             
-            //            guard let myName = registData?["my"] as? String,
-            //                let targetName = registData?["target"] as? String
-            //                else { return profileCell }
-            
-            //            let profile: UIImage?
-            //            if registData?["image"] as? UIImage == UIImage(named: "user10") {
-            //                profile = UIImage(named: "user12")
-            //            } else {
-            //                profile = registData?["image"] as? UIImage
-            //            }
-            
-            guard let myName = userInputData?["my"] as? String,
-                     let targetName = userInputData?["target"] as? String
+            guard let myName = userDataModel?.my,
+                     let targetName = userDataModel?.target
                      else { return profileCell }
             
             let profile: UIImage?
-                 if userInputData?["image"] as? UIImage == UIImage(named: "user10") {
+            if userDataModel?.icon == UIImage(named: "user10") {
                      profile = UIImage(named: "user12")
                  } else {
-                     profile = userInputData?["image"] as? UIImage
+                     profile = userDataModel?.icon
                  }
-            
 
             
             profileCell.mynameLabel.text = myName
@@ -106,10 +103,12 @@ extension InputResultViewController: UITableViewDataSource {
         case 1:
             
             let messagecell = tableView.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! PostCardMessageCell
-            //            messagecell.messageLabel.text = registData?["message"] as? String ?? ""//メッセージ
+//            let userInputData = userDataModel?.getData()
+            userDataModel = UserDataModel.sharead
 
-            guard let message = userInputData?["message"] else { return messagecell }
-            messagecell.messageLabel.text = message as? String//メッセージ
+
+            guard let message = userDataModel?.message else { return messagecell }
+            messagecell.messageLabel.text = message//メッセージ
 
             return messagecell
             

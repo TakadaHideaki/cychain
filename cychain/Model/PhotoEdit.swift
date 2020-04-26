@@ -9,22 +9,21 @@
 import UIKit
 import RSKImageCropper
 
-protocol ButtonSetDelegate: NSObject {
+protocol IconSetDelegate: NSObject {
     func buttonSetDidCropImage(image: UIImage)
 }
 
 
-class ButtonSet: NSObject, RSKImageCropViewControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class IconSet: NSObject, RSKImageCropViewControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
-    weak var delegate: (UIViewController & ButtonSetDelegate)?
+    weak var delegate: (UIViewController & IconSetDelegate)?
 
     var iconButton: UIButton?
     var userDataInputVC = UserDataInputViewController()
     
-    func photoLibraly() {
-        log.debug("photoLibraly")
+    func callPhotoLibraly() {
 
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let pickerView = UIImagePickerController()
             pickerView.sourceType = .photoLibrary
             pickerView.delegate = self
@@ -78,45 +77,3 @@ class ButtonSet: NSObject, RSKImageCropViewControllerDelegate, UIImagePickerCont
 
 
 
-
-
-//    var RegistButton: UIButton?
-//
-//    var User = UserDataInputViewController()
-//
-//    //キャンセルを押した時の処理
-//    func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
-//        dismiss(animated: true, completion: nil)
-//        log.debug("キャンセル")
-//    }
-//    //完了を押した後の処理
-//    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
-//
-//        log.debug("完了を押した後の処理")
-//        RegistButton = User.iconRegistButton
-//
-//
-//        dismiss(animated: true)
-//        RegistButton?.setImage(croppedImage, for: .normal)
-//
-////        もし円形で画像を切り取りし、その画像自体を加工などで利用したい場合
-//        if controller.cropMode == .circle {
-//            UIGraphicsBeginImageContext(croppedImage.size)
-//            let layerView = UIImageView(image: croppedImage)
-//            layerView.frame.size = croppedImage.size
-//            layerView.layer.cornerRadius = layerView.frame.size.width * 0.5
-//            layerView.clipsToBounds = true
-//            let context = UIGraphicsGetCurrentContext()!
-//            layerView.layer.render(in: context)
-//            let capturedImage = UIGraphicsGetImageFromCurrentImageContext()!
-//            UIGraphicsEndImageContext()
-//            let pngData = capturedImage.pngData()!
-//            //このImageは円形で余白は透過です。
-//            let png = UIImage(data: pngData)!
-//            RegistButton?.setImage(png, for: .normal)
-//        }
-//    }
-//}
-//
-//
-//

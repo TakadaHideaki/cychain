@@ -13,9 +13,7 @@ import FirebaseDatabase
 import RSKImageCropper
 import TextFieldEffects
 
-
-//class UserDataInputViewController: UIViewController, UINavigationControllerDelegate ,UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
-    class UserDataInputViewController: UIViewController, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
+    class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
     
     
     @IBOutlet weak var myNameTextField: UITextField!
@@ -24,9 +22,7 @@ import TextFieldEffects
     @IBOutlet weak var iconRegistButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
     
-    var buttonSet: ButtonSet?
-    
-    
+    var iconSet: IconSet?
     let defaultIcon = UIImage(named: "user10")//写真登録のアイコンイメージ
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,51 +48,34 @@ import TextFieldEffects
         messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIcon, for: .normal) //写真投稿ボタンの画像を設定
-        buttonSet = ButtonSet()
-        buttonSet?.delegate = self as? (UIViewController & ButtonSetDelegate)
-        
+        iconSet = IconSet()
+        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
     }
     
-    //アイコン登録ボタン押した処理(フォトライブラリ呼び出し)
-    @IBAction func call_PhotoLibrary(_ sender: Any) {
-        buttonSet?.photoLibraly()
+    @IBAction func iconButtonTapped(_ sender: Any) {
+        //アイコンボタン押した処理(フォトライブラリ呼び出し、選択した写真の加工をiconSetで行う)
+        iconSet?.callPhotoLibraly()
         }
-    
-    // 写真選択後
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        let image = info[.originalImage] as! UIImage  // 選択した写真を取得する
-//        self.dismiss(animated: true)
-//
-//        let imageCropVC = RSKImageCropViewController(image: image, cropMode: .circle)
-//        imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
-//        imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
-//        imageCropVC.chooseButton.setTitle("完了", for: .normal)
-//        imageCropVC.delegate = self
-//        present(imageCropVC, animated: true)
-//    }
      
     
     //データ入力後の投稿ボタン
-    @IBAction func postAction(_ sender: Any) {
+    @IBAction func postData(_ sender: Any) {
         
         guard let myname = myNameTextField.text?.deleteSpace(),
-            let targetname = targetNameTextField.text?.deleteSpace(),
-            let iconImage = iconRegistButton.currentImage
+            let targetname = targetNameTextField.text?.deleteSpace()
             else { return }
-        let messageText = messageTextView.text ?? ""
         
         //入力データを格納
         let inputData: [String: Any] = [
             "my": myname,
             "target": targetname,
-            "message": messageText,
-            "image": iconImage as Any,
+            "message":  messageTextView.text ?? "",
+            "image": iconRegistButton.currentImage as Any,
         ]
         
-        let singleton = UserDataModelSingleton.sharead
-        singleton.setData(userData: inputData)
+        let userDataModel = UserDataModel.sharead
+        userDataModel.setData(userData: inputData)
         
-
         //名前未入力アラート
         if myname.isEmpty || targetname.isEmpty {
             noNameAlert()
@@ -110,14 +89,15 @@ import TextFieldEffects
 
             switch UDData.count {
             case 0 ... 10:
-                singleton.setUserDfault(my:myname, target: targetname)
-                singleton.setFirebase(userData: inputData)
+
+                userDataModel.setUserDfault()
+                userDataModel.setFirebase()
             default: RegistationOverAlert() //登録数オーバーアラート
             }
         } else {
             //投稿値歴無し
-            singleton.setUserDfault(my:myname, target: targetname)
-            singleton.setFirebase(userData: inputData)
+            userDataModel.setUserDfault()
+            userDataModel.setFirebase()
         }
 
         switchVC(view: "InputResultVC", animation: true)
@@ -201,76 +181,12 @@ import TextFieldEffects
     }
 }
 
-//アイコンの写真を丸くする処理
-//extension UserDataInputViewController: RSKImageCropViewControllerDelegate {
-//    //キャンセルボタンが押されたらフォトライブラリをdissmiss
-//    func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    //完了を押したらフォトライブラリを閉じてアイコンボタンに選択した写真をセット
-//    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
-//
-//        dismiss(animated: true)
-//
-//        iconRegistButton?.setImage(croppedImage, for: .normal)
-//
-//        //円形画像
-//        if controller.cropMode == .circle {
-//            UIGraphicsBeginImageContext(croppedImage.size)
-//            let layerView = UIImageView(image: croppedImage)
-//            layerView.frame.size = croppedImage.size
-//            layerView.layer.cornerRadius = layerView.frame.size.width * 0.5
-//            layerView.clipsToBounds = true
-//            let context = UIGraphicsGetCurrentContext()!
-//            layerView.layer.render(in: context)
-//            let capturedImage = UIGraphicsGetImageFromCurrentImageContext()!
-//            UIGraphicsEndImageContext()
-//            let pngData = capturedImage.pngData()!
-//            //円形で余白透過
-//            let png = UIImage(data: pngData)!
-//            iconRegistButton?.setImage(png, for: .normal)
-//        }
-//    }
-//}
-
-
-
-
-
-
-
-//extension UserDataInputViewController: UIImagePickerControllerDelegate {
-//
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//
-//        log.debug("imagePickerController")
-//        self.dismiss(animated: true)
-//
-//        buttonSet = ButtonSet()
-//        buttonSet?.delegate = self
-//        buttonSet?.present(image: info[.originalImage] as! UIImage)
-//    }
-//}
-//
-extension UserDataInputViewController: ButtonSetDelegate {
+extension UserDataInputViewController: IconSetDelegate {
 
     func buttonSetDidCropImage(image: UIImage) {
         iconRegistButton?.setImage(image, for: .normal)
     }
 }
-
-
-
-    
-//    func a(b: UIViewController) {
-//                self.present(b, animated: true)
-//
-//    }
-    
-
-
-
 
 
 

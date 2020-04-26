@@ -148,16 +148,6 @@ extension UITextView {
     }
 }
 
-
-
-extension String {
-     
-    func deleteSpace() -> String {
-        return replacingOccurrences(of: " ", with: "")
-    }
-}
-
-
 class DismissControllerSegue: UIStoryboardSegue {
     override func perform() {
         self.source.dismiss(animated: true, completion: nil)

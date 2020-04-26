@@ -12,50 +12,86 @@ import FirebaseStorage
 import FirebaseDatabase
 
 
-//class UserDataModel {
-struct UserDataModel {
+class UserDataModel {
+
+
+    private init() {}
+    static let sharead = UserDataModel()
     
     var userInputData: [String: Any]?
     var my: String?
     var target: String?
     var message: String?
     var icon: UIImage?
-    
-    init(data: [String: Any]) {
-        self.userInputData = data
-        self.my = data["my"] as? String
-        self.target = data["target"] as? String
-        self.message = data["message"] as? String
-        self.icon = data["image"] as? UIImage
-    }
 
-
-    
-}
-
-class UserDataModelSingleton {
-    
-    var userDataModel = UserDataModel(data: ["" : (Any).self])
-    static let sharead = UserDataModelSingleton()
-    private init() {}
-    
-    
     func setData(userData: [String: Any]) {
-        userDataModel.userInputData = userData
+        self.userInputData = userData
+        self.my = userData["my"] as? String
+        self.target = userData["target"] as? String
+        self.message = userData["message"] as? String
+        self.icon = userData["image"] as? UIImage
     }
     
-    
-    func getData() -> [String: Any] {
-        return userDataModel.userInputData!
+    var ref: DatabaseReference? {
+        get {
+            return
+                Database.database().reference().child("\(my!)/\(target!)/\(USER_ID!)")
+        }
     }
+    var storageRef: StorageReference {
+        get {
+            return
+                STORAGE.child("\(my!)/\(target!)/\(USER_ID!)/\("imageData")")
+        }
+    }
+     
+//     
+//    func getData() -> (my: String, target: String, message: String, icon: UIImage) {
+//        return (my!, target!, message!, icon!)
+//     }
+
+
+//struct UserDataModel {
+//
+//    var userInputData: [String: Any]?
+//    var my: String?
+//    var target: String?
+//    var message: String?
+//    var icon: UIImage?
+//
+//    init(data: [String: Any]) {
+//        self.userInputData = data
+//        self.my = data["my"] as? String
+//        self.target = data["target"] as? String
+//        self.message = data["message"] as? String
+//        self.icon = data["image"] as? UIImage
+//    }
+//}
+
+
+//class UserDataModelSingleton {
+    
+//    var userDataModel = UserDataModel(data: ["" : (Any).self])
+//    static let sharead = UserDataModelSingleton()
+//    private init() {}
     
     
-    func setUserDfault(my: String, target: String) {
+//    func setData(userData: [String: Any]) {
+//        userDataModel.userInputData = userData
+//    }
+//
+//
+//    func getData() -> [String: Any] {
+//        return userDataModel.userInputData!
+//    }
+    
+    
+    func setUserDfault() {
         
         if var UDData = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String : String]] {
             
-            if !UDData.contains([my:target]) {
-                UDData += [[my:target]]
+            if !UDData.contains([my!:target!]) {
+                UDData += [[my!:target!]]
                 UD.set(UDData, forKey: UDKey.keys.uniqueNmame.rawValue)
             }
         } else {
@@ -64,34 +100,35 @@ class UserDataModelSingleton {
     }
     
     
-    func setFirebase(userData: [String: Any]) {
+    func setFirebase() {
         
-        guard let my = userData["my"] as? String,
-            let target = userData["target"] as? String,
-            let message = userData["message"] as? String,
-            let icon = userData["image"] as? UIImage
-            else { return }
+//        guard let message = userData["message"] as? String,
+//            let icon = userData["image"] as? UIImage
+//            else { return }
         
-        let ref = Database.database().reference().child("\(my)/\(target)/\(USER_ID!)")
-        let storageRef = STORAGE.child("\(my)/\(target)/\(USER_ID!)/\("imageData")")
+//        let ref = Database.database().reference().child("\(my!)/\(target!)/\(USER_ID!)")
+        
+
+
+//        let storageRef = STORAGE.child("\(my)/\(target)/\(USER_ID!)/\("imageData")")
         let defaultIcon = UIImage(named: "user10")
         
         switch icon {
         case defaultIcon:
-            ref.setValue(message)
+            ref?.setValue(["message": self.message])
             
         default:
-            setIconStorage(icon: icon, ref: storageRef, complete: { imageURL in
-                ref.setValue(["message": message as Any, "image": imageURL])
+            setIconStorage(icon: icon!, ref: storageRef, complete: { imageURL in
+                self.ref?.setValue(["message": self.message as Any, "image": imageURL])
             })
         }
     }
     
+//}
+
+
+
 }
-
-
-
-
 
     
     
