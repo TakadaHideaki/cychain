@@ -7,10 +7,17 @@
 //
 
 //userDefaultのキーname
-struct UDKey {
-        enum keys: String {
+struct Name {
+        enum KeyName: String {
         case uniqueNmame
         case selectCell
         case block
     }
+    
+    enum ImageName: String {
+        case registIcon = "user10"
+        case defaultIcon = "user12"
+        
+    }
+    
 }

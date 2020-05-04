@@ -99,6 +99,7 @@ extension SignUpViewController: AuthModelDelegate {
         default: noRegistationAlert()
         }
     }
+    
     func weakPasswordAlert() {
         self.alert(title: "パスワードは６文字以上で入力して下さい", message: "", actiontitle: "OK")
     }
@@ -112,8 +113,8 @@ extension SignUpViewController: AuthModelDelegate {
         self.alert(title: "エラー", message: " エラーが起きました\nしばらくしてから再度お試し下さい", actiontitle: "OK")
     }
     @objc func logInerrorDidOccur(error: Error) {}
-    @objc  func passwordErrorAlert() {}
-    @objc  func passwordResetSuccessAlert() {}
+    @objc func passwordErrorAlert() {}
+    @objc func passwordResetSuccessAlert() {}
 }
 
 

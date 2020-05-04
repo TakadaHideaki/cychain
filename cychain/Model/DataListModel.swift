@@ -43,7 +43,7 @@ class DataListModel {
     
     
     func setUserDataList() {
-        if let UDNamesList = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String: String]] {
+        if let UDNamesList = UD.object(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String: String]] {
             
             list = UDNamesList
             myArray = (UDNamesList.map{ $0.keys.sorted()}).flatMap{$0}      // mynameだけのarray
@@ -80,40 +80,23 @@ class DataListModel {
         list?.remove(at: row)
         self.myArray?.remove(at: row)
         self.targetArray?.remove(at: row)
-        UD.set(list, forKey: UDKey.keys.uniqueNmame.rawValue)
+        UD.set(list, forKey: Name.KeyName.uniqueNmame.rawValue)
     }
     
     func getFirebase(complete: @escaping ([String: String]) -> ()) {
         
-        let names: [String: String] = ["my": self.myArray![self.row!],
-                                          "target": self.targetArray![self.row!]]
-        
-        
         ref?.observeSingleEvent(of: .value, with: { (DataSnapshot) in
             
-            if let userdata = DataSnapshot.value as? [String: String] {//[message:メッセージ, image:写真]
-                
-                let userData = names.merging(userdata, uniquingKeysWith: +)
-                //
-                
-                
-                //                userdata["my"] = self.myArray?[self.row!]
-                //                userdata["target"] = self.targetArray?[self.row!]
-                //                let userData = userdata
-                
+            if var userData = DataSnapshot.value as? [String: String] {//userData = [message:メッセージ, image:写真]
+                userData["my"] = self.myArray![self.row!]
+                userData["target"] = self.targetArray![self.row!]
                 complete(userData)
                 
             } else {
-                
-                //            guard let userData = userdata else { return }
-                let userData = names
+                let userData = ["my": self.myArray![self.row!],
+                "target": self.targetArray![self.row!]]
                 complete(userData)
             }
-            
-            
-            
-            
-            
         })
         
     }

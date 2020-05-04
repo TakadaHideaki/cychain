@@ -15,8 +15,6 @@ import GoogleMobileAds
 import Lottie
 
 
-
-
 class SearchViewController: UIViewController, UITextFieldDelegate {
     
     
@@ -29,14 +27,13 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var popButton: UIButton!
     
     
+    //mutchiUserData == [UID: [message:メッセージ、image:写真]]
     lazy var mutchiUserData = [String: [String: Any]]()
     var muchPopUpVC: MuchPopUpVC?
         
     override func viewDidLoad() {
         super.viewDidLoad()
         initialazeUI()
-
-        muchPopUpVC = self.storyboard?.instantiateViewController(withIdentifier: "MuchPopUpVC") as? MuchPopUpVC
     }
     
     func initialazeUI() {
@@ -45,6 +42,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         indicator()
         labelHidden()
         customNavigationBar()
+        muchPopUpVC = self.storyboard?.instantiateViewController(withIdentifier: "MuchPopUpVC") as? MuchPopUpVC
     }
     
     
@@ -65,34 +63,31 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+        //マッチポップで[結果を見る]を押したら結果へ
+        //[×]を押したらポップアップのdismissのみ
         guard let presented = self.presentedViewController else { return }
-            if type(of: presented) == MuchPopUpVC.self {
-                if muchPopUpVC?.backFlag == true {
-                    muchPopUpVC?.backFlag = false
-
-                    if self.mutchiUserData.count == 1 {
-                        switchVC(view: "SeachResultVC", animation: false)
-                    } else {
-                        switchVC(view: "SeachResultListVC", animation: false)
-                    }
-                }
+        if type(of: presented) == MuchPopUpVC.self {
+            
+            switch muchPopUpVC?.numberOfMatching {
+            case .oneMatch: switchVC(view: "SeachResultVC", animation: false)
+            case .multipleMatch: switchVC(view: "SeachResultListVC", animation: false)
+            case .dissmiss: break
+            case .none: break
             }
         }
-    
-    
-    
+    }
+
     
     @IBAction func searchAction(_ sender: Any) {
         
-
         let myName = myNameTextField.text?.deleteSpace() ?? ""
         let searchName = searchNameTextField.text?.deleteSpace() ?? ""
 
         self.view.endEditing(true)
 
         if myName.isEmpty || searchName.isEmpty {
-            self.alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
+            noNameAlert()
             return
 
         } else {
@@ -107,11 +102,11 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
 
                 } else {
                     //マッチ有り
-                    //data == [UID: [message: メッセージ, profile: 投稿写真]]
+                    //mutchiUserData == [UID: ["message": メッセージ, "image": 投稿写真]]
                     self.mutchiUserData = DataSnapshot.value as! [String: [String : Any]]
 
-                    //ブロックユーザー登録があったま場合
-                    if let blockUserID = UD.array(forKey: UDKey.keys.block.rawValue) as? [String]  {
+                    //ブロックユーザー登録があった場合
+                    if let blockUserID = UD.array(forKey: Name.KeyName.block.rawValue) as? [String]  {
                         blockUserID.forEach {
                             //マッチしたユーザーとブロックユーザーが一致したら
                             //ブロックユーザーを表示させない処理
@@ -129,7 +124,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             })
         }
     }
-
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -152,9 +146,11 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             let searchName = searchNameTextField.text?.deleteSpace()
             else { return }
         
-        let singleton = MatchData.sharedInstance
-        singleton.SingletonUserData = self.mutchiUserData
-        singleton.SingletonNames = [myName, searchName]
+//        let matchData = MatchData.sharedInstance
+//        matchData.SingletonUserData = self.mutchiUserData
+//        matchData.SingletonNames = [myName, searchName]
+        let matchData = MatchData.shared
+        matchData.matchDataSet(matchData: self.mutchiUserData, names: [myName, searchName])
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             if let muchPopUpVC = self.muchPopUpVC {
@@ -162,7 +158,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
     
     private func nomutch() {
         self.indicator.stopAnimating()
@@ -175,6 +170,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         noPostLabel.isHidden = true
         popButton.isHidden = true
         animationView.isHidden = true
+    }
+    
+    func noNameAlert() {
+        alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
     }
     
 

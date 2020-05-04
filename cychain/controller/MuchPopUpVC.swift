@@ -11,11 +11,18 @@ import Lottie
 
 class MuchPopUpVC: UIViewController {
     
-    var backFlag: Bool?
+
     
     @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var contentView: contentView!
     
+    var numberOfMatching: match?
+
+    enum match {
+        case oneMatch
+        case multipleMatch
+        case dissmiss
+    }
     
     override func viewWillAppear(_ animated: Bool) {
          super.viewWillAppear(animated)
@@ -23,19 +30,27 @@ class MuchPopUpVC: UIViewController {
         animationView.play()
     }
     
+     override func viewDidDisappear(_ animated: Bool) {
+           super.viewDidDisappear(animated)
+        animationView.stop()
+    }
 
-    
     
     @IBAction func dismissButton(_ sender: Any) {
-        animationView.stop()
+        numberOfMatching = .dissmiss
         self.dismiss(animated: true, completion: nil)
     }
-    
 
     @IBAction func nextView(_ sender: Any) {
-        animationView.stop()
-        backFlag = true
-        self.dismiss(animated: false)
+        
+        let matchData = MatchData.shared
+        
+        if matchData.muchData?.count == 1{
+            numberOfMatching = .oneMatch
+        } else {
+            numberOfMatching = .multipleMatch
+        }
+        self.dismiss(animated: true, completion: nil)
     }
     
 }

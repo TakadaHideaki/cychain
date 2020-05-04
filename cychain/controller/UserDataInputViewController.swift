@@ -61,9 +61,8 @@ import TextFieldEffects
     //データ入力後の投稿ボタン
     @IBAction func postData(_ sender: Any) {
         
-        guard let myname = myNameTextField.text?.deleteSpace(),
-            let targetname = targetNameTextField.text?.deleteSpace()
-            else { return }
+        let myname = myNameTextField.text?.deleteSpace() ?? ""
+        let targetname = targetNameTextField.text?.deleteSpace() ?? ""
         
         //入力データを格納
         let inputData: [String: Any] = [
@@ -85,7 +84,7 @@ import TextFieldEffects
             overCharacterAlert()
         }
         //投稿履歴有り
-        if let UDData = UD.object(forKey: UDKey.keys.uniqueNmame.rawValue) as? [[String : String]]  {
+        if let UDData = UD.object(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]]  {
 
             switch UDData.count {
             case 0 ... 10:

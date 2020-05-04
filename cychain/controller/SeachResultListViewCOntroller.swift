@@ -14,8 +14,8 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     var names: [String]?
     var userID = [String]()
     var value = [[String:Any]]()
-    var indicatorView = UIActivityIndicatorView()
-    var mutchingUserData = [String: [String: Any]]()
+    var mutchingUserData: [String: [String: Any]]?
+    var matchDataModel: MatchData?
 
     
     @IBOutlet weak var tableView: UITableView!
@@ -24,7 +24,6 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
         super.viewDidLoad()
         initalizeUI()
         initializeTableView()
-        indicator()
         userDataSet()
         tableView.reloadData()
     }
@@ -51,12 +50,13 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     
     
     func userDataSet() {
-        guard let userName = MatchData.sharedInstance.SingletonNames,
-               let userData = MatchData.sharedInstance.SingletonUserData
+        matchDataModel = MatchData.shared
+        guard let userName = matchDataModel?.names,
+               let muchData = matchDataModel?.muchData
                else { return }
-        names = userName
         
-        userData.forEach {
+        names = userName
+        muchData.forEach {
             userID += [$0.key]
             value += [$0.value]
         }
@@ -90,14 +90,13 @@ extension SeachResultListViewCOntroller: UITableViewDelegate {
     
     func  tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        indicatorView.startAnimating()
-        
         let SeachResultMultipleVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultMultipleViewCOntroller") as! SeachResultMultipleViewCOntroller
-        SeachResultMultipleVC.names = names
+        
+
+        SeachResultMultipleVC.nameArray = names
         SeachResultMultipleVC.account = userID[indexPath.row]
         SeachResultMultipleVC.value = value[indexPath.row]
         self.navigationController?.pushViewController(SeachResultMultipleVC, animated: true)
-        self.indicatorView.stopAnimating()
     }
 }
 

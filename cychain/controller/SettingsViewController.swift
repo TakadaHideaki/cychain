@@ -18,10 +18,11 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
     
     
     @IBOutlet weak var tableView: UITableView!
-    let sectionTitle = ["アカウント", "その他"]
-    let account = ["ログアウト", "アカウント削除"]
-    let other = ["問い合わせ", "利用規約", "プライバシーポリシー"]
-    var array: [String:String]!
+//    let sectionTitle = ["アカウント", "その他"]
+//    let account = ["ログアウト", "アカウント削除"]
+//    let other = ["問い合わせ", "利用規約", "プライバシーポリシー"]
+//    var array: [String:String]!
+    var settingModel: SettingModel?
 
     
     
@@ -29,6 +30,8 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
         super.viewDidLoad()
         initializeUI()
         initializeTableview()
+        settingModel = SettingModel()
+        settingModel?.delegate = self
     }
     
     func initializeUI() {
@@ -56,36 +59,60 @@ extension SettingsViewController: UITableViewDataSource {
 
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionTitle.count
+        return EnumCells.count
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        switch section {
-        case 0: return account.count
-        case 1: return other.count
-        default: break
+        guard let account = settingModel?.account,
+            let other = settingModel?.other
+            else { return 0 }
+        
+        switch Section(rawValue: section) {
+        case .account: return account.count
+        case .other: return other.count
+        case .none: return 0
         }
-        return section
+        //        switch section {
+        //        case 0: return settingModel?.account.count ?? 2
+        //        case 1: return settingModel?.other.count ?? 3
+        //        default: break
+        //        }
+        //        return section
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        guard let account = settingModel?.account,
+                let other = settingModel?.other
+                else { return UITableViewCell() }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        switch indexPath.section {
-        case 0: cell.textLabel?.text = account[indexPath.row]
-        case 1: cell.textLabel?.text = other[indexPath.row]
-        default: break
+        switch Section(rawValue: indexPath.section ) {
+        case .account:
+            cell.textLabel?.text = account[indexPath.row]
+        case .other:
+            cell.textLabel?.text = other[indexPath.row]
+        default : break
+            
         }
+        
+        
+        
+//        switch indexPath.section {
+//        case 0: cell.textLabel?.text = settingModel?.account[indexPath.row]
+//        case 1: cell.textLabel?.text = settingModel?.other[indexPath.row]
+//        default: break
+//        }
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionTitle[section]
+        return settingModel?.sectionTitle[section]
     }
 }
     
@@ -100,57 +127,52 @@ extension SettingsViewController: UITableViewDelegate {
         guard let titles = tableView.cellForRow(at: indexPath)?.textLabel?.text! else { return }
         
         switch titles {
-        case ("ログアウト"):
-            let firebaseAuth = Auth.auth()
-            do {
-                log.debug("ログアウト成功")
-
-                try firebaseAuth.signOut()
-                sendInitialViewAlert(title: "ログアウトしました", message: "")
-  
-            } catch let signOutError as NSError {
-                log.debug("ログアウト失敗")
-                alert(title: "ログアウト失敗", message: "ログアウト出来ませんでした「お問い合わせ」から問い合わせ下さい", actiontitle: "OK")
-            }            
+        case ("ログアウト"): settingModel?.logOut()
+//            let firebaseAuth = Auth.auth()
+//            do {
+//                log.debug("ログアウト成功")
+//                try firebaseAuth.signOut()
+////                logOutAlert()
+//
+//            } catch _ as NSError {
+//                log.debug("ログアウト失敗")
+////                aendMailErrorAlert()
+//            }
             
-            
-            
-            
-        case ("アカウント削除"):
-            
-            func haveData() {
-                guard let names = UD.array(forKey: "uniqueNmame") as? [[String : String]] else { return }
-                names.forEach {
-                    $0.forEach {
-                        //  firebase削除
-                        let ref = Database.database().reference().child("\($0)/\($1)/\(USER_ID!)")
-                        ref.removeValue()
-                        
-                        //  fireStorage削除
-                        let storageRef = STORAGE.child("\($0)/\($1)/\(USER_ID!)/\("imageData")")
-                        storageRef.delete { error in
-                            if error != nil {
-                                log.debug("Storage delete error")
-                            } else {
-                                log.debug("Storage delete success")
-                            }
-                        }
-                    }
-                }
-            }
-            
-            haveData()
-            let domain = Bundle.main.bundleIdentifier!
-            UD.removePersistentDomain(forName: domain)
-            
-            Auth.auth().currentUser?.delete { error in
-                if error != nil {
-                    self.alert(title: "アカウント削除エラー", message: "再ログインして削除してください。それでも削除でいない時は「お問い合わせ」から連絡下さい", actiontitle: "OK")
-                } else {
-                    self.sendInitialViewAlert(title: "アカウントを削除しました", message: "")
-                }
-            }
-            
+        case ("アカウント削除"): settingModel?.signOut()
+//
+//            func haveData() {
+//                guard let names = UD.array(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]] else { return }
+//                names.forEach {
+//                    $0.forEach {
+//                        //  firebase削除
+//                        let ref = Database.database().reference().child("\($0)/\($1)/\(USER_ID!)")
+//                        ref.removeValue()
+//
+//                        //  fireStorage削除
+//                        let storageRef = STORAGE.child("\($0)/\($1)/\(USER_ID!)/\("imageData")")
+//                        storageRef.delete { error in
+//                            if error != nil {
+//                                log.debug("Storage delete error")
+//                            } else {
+//                                log.debug("Storage delete success")
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            haveData()
+//            let domain = Bundle.main.bundleIdentifier!
+//            UD.removePersistentDomain(forName: domain)
+//
+//            Auth.auth().currentUser?.delete { error in
+//                if error != nil {
+//                    self.signOutErrorAlert()
+//                } else {
+//                    self.signOutAlert()
+//                }
+//            }
             
         case ("問い合わせ"): sendMail()
         case ("利用規約"): switchVC(view: "terms1", animation: true)
@@ -169,6 +191,22 @@ extension SettingsViewController: UITableViewDelegate {
         }
     }
 
+}
+
+extension SettingsViewController: SettingModelDelegate {
+    
+    func logoutAlert() {
+        logOutAlert()
+    }
+    func sendmailErrorAlert() {
+        sendMailErrorAlert()
+    }
+    func signoutErrorAlert() {
+        signOutErrorAlert()
+    }
+    func signoutAlert() {
+        signOutAlert()
+    }
 }
 
 

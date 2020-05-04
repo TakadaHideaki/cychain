@@ -29,37 +29,7 @@ extension UIViewController {
         self.present(vc, animated: animation)
     }
     
-    
-    
-    //アラート（アラートを出すだけ）
-    func alert(title:String,message:String,actiontitle:String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: actiontitle, style: .default))
-        self.present(alert, animated: true)
-    }
-    
-    
-    //アラート（アラートを出してviewを切り替える）
-    func sendInitialViewAlert(title:String,message:String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let sendButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{(action:UIAlertAction!) -> Void in
-            self.dismiss(animated: true, completion: nil)
-        })
-        alert.addAction(sendButton)
-        self.present(alert, animated: true)
 
-    }
-    
-    
-    
-    func cansel_Send_Alert(title: String, message: String, actions: [UIAlertAction]) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        actions.forEach { alert.addAction($0) }
-        present(alert, animated: true)
-    }
-    
-    
-    
     //問合せ
     func sendMail() {
         
@@ -72,7 +42,7 @@ extension UIViewController {
             self.present(mail, animated: true, completion: nil)
             
         } else {
-            alert(title: "No Mail Accounts", message: "Please set up mail accounts", actiontitle: "OK")
+            sendMailErrorAlert()
         }
     }
     
