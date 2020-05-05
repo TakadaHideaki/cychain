@@ -172,9 +172,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         animationView.isHidden = true
     }
     
-    func noNameAlert() {
-        alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
-    }
+
     
 
 }

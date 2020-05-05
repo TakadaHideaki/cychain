@@ -11,7 +11,6 @@ import FirebaseAuth
 
 class LogInViewController: SignUpViewController {
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         authViewInstance.logInUI()
@@ -59,19 +58,16 @@ class LogInViewController: SignUpViewController {
     
     
     override func passwordErrorAlert() {
-        self.alert(title: "このアドレスは登録されてません", message: "", actiontitle: "OK")
+        passworderrorAlert()
     }
-    
     override func passwordResetSuccessAlert() {
-        self.alert(title: "メールを送信しました。", message: "メールでパスワードの再設定を行ってください。", actiontitle: "OK")
+        passwordresetSuccessAlert()
     }
-    
     func passwordEmptyAlert() {
-        self.alert(title: "メールをアドレスを入力して下さい", message: "", actiontitle: "OK")
+        passwordemptyAlert()
     }
-    
     func registGoogleAdressAlert() {
-        self.alert(title: "Googleアドレスでの登録", message: "Googleログインからログインして下さい", actiontitle: "OK")
+        registGoogleadressAlert()
     }
     
     

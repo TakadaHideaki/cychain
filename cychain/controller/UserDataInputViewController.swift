@@ -88,36 +88,18 @@ import TextFieldEffects
 
             switch UDData.count {
             case 0 ... 10:
-
                 userDataModel.setUserDfault()
                 userDataModel.setFirebase()
-            default: RegistationOverAlert() //登録数オーバーアラート
+            default: RegistationOverAlert(VCID: "list") //登録数オーバーアラート
             }
         } else {
             //投稿値歴無し
             userDataModel.setUserDfault()
             userDataModel.setFirebase()
         }
-
         switchVC(view: "InputResultVC", animation: true)
     }
-    
-    
-    func noNameAlert() {
-        alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
-    }
-    
-    func overCharacterAlert() {
-        alert(title: "名前は１３文字までです", message: "", actiontitle: "OK")
-    }
-    
-    func RegistationOverAlert(){
-        let cancel = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: nil)
-        let sendList = UIAlertAction(title: "登録リストへ",style: UIAlertAction.Style.default,handler:{(action:UIAlertAction!) -> Void in
-            self.switchVC(view: "list", animation: true)
-        })
-        cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
-    }
+        
     
     func textFieldDidBeginEditing(_ textField: UITextField)  {
         messageTextView.isSelectable = false

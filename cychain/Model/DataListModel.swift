@@ -50,20 +50,19 @@ class DataListModel {
             targetArray = (UDNamesList.map{$0.values.sorted()}).flatMap{$0} 
         }
     }
+
     
-//    func rowDelerte(row: Int) {
-//
-//        guard let my = my?[row],
-//            let target = target?[row]
-//            else { return }
-        
-//        let ref = Database.database().reference().child("\(my)/\(target)/\(USER_ID!)")
-//        let storageRef = STORAGE.child("\(my)/\(target)/\(USER_ID!)/\("imageData")")
+    func deleteRowsAction() {
+        deleteFirebaseData()
+        deleteFireStorage()
+        updateUserDefault()
+    }
     
-    func rowDelerte() {
-        
-        ref?.removeValue() // firebaseデータ削除
-        // fireStorage写真削除
+    func deleteFirebaseData() {
+        ref?.removeValue()
+    }
+    
+    func deleteFireStorage() {
         storageRef.delete { error in
             if let error = error {
                 let nsError = error as NSError
@@ -75,7 +74,9 @@ class DataListModel {
                 log.debug("Storege Delete Success")
             }
         }
-        //UDを更新
+    }
+    
+    func updateUserDefault() {
         guard let row = row else { return }
         list?.remove(at: row)
         self.myArray?.remove(at: row)
@@ -83,7 +84,9 @@ class DataListModel {
         UD.set(list, forKey: Name.KeyName.uniqueNmame.rawValue)
     }
     
-    func getFirebase(complete: @escaping ([String: String]) -> ()) {
+    
+    
+    func downloadFirebaseData(complete: @escaping ([String: String]) -> ()) {
         
         ref?.observeSingleEvent(of: .value, with: { (DataSnapshot) in
             
@@ -98,7 +101,6 @@ class DataListModel {
                 complete(userData)
             }
         })
-        
     }
     
 }

@@ -67,7 +67,7 @@ extension SeachResultMultipleViewCOntroller {
             profileCell.targetLabel.minimumScaleFactor = 0.5
             
             if let urlImage = value?["image"] as? String  {
-                matchDataModel?.convertURLtoImage(URLImage: urlImage, { complete in
+                matchDataModel?.convertURLtoUIImage(URLImage: urlImage, { complete in
                     profileCell.profileImage.image = complete
                     self.coverView1.isHidden = true
                     self.indicator.stopAnimating()

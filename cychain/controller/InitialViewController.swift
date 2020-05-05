@@ -41,16 +41,17 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     
     
     func PagerTabUI() {
-        settings.style.buttonBarBackgroundColor = .clear
-        settings.style.buttonBarItemBackgroundColor = .clear
-        settings.style.buttonBarItemFont = .systemFont(ofSize: 16)
-        settings.style.buttonBarItemTitleColor = .black
-        settings.style.selectedBarBackgroundColor = .black // 選択中の色
-        settings.style.selectedBarHeight = 2  // 選択中のインジケーターの太さ
-        settings.style.buttonBarLeftContentInset = 30  // ButtonBarの左端余白
-        settings.style.buttonBarRightContentInset = 30
-        settings.style.buttonBarMinimumLineSpacing = 30  // Button間スペース
-        settings.style.buttonBarItemLeftRightMargin = 10 // Button内余白
+        var style = settings.style
+        style.buttonBarBackgroundColor = .clear
+        style.buttonBarItemBackgroundColor = .clear
+        style.buttonBarItemFont = .systemFont(ofSize: 16)
+        style.buttonBarItemTitleColor = .black
+        style.selectedBarBackgroundColor = .black // 選択中の色
+        style.selectedBarHeight = 2  // 選択中のインジケーターの太さ
+        style.buttonBarLeftContentInset = 30  // ButtonBarの左端余白
+        style.buttonBarRightContentInset = 30
+        style.buttonBarMinimumLineSpacing = 30  // Button間スペース
+        style.buttonBarItemLeftRightMargin = 10 // Button内余白
         
         changeCurrentIndexProgressive = { oldCell, newCell, progressPercentage, changeCurrentIndex, animated in
               // 変更されたか、選択前後のCellをアンラップ
@@ -62,7 +63,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     
     
     func LoggedIn() {
-        //ユーザーがログインしていたらログイン画面省略する
+        //ユーザーがログイン中なら画面スキップ
         //モーダルで本体に画面遷移
         if Auth.auth().currentUser != nil {
             log.debug("logging in")

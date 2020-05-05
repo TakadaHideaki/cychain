@@ -50,8 +50,8 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate, Indicato
     //ログインがキャンセル・失敗した場合
     private func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
                         withError error: NSError!) {
-        //        失敗した時の処理を書く
-        alert(title: "アカウントが登録できませんでした", message: "", actiontitle: "OK")
+        //失敗時
+        signUpErrorAlert()
         return
     }
     

@@ -26,6 +26,7 @@ class UserDataModel {
     
 //    convenience init
     
+
     func setData(userData: [String: Any]) {
         self.userInputData = userData
         self.my = userData["my"] as? String

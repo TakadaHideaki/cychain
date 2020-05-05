@@ -96,7 +96,7 @@ extension SeachResultViewCotroller: UITableViewDataSource {
             
             //アイコン登録があったらアイコンのURLをUIImageに変換する
             if let urlImage = matchDataModel?.URLImage {
-                matchDataModel?.convertURLtoImage(URLImage: urlImage, { complete in
+                matchDataModel?.convertURLtoUIImage(URLImage: urlImage, { complete in
                     profileCell.profileImage.image = complete
                     //アイコンに画像設定が終わったらインディケーターoff
                     self.coverView.isHidden = true
@@ -156,13 +156,13 @@ extension SeachResultViewCotroller {
             self.sendMailAction()
         }
         //投稿ユーザーブッロク（検索に引っかからないようにする）
-        let block: UIAlertAction = UIAlertAction(title: "投稿者をブロック", style: .default) {
+        let block = UIAlertAction(title: "投稿者をブロック", style: .default) {
             (action: UIAlertAction!) in
             self.blockAction()
         }
         // Cancelボタン
-        let cancel: UIAlertAction = UIAlertAction(title: "cancel", style: .cancel){
-            (action: UIAlertAction!) in
+        let cancel = UIAlertAction(title: "cancel", style: .cancel){
+                   (action: UIAlertAction!) in
         }
         
         let actions = [report, block, cancel]
@@ -189,7 +189,7 @@ extension SeachResultViewCotroller {
             
         } else {
             //メール送信が不可能
-            self.alert(title: "メールアカウントを設定してください", message: "", actiontitle: "OK")
+            sendMailErrorAlert()
         }
         //エラー処理
         func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

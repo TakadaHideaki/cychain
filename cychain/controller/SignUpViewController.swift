@@ -101,16 +101,16 @@ extension SignUpViewController: AuthModelDelegate {
     }
     
     func weakPasswordAlert() {
-        self.alert(title: "パスワードは６文字以上で入力して下さい", message: "", actiontitle: "OK")
+        weakpasswordAlert()
     }
     func invalidEmailAlert() {
-        self.alert(title: "メールアドレスが正しくありません", message: "", actiontitle: "OK")
+        invalidemailAlert()
     }
     func emailAlreadyInUseAlert() {
-        self.alert(title: "このメールアドレスはすでに使われています", message: "", actiontitle: "OK")
+        emailalreadyInUseAlert()
     }
     func noRegistationAlert() {
-        self.alert(title: "エラー", message: " エラーが起きました\nしばらくしてから再度お試し下さい", actiontitle: "OK")
+        registErrorAlert()
     }
     @objc func logInerrorDidOccur(error: Error) {}
     @objc func passwordErrorAlert() {}
@@ -131,7 +131,7 @@ extension SignUpViewController: AuthViewDelegate {
 extension SignUpViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        //signUpボタン有効無効切替
+        //addressとpasswordが空ならsignUpボタンを無効
         guard let authview = authView  else { return true }
 
         if authViewInstance.emailTextField.text!.isEmpty || authViewInstance.passwordTextField.text!.isEmpty {

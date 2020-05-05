@@ -74,23 +74,6 @@ class SettingModel {
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 enum EnumCells: Int {

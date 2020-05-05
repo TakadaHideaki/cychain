@@ -12,8 +12,6 @@ class MatchData {
     static let shared = MatchData()
     private init() {}
     
-    //    var SingletonUserData: [String: [String: Any]]? //[[UID: [message:メッセージ、image:写真]]
-    //    var SingletonNames: [String]? // [myName, searchName]
     var names: [String]?
     var muchData: [String: [String: Any]]?
     var matchuserID: String?
@@ -42,7 +40,7 @@ class MatchData {
     
     
     
-    func convertURLtoImage(URLImage: String, _ complete: @escaping (UIImage) -> ()) {
+    func convertURLtoUIImage(URLImage: String, _ complete: @escaping (UIImage) -> ()) {
         
         let url = URL(string: URLImage)
         DispatchQueue.global().async {

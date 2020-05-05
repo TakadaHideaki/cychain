@@ -35,7 +35,7 @@ class Pager_LogIn_ViewController: Pager_SignUp_ViewController, FUIAuthDelegate {
     //ログインがキャンセル・失敗した場合
      func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
                 withError error: NSError!) {
-        alert(title: "ログインができませんでした", message: "", actiontitle: "OK")
+        logInErrorAlert()
     }
     
     override func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {

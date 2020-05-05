@@ -18,14 +18,9 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
     
     
     @IBOutlet weak var tableView: UITableView!
-//    let sectionTitle = ["アカウント", "その他"]
-//    let account = ["ログアウト", "アカウント削除"]
-//    let other = ["問い合わせ", "利用規約", "プライバシーポリシー"]
-//    var array: [String:String]!
-    var settingModel: SettingModel?
 
-    
-    
+    var settingModel: SettingModel?
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
@@ -74,12 +69,6 @@ extension SettingsViewController: UITableViewDataSource {
         case .other: return other.count
         case .none: return 0
         }
-        //        switch section {
-        //        case 0: return settingModel?.account.count ?? 2
-        //        case 1: return settingModel?.other.count ?? 3
-        //        default: break
-        //        }
-        //        return section
     }
     
     
@@ -99,14 +88,6 @@ extension SettingsViewController: UITableViewDataSource {
         default : break
             
         }
-        
-        
-        
-//        switch indexPath.section {
-//        case 0: cell.textLabel?.text = settingModel?.account[indexPath.row]
-//        case 1: cell.textLabel?.text = settingModel?.other[indexPath.row]
-//        default: break
-//        }
         return cell
     }
     
@@ -128,17 +109,6 @@ extension SettingsViewController: UITableViewDelegate {
         
         switch titles {
         case ("ログアウト"): settingModel?.logOut()
-//            let firebaseAuth = Auth.auth()
-//            do {
-//                log.debug("ログアウト成功")
-//                try firebaseAuth.signOut()
-////                logOutAlert()
-//
-//            } catch _ as NSError {
-//                log.debug("ログアウト失敗")
-////                aendMailErrorAlert()
-//            }
-            
         case ("アカウント削除"): settingModel?.signOut()
 //
 //            func haveData() {
