@@ -63,6 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         GADMobileAds.sharedInstance().start()
         
+        UD.register(defaults: [Name.KeyName.flag.rawValue: true])
+        
         return true
     }
     

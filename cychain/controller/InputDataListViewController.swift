@@ -77,7 +77,7 @@ extension InputDataListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! inputDataListCell
 
         cell.myName.text = dataListModel?.myArray?[indexPath.row] ?? ""
         cell.targetName.text = dataListModel?.targetArray?[indexPath.row] ?? ""

@@ -8,7 +8,8 @@
 
 //userDefaultのキーname
 struct Name {
-        enum KeyName: String {
+    enum KeyName: String {
+        case flag
         case uniqueNmame
         case selectCell
         case block

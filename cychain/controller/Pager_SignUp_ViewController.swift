@@ -28,6 +28,7 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate, Indicato
     func setImageButton() {
         mailSignUpButton.setImage(UIImage(named: "mail"), for: .normal)
         gmaiSignUplButton.setImage(UIImage(named: "google"), for: .normal)
+    
     }
     
     @IBAction func googleSignUpButtonTapped(_ sender: Any) {

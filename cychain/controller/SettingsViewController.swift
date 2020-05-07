@@ -110,40 +110,6 @@ extension SettingsViewController: UITableViewDelegate {
         switch titles {
         case ("ログアウト"): settingModel?.logOut()
         case ("アカウント削除"): settingModel?.signOut()
-//
-//            func haveData() {
-//                guard let names = UD.array(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]] else { return }
-//                names.forEach {
-//                    $0.forEach {
-//                        //  firebase削除
-//                        let ref = Database.database().reference().child("\($0)/\($1)/\(USER_ID!)")
-//                        ref.removeValue()
-//
-//                        //  fireStorage削除
-//                        let storageRef = STORAGE.child("\($0)/\($1)/\(USER_ID!)/\("imageData")")
-//                        storageRef.delete { error in
-//                            if error != nil {
-//                                log.debug("Storage delete error")
-//                            } else {
-//                                log.debug("Storage delete success")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            haveData()
-//            let domain = Bundle.main.bundleIdentifier!
-//            UD.removePersistentDomain(forName: domain)
-//
-//            Auth.auth().currentUser?.delete { error in
-//                if error != nil {
-//                    self.signOutErrorAlert()
-//                } else {
-//                    self.signOutAlert()
-//                }
-//            }
-            
         case ("問い合わせ"): sendMail()
         case ("利用規約"): switchVC(view: "terms1", animation: true)
         case ("プライバシーポリシー"): switchVC(view: "privacyPolicy", animation: true)
