@@ -34,36 +34,14 @@ class Onboarding: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         labelSet()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         ButtonSet()
-
-    }
-    
-    func setScrollView() {
-        let scrollView = UIScrollView()
-        scrollView.frame = view.frame
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
-
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 100).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        
-        scrollView.contentSize = CGSize(width: 1000, height: self.view.frame.height)
-
     }
     
     func ButtonSet() {
         StartButton.layer.borderWidth = 1.5
-        StartButton.layer.borderColor = UIColor.darkGray.cgColor
         StartButton.layer.cornerRadius = 7
+        StartButton.layer.borderColor = UIColor.darkGray.cgColor
     }
-    
-    
     
     func labelSet() {
         self.topLabel.isHidden = true

@@ -18,16 +18,15 @@ class Pager_LogIn_ViewController: Pager_SignUp_ViewController, FUIAuthDelegate {
     @IBOutlet weak var mailLogInButton: Button!
     @IBOutlet weak var gmailLogInButton: Button!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setImageButton()
-    }
     
     override func setImageButton() {
-        mailLogInButton.setImage(UIImage(named: "mail"), for: .normal)
-        gmailLogInButton.setImage(UIImage(named: "google"), for: .normal)
+        let mailImage = R.image.mail()
+        let googleImage = R.image.google()
+        mailLogInButton.setImage(mailImage, for: .normal)
+        gmailLogInButton.setImage(googleImage, for: .normal)
     }
     
+        
     @IBAction func googleLogInButtonTapped(_ sender: Any) {
         GIDSignIn.sharedInstance().signIn()
     }

@@ -97,8 +97,6 @@ extension SettingsViewController: UITableViewDataSource {
     }
 }
     
-
-
     
 extension SettingsViewController: UITableViewDelegate {
 
@@ -106,13 +104,12 @@ extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let titles = tableView.cellForRow(at: indexPath)?.textLabel?.text! else { return }
-        
         switch titles {
         case ("ログアウト"): settingModel?.logOut()
         case ("アカウント削除"): settingModel?.signOut()
         case ("問い合わせ"): sendMail()
-        case ("利用規約"): switchVC(view: "terms1", animation: true)
-        case ("プライバシーポリシー"): switchVC(view: "privacyPolicy", animation: true)
+        case ("利用規約"): pushVC(vc: R.storyboard.main.terms1()!, animation: true)
+        case ("プライバシーポリシー"): pushVC(vc: R.storyboard.main.privacyPolicy()!, animation: true)
         default: break
         }
     }

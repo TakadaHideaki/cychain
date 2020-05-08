@@ -25,6 +25,7 @@ pod 'XLPagerTabStrip'
 pod 'LTMorphingLabel'
 pod 'XCGLogger', '~> 7.0.0'
 pod 'lottie-ios'
+pod 'R.swift'
 
 end
 
@@ -46,6 +47,7 @@ pod 'XLPagerTabStrip'
 pod 'LTMorphingLabel'
 pod 'XCGLogger', '~> 7.0.0'
 pod 'lottie-ios'
+pod 'R.swift'
 
 end
 

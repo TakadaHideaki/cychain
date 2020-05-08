@@ -92,7 +92,6 @@ extension SeachResultListViewCOntroller: UITableViewDelegate {
         
         let SeachResultMultipleVC = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultMultipleViewCOntroller") as! SeachResultMultipleViewCOntroller
         
-
         SeachResultMultipleVC.nameArray = names
         SeachResultMultipleVC.account = userID[indexPath.row]
         SeachResultMultipleVC.value = value[indexPath.row]

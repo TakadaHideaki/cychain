@@ -16,9 +16,9 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
     
     @IBOutlet var tableView: UITableView!
     
-    var namesList: [[String:String]]? //[[myname, targetname]]
-    var myNames: [String]?
-    var targetNames: [String]?
+//    var namesList: [[String:String]]? //[[myname, targetname]]
+//    var myNames: [String]?
+//    var targetNames: [String]?
     var indicatorView = UIActivityIndicatorView()
     var dataListModel: DataListModel?
     
@@ -78,7 +78,6 @@ extension InputDataListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! inputDataListCell
-
         cell.myName.text = dataListModel?.myArray?[indexPath.row] ?? ""
         cell.targetName.text = dataListModel?.targetArray?[indexPath.row] ?? ""
         return cell
@@ -89,7 +88,6 @@ extension InputDataListViewController: UITableViewDataSource {
         
         dataListModel?.row = indexPath.row
         dataListModel?.deleteRowsAction()
-
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }
@@ -110,7 +108,7 @@ extension InputDataListViewController: UITableViewDelegate {
 
             let singleton = EditData.sharedInstance
             singleton.SingletonUserData = userData
-            self.presentVC(view: "EditNC", animation: true)
+            self.presentVC(vc: R.storyboard.main.editNC()!, animation: true)
         })
         
     }

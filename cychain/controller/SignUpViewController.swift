@@ -17,9 +17,6 @@ class SignUpViewController: UIViewController {
     let authViewInstance = AuthView.instance()
     let securityButton = UIButton(type: .custom)
     let passwordShow_Hide_Button = UIButton(type: .custom)
-    let showImage = UIImage(named: "eye5")
-    let hideImage = UIImage(named: "eye4")
-    
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +63,7 @@ class SignUpViewController: UIViewController {
         var show = true
         authViewInstance.passwordTextField.isSecureTextEntry.toggle()
         show.toggle()
-        let show_hideImage = show ? hideImage: showImage
+        let show_hideImage = show ?  R.image.eye4(): R.image.eye5()
         passwordShow_Hide_Button.setImage(show_hideImage, for: .normal)
     }
     
@@ -76,7 +73,7 @@ extension SignUpViewController: AuthModelDelegate {
     
     //Home画面へ
     func toHome() {
-        presentVC(view: "tabVC", animation: true)
+        presentVC(vc: R.storyboard.main.tabVC()!, animation: true)
     }
     
     //ahthのエラーハンドリング

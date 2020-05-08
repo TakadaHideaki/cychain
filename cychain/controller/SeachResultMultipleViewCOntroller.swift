@@ -12,7 +12,6 @@ import MessageUI
 
 class SeachResultMultipleViewCOntroller: SeachResultViewCotroller {
     
-    
     @IBOutlet weak var tableView1: UITableView!
     @IBOutlet weak var coverView1: UIView!
     
@@ -35,8 +34,9 @@ class SeachResultMultipleViewCOntroller: SeachResultViewCotroller {
     }
     
     override func cellRegist() {
-        tableView1.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
-        tableView1.register(UINib(nibName: "PostCardMessageCell", bundle: nil), forCellReuseIdentifier: "PostCardMessageCell")
+        tableView.register(UINib(resource:R.nib.postCardeTableViewCell), forCellReuseIdentifier: "PostCardeTableViewCell")
+          tableView.register(UINib(resource:R.nib.postCardMessageCell), forCellReuseIdentifier: "PostCardMessageCell")
+
     }
 
     @IBAction func report1(_ sender: Any) {
@@ -74,7 +74,7 @@ extension SeachResultMultipleViewCOntroller {
                 })
             } else {
                 //アイコン登録が無かっったらデフォルトアイコンをセット
-                profileCell.profileImage.image = UIImage(named: Name.ImageName.defaultIcon.rawValue)
+                profileCell.profileImage.image = R.image.user12()
                 self.coverView1.isHidden = true
                 self.indicator.stopAnimating()
             }
@@ -84,7 +84,6 @@ extension SeachResultMultipleViewCOntroller {
         case 1:
             
             let messagecell = tableView1.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! PostCardMessageCell
-            
             messagecell.messageLabel.text = value?["message"] as? String ?? ""
             return messagecell
             

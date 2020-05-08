@@ -42,7 +42,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         indicator()
         labelHidden()
         customNavigationBar()
-        muchPopUpVC = self.storyboard?.instantiateViewController(withIdentifier: "MuchPopUpVC") as? MuchPopUpVC
+        muchPopUpVC = R.storyboard.main.muchPopUpVC()
     }
     
     
@@ -70,8 +70,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         if type(of: presented) == MuchPopUpVC.self {
             
             switch muchPopUpVC?.numberOfMatching {
-            case .oneMatch: switchVC(view: "SeachResultVC", animation: false)
-            case .multipleMatch: switchVC(view: "SeachResultListVC", animation: false)
+            case .oneMatch: pushVC(vc: R.storyboard.main.seachResultVC()!, animation: false)
+            case .multipleMatch: pushVC(vc: R.storyboard.main.seachResultListVC()!, animation: false)
             case .dissmiss: break
             case .none: break
             }
@@ -146,9 +146,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             let searchName = searchNameTextField.text?.deleteSpace()
             else { return }
         
-//        let matchData = MatchData.sharedInstance
-//        matchData.SingletonUserData = self.mutchiUserData
-//        matchData.SingletonNames = [myName, searchName]
         let matchData = MatchData.shared
         matchData.matchDataSet(matchData: self.mutchiUserData, names: [myName, searchName])
         

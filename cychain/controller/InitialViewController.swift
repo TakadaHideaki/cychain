@@ -16,7 +16,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     
 
     @IBOutlet weak var label: LTMorphingLabel!
-    var labelText = "cychain"
+    var labelText = "c y c h a i n"
     var attributedText: NSMutableAttributedString?
     
 
@@ -38,7 +38,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     
     
     func initializeUI() {
-        label.text = "c y c h a i n"
+        label.text = labelText
         self.navigationItem.hidesBackButton = true
     }
     
@@ -66,17 +66,15 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     func confirmInitialLaunch() {
         if UD.bool(forKey: Name.KeyName.flag.rawValue) {
             UD.set(false, forKey: Name.KeyName.flag.rawValue)
-            self.presentVC(view: "OnboardingVC", animation: false)
+            self.pushVC(vc: R.storyboard.main.onboardingVC()!, animation: false)
         }
     }
     
     
     func LoggedIn() {
         //ユーザーがログイン中なら画面スキップ
-        //モーダルで本体に画面遷移
         if Auth.auth().currentUser != nil {
-            log.debug("logging in")
-            self.presentVC(view: "tabVC", animation: true)
+            self.presentVC(vc: R.storyboard.main.tabVC()!, animation: true)
         }
     }
     
@@ -91,18 +89,18 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
        }
 
      @objc func loginCompleted(notification: NSNotification){
-        self.presentVC(view: "tabVC", animation: true)
+        self.presentVC(vc: R.storyboard.main.tabVC()!, animation: true)
      }
     
     
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         //タブバーの登録
-        let sighUp = storyBoard.instantiateViewController(withIdentifier: "bSighUp")
-        let logIn = storyBoard.instantiateViewController(withIdentifier: "bLogin")
+        let sighUp: UIViewController =  R.storyboard.main.bSighUp()!
+        let logIn: UIViewController = R.storyboard.main.bLogin()!
         return [sighUp, logIn]
+        
     }
         
 

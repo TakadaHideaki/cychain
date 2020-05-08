@@ -46,10 +46,8 @@ class LogInViewController: SignUpViewController {
             
         default:
             if mailText.contains("@gmail.com") {
-                log.debug("@gmail.com")
                 registGoogleAdressAlert()
             } else {
-                log.debug("default erroe")
                 noRegistationAlert()
             }
             return
@@ -80,7 +78,6 @@ class LogInViewController: SignUpViewController {
         } else {
             authview.signUpButtonEnabled(button: authViewInstance.logInButton)
         }
-        
         
         authViewInstance.passwordErrorLabel.isHidden = true
         authViewInstance.authErrorLabel.isHidden = true

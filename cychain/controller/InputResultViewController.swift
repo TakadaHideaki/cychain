@@ -43,8 +43,13 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView(frame: .zero)
-        tableView.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
-        tableView.register(UINib(nibName: "PostCardMessageCell", bundle: nil), forCellReuseIdentifier: "PostCardMessageCell")
+        
+        
+        tableView.register(UINib(resource:R.nib.postCardeTableViewCell), forCellReuseIdentifier: "PostCardeTableViewCell")
+        tableView.register(UINib(resource:R.nib.postCardMessageCell), forCellReuseIdentifier: "PostCardMessageCell")
+
+//        tableView.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
+//        tableView.register(UINib(nibName: "PostCardMessageCell", bundle: nil), forCellReuseIdentifier: "PostCardMessageCell")
     }
 }
 
@@ -73,13 +78,6 @@ extension InputResultViewController: UITableViewDataSource {
                 let targetName = userDataModel?.target,
                 let profile = userDataModel?.icon
                 else { return profileCell }
-//
-//            let profile: UIImage?
-//            if userDataModel?.icon == UIImage(named: "user10") {
-//                     profile = UIImage(named: "user12")
-//                 } else {
-//                     profile = userDataModel?.icon
-//                 }
 
             
             profileCell.mynameLabel.text = myName
@@ -97,7 +95,6 @@ extension InputResultViewController: UITableViewDataSource {
             
             let messagecell = tableView.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! PostCardMessageCell
             userDataModel = UserDataModel.sharead
-
 
             guard let message = userDataModel?.message else { return messagecell }
             messagecell.messageLabel.text = message//メッセージ

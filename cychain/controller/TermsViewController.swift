@@ -8,12 +8,7 @@
 
 import UIKit
 
-class TermsViewController: UIViewController {
+class TermsViewController: PolicyViewController {
     
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-    }
+
 }

@@ -113,14 +113,13 @@ extension UIViewController {
        }
     
     
-    func RegistationOverAlert(VCID: String){
-         let cancel = UIAlertAction(title: "キャンセル", style: .cancel)
-         let sendList = UIAlertAction(title: "登録リストへ",style: .default,
-                                      handler:{(action: UIAlertAction!) -> Void in
-             self.switchVC(view: VCID, animation: true)
-         })
-         cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
-     }
+    func RegistationOverAlert(vc: UIViewController){
+        let cancel = UIAlertAction(title: "キャンセル", style: .cancel)
+        let sendList = UIAlertAction(title: "登録リストへ",style: .default, handler:{(action: UIAlertAction!) -> Void in
+            self.pushVC(vc: vc, animation: true)
+        })
+        cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
+    }
     
 
 

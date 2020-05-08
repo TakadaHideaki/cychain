@@ -105,7 +105,7 @@ extension SeachResultViewCotroller: UITableViewDataSource {
                 })
             } else {
                 //アイコン登録が無かっったらデフォルトアイコンをセット
-                profileCell.profileImage.image = UIImage(named: Name.ImageName.defaultIcon.rawValue)
+                profileCell.profileImage.image = R.image.user12()
                 self.coverView.isHidden = true
                 self.indicator.stopAnimating()
             }

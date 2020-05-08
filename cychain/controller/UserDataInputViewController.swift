@@ -23,7 +23,7 @@ import TextFieldEffects
     @IBOutlet weak var messageLabel: UILabel!
     
     var iconSet: IconSet?
-    let defaultIcon = UIImage(named: "user10")//写真登録のアイコンイメージ
+        let defaultIcon = R.image.user10()//写真登録のアイコンイメージ
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
@@ -49,7 +49,9 @@ import TextFieldEffects
         customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIcon, for: .normal) //写真投稿ボタンの画像を設定
         iconSet = IconSet()
-        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
+//        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
+        iconSet?.delegate = self
+
     }
     
     @IBAction func iconButtonTapped(_ sender: Any) {
@@ -88,16 +90,16 @@ import TextFieldEffects
 
             switch UDData.count {
             case 0 ... 10:
-                userDataModel.setUserDfault()
+                userDataModel.setUserDefault()
                 userDataModel.setFirebase()
-            default: RegistationOverAlert(VCID: "list") //登録数オーバーアラート
+            default: RegistationOverAlert(vc: R.storyboard.main.list()!) //登録数オーバーアラート
             }
         } else {
             //投稿値歴無し
-            userDataModel.setUserDfault()
+            userDataModel.setUserDefault()
             userDataModel.setFirebase()
         }
-        switchVC(view: "InputResultVC", animation: true)
+        pushVC(vc: R.storyboard.main.inputResultVC()!, animation: true)
     }
         
     

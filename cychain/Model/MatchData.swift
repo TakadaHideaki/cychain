@@ -16,7 +16,7 @@ class MatchData {
     var muchData: [String: [String: Any]]?
     var matchuserID: String?
     var message: String?
-    var icon = UIImage(named: Name.ImageName.defaultIcon.rawValue)
+    var icon = R.image.user12()
     var URLImage: String?
     var indexPath: Int?
     

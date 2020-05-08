@@ -11,6 +11,7 @@ import Firebase
 import FirebaseAuth
 import GoogleSignIn
 import XLPagerTabStrip
+import Rswift
 
 class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate, IndicatorInfoProvider {
     
@@ -26,10 +27,12 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate, Indicato
     }
     
     func setImageButton() {
-        mailSignUpButton.setImage(UIImage(named: "mail"), for: .normal)
-        gmaiSignUplButton.setImage(UIImage(named: "google"), for: .normal)
-    
+        let mailImage = R.image.mail()
+        let googleImage = R.image.google()
+        mailSignUpButton.setImage(mailImage, for: .normal)
+        gmaiSignUplButton.setImage(googleImage, for: .normal)
     }
+    
     
     @IBAction func googleSignUpButtonTapped(_ sender: Any) {
         GIDSignIn.sharedInstance().signIn()

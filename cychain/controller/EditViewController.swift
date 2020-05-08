@@ -49,7 +49,9 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
         iconSet = IconSet()
-        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
+//        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
+        iconSet?.delegate = self
+
     }
     
     //UserDataを表示
@@ -92,7 +94,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
                 log.debug("error")
             }
         } else {
-            iconRegistButton.setImage(UIImage(named: "user10"), for: .normal)
+            iconRegistButton.setImage(R.image.user10(), for: .normal)
         }
     }
     
@@ -105,15 +107,13 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     @IBAction func senderData(_ sender: Any) {
         
         editUserData!["message"] = messageTextView.text ?? ""
-        editUserData?["image"]  = iconRegistButton.currentImage ?? UIImage(named: "user10")
+        editUserData?["image"]  = iconRegistButton.currentImage ?? R.image.user10()
         
         let userDataModel = UserDataModel.sharead
-        userDataModel.setData(userData: editUserData!)
         
-        userDataModel.setUserDfault()
-        userDataModel.setFirebase()
-        
-        switchVC(view: "InputResultVC", animation: true)
+        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
+        userDataModel.setFirebase()//firebase更新
+        pushVC(vc: R.storyboard.main.inputResultVC()!, animation: true)
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {

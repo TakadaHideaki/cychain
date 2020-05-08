@@ -34,8 +34,8 @@ class UserDataModel {
         self.message = userData["message"] as? String
         
         //アイコンの登録がなければ登録アイコンをデフォルトアイコンに変換してself.iconにセット
-        if userData["image"] as? UIImage == UIImage(named: Name.ImageName.registIcon.rawValue) {
-            self.icon = UIImage(named: Name.ImageName.defaultIcon.rawValue)
+        if userData["image"] as? UIImage == R.image.user10() {
+            self.icon = R.image.user12()
         } else {
             //アイコンの登録があればそのままself.iconにセット
             self.icon = userData["image"] as? UIImage
@@ -56,7 +56,7 @@ class UserDataModel {
     }
     
     
-    func setUserDfault() {
+    func setUserDefault() {
         
         if var UDData = UD.object(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]] {
             
@@ -72,10 +72,9 @@ class UserDataModel {
     
     func setFirebase() {
         
-        let defaultIcon = UIImage(named: Name.ImageName.defaultIcon.rawValue)
-        
         switch icon {
-        case defaultIcon:
+            
+        case R.image.user12():
             ref?.setValue(["message": self.message])
             
         default:

@@ -360,6 +360,9 @@ PODS:
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
+  - R.swift (5.2.2):
+    - R.swift.Library (~> 5.2.0)
+  - R.swift.Library (5.2.0)
   - RSKImageCropper (2.2.3)
   - SDWebImage (5.3.2):
     - SDWebImage/Core (= 5.3.2)
@@ -382,6 +385,7 @@ DEPENDENCIES:
   - lottie-ios
   - LTMorphingLabel
   - NVActivityIndicatorView
+  - R.swift
   - RSKImageCropper
   - TextFieldEffects
   - XCGLogger (~> 7.0.0)
@@ -423,6 +427,8 @@ SPEC REPOS:
     - nanopb
     - NVActivityIndicatorView
     - ObjcExceptionBridging
+    - R.swift
+    - R.swift.Library
     - RSKImageCropper
     - SDWebImage
     - TextFieldEffects
@@ -464,12 +470,14 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
+  R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
+  R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SDWebImage: 6ac2eb96571bff96ecde31a987172c5934a0eb7d
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   XCGLogger: 0434f15e3909cdc450bb63faf638b8792ab782ab
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 56cbc1126d1359eb9314d66a80c36694bc4e3b32
+PODFILE CHECKSUM: dd2c88e057ba338e8cdd2e13dc7cccc683ec81dc
 
 COCOAPODS: 1.8.4

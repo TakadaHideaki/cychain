@@ -15,10 +15,12 @@ struct Name {
         case block
     }
     
-    enum ImageName: String {
-        case registIcon = "user10"
-        case defaultIcon = "user12"
-        
+
+    enum DataKey: String {
+        case my
+        case target
+        case message
+        case image
     }
     
 }

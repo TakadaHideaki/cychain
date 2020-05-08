@@ -18,14 +18,13 @@ import Firebase
 extension UIViewController {
     
     //viewの切り替え
-    func switchVC(view: String, animation: Bool) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: view)
-        self.navigationController?.pushViewController(vc!, animated: animation)
+    
+    func presentVC(vc: UIViewController, animation: Bool) {
+        self.present(vc, animated: animation)
     }
     
-    func presentVC(view: String, animation: Bool) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: view)
+    
+    func pushVC(vc: UIViewController, animation: Bool) {
         self.present(vc, animated: animation)
     }
     
