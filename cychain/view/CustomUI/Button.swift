@@ -32,6 +32,7 @@ class Button: UIButton {
     
     
     
+    
     @IBInspectable
     open var shadowColor: UIColor? {
         didSet {
@@ -106,6 +107,7 @@ class Button: UIButton {
         layer.shadowOffset = shadowOffset
         layer.shadowOpacity = shadowOpacity
         layer.shadowRadius = shadowRadius
+        
         
         guard let gradientLayer = self.layer as? CAGradientLayer else { return }
         gradientLayer.cornerRadius = useCornerRadius ? cornerRadius : bounds.midY

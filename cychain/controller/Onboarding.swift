@@ -8,8 +8,6 @@
 
 import UIKit
 import Lottie
-import GoogleSignIn
-
 
 
 class Onboarding: UIViewController {
@@ -38,8 +36,6 @@ class Onboarding: UIViewController {
     }
     
     func ButtonSet() {
-        StartButton.layer.borderWidth = 1.5
-        StartButton.layer.cornerRadius = 7
         StartButton.layer.borderColor = UIColor.darkGray.cgColor
     }
     
@@ -53,7 +49,7 @@ class Onboarding: UIViewController {
         self.onboardingView.bringSubviewToFront(botomLabel)
         
         self.topLabel.text = "Hello!"
-        self.middlLabel.text = "cychainはユーザーの安全の為\nアカウント登録をお願いしています"
+        self.middlLabel.text = "cychainはユーザーの\n安全の為アカウント登録を\nお願いしています"
         self.botomLabel.text = "アカウントはgooleの\n管理するサーバーです\n安心してご利用下さい"
         
         middlLabelTopMargin.constant = CGFloat(middlLabelMargin())
@@ -66,7 +62,7 @@ class Onboarding: UIViewController {
              case iphoneXR_XsMax = 896
         }
 
-        func middlLabelMargin() -> Int{
+        func middlLabelMargin() -> Int {
             switch hight {
             case DeviseHight.iphone6_7_8_XS.rawValue: return 20
             case DeviseHight.iphone6_7_8_Plus.rawValue: return 30

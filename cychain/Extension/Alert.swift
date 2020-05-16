@@ -26,7 +26,7 @@ extension UIViewController {
         })
         alert.addAction(sendButton)
         self.present(alert, animated: true)
-
+        
     }
     
     
@@ -44,39 +44,43 @@ extension UIViewController {
     }
     
     func logOutAlert() {
-         sendInitialViewAlert(title: "ログアウトしました", message: "")
-     }
+        sendInitialViewAlert(title: "ログアウトしました", message: "")
+    }
     
     func passwordresetSuccessAlert() {
-           alert(title: "メールを送信しました。", message: "メールでパスワードの再設定を行ってください。", actiontitle: "OK")
-       }
+        alert(title: "メールを送信しました。", message: "メールでパスワードの再設定を行ってください。", actiontitle: "OK")
+    }
     
     
     
     
     func weakpasswordAlert() {
-           alert(title: "パスワードは６文字以上で入力して下さい", message: "", actiontitle: "OK")
-       }
+        alert(title: "パスワードは６文字以上で入力して下さい", message: "", actiontitle: "OK")
+    }
     
     func invalidemailAlert() {
-          alert(title: "メールアドレスが正しくありません", message: "", actiontitle: "OK")
-      }
+        alert(title: "メールアドレスが正しくありません", message: "", actiontitle: "OK")
+    }
     func emailalreadyInUseAlert() {
-          alert(title: "このメールアドレスはすでに使われています", message: "", actiontitle: "OK")
-      }
+        alert(title: "このメールアドレスはすでに使われています", message: "", actiontitle: "OK")
+    }
     
-     func passworderrorAlert() {
-          alert(title: "このアドレスは登録されてません", message: "", actiontitle: "OK")
-      }
+    func passworderrorAlert() {
+        alert(title: "このアドレスは登録されてません", message: "", actiontitle: "OK")
+    }
+    
+    func emptyAlert() {
+        alert(title: "未入力の項目があります", message: "", actiontitle: "OK")
+    }
     
     func passwordemptyAlert() {
-          self.alert(title: "メールをアドレスを入力して下さい", message: "", actiontitle: "OK")
-      }
+        self.alert(title: "メールをアドレスを入力して下さい", message: "", actiontitle: "OK")
+    }
     
     func registGoogleadressAlert() {
-          alert(title: "Googleアドレスでの登録", message: "Googleログインからログインして下さい", actiontitle: "OK")
-      }
-  
+        alert(title: "Googleアドレスでの登録", message: "Googleログインからログインして下さい", actiontitle: "OK")
+    }
+    
     func noNameAlert() {
         alert(title: "名前を入力して下さい", message: "", actiontitle: "OK")
     }
@@ -109,8 +113,8 @@ extension UIViewController {
     }
     
     func registErrorAlert() {
-           self.alert(title: "エラー", message: " エラーが起きました\nしばらくしてから再度お試し下さい", actiontitle: "OK")
-       }
+        self.alert(title: "エラー", message: " エラーが起きました\nしばらくしてから再度お試し下さい", actiontitle: "OK")
+    }
     
     
     func RegistationOverAlert(vc: UIViewController){
@@ -121,6 +125,6 @@ extension UIViewController {
         cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
     }
     
-
-
+    
+    
 }

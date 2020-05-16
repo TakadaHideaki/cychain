@@ -6,7 +6,7 @@
 //  Copyright © 2020 高田英明. All rights reserved.
 //
 
-import Firebase
+import FirebaseAuth
 
 protocol AuthModelDelegate: class {
     func toHome()
@@ -29,24 +29,27 @@ class AuthModel {
             } else {
                 if let e = error {
                     self.delegate?.signUperrorDidOccur(error: e)
+                    log.debug(e)
+
                 }
             }
         }
     }
     
-    func LogIn(mail: String, pass: String) {
-        log.debug(mail)
+    func logIn(mail: String, pass: String) {
         
         Auth.auth().signIn(withEmail: mail, password: pass) { (authResult, error) in
-            
+
             if (((authResult?.user) != nil) && error == nil) {
                 self.delegate?.toHome()
-                log.debug("login sacsess")
-                
             } else {
                 if let e = error {
                     self.delegate?.logInerrorDidOccur(error: e)
-                    log.debug("login error")
+                    log.debug(e)
+
+      
+//
+                    
                 }
             }
         }

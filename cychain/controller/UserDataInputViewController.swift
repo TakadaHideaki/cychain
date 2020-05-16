@@ -13,7 +13,7 @@ import FirebaseDatabase
 import RSKImageCropper
 import TextFieldEffects
 
-    class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
+class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
     
     
     @IBOutlet weak var myNameTextField: UITextField!
@@ -23,7 +23,7 @@ import TextFieldEffects
     @IBOutlet weak var messageLabel: UILabel!
     
     var iconSet: IconSet?
-        let defaultIcon = R.image.user10()//写真登録のアイコンイメージ
+    let defaultIcon = R.image.user10()//写真登録のアイコンイメージ
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
@@ -49,16 +49,16 @@ import TextFieldEffects
         customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIcon, for: .normal) //写真投稿ボタンの画像を設定
         iconSet = IconSet()
-//        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
+        //        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
         iconSet?.delegate = self
-
+        
     }
     
     @IBAction func iconButtonTapped(_ sender: Any) {
         //アイコンボタン押した処理(フォトライブラリ呼び出し、選択した写真の加工をiconSetで行う)
         iconSet?.callPhotoLibraly()
-        }
-     
+    }
+    
     
     //データ入力後の投稿ボタン
     @IBAction func postData(_ sender: Any) {
@@ -87,7 +87,7 @@ import TextFieldEffects
         }
         //投稿履歴有り
         if let UDData = UD.object(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]]  {
-
+            
             switch UDData.count {
             case 0 ... 10:
                 userDataModel.setUserDefault()
@@ -101,7 +101,7 @@ import TextFieldEffects
         }
         pushVC(vc: R.storyboard.main.inputResultVC()!, animation: true)
     }
-        
+    
     
     func textFieldDidBeginEditing(_ textField: UITextField)  {
         messageTextView.isSelectable = false
@@ -122,18 +122,18 @@ import TextFieldEffects
     }
     
     //textviewを６行までに制限
-     let maxLength = 6
-     var previousText = ""
-     var lastReplaceRange: NSRange!
-     var lastReplacementString = ""
-     
-     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-         self.previousText = myNameTextField.text!
-         self.lastReplaceRange = range
-         self.lastReplacementString = text
-         return true
-     }
-
+    let maxLength = 6
+    var previousText = ""
+    var lastReplaceRange: NSRange!
+    var lastReplacementString = ""
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        self.previousText = myNameTextField.text!
+        self.lastReplaceRange = range
+        self.lastReplacementString = text
+        return true
+    }
+    
     
     //メッセージを６行に制限
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -165,7 +165,7 @@ import TextFieldEffects
 }
 
 extension UserDataInputViewController: IconSetDelegate {
-
+    
     func buttonSetDidCropImage(image: UIImage) {
         iconRegistButton?.setImage(image, for: .normal)
     }

@@ -26,6 +26,8 @@ pod 'LTMorphingLabel'
 pod 'XCGLogger', '~> 7.0.0'
 pod 'lottie-ios'
 pod 'R.swift'
+pod 'RxSwift'
+pod 'RxCocoa'
 
 end
 
@@ -48,6 +50,8 @@ pod 'LTMorphingLabel'
 pod 'XCGLogger', '~> 7.0.0'
 pod 'lottie-ios'
 pod 'R.swift'
+pod 'RxSwift'
+pod 'RxCocoa'
 
 end
 

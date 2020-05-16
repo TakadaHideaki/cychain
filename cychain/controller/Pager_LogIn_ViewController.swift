@@ -6,24 +6,23 @@
 //  Copyright © 2019 高田英明. All rights reserved.
 //
 
-import UIKit
 import Firebase
-import FirebaseUI
-import FirebaseAuth
+//import FirebaseUI
+//import FirebaseAuth
 import GoogleSignIn
 import XLPagerTabStrip
 
-class Pager_LogIn_ViewController: Pager_SignUp_ViewController, FUIAuthDelegate {
+//class Pager_LogIn_ViewController: Pager_SignUp_ViewController, FUIAuthDelegate {
+class Pager_LogIn_ViewController: Pager_SignUp_ViewController {
+
     
     @IBOutlet weak var mailLogInButton: Button!
     @IBOutlet weak var gmailLogInButton: Button!
     
     
     override func setImageButton() {
-        let mailImage = R.image.mail()
-        let googleImage = R.image.google()
-        mailLogInButton.setImage(mailImage, for: .normal)
-        gmailLogInButton.setImage(googleImage, for: .normal)
+        mailLogInButton.setImage(R.image.mail(), for: .normal)
+        gmailLogInButton.setImage(R.image.google(), for: .normal)
     }
     
         

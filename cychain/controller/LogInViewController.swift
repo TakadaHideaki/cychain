@@ -11,13 +11,28 @@ import FirebaseAuth
 
 class LogInViewController: SignUpViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func initializeUI() {
         authViewInstance.logInUI()
     }
     
-    override func logIn(email: String, password: String) {
-        authModel?.LogIn(mail: email, pass: password)
+
+    override func authAction(email: String, password: String) {
+       authModel?.logIn(mail: email, pass: password)
+   }
+    
+    override func switchButtonEnabled() {
+        
+        guard let authview = authView  else { return }
+        
+        if authViewInstance.emailTextField.text!.isEmpty ||
+            authViewInstance.passwordTextField.text!.isEmpty {
+            authview.flag = true
+            authview.buttonInvalid(button: authViewInstance.logInButton)
+            
+        } else {
+            authview.flag = false
+            authview.buttonInvalid(button: authViewInstance.logInButton)
+        }
     }
     
     override func passwordReset(email: String) {
@@ -36,7 +51,8 @@ class LogInViewController: SignUpViewController {
         switch errorMessage {
         //パスワード文字数不足
         case ("The password is invalid or the user does not have a password."):
-            self.weakPasswordAlert()
+//            self.weakPasswordAlert()
+            invalidEmailAlert()
             authViewInstance.passwordErrorLabel.isHidden = false
             
         //無効アドレス
@@ -52,6 +68,7 @@ class LogInViewController: SignUpViewController {
             }
             return
         }
+        
     }
     
     
@@ -69,20 +86,22 @@ class LogInViewController: SignUpViewController {
     }
     
     
-    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        guard let authview = authView  else { return true }
-        
-        if authViewInstance.emailTextField.text!.isEmpty || authViewInstance.passwordTextField.text!.isEmpty {
-            authview.signUpButtonInvalid(button: authViewInstance.logInButton)
-        } else {
-            authview.signUpButtonEnabled(button: authViewInstance.logInButton)
-        }
-        
-        authViewInstance.passwordErrorLabel.isHidden = true
-        authViewInstance.authErrorLabel.isHidden = true
-        return true
-    }
+//    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        
+//        guard let authview = authView  else { return true }
+//        
+//        if authViewInstance.emailTextField.text!.isEmpty || authViewInstance.passwordTextField.text!.isEmpty {
+//            authview.flag = true
+//            authview.buttonInvalid(button: authViewInstance.logInButton)
+//        } else {
+//            authView?.flag = false
+//            authview.buttonInvalid(button: authViewInstance.logInButton)
+//        }
+//        
+//        authViewInstance.passwordErrorLabel.isHidden = true
+//        authViewInstance.authErrorLabel.isHidden = true
+//        return true
+//    }
 }
 
 

@@ -9,9 +9,9 @@
 import UIKit
 
 protocol AuthViewDelegate: class {
-    func signUp(email: String, password: String)
-    func logIn(email: String, password: String)
+    func authAction(email: String, password: String)
     func passwordReset(email: String)
+    func textFieldEnptyAlert()
 }
 
 
@@ -27,10 +27,8 @@ class AuthView: UIView {
     
     weak var delegate: AuthViewDelegate?
 
-    let securityButton = UIButton(type: .custom)
-    let showImage = UIImage(named: "eye5")
-    let hideImage = UIImage(named: "eye4")
-    
+    var securityButton = UIButton(type: .custom)
+
     
     class func instance() -> AuthView {
           return UINib(nibName: "AuthView", bundle: nil).instantiate(withOwner: self, options: nil)[0] as! AuthView
@@ -42,63 +40,77 @@ class AuthView: UIView {
         passwordTextField.underLine(height: 1.0, color: .white)
     }
     
+    func textFieldLeftIconSet() {
+        textFieldIconSet(textField: emailTextField, image: R.image.mail()!)
+        textFieldIconSet(textField: passwordTextField, image: R.image.password()!)
+     }
     //メールアイコンとパスワードアイコンをtextFieldに設置
-    func textFieldIconSet(textField: UITextField, andImage image: UIImage) {
-        let iconView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 20 , height: 20))
-        let iconMarginView: UIView = UIView(frame:
-            CGRect(x: 0, y: 0, width: 30, height: 20))
+    func textFieldIconSet(textField: UITextField, image: UIImage) {
+       
+        let iconMarginView: UIView = {
+            let iconMarginView = UIView()
+            iconMarginView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+            return iconMarginView
+        }()
+        
+        let iconView: UIImageView = {
+            let iconView = UIImageView()
+            iconView.frame = CGRect(x: 0.0, y: 0.0, width: 20 , height: 20)
+            iconView.image = image
+            return iconView
+        }()
         iconMarginView.addSubview(iconView)
-        iconView.image = image
         textField.leftView = iconMarginView
         textField.leftViewMode = .always
     }
-    //　↑を適合
-    func textFieldLeftIconSet() {
-         textFieldIconSet(textField: emailTextField, andImage: UIImage(named: "mail")!)
-         textFieldIconSet(textField: passwordTextField, andImage: UIImage(named: "password")!)
-     }
     
     //paswprdTextFieldの左に伏せ字用の目のマーク設置
-     func addPasswordEyeButton() {
-        securityButton.setImage((hideImage), for: .normal)
-         securityButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 5, right: 0)
-         securityButton.frame = CGRect(x: CGFloat(passwordTextField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-         passwordTextField.rightView = securityButton
-         passwordTextField.rightViewMode = .always
-     }
-
+    func addPasswordEyeButton() {
+        let button: UIButton = {
+            let button = UIButton()
+            button.setImage(R.image.eye4(), for: .normal)
+            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 10, right: 0)
+            let textFieldWidth = passwordTextField.frame.size.width
+            securityButton.frame = CGRect(x: textFieldWidth - 25, y: 5, width: 10, height: 15)
+            return button
+        }()
+        securityButton = button
+        passwordTextField.rightView = securityButton
+        passwordTextField.rightViewMode = .always
+    }
     
     //SignUpボタンを有効
-    func signUpButtonEnabled(button: UIButton) {
-         button.isEnabled = true
-         button.backgroundColor = .white
-         button.setTitleColor(.black, for: .normal)
-         button.layer.borderWidth = 0
-     }
-     
-    //SignUpvボタン無効
-     func signUpButtonInvalid(button: UIButton) {
-         button.isEnabled = false
-         button.backgroundColor = .clear
-         button.setTitleColor(.lightGray, for: .normal)
-         button.layer.borderColor = UIColor.lightGray.cgColor
-         button.layer.borderWidth = 2
-     }
+    var flag = true
+    func buttonInvalid(button: UIButton) {
+        button.isEnabled = flag ? false: true
+        button.backgroundColor = flag ? .clear: .white
+        button.layer.borderWidth = flag ? 2: 0
+        button.layer.borderColor = flag ? UIColor.lightGray.cgColor: UIColor.white.cgColor
+        if flag == true {
+            button.setTitleColor(.lightGray, for: .normal)
+        } else {
+            button.setTitleColor(.black, for: .normal)
+        }
+    }
+    
     
     final func signUpUI() {
         authErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true
         passwordResetButton.isHidden = true
-        logInButton.isHidden = true
+        logInButton.isHidden = false
         signUpButton.setTitle("Sign Up", for: .normal)
-        signUpButtonInvalid(button: signUpButton)
+        buttonInvalid(button: signUpButton)
     }
     
     func logInUI() {
+        authErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+        passwordResetButton.isHidden = true
         signUpButton.isHidden = true
         logInButton.isHidden = false
         logInButton.setTitle("Log In", for: .normal)
-        signUpButtonInvalid(button: logInButton)
+        buttonInvalid(button: logInButton)
     }
     
     func errorLabelHidden() {
@@ -107,22 +119,24 @@ class AuthView: UIView {
     }
     
     
-    
     @IBAction func SignInButtonTapped(_ sender: Any) {
-
-        guard let email = emailTextField.text?.deleteSpace(),
-            let pass = passwordTextField.text?.deleteSpace()
-            else { return }
-        delegate?.signUp(email: email, password: pass)
+        buttonTappedAction()
     }
     
-    
     @IBAction func logInButtonTapped(_ sender: Any) {
+        buttonTappedAction()
+    }
+    
+    func buttonTappedAction() {
+        if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
+            delegate?.textFieldEnptyAlert()
         
-        guard let email = emailTextField.text?.deleteSpace(),
-            let pass = passwordTextField.text?.deleteSpace()
-            else { return }
-        delegate?.logIn(email: email, password: pass)
+        } else {
+            guard let email = emailTextField.text?.deleteSpace(),
+                let pass = passwordTextField.text?.deleteSpace()
+                else { return }
+            delegate?.authAction(email: email, password: pass)
+        }
     }
     
     

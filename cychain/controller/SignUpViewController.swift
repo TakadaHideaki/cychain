@@ -7,20 +7,30 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import FirebaseAuth
 
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     var authModel: AuthModel?
     var authView: AuthView?
     let authViewInstance = AuthView.instance()
-    let securityButton = UIButton(type: .custom)
-    let passwordShow_Hide_Button = UIButton(type: .custom)
+    var securityFlag = true
+    
+    private let disposeBag = DisposeBag()
+    
+ 
+
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        initializeUI()
+        authViewInstance.emailTextField.text = ""
+        authViewInstance.passwordTextField.text = ""
+        switchButtonEnabled() 
         self.navigationController?.isNavigationBarHidden = false
     }
     
@@ -33,9 +43,10 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         set_View_Model()
-        initializeUI()
-        authViewInstance.signUpUI()
+        initialize()
+        initButton()
     }
+    
     
     func set_View_Model() {
         authModel = AuthModel()
@@ -44,10 +55,9 @@ class SignUpViewController: UIViewController {
         authModel?.delegate = self
     }
     
-    
-    func initializeUI() {
-        authViewInstance.emailTextField.delegate = self
-        authViewInstance.passwordTextField.delegate = self
+    func initialize() {
+//        authViewInstance.emailTextField.delegate = self
+//        authViewInstance.passwordTextField.delegate = self
         authViewInstance.passwordTextField.isSecureTextEntry = true
         authViewInstance.textFieldUnderLine()   // textFieldをアンダーラインのみ
         authViewInstance.textFieldLeftIconSet() // メール、パスワードアイコン設置
@@ -55,18 +65,52 @@ class SignUpViewController: UIViewController {
         securityButtonTapped() //平字/伏せ字切替
     }
     
+    func initializeUI() {
+        authViewInstance.signUpUI()
+    }
+    
+    func switchButtonEnabled() {
+        guard let authview = authView  else { return }
+        
+        if authViewInstance.emailTextField.text!.isEmpty ||
+            authViewInstance.passwordTextField.text!.isEmpty {
+            
+            authview.flag = true
+            authview.buttonInvalid(button: authViewInstance.signUpButton)
+            
+        } else {
+            authview.flag = false
+            authview.buttonInvalid(button: authViewInstance.signUpButton)
+        }
+    }
+    
+    func checkTextField(textField: UITextField) {
+        textField.rx.text
+            .subscribe(onNext: { _ in
+                log.debug(textField.text!.count)
+                self.switchButtonEnabled()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func initButton() {
+        switchButtonEnabled()
+        checkTextField(textField: authViewInstance.emailTextField)
+        checkTextField(textField: authViewInstance.passwordTextField)
+    }
+
     
     func securityButtonTapped() {
-        authViewInstance.securityButton.addTarget(self, action: #selector(self.security), for: .touchUpInside)
+        authViewInstance.securityButton.addTarget(self,
+                                                  action: #selector(self.security),
+                                                  for: .touchUpInside)
     }
     @objc func security(_ sender: Any) {
-        var show = true
         authViewInstance.passwordTextField.isSecureTextEntry.toggle()
-        show.toggle()
-        let show_hideImage = show ?  R.image.eye4(): R.image.eye5()
-        passwordShow_Hide_Button.setImage(show_hideImage, for: .normal)
+        securityFlag.toggle()
+        let eyeImage = securityFlag ? R.image.eye4(): R.image.eye5()
+        authViewInstance.securityButton.setImage(eyeImage, for: .normal)
     }
-    
 }
 
 extension SignUpViewController: AuthModelDelegate {
@@ -117,28 +161,15 @@ extension SignUpViewController: AuthModelDelegate {
 
 extension SignUpViewController: AuthViewDelegate {
     
-    final func signUp(email: String, password: String) {
+     @objc func authAction(email: String, password: String) {
         authModel?.signUp(emai: email, password: password)
     }
-    @objc func logIn(email: String, password: String) {}
+    func textFieldEnptyAlert() {
+        emptyAlert()
+    }
     @objc func passwordReset(email: String) {}
 }
 
-
-extension SignUpViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        //addressとpasswordが空ならsignUpボタンを無効
-        guard let authview = authView  else { return true }
-
-        if authViewInstance.emailTextField.text!.isEmpty || authViewInstance.passwordTextField.text!.isEmpty {
-            authview.signUpButtonInvalid(button: authViewInstance.signUpButton)
-        } else {
-            authview.signUpButtonEnabled(button: authViewInstance.signUpButton)
-        }
-        return true
-    }
-}
 
 
 

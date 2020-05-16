@@ -15,8 +15,8 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var tableView: UITableView!
     
-    var registData: [String: Any]?
-    var userInputData: [String: Any]?
+//    var registData: [String: Any]?
+//    var userInputData: [String: Any]?
     var userDataModel: UserDataModel?
 
     
@@ -45,11 +45,11 @@ class InputResultViewController: UIViewController, UIImagePickerControllerDelega
         tableView.tableFooterView = UIView(frame: .zero)
         
         
-        tableView.register(UINib(resource:R.nib.postCardeTableViewCell), forCellReuseIdentifier: "PostCardeTableViewCell")
-        tableView.register(UINib(resource:R.nib.postCardMessageCell), forCellReuseIdentifier: "PostCardMessageCell")
+//        tableView.register(UINib(resource:R.nib.postCardeTableViewCell), forCellReuseIdentifier: "PostCardeTableViewCell")
+//        tableView.register(UINib(resource:R.nib.postCardMessageCell), forCellReuseIdentifier: "PostCardMessageCell")
 
-//        tableView.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
-//        tableView.register(UINib(nibName: "PostCardMessageCell", bundle: nil), forCellReuseIdentifier: "PostCardMessageCell")
+        tableView.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
+        tableView.register(UINib(nibName: "PostCardMessageCell", bundle: nil), forCellReuseIdentifier: "PostCardMessageCell")
     }
 }
 

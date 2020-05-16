@@ -42,7 +42,7 @@ class MatchData {
     
     func convertURLtoUIImage(URLImage: String, _ complete: @escaping (UIImage) -> ()) {
         
-        let url = URL(string: URLImage)
+        let url = URL(string: URLImage) //let url = urlString.flatMap(URL.init)でも可
         DispatchQueue.global().async {
             do {
                 let imageData = try Data(contentsOf: url!)
