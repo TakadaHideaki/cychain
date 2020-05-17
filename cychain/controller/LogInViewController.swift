@@ -11,6 +11,7 @@ import FirebaseAuth
 
 class LogInViewController: SignUpViewController {
     
+    //xibで作ったSignUp.LogIn共用画面をLogIn画面用にする
     override func initializeUI() {
         authViewInstance.logInUI()
     }
@@ -21,14 +22,14 @@ class LogInViewController: SignUpViewController {
    }
     
     override func switchButtonEnabled() {
-        
+
         guard let authview = authView  else { return }
-        
+
         if authViewInstance.emailTextField.text!.isEmpty ||
             authViewInstance.passwordTextField.text!.isEmpty {
             authview.flag = true
             authview.buttonInvalid(button: authViewInstance.logInButton)
-            
+
         } else {
             authview.flag = false
             authview.buttonInvalid(button: authViewInstance.logInButton)

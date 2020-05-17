@@ -12,17 +12,13 @@ import RxCocoa
 import FirebaseAuth
 
 
-class SignUpViewController: UIViewController, UITextFieldDelegate {
+class SignUpViewController: UIViewController {
     
     var authModel: AuthModel?
     var authView: AuthView?
     let authViewInstance = AuthView.instance()
     var securityFlag = true
-    
     private let disposeBag = DisposeBag()
-    
- 
-
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,7 +26,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         initializeUI()
         authViewInstance.emailTextField.text = ""
         authViewInstance.passwordTextField.text = ""
-        switchButtonEnabled() 
+        switchButtonEnabled()
         self.navigationController?.isNavigationBarHidden = false
     }
     
@@ -44,7 +40,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         set_View_Model()
         initialize()
-        initButton()
     }
     
     
@@ -62,13 +57,50 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         authViewInstance.textFieldUnderLine()   // textFieldをアンダーラインのみ
         authViewInstance.textFieldLeftIconSet() // メール、パスワードアイコン設置
         authViewInstance.addPasswordEyeButton() // 伏せ字用アイマーク設置
-        securityButtonTapped() //平字/伏せ字切替
+        initSignUpButton() //textfield空なら無効
+        initSecurityButton() //平字/伏せ字切替
     }
     
+    //xibで作ったSignUp.LogIn共用画面をSignUp画面用にする
     func initializeUI() {
         authViewInstance.signUpUI()
     }
     
+    //textfieldを監視対象に追加
+    private func initSignUpButton() {
+        switchButtonEnabled() //textfieldが空ならサインアップボタンを無効
+        checkTextField(textField: authViewInstance.emailTextField)
+        checkTextField(textField: authViewInstance.passwordTextField)
+    }
+    //目のボタンを監視対象に追加
+    private func initSecurityButton() {
+        SecureTextEntry() // 伏せ字/平字切り替え
+        securityButtonTapped(button: authViewInstance.securityButton)
+    }
+    
+    //textFieldの変更を監視
+      func checkTextField(textField: UITextField) {
+          textField.rx.text
+              .subscribe(onNext: { _ in
+                  log.debug(textField.text!.count)
+                  //空ならサインアップボタンを無効
+                  self.switchButtonEnabled()
+              })
+              .disposed(by: disposeBag)
+      }
+    
+    //buttonタップを監視
+    func securityButtonTapped(button: UIButton) {
+        button.rx.tap
+            .subscribe(onNext: { [weak self] in
+                log.debug("buttontap")
+                // 伏せ字/平字切り替え
+                self?.SecureTextEntry()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    //サインアップボタン押下制御
     func switchButtonEnabled() {
         guard let authview = authView  else { return }
         
@@ -84,33 +116,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func checkTextField(textField: UITextField) {
-        textField.rx.text
-            .subscribe(onNext: { _ in
-                log.debug(textField.text!.count)
-                self.switchButtonEnabled()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func initButton() {
-        switchButtonEnabled()
-        checkTextField(textField: authViewInstance.emailTextField)
-        checkTextField(textField: authViewInstance.passwordTextField)
-    }
-
-    
-    func securityButtonTapped() {
-        authViewInstance.securityButton.addTarget(self,
-                                                  action: #selector(self.security),
-                                                  for: .touchUpInside)
-    }
-    @objc func security(_ sender: Any) {
+    //目のボタンタップでtextfieldの伏せ字/平字切り替えができる様にする
+    func SecureTextEntry() {
         authViewInstance.passwordTextField.isSecureTextEntry.toggle()
+        //伏せ字の時はスラッシュ(\)の目にする
         securityFlag.toggle()
-        let eyeImage = securityFlag ? R.image.eye4(): R.image.eye5()
+        let slashEye = R.image.eye4()
+        let eye = R.image.eye5()
+        let eyeImage = securityFlag ? slashEye: eye
         authViewInstance.securityButton.setImage(eyeImage, for: .normal)
     }
+
 }
 
 extension SignUpViewController: AuthModelDelegate {

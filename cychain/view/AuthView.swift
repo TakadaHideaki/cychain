@@ -80,7 +80,7 @@ class AuthView: UIView {
     }
     
     //SignUpボタンを有効
-    var flag = true
+    var flag = true //textfieldが空の状態がflag == true
     func buttonInvalid(button: UIButton) {
         button.isEnabled = flag ? false: true
         button.backgroundColor = flag ? .clear: .white
@@ -93,7 +93,7 @@ class AuthView: UIView {
         }
     }
     
-    
+    //xibで作ったSignUp.LogIn共用画面をSignUp画面用にする
     final func signUpUI() {
         authErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true
@@ -102,7 +102,7 @@ class AuthView: UIView {
         signUpButton.setTitle("Sign Up", for: .normal)
         buttonInvalid(button: signUpButton)
     }
-    
+    //xibで作ったSignUp.LogIn共用画面をlogIn画面用にする
     func logInUI() {
         authErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true
