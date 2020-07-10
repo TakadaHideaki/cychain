@@ -19,24 +19,23 @@ class Pager_LogIn_ViewController: Pager_SignUp_ViewController {
     @IBOutlet weak var mailLogInButton: Button!
     @IBOutlet weak var gmailLogInButton: Button!
     
+    override var barTitle: String { return "ログイン" }
     
+    //ボタンにアイコンをセット
     override func setImageButton() {
-        mailLogInButton.setImage(R.image.mail(), for: .normal)
-        gmailLogInButton.setImage(R.image.google(), for: .normal)
+        mailLogInButton.setImage(R.image.mail(), for: .normal) //　メールログインボタンにメールアイコン設置
+        gmailLogInButton.setImage(R.image.google(), for: .normal) //　GメールログインボタンにGoogleアイコンを設置
     }
     
-        
-    @IBAction func googleLogInButtonTapped(_ sender: Any) {
-        GIDSignIn.sharedInstance().signIn()
+    //『googleでログイン』をTapした時のアクション
+    override func buttonSet() {
+        gmailButtontapAction(button: gmailLogInButton) //googleログイン画面に遷移
     }
     
-    //ログインがキャンセル・失敗した場合
+    //ログインが失敗した場合
      func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
                 withError error: NSError!) {
-        logInErrorAlert()
+        logInErrorAlert() //ログイン失敗アラート表示
     }
     
-    override func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "ログイン") // 親のButtonBarで使われる名前
-    }
 }

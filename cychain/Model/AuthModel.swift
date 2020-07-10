@@ -20,9 +20,9 @@ class AuthModel {
     
     weak var delegate: AuthModelDelegate?
         
-    func signUp(emai: String, password: String) {
+    func signUp(email: String, password: String) {
 
-        Auth.auth().createUser(withEmail: emai, password: password) { (authResult, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
 
             if (((authResult?.user) != nil) && error == nil) || Auth.auth().currentUser != nil {
                 self.delegate?.toHome()

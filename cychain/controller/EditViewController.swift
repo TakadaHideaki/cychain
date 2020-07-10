@@ -111,7 +111,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         
         let userDataModel = UserDataModel.sharead
         
-        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
+//        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
         userDataModel.setFirebase()//firebase更新
         pushVC(vc: R.storyboard.main.inputResultVC()!, animation: true)
     }

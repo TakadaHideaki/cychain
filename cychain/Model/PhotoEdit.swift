@@ -16,7 +16,10 @@ protocol IconSetDelegate: NSObject {
 
 class IconSet: NSObject, RSKImageCropViewControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+
+
     weak var delegate: (UIViewController & IconSetDelegate)?
+
 
     var iconButton: UIButton?
     var userDataInputVC = UserDataInputViewController()
@@ -28,11 +31,13 @@ class IconSet: NSObject, RSKImageCropViewControllerDelegate, UIImagePickerContro
             pickerView.sourceType = .photoLibrary
             pickerView.delegate = self
             delegate?.present(pickerView, animated: true)
+            log.debug("b")
         }
     }
     
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-                
         let image = info[.originalImage] as! UIImage  // 選択した写真を取得する
         delegate?.dismiss(animated: true)
             
@@ -42,9 +47,11 @@ class IconSet: NSObject, RSKImageCropViewControllerDelegate, UIImagePickerContro
         imageCropVC.chooseButton.setTitle("完了", for: .normal)
         imageCropVC.delegate = self
         delegate?.present(imageCropVC, animated: true)
+        log.debug("c")
     }
-    
-    
+
+ 
+
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
         
         delegate?.dismiss(animated: true)
@@ -63,14 +70,16 @@ class IconSet: NSObject, RSKImageCropViewControllerDelegate, UIImagePickerContro
             let pngData = capturedImage.pngData()!
             //このImageは円形で余白は透過です。
             let png = UIImage(data: pngData)!
+            log.debug("d")
             delegate?.buttonSetDidCropImage(image: png)
         }
     }
+
     
     func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
         delegate?.dismiss(animated: true)
-//        dismiss(animated: true, completion: nil)
     }
+
 }
 
 

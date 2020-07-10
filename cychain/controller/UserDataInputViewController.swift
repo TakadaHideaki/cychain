@@ -7,13 +7,12 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseStorage
-import FirebaseDatabase
-import RSKImageCropper
+import RxSwift
+import RxCocoa
 import TextFieldEffects
 
 class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
+
     
     
     @IBOutlet weak var myNameTextField: UITextField!
@@ -21,9 +20,14 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var iconRegistButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var postButton: Button!
     
-    var iconSet: IconSet?
+    private let disposeBag = DisposeBag()
+
+    let userDataModel = UserDataModel.sharead
+    let viewModel = UserDataViewModel()
     let defaultIcon = R.image.user10()//写真登録のアイコンイメージ
+    
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
@@ -47,60 +51,108 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
         messageTextView.delegate = self
         messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
-        self.iconRegistButton.setImage(self.defaultIcon, for: .normal) //写真投稿ボタンの画像を設定
-        iconSet = IconSet()
-        //        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
-        iconSet?.delegate = self
+        self.iconRegistButton.setImage(self.defaultIcon, for: .normal)
+
+        
+        bind()
+        CharactorError()//文字数チェック
+        postCountError()//投稿数チェック
+        goNextVC()//画面遷移
+        aaa()
+
+    }
+    
+
+    
+    func bind() {
+        //view => viewModl
+        //myNameTextFieldを監視
+        myNameTextField.rx.text.orEmpty
+            .map{( $0.deleteSpace())}
+            .bind(to: viewModel.myNameRelay)
+            .disposed(by: disposeBag)
+        
+        //targetNameTextFieldを監視
+        targetNameTextField.rx.text.orEmpty
+            .map{( $0.deleteSpace())}
+            .bind(to: viewModel.targetRelay)
+            .disposed(by: disposeBag)
+        
+        //textViewを監視
+        messageTextView.rx.text.orEmpty
+            .bind(to: userDataModel.messageRelay)
+            .disposed(by: disposeBag)
+        
+        //アイコンボタンを監視
+        iconRegistButton.rx.tap
+            .bind(to: viewModel.onIcButtonClick)
+            .disposed(by: disposeBag)
+        
+        //投稿ボタンを監視
+        postButton.rx.tap
+            .bind(to: viewModel.onRegisterButtonClick)
+            .disposed(by: disposeBag)
+        
+        
+        
+        
+        //viewmoel => view
+        viewModel.buttonImage?
+            .drive(iconRegistButton.rx.image())
+            .disposed(by: disposeBag)
         
     }
     
-    @IBAction func iconButtonTapped(_ sender: Any) {
-        //アイコンボタン押した処理(フォトライブラリ呼び出し、選択した写真の加工をiconSetで行う)
-        iconSet?.callPhotoLibraly()
+    
+     //textFieldが未入力or13文字以上でアラート
+    func CharactorError() {
+        viewModel.isInputTextValid
+            .filter{ !$0 }
+            .map { _ in () }
+            .subscribe(onNext: { _ in
+                self.charactorErrorAlert()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    //投稿数が10以上でアラート
+    func postCountError() {
+        viewModel.postsCountCheck
+            .filter{ !$0 }
+            .map { _ in () }
+            .subscribe(onNext: { _ in
+                self.RegistationOverAlert(vc: R.storyboard.main.list()!)
+            })
+            .disposed(by: disposeBag)
     }
     
     
-    //データ入力後の投稿ボタン
-    @IBAction func postData(_ sender: Any) {
-        
-        let myname = myNameTextField.text?.deleteSpace() ?? ""
-        let targetname = targetNameTextField.text?.deleteSpace() ?? ""
-        
-        //入力データを格納
-        let inputData: [String: Any] = [
-            "my": myname,
-            "target": targetname,
-            "message":  messageTextView.text ?? "",
-            "image": iconRegistButton.currentImage as Any,
-        ]
-        
-        let userDataModel = UserDataModel.sharead
-        userDataModel.setData(userData: inputData)
-        
-        //名前未入力アラート
-        if myname.isEmpty || targetname.isEmpty {
-            noNameAlert()
-        }
-        //名前文字数オーバーアラート
-        if myname.count >= 13 || targetname.count >= 13 {
-            overCharacterAlert()
-        }
-        //投稿履歴有り
-        if let UDData = UD.object(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]]  {
-            
-            switch UDData.count {
-            case 0 ... 10:
-                userDataModel.setUserDefault()
-                userDataModel.setFirebase()
-            default: RegistationOverAlert(vc: R.storyboard.main.list()!) //登録数オーバーアラート
-            }
-        } else {
-            //投稿値歴無し
-            userDataModel.setUserDefault()
-            userDataModel.setFirebase()
-        }
-        pushVC(vc: R.storyboard.main.inputResultVC()!, animation: true)
+   //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
+    func goNextVC() {
+        self.viewModel.goToNext
+            .subscribe(onNext: { text1 in
+                let vc = InputResultViewController(text1: text1)
+                log.debug(self.viewModel.mT)
+
+//                self.presentVC(vc: vc, animation: true)
+    })
+    .disposed(by: disposeBag)
     }
+    
+
+    func aaa() {
+        self.viewModel.mT.subscribe(onNext: { aa in
+            log.debug(aa)
+            log.debug(aa)
+            log.debug(self.viewModel.mT)
+        })
+        .disposed(by: disposeBag)
+    }
+   
+
+    
+    
+
     
     
     func textFieldDidBeginEditing(_ textField: UITextField)  {
@@ -165,9 +217,9 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
 }
 
 extension UserDataInputViewController: IconSetDelegate {
-    
+
     func buttonSetDidCropImage(image: UIImage) {
-        iconRegistButton?.setImage(image, for: .normal)
+        viewModel.onImageSelected.accept(image)
     }
 }
 

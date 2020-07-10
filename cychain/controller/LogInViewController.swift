@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import RxSwift
 import FirebaseAuth
 
 class LogInViewController: SignUpViewController {
+    
+    private let disposeBag = DisposeBag()
     
     //xibで作ったSignUp.LogIn共用画面をLogIn画面用にする
     override func initializeUI() {
@@ -17,24 +20,25 @@ class LogInViewController: SignUpViewController {
     }
     
 
+    override func bind() {
+        //email/passwprdtextFieldを監視対象に追加
+        bindtext(textField: authViewInstance.emailTextField, text: authView!.email)
+        bindtext(textField: authViewInstance.passwordTextField, text: authView!.password)
+        
+         //mailとpassの文字数によってsignUpButtonの有効/無効切り替え
+        authView?.isValid()
+            .subscribe(onNext: { [weak self] flag in
+                self?.authView?.flag = flag
+                self?.authView?.buttonInvalid(button: (self?.authViewInstance.logInButton!)!)
+        })
+         .disposed(by: disposeBag)
+    }
+    
+
     override func authAction(email: String, password: String) {
        authModel?.logIn(mail: email, pass: password)
    }
     
-    override func switchButtonEnabled() {
-
-        guard let authview = authView  else { return }
-
-        if authViewInstance.emailTextField.text!.isEmpty ||
-            authViewInstance.passwordTextField.text!.isEmpty {
-            authview.flag = true
-            authview.buttonInvalid(button: authViewInstance.logInButton)
-
-        } else {
-            authview.flag = false
-            authview.buttonInvalid(button: authViewInstance.logInButton)
-        }
-    }
     
     override func passwordReset(email: String) {
         if email.isEmpty {

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol AuthViewDelegate: class {
     func authAction(email: String, password: String)
@@ -28,6 +30,22 @@ class AuthView: UIView {
     weak var delegate: AuthViewDelegate?
 
     var securityButton = UIButton(type: .custom)
+    
+    
+    let email = PublishSubject<String>()
+    let password = PublishSubject<String>()
+    
+    func isValid() -> Observable<Bool> {
+        return Observable
+            .combineLatest(email.asObservable().startWith(""),
+                           password.asObservable().startWith(""))
+            .map { email, password in
+                return email.count > 5 && password.count > 5
+        }
+        .startWith(false)
+    }
+    
+
 
     
     class func instance() -> AuthView {
@@ -44,7 +62,7 @@ class AuthView: UIView {
         textFieldIconSet(textField: emailTextField, image: R.image.mail()!)
         textFieldIconSet(textField: passwordTextField, image: R.image.password()!)
      }
-    //メールアイコンとパスワードアイコンをtextFieldに設置
+    //textField左にメールマークと鍵マークを設置
     func textFieldIconSet(textField: UITextField, image: UIImage) {
        
         let iconMarginView: UIView = {
@@ -79,21 +97,23 @@ class AuthView: UIView {
         passwordTextField.rightViewMode = .always
     }
     
-    //SignUpボタンを有効
-    var flag = true //textfieldが空の状態がflag == true
+    //SignUpボタンを有効/無効切り替え
+    var flag = false //textfieldが空の状態がflag == true
     func buttonInvalid(button: UIButton) {
         button.isEnabled = flag ? false: true
-        button.backgroundColor = flag ? .clear: .white
-        button.layer.borderWidth = flag ? 2: 0
-        button.layer.borderColor = flag ? UIColor.lightGray.cgColor: UIColor.white.cgColor
+        button.backgroundColor = flag ? .white: .clear
+        button.layer.borderWidth = flag ? 0: 2
+        button.layer.borderColor = flag ? UIColor.white.cgColor: UIColor.lightGray.cgColor
         if flag == true {
-            button.setTitleColor(.lightGray, for: .normal)
-        } else {
             button.setTitleColor(.black, for: .normal)
+        } else {
+            button.setTitleColor(.lightGray, for: .normal)
         }
     }
+
+
     
-    //xibで作ったSignUp.LogIn共用画面をSignUp画面用にする
+    //xibで作ったSignUp.LogIn共用画面を【SignUp】用画面にする
     final func signUpUI() {
         authErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true
@@ -102,7 +122,7 @@ class AuthView: UIView {
         signUpButton.setTitle("Sign Up", for: .normal)
         buttonInvalid(button: signUpButton)
     }
-    //xibで作ったSignUp.LogIn共用画面をlogIn画面用にする
+    //xibで作ったSignUp.LogIn共用画面を【LogIn】用画面にする
     func logInUI() {
         authErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true
@@ -120,7 +140,9 @@ class AuthView: UIView {
     
     
     @IBAction func SignInButtonTapped(_ sender: Any) {
-        buttonTappedAction()
+//        buttonTappedAction()
+        log.debug("view")
+
     }
     
     @IBAction func logInButtonTapped(_ sender: Any) {
@@ -128,15 +150,15 @@ class AuthView: UIView {
     }
     
     func buttonTappedAction() {
-        if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            delegate?.textFieldEnptyAlert()
-        
-        } else {
-            guard let email = emailTextField.text?.deleteSpace(),
-                let pass = passwordTextField.text?.deleteSpace()
-                else { return }
-            delegate?.authAction(email: email, password: pass)
-        }
+//        if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
+//            delegate?.textFieldEnptyAlert()
+//
+//        } else {
+//            guard let email = emailTextField.text?.deleteSpace(),
+//                let pass = passwordTextField.text?.deleteSpace()
+//                else { return }
+//            delegate?.authAction(email: email, password: pass)
+//        }
     }
     
     
@@ -146,6 +168,9 @@ class AuthView: UIView {
         self.delegate?.passwordReset(email: email)
     }
 }
+
+
+
 
 
 

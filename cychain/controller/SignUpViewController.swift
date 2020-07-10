@@ -26,7 +26,6 @@ class SignUpViewController: UIViewController {
         initializeUI()
         authViewInstance.emailTextField.text = ""
         authViewInstance.passwordTextField.text = ""
-        switchButtonEnabled()
         self.navigationController?.isNavigationBarHidden = false
     }
     
@@ -40,6 +39,7 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         set_View_Model()
         initialize()
+        bind()
     }
     
     
@@ -57,8 +57,9 @@ class SignUpViewController: UIViewController {
         authViewInstance.textFieldUnderLine()   // textFieldをアンダーラインのみ
         authViewInstance.textFieldLeftIconSet() // メール、パスワードアイコン設置
         authViewInstance.addPasswordEyeButton() // 伏せ字用アイマーク設置
-        initSignUpButton() //textfield空なら無効
+//        initTextField() //textfield空なら無効
         initSecurityButton() //平字/伏せ字切替
+        initSignUpButton()
     }
     
     //xibで作ったSignUp.LogIn共用画面をSignUp画面用にする
@@ -66,54 +67,56 @@ class SignUpViewController: UIViewController {
         authViewInstance.signUpUI()
     }
     
-    //textfieldを監視対象に追加
-    private func initSignUpButton() {
-        switchButtonEnabled() //textfieldが空ならサインアップボタンを無効
-        checkTextField(textField: authViewInstance.emailTextField)
-        checkTextField(textField: authViewInstance.passwordTextField)
+    
+    func bind() {
+        //email/passwprdtextFieldを監視対象に追加
+        bindtext(textField: authViewInstance.emailTextField, text: authView!.email)
+        bindtext(textField: authViewInstance.passwordTextField, text: authView!.password)
+        
+         //mailとpassの文字数によってsignUpButtonの有効/無効切り替え
+        authView?.isValid()
+            .subscribe(onNext: { [weak self] flag in
+                self?.authView?.flag = flag
+                self?.authView?.buttonInvalid(button: (self?.authViewInstance.signUpButton!)!)
+        })
+         .disposed(by: disposeBag)
     }
+    
+    //textfield(email/passsord)の変更を監視
+    func bindtext(textField: UITextField, text: PublishSubject<String>) {
+        textField.rx.text.orEmpty
+            .bind(to: text)
+            .disposed(by: disposeBag)
+    }
+    
+        
     //目のボタンを監視対象に追加
     private func initSecurityButton() {
         SecureTextEntry() // 伏せ字/平字切り替え
         securityButtonTapped(button: authViewInstance.securityButton)
     }
+    //SugnUpButtonを監視対象に登録
+    private func initSignUpButton() {
+//        signUpAcction()
+        signUpButtonTapped(button: authViewInstance.signUpButton)
+    }
     
-    //textFieldの変更を監視
-      func checkTextField(textField: UITextField) {
-          textField.rx.text
-              .subscribe(onNext: { _ in
-                  log.debug(textField.text!.count)
-                  //空ならサインアップボタンを無効
-                  self.switchButtonEnabled()
-              })
-              .disposed(by: disposeBag)
-      }
-    
-    //buttonタップを監視
+    //目のbuttonタップを監視
     func securityButtonTapped(button: UIButton) {
         button.rx.tap
             .subscribe(onNext: { [weak self] in
-                log.debug("buttontap")
-                // 伏せ字/平字切り替え
-                self?.SecureTextEntry()
+                self?.SecureTextEntry() // 伏せ字/平字切り替え
             })
             .disposed(by: disposeBag)
     }
     
-    //サインアップボタン押下制御
-    func switchButtonEnabled() {
-        guard let authview = authView  else { return }
-        
-        if authViewInstance.emailTextField.text!.isEmpty ||
-            authViewInstance.passwordTextField.text!.isEmpty {
-            
-            authview.flag = true
-            authview.buttonInvalid(button: authViewInstance.signUpButton)
-            
-        } else {
-            authview.flag = false
-            authview.buttonInvalid(button: authViewInstance.signUpButton)
-        }
+    //SignUpButtonタップを監視
+    func signUpButtonTapped(button: UIButton) {
+        button.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.signUpAcction()
+            })
+        .disposed(by: disposeBag)
     }
     
     //目のボタンタップでtextfieldの伏せ字/平字切り替えができる様にする
@@ -125,6 +128,14 @@ class SignUpViewController: UIViewController {
         let eye = R.image.eye5()
         let eyeImage = securityFlag ? slashEye: eye
         authViewInstance.securityButton.setImage(eyeImage, for: .normal)
+    }
+    
+    // サインアップ
+    func signUpAcction() {
+        guard let email = authViewInstance.emailTextField.text?.deleteSpace(),
+            let pass = authViewInstance.passwordTextField.text?.deleteSpace()
+            else { return }
+        authModel?.signUp(email: email, password: pass)
     }
 
 }
@@ -178,7 +189,7 @@ extension SignUpViewController: AuthModelDelegate {
 extension SignUpViewController: AuthViewDelegate {
     
      @objc func authAction(email: String, password: String) {
-        authModel?.signUp(emai: email, password: password)
+        authModel?.signUp(email: email, password: password)
     }
     func textFieldEnptyAlert() {
         emptyAlert()

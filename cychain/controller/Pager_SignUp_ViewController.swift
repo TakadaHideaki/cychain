@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import Rswift
 import Firebase
 import FirebaseAuth
 import GoogleSignIn
 import XLPagerTabStrip
-import Rswift
 
 class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate, IndicatorInfoProvider {
     
@@ -19,22 +21,38 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate, Indicato
     @IBOutlet weak var mailSignUpButton: Button!
     @IBOutlet weak var gmaiSignUplButton: UIButton!
     
+    private let disposeBag = DisposeBag()
+    private(set) var barTitle = "登録"
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setImageButton()
-        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.presentingViewController = self //Gmailでログインする画面を表示
+        buttonSet()
     }
     
+    //ボタンにアイコンをセット
     func setImageButton() {
-        mailSignUpButton.setImage(R.image.mail(), for: .normal)
-        gmaiSignUplButton.setImage(R.image.google(), for: .normal)
+        mailSignUpButton.setImage(R.image.mail(), for: .normal) //ログインボタンにメールアイコンをセット
+        gmaiSignUplButton.setImage(R.image.google(), for: .normal)//GoogleログインにGoogleアイコンをセット
     }
     
-    
-    @IBAction func googleSignUpButtonTapped(_ sender: Any) {
-        GIDSignIn.sharedInstance().signIn()
+    //『googleで登録』をTapした時のアクション（Gmailでログイン）
+    func gmailButtontapAction(button: UIButton) {
+        button.rx.tap
+            .subscribe(onNext: {
+                //googleでアカウント登録画面に遷移
+                GIDSignIn.sharedInstance().signIn()
+            })
+        .disposed(by: disposeBag)
     }
+    //googleで登録Buttonを監視対象に追加
+    func buttonSet() {
+        gmailButtontapAction(button: gmaiSignUplButton)
+    }
+        
+
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         
@@ -57,6 +75,7 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate, Indicato
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "登録")
+        // initialVCのタブボタンの名前を登録と表示
+        return IndicatorInfo(title: barTitle)
     }
 }

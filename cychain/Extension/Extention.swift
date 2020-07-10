@@ -20,7 +20,7 @@ extension UIViewController {
     //viewの切り替え
     
     func presentVC(vc: UIViewController, animation: Bool) {
-        self.present(vc, animated: animation)
+        self.navigationController?.pushViewController(vc, animated: animation)
     }
     
     

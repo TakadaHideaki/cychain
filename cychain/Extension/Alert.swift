@@ -89,6 +89,12 @@ extension UIViewController {
         alert(title: "名前は１３文字までです", message: "", actiontitle: "OK")
     }
     
+    func charactorErrorAlert() {
+         alert(title: "文字数Error", message: "", actiontitle: "OK")
+     }
+    
+    
+    
     
     
     func logInErrorAlert() {

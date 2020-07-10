@@ -16,13 +16,14 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     
 
     @IBOutlet weak var label: LTMorphingLabel!
+    
     var labelText = "c y c h a i n"
     var attributedText: NSMutableAttributedString?
-    
 
     override func viewDidLoad() {
-        customNavigationBar() //ナビゲーションバーデザイン
-        PagerTabUI() //ページタブバーデザイン
+        customNavigationBar() //navigationBarデザイン(※記述場所viewDidLoadの前)
+        PagerTabUI()        //ページタブバーデザイン(※記述場所viewDidLoadの前)
+        
         super.viewDidLoad()
         initializeUI()
         LoggedIn()
@@ -56,13 +57,14 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         settings.style.buttonBarItemLeftRightMargin = 10 // Button内余白
         
         changeCurrentIndexProgressive = { oldCell, newCell, progressPercentage, changeCurrentIndex, animated in
-              // 変更されたか、選択前後のCellをアンラップ
+              // 選択前後のCellをアンラップ
               guard changeCurrentIndex, let oldCell = oldCell, let newCell = newCell else { return }
-              oldCell.label.textColor = .white  // 選択前のセル
-              newCell.label.textColor = .black  // 選択後のセル
+              oldCell.label.textColor = .white  // 選択前のセルの色
+              newCell.label.textColor = .black  // 選択後のセルの色
           }
     }
     
+    // 初めてのログインならonboardingを表示
     func confirmInitialLaunch() {
         if UD.bool(forKey: Name.KeyName.flag.rawValue) {
             UD.set(false, forKey: Name.KeyName.flag.rawValue)
@@ -70,15 +72,15 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         }
     }
     
-    
+    // ログイン中の場合はログイン画面をスキップ
     func LoggedIn() {
-        //ユーザーがログイン中なら画面スキップ
         if Auth.auth().currentUser != nil {
             self.presentVC(vc: R.storyboard.main.tabVC()!, animation: true)
         }
     }
     
     // NotificationCenterに監視対象として登録
+    // ログインが成功したらhome画面へ遷移
      func configureObserver() {
          NotificationCenter.default.addObserver(
              self,
@@ -87,7 +89,6 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
              object: nil
          )
        }
-
      @objc func loginCompleted(notification: NSNotification){
         self.presentVC(vc: R.storyboard.main.tabVC()!, animation: true)
      }
@@ -100,7 +101,6 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         let sighUp: UIViewController =  R.storyboard.main.bSighUp()!
         let logIn: UIViewController = R.storyboard.main.bLogin()!
         return [sighUp, logIn]
-        
     }
         
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EuS-L3-iae">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EuS-L3-iae">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -204,9 +204,6 @@
                                         <size key="value" width="10" height="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="googleLogInButtonTapped:" destination="xfh-9K-dds" eventType="touchUpInside" id="SEo-M8-fih"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.2925565242767334" green="0.5411641001701355" blue="0.95298689603805542" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -850,9 +847,6 @@
                                         <size key="value" width="10" height="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="googleSignUpButtonTapped:" destination="hXT-Pz-nMY" eventType="touchUpInside" id="NBG-41-GQi"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zeK-GZ-RZ7" customClass="Button" customModule="cychain" customModuleProvider="target">
                                 <rect key="frame" x="50" y="94" width="275" height="55"/>
@@ -928,7 +922,7 @@
         <!--Post Card-->
         <scene sceneID="1hH-NB-ajF">
             <objects>
-                <viewController storyboardIdentifier="InputResultVC" title="Post Card" id="d8m-kB-2qB" customClass="InputResultViewController" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InputResultVC" title="Post Card" modalPresentationStyle="fullScreen" id="d8m-kB-2qB" customClass="InputResultViewController" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="k3Y-Rl-kpv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3218,9 +3212,6 @@ Cg
                                 </constraints>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="user10"/>
-                                <connections>
-                                    <action selector="iconButtonTapped:" destination="b7D-4y-fMl" eventType="touchUpInside" id="l0t-Mf-AYv"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="あなたの名前" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GwW-zQ-bQo" customClass="MadokaTextField" customModule="TextFieldEffects">
                                 <rect key="frame" x="47.666666666666657" y="183" width="280" height="60"/>
@@ -3282,9 +3273,6 @@ Cg
                                         <point key="value" x="0.0" y="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="postData:" destination="b7D-4y-fMl" eventType="touchUpInside" id="KTY-Go-rBo"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJX-z6-nZg">
                                 <rect key="frame" x="47.666666666666657" y="359" width="90" height="25"/>
@@ -3299,6 +3287,7 @@ Cg
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="view"/>
                         <constraints>
                             <constraint firstItem="6ZM-AV-8rb" firstAttribute="leading" secondItem="Oaq-3B-I5S" secondAttribute="leading" id="07F-1D-KHl"/>
                             <constraint firstItem="sP5-4Z-Mxv" firstAttribute="top" secondItem="GwW-zQ-bQo" secondAttribute="bottom" constant="18" id="7e9-yt-oDf"/>
@@ -3332,6 +3321,7 @@ Cg
                         <outlet property="messageLabel" destination="sJX-z6-nZg" id="zyQ-il-boS"/>
                         <outlet property="messageTextView" destination="Oaq-3B-I5S" id="eSG-1t-eBN"/>
                         <outlet property="myNameTextField" destination="GwW-zQ-bQo" id="5NZ-QW-oNG"/>
+                        <outlet property="postButton" destination="6ZM-AV-8rb" id="7Lz-fc-yPJ"/>
                         <outlet property="targetNameTextField" destination="sP5-4Z-Mxv" id="Cn8-F3-QOa"/>
                     </connections>
                 </viewController>
