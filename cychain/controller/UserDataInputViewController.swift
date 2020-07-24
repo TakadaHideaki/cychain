@@ -1,18 +1,11 @@
-//
-//  DataInput1.swift
-//  abcd
-//
-//  Created by takadahideaki007 on 2019/04/28.
-//  Copyright © 2019 高田英明. All rights reserved.
-//
-
 import UIKit
 import RxSwift
 import RxCocoa
 import TextFieldEffects
+import RSKImageCropper
 
 class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
-
+    
     
     
     @IBOutlet weak var myNameTextField: UITextField!
@@ -23,14 +16,18 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
     @IBOutlet weak var postButton: Button!
     
     private let disposeBag = DisposeBag()
-
-    let userDataModel = UserDataModel.sharead
-    let viewModel = UserDataViewModel()
-    let defaultIcon = R.image.user10()//写真登録のアイコンイメージ
+    private let userDataModel = UserDataModel.sharead
+    private let viewModel = UserDataViewModel()
+    private let defaultIcon = R.image.user10()
+    private let iconSet = IconSet()
+    private let imageCrop = ImageCrop()
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
+        //        selectedImage()    //フォトライブラリから選択した画像を受け取る
+        //        croppedImage()    //RSKImageCropVCから切り抜かれた画像を受け取る
     }
     
     override func viewDidLoad() {
@@ -43,6 +40,7 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
         // TextViewフォーカス外す　＆キーボード閉じる＋View戻す
         messageTextView.resignFirstResponder()
         configureObserver()
+        
     }
     
     func initializeUI() {
@@ -52,108 +50,80 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
         messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIcon, for: .normal)
-
         
-        bind()
-        CharactorError()//文字数チェック
-        postCountError()//投稿数チェック
-        goNextVC()//画面遷移
-        aaa()
-
-    }
-    
-
-    
-    func bind() {
-        //view => viewModl
-        //myNameTextFieldを監視
-        myNameTextField.rx.text.orEmpty
-            .map{( $0.deleteSpace())}
-            .bind(to: viewModel.myNameRelay)
-            .disposed(by: disposeBag)
+        iconSet.delegate = self
+        imageCrop.delegate = self
         
-        //targetNameTextFieldを監視
-        targetNameTextField.rx.text.orEmpty
-            .map{( $0.deleteSpace())}
-            .bind(to: viewModel.targetRelay)
-            .disposed(by: disposeBag)
-        
-        //textViewを監視
-        messageTextView.rx.text.orEmpty
-            .bind(to: userDataModel.messageRelay)
-            .disposed(by: disposeBag)
-        
-        //アイコンボタンを監視
-        iconRegistButton.rx.tap
-            .bind(to: viewModel.onIcButtonClick)
-            .disposed(by: disposeBag)
-        
-        //投稿ボタンを監視
-        postButton.rx.tap
-            .bind(to: viewModel.onRegisterButtonClick)
-            .disposed(by: disposeBag)
-        
-        
-        
-        
-        //viewmoel => view
-        viewModel.buttonImage?
-            .drive(iconRegistButton.rx.image())
-            .disposed(by: disposeBag)
-        
+        bind() 
     }
     
     
-     //textFieldが未入力or13文字以上でアラート
-    func CharactorError() {
-        viewModel.isInputTextValid
-            .filter{ !$0 }
-            .map { _ in () }
+    
+    
+    
+    private func bind() {
+        
+        let input = UserDataViewModel.Input(
+            postButtontapped: postButton.rx.tap.asObservable(),
+            iconButtontapped: iconRegistButton.rx.tap.asObservable(),
+            myNameRelay: myNameTextField.rx.text.orEmpty.map{( $0.deleteSpace())},
+            targetRelay: targetNameTextField.rx.text.orEmpty.map{( $0.deleteSpace())},
+            messageRelay: messageTextView.rx.text.orEmpty.asObservable(),
+            imageSelected: iconSet.SelectedImage,
+            imageCropped: imageCrop.croppedImage
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        //アイコンボタンタップ（フォトライブラリへ遷移）
+        output.onIcButtonClickEvent
+            .subscribe (onNext: { _ in
+                self.iconSet.iconButtonTapped()
+            })
+            .disposed(by: disposeBag)
+        
+        //textFieldが未入力or13文字以上でアラート
+        output.characterCountOverrun
             .subscribe(onNext: { _ in
                 self.charactorErrorAlert()
             })
             .disposed(by: disposeBag)
-    }
-    
-    //投稿数が10以上でアラート
-    func postCountError() {
-        viewModel.postsCountCheck
+        
+        //投稿数が10以上でアラート
+        output.postsCountOver
             .filter{ !$0 }
             .map { _ in () }
             .subscribe(onNext: { _ in
                 self.RegistationOverAlert(vc: R.storyboard.main.list()!)
             })
             .disposed(by: disposeBag)
+        
+        //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
+        output.nextVC
+            .subscribe(onNext: { value in
+                log.debug(value)
+                //                self.presentVC(vc: vc, animation: true)
+            })
+            .disposed(by: disposeBag)
+        
+        //viewModelから選択画像を受け取りCropVCへ渡す
+        output.selectedImage
+            .subscribe(onNext: { image in
+                log.debug(image)
+                self.imageCrop.RSKImageCropVC(image: image)
+            })
+            .disposed(by: disposeBag)
+        
+        //ViewModelから切り抜き画像のEventを受け取り、アイコンボタンにセット
+        output.iconButtonImage
+            .drive(iconRegistButton.rx.image())
+            .disposed(by: disposeBag)
+        
+
     }
-    
-    
-   //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
-    func goNextVC() {
-        self.viewModel.goToNext
-            .subscribe(onNext: { text1 in
-                let vc = InputResultViewController(text1: text1)
-                log.debug(self.viewModel.mT)
-
-//                self.presentVC(vc: vc, animation: true)
-    })
-    .disposed(by: disposeBag)
-    }
-    
-
-    func aaa() {
-        self.viewModel.mT.subscribe(onNext: { aa in
-            log.debug(aa)
-            log.debug(aa)
-            log.debug(self.viewModel.mT)
-        })
-        .disposed(by: disposeBag)
-    }
-   
 
     
-    
 
-    
     
     func textFieldDidBeginEditing(_ textField: UITextField)  {
         messageTextView.isSelectable = false
@@ -216,12 +186,118 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
     }
 }
 
-extension UserDataInputViewController: IconSetDelegate {
 
-    func buttonSetDidCropImage(image: UIImage) {
-        viewModel.onImageSelected.accept(image)
+
+/*
+         
+        //view => viewModl
+        //myNameTextFieldを監視
+        myNameTextField.rx.text.orEmpty
+            .map{( $0.deleteSpace())}
+            .bind(to: viewModel.myNameRelay)
+            .disposed(by: disposeBag)
+        
+        //targetNameTextFieldを監視
+        targetNameTextField.rx.text.orEmpty
+            .map{( $0.deleteSpace())}
+            .bind(to: viewModel.targetRelay)
+            .disposed(by: disposeBag)
+        
+        //textViewを監視
+        messageTextView.rx.text.orEmpty
+            .bind(to: viewModel.messageRelay)
+            .disposed(by: disposeBag)
+        
+        //アイコンボタンを監視
+        iconRegistButton.rx.tap
+            .bind(to: viewModel.iconButtontapped)
+            .disposed(by: disposeBag)
+        
+        //投稿ボタンを監視
+        postButton.rx.tap
+            .bind(to: viewModel.postButtontapped)
+            .disposed(by: disposeBag)
+          
     }
-}
+    
+    
+     //textFieldが未入力or13文字以上でアラート
+    func CharactorError() {
+        viewModel.outputs?.characterCountOverrun
+            .subscribe(onNext: { _ in
+                self.charactorErrorAlert()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    //投稿数が10以上でアラート
+    func postCountError() {
+        viewModel.outputs?.postsCountCheck
+            .filter{ !$0 }
+            .map { _ in () }
+            .subscribe(onNext: { _ in
+                self.RegistationOverAlert(vc: R.storyboard.main.list()!)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    
+   //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
+    func goNextVC() {
+        self.viewModel.outputs?.nextVC
+            .subscribe(onNext: { value in
+                
+                log.debug(value)
+//                self.presentVC(vc: vc, animation: true)
+    })
+    .disposed(by: disposeBag)
+    }
+    
+    //アイコンボタンタップ（フォトライブラリへ遷移）
+    func sendToPhotoLibrary() {
+        self.viewModel.outputs?.onIcButtonClickEvent
+            .subscribe (onNext: { _ in
+                self.iconSet?.iconButtonTapped()
+            })
+            .disposed(by: disposeBag)
+    }
+    
 
+    //フォトライブラリから選択した画像を受け取る
+    func selectedImage() {
+        self.iconSet?.SelectedImage
+            .subscribe(onNext: { image in
+                self.viewModel.onImageSelectedRelay.onNext(image)
+            })
+        .disposed(by: disposeBag)
+    }
+    
+    //viewModelから選択画像を受け取りCropVCへ渡す
+    func sendToCropVC() {
+        self.viewModel.outputs?.onImageSelectedEvent
+            .subscribe(onNext: { image in
+                log.debug(image)
+                self.imageCrop?.RSKImageCropVC(image: image)
 
-
+            })
+        .disposed(by: disposeBag)
+    }
+    
+    //CropVCから切り抜き画像を受け取りViewModelへ送る
+    func croppedImage() {
+        self.imageCrop?.croppedImage
+            .subscribe(onNext: { image in
+                self.viewModel.croppedImageRelay.accept(image)
+            })
+        .disposed(by: disposeBag)
+    }
+    
+    //ViewModelから切り抜き画像のEventを受け取り
+    //アイコンボタンに切り抜き画像をセットする
+    func setIconButtonImage() {
+        self.viewModel.iconButtonImage
+            .drive(iconRegistButton.rx.image())
+            .disposed(by: disposeBag)
+    }
+ 
+ */

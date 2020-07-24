@@ -1,86 +1,42 @@
-//
-//  PhotoEdit.swift
-//  cychain
-//
-//  Created by takadahideaki007 on 2020/03/05.
-//  Copyright © 2020 高田英明. All rights reserved.
-//
-
 import UIKit
+import RxSwift
+import RxCocoa
 import RSKImageCropper
 
-protocol IconSetDelegate: NSObject {
-    func buttonSetDidCropImage(image: UIImage)
-}
+class IconSet: NSObject, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
-
-class IconSet: NSObject, RSKImageCropViewControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-
-
-
-    weak var delegate: (UIViewController & IconSetDelegate)?
-
-
-    var iconButton: UIButton?
-    var userDataInputVC = UserDataInputViewController()
+//    weak var delegate: (UIViewController & IconSetDelegate)?
+    weak var delegate: UIViewController?
+ 
+    //output
+    private let image = PublishRelay<UIImage>()
+    var SelectedImage: Observable<UIImage> {
+        return image.asObservable()
+    }
+ 
     
-    func callPhotoLibraly() {
+    func iconButtonTapped() {
 
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let pickerView = UIImagePickerController()
-            pickerView.sourceType = .photoLibrary
+            pickerView.sourceType = .photoLibrary  //PhotoLibraryから画像を選択
             pickerView.delegate = self
+            pickerView.modalPresentationStyle = .fullScreen
             delegate?.present(pickerView, animated: true)
-            log.debug("b")
         }
     }
     
-    
-    
+    // UIImagepickerのdelegat 画像選択後呼び出し
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as! UIImage  // 選択した写真を取得する
-        delegate?.dismiss(animated: true)
-            
-        let imageCropVC = RSKImageCropViewController(image: image, cropMode: .circle)
-        imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
-        imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
-        imageCropVC.chooseButton.setTitle("完了", for: .normal)
-        imageCropVC.delegate = self
-        delegate?.present(imageCropVC, animated: true)
-        log.debug("c")
-    }
-
- 
-
-    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
         
-        delegate?.dismiss(animated: true)
-
-        // 円形画像を切り取りし
-        if controller.cropMode == .circle {
-            UIGraphicsBeginImageContext(croppedImage.size)
-            let layerView = UIImageView(image: croppedImage)
-            layerView.frame.size = croppedImage.size
-            layerView.layer.cornerRadius = layerView.frame.size.width * 0.5
-            layerView.clipsToBounds = true
-            let context = UIGraphicsGetCurrentContext()!
-            layerView.layer.render(in: context)
-            let capturedImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
-            let pngData = capturedImage.pngData()!
-            //このImageは円形で余白は透過です。
-            let png = UIImage(data: pngData)!
-            log.debug("d")
-            delegate?.buttonSetDidCropImage(image: png)
+        if let image = info[.originalImage] as? UIImage {
+            self.image.accept(image) // 選択した写真を取得する
         }
+        delegate?.dismiss(animated: false)
     }
-
-    
-    func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
-        delegate?.dismiss(animated: true)
-    }
-
 }
+    
+
 
 
 

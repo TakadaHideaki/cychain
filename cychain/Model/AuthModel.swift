@@ -44,12 +44,7 @@ class AuthModel {
                 self.delegate?.toHome()
             } else {
                 if let e = error {
-                    self.delegate?.logInerrorDidOccur(error: e)
-                    log.debug(e)
-
-      
-//
-                    
+                    self.delegate?.logInerrorDidOccur(error: e) 
                 }
             }
         }

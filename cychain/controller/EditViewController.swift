@@ -100,7 +100,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     
     
     @IBAction func iconButtonTapped(_ sender: Any) {
-        iconSet?.callPhotoLibraly()
+//        iconSet?.iconButtonTapped()
     }
     
     
@@ -171,10 +171,10 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     
 }
 
-extension EditViewController: IconSetDelegate {
-
-    func buttonSetDidCropImage(image: UIImage) {
-        iconRegistButton?.setImage(image, for: .normal)
-    }
-}
+//extension EditViewController: IconSetDelegate {
+//
+//    func buttonSetDidCropImage(image: UIImage) {
+//        iconRegistButton?.setImage(image, for: .normal)
+//    }
+//}
 
