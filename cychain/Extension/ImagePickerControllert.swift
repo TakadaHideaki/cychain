@@ -1,19 +1,16 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RSKImageCropper
 
-class IconSet: NSObject, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class ImagePickerController: NSObject, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
-//    weak var delegate: (UIViewController & IconSetDelegate)?
     weak var delegate: UIViewController?
  
     //output
     private let image = PublishRelay<UIImage>()
-    var SelectedImage: Observable<UIImage> {
+    var selectedImage: Observable<UIImage> {
         return image.asObservable()
     }
- 
     
     func iconButtonTapped() {
 
@@ -36,9 +33,3 @@ class IconSet: NSObject, UIImagePickerControllerDelegate & UINavigationControlle
     }
 }
     
-
-
-
-
-
-

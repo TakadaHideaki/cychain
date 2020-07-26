@@ -1,11 +1,3 @@
-//
-//  TableViewCell.swift
-//  abcd
-//
-//  Created by takadahideaki007 on 2019/01/30.
-//  Copyright © 2019 高田英明. All rights reserved.
-//
-
 import UIKit
 
 class inputDataListCell: UITableViewCell {

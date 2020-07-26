@@ -1,11 +1,3 @@
-//
-//  edit2.swift
-//  abcd
-//
-//  Created by takadahideaki007 on 2019/05/01.
-//  Copyright © 2019 高田英明. All rights reserved.
-//
-
 import UIKit
 import Firebase
 import FirebaseStorage
@@ -22,10 +14,12 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     @IBOutlet weak var iconRegistButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
     
+
+    
     
     var editUserData: [String: Any]?
     var iconImage: UIImage?
-    var iconSet: IconSet?
+    var iconSet: ImagePickerController?
     
     
     override func viewDidLoad() {
@@ -48,7 +42,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         tabBarController?.tabBar.isHidden = true
         messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
-        iconSet = IconSet()
+        iconSet = ImagePickerController()
 //        iconSet?.delegate = self as? (UIViewController & IconSetDelegate)
         iconSet?.delegate = self
 
@@ -111,7 +105,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         
         let userDataModel = UserDataModel.sharead
         
-//        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
+        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
         userDataModel.setFirebase()//firebase更新
         pushVC(vc: R.storyboard.main.inputResultVC()!, animation: true)
     }
@@ -177,4 +171,6 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
 //        iconRegistButton?.setImage(image, for: .normal)
 //    }
 //}
+ 
+
 

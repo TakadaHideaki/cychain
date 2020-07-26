@@ -1,11 +1,3 @@
-//
-//  PostCardeTableViewCell.swift
-//  cychain
-//
-//  Created by takadahideaki007 on 2020/04/13.
-//  Copyright © 2020 高田英明. All rights reserved.
-//
-
 import UIKit
 
 class PostCardeTableViewCell: UITableViewCell {

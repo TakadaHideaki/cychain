@@ -1,11 +1,3 @@
-//
-//  tab.swift
-//  abcd
-//
-//  Created by takadahideaki007 on 2019/08/30.
-//  Copyright © 2019 高田英明. All rights reserved.
-//
-
 import UIKit
 import FirebaseAuth
 import LTMorphingLabel
@@ -33,7 +25,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
-        confirmInitialLaunch() 
+//        confirmInitialLaunch()
         configureObserver()
     }
     

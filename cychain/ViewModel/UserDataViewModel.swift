@@ -7,7 +7,8 @@ struct Texts {
     let my: String
     let target: String
     let message: String
-    var iconImage = R.image.user12()!
+    var iconImage: UIImage
+
     var isValid: Bool {
         return ![my, target].map { checkChars($0) }.contains(false)
     }
@@ -41,15 +42,15 @@ extension UserDataViewModel: UserViewModelType {
     
     struct Output {
         let onIcButtonClickEvent: Observable<Void>
-        let characterCountOverrun: Observable<Void>
-        let postsCountOver: Observable<Bool>
-        let nextVC: Observable<Texts>
         let selectedImage: Observable<UIImage>
         let iconButtonImage: Driver<UIImage>
-
+        let postsCountOver: Observable<Bool>
+        let characterCountOverrun: Observable<Void>
+        let nextVC: Observable<Texts>
     }
     
     func transform(input: Input) -> Output {
+                
         //UserDataを纏めるTextsへ
         let substitutionToTexts = Observable
             .combineLatest(input.myNameRelay.asObservable(),
@@ -61,21 +62,18 @@ extension UserDataViewModel: UserViewModelType {
                                   message: message,
                                   iconImage: iconImage)
         }
+ 
+
+   
         //投稿数Check
         var postsCheck: Observable<Bool> {
             if let ppstCount = UD.object(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]]  {
                 switch ppstCount.count {
-                case 0 ... 10: return Observable.of(true)
-                default: return Observable.of(false)
-                    
-                    //  userDataModel.setUserDefault()
-                    //  userDataModel.setFirebase()
+                case 0 ... 10: return Observable.of(true) //投稿数10以下
+                default: return Observable.of(false)      //投稿数11以上
                 }
             } else {
-                //投稿値歴無し
-                return Observable.of(true)
-                //  userDataModel.setUserDefault()
-                //  userDataModel.setFirebase()
+                return Observable.of(true)               //投稿値歴無し
             }
         }
         //textField文字数check
@@ -84,18 +82,18 @@ extension UserDataViewModel: UserViewModelType {
             .filter { $0 }
             .map { _ in () }
             .withLatestFrom(substitutionToTexts) { _, texts in texts }
+     
         //文字数NG
         let overrun = characterCheck.filter { !$0.isValid }.map { _ in () }
         //文字数OK
         let apprppriate = characterCheck.filter { $0.isValid }
         
-        
         return Output(onIcButtonClickEvent: input.iconButtontapped,
-                      characterCountOverrun: overrun,
-                      postsCountOver: postsCheck,
-                      nextVC: apprppriate,
                       selectedImage: input.imageSelected,
-                      iconButtonImage: input.imageCropped.asDriver(onErrorDriveWith: Driver.empty())
+                      iconButtonImage: input.imageCropped.asDriver(onErrorDriveWith: Driver.empty()),
+                      postsCountOver: postsCheck,
+                      characterCountOverrun: overrun,
+                      nextVC: apprppriate
         )
     }
     

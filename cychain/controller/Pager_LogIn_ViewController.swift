@@ -1,14 +1,4 @@
-//
-//  bLogIn.swift
-//  abcd
-//
-//  Created by takadahideaki007 on 2019/08/30.
-//  Copyright © 2019 高田英明. All rights reserved.
-//
-
 import Firebase
-//import FirebaseUI
-//import FirebaseAuth
 import GoogleSignIn
 import XLPagerTabStrip
 

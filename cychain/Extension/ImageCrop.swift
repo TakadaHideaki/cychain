@@ -1,11 +1,3 @@
-//
-//  ImageCrop.swift
-//  cychain
-//
-//  Created by takadahideaki007 on 2020/07/21.
-//  Copyright © 2020 高田英明. All rights reserved.
-//
-
 import UIKit
 import RxSwift
 import RxCocoa
@@ -19,7 +11,6 @@ class ImageCrop: NSObject {
     var croppedImage: Observable<UIImage> {
         return image.asObservable()
     }
-
     
     //切り抜き画面呼び出し
     func RSKImageCropVC(image: UIImage) {
