@@ -7,7 +7,6 @@ import RSKImageCropper
 class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, ScrollKeyBoard {
     
     
-    
     @IBOutlet weak var myNameTextField: UITextField!
     @IBOutlet weak var targetNameTextField: UITextField!
     @IBOutlet weak var messageTextView: UITextView!
@@ -22,11 +21,9 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
     private let imageCrop = ImageCrop()
     
     
-    
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
@@ -43,12 +40,13 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
         myNameTextField.delegate = self
         targetNameTextField.delegate = self
         messageTextView.delegate = self
+        iconSet.delegate = self
+        imageCrop.delegate = self
         messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIcon, for: .normal)
         
-        iconSet.delegate = self
-        imageCrop.delegate = self
+   
         bind()
     }
     
@@ -110,8 +108,10 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
         //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
          output.nextVC
              .subscribe(onNext: { value in
-                 log.debug(value)
-                 //  self.presentVC(vc: vc, animation: true)
+                let vc = InputResultViewController(data: value)
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+//                   self.presentVC(vc: vc, animation: true)
              })
              .disposed(by: disposeBag)
         

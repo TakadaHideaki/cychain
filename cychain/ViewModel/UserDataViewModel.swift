@@ -25,7 +25,14 @@ protocol UserViewModelType {
 
 
 struct UserDataViewModel {
-    init(){}
+    let setUserDefaultModel: setUserDefault?
+    let setFirebaseModel: setFirebase?
+    private let disposeBag = DisposeBag()
+
+    init(){
+        self.setUserDefaultModel = setUserDefault()
+        self.setFirebaseModel = setFirebase()
+    }
 }
 
 
@@ -50,7 +57,6 @@ extension UserDataViewModel: UserViewModelType {
     }
     
     func transform(input: Input) -> Output {
-                
         //UserDataを纏めるTextsへ
         let substitutionToTexts = Observable
             .combineLatest(input.myNameRelay.asObservable(),
@@ -62,9 +68,6 @@ extension UserDataViewModel: UserViewModelType {
                                   message: message,
                                   iconImage: iconImage)
         }
- 
-
-   
         //投稿数Check
         var postsCheck: Observable<Bool> {
             if let ppstCount = UD.object(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]]  {
@@ -82,11 +85,21 @@ extension UserDataViewModel: UserViewModelType {
             .filter { $0 }
             .map { _ in () }
             .withLatestFrom(substitutionToTexts) { _, texts in texts }
-     
+                
         //文字数NG
         let overrun = characterCheck.filter { !$0.isValid }.map { _ in () }
         //文字数OK
         let apprppriate = characterCheck.filter { $0.isValid }
+        
+        //Userdafaultとfirebaseへ保存
+        characterCheck
+            .subscribe(onNext: { value in
+                self.setUserDefaultModel?.save(data: value)
+                self.setFirebaseModel?.setFirebae(data: value)
+        })
+            .disposed(by: disposeBag)
+        
+  
         
         return Output(onIcButtonClickEvent: input.iconButtontapped,
                       selectedImage: input.imageSelected,
@@ -94,8 +107,10 @@ extension UserDataViewModel: UserViewModelType {
                       postsCountOver: postsCheck,
                       characterCountOverrun: overrun,
                       nextVC: apprppriate
-        )
-    }
+        )}
+    
+        
+    
     
     
     

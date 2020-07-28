@@ -7,55 +7,144 @@ import GoogleMobileAds
 //class InputResultViewController: UIViewController, UIImagePickerControllerDelegate {
 class InputResultViewController: UIViewController {
 
-        
-    
     @IBOutlet weak var tableView: UITableView!
     
-//    var registData: [String: Any]?
-//    var userInputData: [String: Any]?
-    var userDataModel: UserDataModel?
+    
+    private let viewModel = PostResultViewModel()
+    
+//    let viewModel: PostResultViewModel
     private let disposeBag = DisposeBag()
     
-    let viewModel: PostResultViewModel
-    let items: BehaviorRelay<[String]>
-
-
     
-    init(text1: String) {
-//        self.viewModel = PostResultViewModel(text1: text1)
-        self.viewModel = PostResultViewModel(text1: text1)
-        self.items = BehaviorRelay(value: [text1])
-        log.debug(text1)
-        
+    
+        var userpostData: Observable<Any>
 
 
-        super.init(nibName: nil, bundle: nil)
+    init(data: Texts) {
+        self.userpostData = Observable.just(data)
+//        self.viewModel = PostResultViewModel(data: data)
+          super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-
-    override func viewWillLayoutSubviews() {
-        _ = self.initViewLayout
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
+        bind()
     }
-    lazy var initViewLayout : Void = {
-        admob()
-    }()
+    
+    private func bind() {
+        let input = PostResultViewModel.Input(postData: self.userpostData)
+
+//
+        let output = viewModel.transform(input: input)
+//
+//                 output.cellData.subscribe(onNext: { value in
+//                    log.debug(value)
+//                })
+//                .disposed(by: disposeBag)
+
+        output.cellData
+            .bind(to: tableView.rx.items(cellIdentifier: "PostCardeTableViewCell", cellType: PostCardeTableViewCell.self)) { (row, element, cell) in
+
+        }
+        .disposed(by: disposeBag)
+    }
+    
+    
+        
+
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    /*
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        log.debug(self.items)
-//        initializeUI()
-//        initializeTableView()
-//        tableView.reloadData()
-//        userDataModel = UserDataModel.sharead
         
-//        self.items.bind(to: tableView.rx.items(cellIdentifier: "PostCardeTableViewCell", cellType: PostCardeTableViewCell.self)) { row, elemnt, cell in
-//            cell.mynameLabel.text = elemnt
+//
+//        self.viewModel.eventSubject1.subscribe(onNext: { value in
+//            log.debug(value)
+//        })
+//        .disposed(by: disposeBag)
+ 
+ */
 
-    }}
+        
+        
+        
+        
+        
+//
+//        tableView.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
+//
+//        viewModel.items
+//            .bind(to: tableView.rx.items(cellIdentifier: "PostCardeTableViewCell", cellType: PostCardeTableViewCell.self)) { (row, element, cell) in
+//
+                
+//                cell.mynameLabel.text = element as? String
+//                cell.mynameLabel.adjustsFontSizeToFitWidth = true
+//                cell.targetLabel.adjustsFontSizeToFitWidth = true
+//                cell.mynameLabel.minimumScaleFactor = 0.5
+//                cell.targetLabel.minimumScaleFactor = 0.5
+//        }
+//    .disposed(by: disposeBag)
+//
+//        tableView.rx.itemSelected
+//            .subscribe(onNext: { indexPath in
+//                log.debug("itemSelected")
+//            })
+//        .disposed(by: disposeBag)
+//
+    
+    
+ 
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         
         /*
@@ -83,7 +172,45 @@ class InputResultViewController: UIViewController {
     .disposed(by: disposeBag)
         
     }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
     /*
+ 
+   override func viewWillLayoutSubviews() {
+         _ = self.initViewLayout
+     }
+     lazy var initViewLayout : Void = {
+         admob()
+     }()
+     
+     override func viewDidLoad() {
+         super.viewDidLoad()
+ //        initializeUI()
+ //        initializeTableView()
+ //        tableView.reloadData()
+ //        userDataModel = UserDataModel.sharead
+     }}
 
     
     func initializeUI() {
