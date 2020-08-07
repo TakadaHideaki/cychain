@@ -103,10 +103,10 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         editUserData!["message"] = messageTextView.text ?? ""
         editUserData?["image"]  = iconRegistButton.currentImage ?? R.image.user10()
         
-        let userDataModel = UserDataModel.sharead
+//        let userDataModel = UserDataModel.sharead
         
-        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
-        userDataModel.setFirebase()//firebase更新
+//        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
+//        userDataModel.setFirebase()//firebase更新
         pushVC(vc: R.storyboard.main.inputResultVC()!, animation: true)
     }
     

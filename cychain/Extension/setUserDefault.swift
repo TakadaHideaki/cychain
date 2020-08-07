@@ -3,12 +3,17 @@ import RxSwift
 import RxCocoa
 
 class setUserDefault {
-    
+
+    private let key = Name.KeyName.uniqueNmame.rawValue
     private let disposeBag = DisposeBag()
     
-    func save(data: Texts) {
+    private var resetDataRelay = BehaviorRelay<[[String:String]]>(value: [["":""]])
+    var resetUdData: Observable<[[String:String]]> {
+        return resetDataRelay.asObservable()
+    }
+    
+    func setUd(data: Texts) -> Texts {
         //        let names = [data.my: data.target]
-        //        let key = Name.KeyName.uniqueNmame.rawValue
         //
         //        if var UDData = UD.object(forKey: key) as? [[String: String]] {
         //
@@ -17,8 +22,48 @@ class setUserDefault {
         //            }
         //            UD.set([names], forKey: key)
         //        }
-        log.debug(data.my)
+        log.debug(data)
+        return data
     }
+    
+    
+
+    
+    func read() -> [[String: String]] {
+          if let postNamesList = UD.object(forKey: key) as? [[String: String]] {
+              return postNamesList
+          }
+          return [["":""]]
+      }
+    
+//    func reset(data: [[String: String]]) -> [[String: String]]{
+//        log.debug(data)
+//        return data
+//    }
+    func reset(data: [[String: String]]) -> [[String: String]] {
+         log.debug(data)
+        return data
+     }
+    
+ 
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

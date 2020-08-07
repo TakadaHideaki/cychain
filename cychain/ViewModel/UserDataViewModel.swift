@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
 struct Texts {
     let my: String
     let target: String
@@ -17,18 +16,11 @@ struct Texts {
     }
 }
 
-protocol UserViewModelType {
-    associatedtype Input
-    associatedtype Output
-    func transform(input: Input) -> Output
-}
-
-
 struct UserDataViewModel {
     let setUserDefaultModel: setUserDefault?
     let setFirebaseModel: setFirebase?
     private let disposeBag = DisposeBag()
-
+    
     init(){
         self.setUserDefaultModel = setUserDefault()
         self.setFirebaseModel = setFirebase()
@@ -36,7 +28,7 @@ struct UserDataViewModel {
 }
 
 
-extension UserDataViewModel: UserViewModelType {
+extension UserDataViewModel: ViewModelType {
     struct Input {
         let postButtontapped: Observable<Void>
         let iconButtontapped: Observable<Void>
@@ -80,12 +72,20 @@ extension UserDataViewModel: UserViewModelType {
             }
         }
         //textField文字数check
+        //        let characterCheck = input.postButtontapped
+        //            .withLatestFrom(postsCheck)
+        //            .filter { $0 }
+        //            .map { _ in () }
+        //            .withLatestFrom(substitutionToTexts) { _, texts in texts }
+        
         let characterCheck = input.postButtontapped
             .withLatestFrom(postsCheck)
             .filter { $0 }
             .map { _ in () }
             .withLatestFrom(substitutionToTexts) { _, texts in texts }
-                
+            .map { return self.setUserDefaultModel?.setUd(data: $0) }
+            .flatMap { Observable.from(optional: $0) }
+        
         //文字数NG
         let overrun = characterCheck.filter { !$0.isValid }.map { _ in () }
         //文字数OK
@@ -94,12 +94,12 @@ extension UserDataViewModel: UserViewModelType {
         //Userdafaultとfirebaseへ保存
         characterCheck
             .subscribe(onNext: { value in
-                self.setUserDefaultModel?.save(data: value)
+                //                self.setUserDefaultModel?.save(data: value)
                 self.setFirebaseModel?.setFirebae(data: value)
-        })
+            })
             .disposed(by: disposeBag)
         
-  
+        
         
         return Output(onIcButtonClickEvent: input.iconButtontapped,
                       selectedImage: input.imageSelected,
@@ -109,13 +109,13 @@ extension UserDataViewModel: UserViewModelType {
                       nextVC: apprppriate
         )}
     
-        
     
     
     
     
     
-
+    
+    
 }
 
 

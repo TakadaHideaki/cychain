@@ -23,12 +23,14 @@
 		8C303D742439CB0F00F080AB /* AuthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C303D732439CB0F00F080AB /* AuthView.xib */; };
 		8C303D752439CB0F00F080AB /* AuthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C303D732439CB0F00F080AB /* AuthView.xib */; };
 		8C3E3132241CE743008A4DAF /* EditData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3E3131241CE743008A4DAF /* EditData.swift */; };
+		8C3FCD5E24D3A09300ADC76B /* PostResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3FCD5D24D3A09300ADC76B /* PostResultModel.swift */; };
+		8C3FCD5F24D3A09300ADC76B /* PostResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3FCD5D24D3A09300ADC76B /* PostResultModel.swift */; };
 		8C420CF62452B19800769F01 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420CF52452B19800769F01 /* Extention.swift */; };
 		8C420CF72452B19800769F01 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420CF52452B19800769F01 /* Extention.swift */; };
 		8C420CF92452B27F00769F01 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420CF82452B27F00769F01 /* String.swift */; };
 		8C420CFA2452B27F00769F01 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420CF82452B27F00769F01 /* String.swift */; };
-		8C420CFF24540EB000769F01 /* DataListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420CFE24540EB000769F01 /* DataListModel.swift */; };
-		8C420D0024540EB000769F01 /* DataListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420CFE24540EB000769F01 /* DataListModel.swift */; };
+		8C420CFF24540EB000769F01 /* PostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420CFE24540EB000769F01 /* PostListModel.swift */; };
+		8C420D0024540EB000769F01 /* PostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420CFE24540EB000769F01 /* PostListModel.swift */; };
 		8C420D05245E2A2500769F01 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420D04245E2A2500769F01 /* SettingModel.swift */; };
 		8C420D06245E2A2500769F01 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420D04245E2A2500769F01 /* SettingModel.swift */; };
 		8C420D08245E7DDB00769F01 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C420D07245E7DDB00769F01 /* Alert.swift */; };
@@ -39,6 +41,12 @@
 		8C42303B240EFD1E00160A04 /* Pods_cychain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C423039240EFD1E00160A04 /* Pods_cychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8C42303F240FB98600160A04 /* UDKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C423037240EE7D300160A04 /* UDKey.swift */; };
 		8C42304124110BFB00160A04 /* ImagePickerControllert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C42304024110BFA00160A04 /* ImagePickerControllert.swift */; };
+		8C43513D24D5365B0035FDC4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43513C24D5365B0035FDC4 /* ViewModelType.swift */; };
+		8C43513E24D5365B0035FDC4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43513C24D5365B0035FDC4 /* ViewModelType.swift */; };
+		8C43514024D537B10035FDC4 /* PostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43513F24D537B10035FDC4 /* PostListViewModel.swift */; };
+		8C43514124D537B10035FDC4 /* PostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43513F24D537B10035FDC4 /* PostListViewModel.swift */; };
+		8C43514324D59D260035FDC4 /* ReadUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43514224D59D260035FDC4 /* ReadUserDefault.swift */; };
+		8C43514424D59D260035FDC4 /* ReadUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43514224D59D260035FDC4 /* ReadUserDefault.swift */; };
 		8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */; };
 		8C50ACC7239289AC00FAFBC4 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBF239289AC00FAFBC4 /* NameCell.swift */; };
 		8C50ACDC23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */; };
@@ -68,8 +76,8 @@
 		8C70D345246153D800150E52 /* Onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C70D343246153D800150E52 /* Onboarding.json */; };
 		8C70D347246157E900150E52 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70D346246157E900150E52 /* Onboarding.swift */; };
 		8C70D348246157E900150E52 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70D346246157E900150E52 /* Onboarding.swift */; };
-		8C750E01244711EC0003A82C /* PostCardMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C750DFF244711EC0003A82C /* PostCardMessageCell.swift */; };
-		8C750E02244711EC0003A82C /* PostCardMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C750DFF244711EC0003A82C /* PostCardMessageCell.swift */; };
+		8C750E01244711EC0003A82C /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C750DFF244711EC0003A82C /* MessageCell.swift */; };
+		8C750E02244711EC0003A82C /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C750DFF244711EC0003A82C /* MessageCell.swift */; };
 		8C750E03244711EC0003A82C /* PostCardMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C750E00244711EC0003A82C /* PostCardMessageCell.xib */; };
 		8C750E04244711EC0003A82C /* PostCardMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C750E00244711EC0003A82C /* PostCardMessageCell.xib */; };
 		8C7B1EBE21D925BC00AFE846 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7B1EBD21D925BC00AFE846 /* AppDelegate.swift */; };
@@ -103,8 +111,8 @@
 		8CE1B4BD2442EBF6009D8698 /* contentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE1B4B02442EBF6009D8698 /* contentView.swift */; };
 		8CE1B4BE2442EBF6009D8698 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE1B4B12442EBF6009D8698 /* Button.swift */; };
 		8CE1B4BF2442EBF6009D8698 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE1B4B12442EBF6009D8698 /* Button.swift */; };
-		8CE1B4C22443A2AB009D8698 /* PostCardeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C02443A2AB009D8698 /* PostCardeTableViewCell.swift */; };
-		8CE1B4C32443A2AB009D8698 /* PostCardeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C02443A2AB009D8698 /* PostCardeTableViewCell.swift */; };
+		8CE1B4C22443A2AB009D8698 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C02443A2AB009D8698 /* ProfileCell.swift */; };
+		8CE1B4C32443A2AB009D8698 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C02443A2AB009D8698 /* ProfileCell.swift */; };
 		8CE1B4C42443A2AB009D8698 /* PostCardeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C12443A2AB009D8698 /* PostCardeTableViewCell.xib */; };
 		8CE1B4C52443A2AB009D8698 /* PostCardeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C12443A2AB009D8698 /* PostCardeTableViewCell.xib */; };
 		8CEA6A13247A9DDC00A1B283 /* UserDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CEA6A12247A9DDC00A1B283 /* UserDataViewModel.swift */; };
@@ -166,9 +174,10 @@
 		8C303D702439CAFD00F080AB /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		8C303D732439CB0F00F080AB /* AuthView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthView.xib; sourceTree = "<group>"; };
 		8C3E3131241CE743008A4DAF /* EditData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditData.swift; sourceTree = "<group>"; };
+		8C3FCD5D24D3A09300ADC76B /* PostResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResultModel.swift; sourceTree = "<group>"; };
 		8C420CF52452B19800769F01 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		8C420CF82452B27F00769F01 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		8C420CFE24540EB000769F01 /* DataListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataListModel.swift; sourceTree = "<group>"; };
+		8C420CFE24540EB000769F01 /* PostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListModel.swift; sourceTree = "<group>"; };
 		8C420D04245E2A2500769F01 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		8C420D07245E7DDB00769F01 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		8C42302E2409EF8000160A04 /* Pods_cychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_cychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +185,9 @@
 		8C423037240EE7D300160A04 /* UDKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDKey.swift; sourceTree = "<group>"; };
 		8C423039240EFD1E00160A04 /* Pods_cychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_cychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C42304024110BFA00160A04 /* ImagePickerControllert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerControllert.swift; sourceTree = "<group>"; };
+		8C43513C24D5365B0035FDC4 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		8C43513F24D537B10035FDC4 /* PostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewModel.swift; sourceTree = "<group>"; };
+		8C43514224D59D260035FDC4 /* ReadUserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserDefault.swift; sourceTree = "<group>"; };
 		8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inputDataListCell.swift; sourceTree = "<group>"; };
 		8C50ACBF239289AC00FAFBC4 /* NameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameCell.swift; sourceTree = "<group>"; };
 		8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager_SignUp_ViewController.swift; sourceTree = "<group>"; };
@@ -201,7 +213,7 @@
 		8C54CBBD24CC15AC0079C316 /* setFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setFirebase.swift; sourceTree = "<group>"; };
 		8C70D343246153D800150E52 /* Onboarding.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Onboarding.json; sourceTree = "<group>"; };
 		8C70D346246157E900150E52 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
-		8C750DFF244711EC0003A82C /* PostCardMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCardMessageCell.swift; sourceTree = "<group>"; };
+		8C750DFF244711EC0003A82C /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		8C750E00244711EC0003A82C /* PostCardMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCardMessageCell.xib; sourceTree = "<group>"; };
 		8C7B1EBA21D925BC00AFE846 /* cychain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cychain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C7B1EBD21D925BC00AFE846 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -224,7 +236,7 @@
 		8CE1B4AF2442EBF6009D8698 /* textView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = textView.swift; sourceTree = "<group>"; };
 		8CE1B4B02442EBF6009D8698 /* contentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = contentView.swift; sourceTree = "<group>"; };
 		8CE1B4B12442EBF6009D8698 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		8CE1B4C02443A2AB009D8698 /* PostCardeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCardeTableViewCell.swift; sourceTree = "<group>"; };
+		8CE1B4C02443A2AB009D8698 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		8CE1B4C12443A2AB009D8698 /* PostCardeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCardeTableViewCell.xib; sourceTree = "<group>"; };
 		8CEA6A12247A9DDC00A1B283 /* UserDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataViewModel.swift; sourceTree = "<group>"; };
 		8CEA6A1524AB421100A1B283 /* PostResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResultViewModel.swift; sourceTree = "<group>"; };
@@ -275,6 +287,7 @@
 				8C420CF52452B19800769F01 /* Extention.swift */,
 				8C54CBBA24CC15890079C316 /* setUserDefault.swift */,
 				8C54CBBD24CC15AC0079C316 /* setFirebase.swift */,
+				8C43514224D59D260035FDC4 /* ReadUserDefault.swift */,
 				8C54CBB724C705AF0079C316 /* ImageCrop.swift */,
 				8C42304024110BFA00160A04 /* ImagePickerControllert.swift */,
 				8C420D07245E7DDB00769F01 /* Alert.swift */,
@@ -289,7 +302,8 @@
 			children = (
 				8C303D67243879F500F080AB /* AuthModel.swift */,
 				8C303D6124334A5C00F080AB /* UserDataModel.swift */,
-				8C420CFE24540EB000769F01 /* DataListModel.swift */,
+				8C3FCD5D24D3A09300ADC76B /* PostResultModel.swift */,
+				8C420CFE24540EB000769F01 /* PostListModel.swift */,
 				8C8B07092427566D007F7494 /* MatchData.swift */,
 				8C420D04245E2A2500769F01 /* SettingModel.swift */,
 				8C3E3131241CE743008A4DAF /* EditData.swift */,
@@ -312,8 +326,8 @@
 			children = (
 				8CA19C8F22EBC90200ED752F /* Main.storyboard */,
 				8C303D702439CAFD00F080AB /* AuthView.swift */,
-				8C750DFF244711EC0003A82C /* PostCardMessageCell.swift */,
-				8CE1B4C02443A2AB009D8698 /* PostCardeTableViewCell.swift */,
+				8C750DFF244711EC0003A82C /* MessageCell.swift */,
+				8CE1B4C02443A2AB009D8698 /* ProfileCell.swift */,
 				8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */,
 				8C50ACBF239289AC00FAFBC4 /* NameCell.swift */,
 				8C750E00244711EC0003A82C /* PostCardMessageCell.xib */,
@@ -414,6 +428,8 @@
 			children = (
 				8CEA6A12247A9DDC00A1B283 /* UserDataViewModel.swift */,
 				8CEA6A1524AB421100A1B283 /* PostResultViewModel.swift */,
+				8C43513F24D537B10035FDC4 /* PostListViewModel.swift */,
+				8C43513C24D5365B0035FDC4 /* ViewModelType.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -755,8 +771,8 @@
 				8C420D08245E7DDB00769F01 /* Alert.swift in Sources */,
 				8C54CBBB24CC15890079C316 /* setUserDefault.swift in Sources */,
 				8C423038240EE7D300160A04 /* UDKey.swift in Sources */,
-				8C420CFF24540EB000769F01 /* DataListModel.swift in Sources */,
-				8CE1B4C22443A2AB009D8698 /* PostCardeTableViewCell.swift in Sources */,
+				8C420CFF24540EB000769F01 /* PostListModel.swift in Sources */,
+				8CE1B4C22443A2AB009D8698 /* ProfileCell.swift in Sources */,
 				8CE1B4B62442EBF6009D8698 /* ShadowButton.swift in Sources */,
 				8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */,
 				8CEA6A13247A9DDC00A1B283 /* UserDataViewModel.swift in Sources */,
@@ -770,6 +786,7 @@
 				8C8B06FE242597E8007F7494 /* MuchPopUpVC.swift in Sources */,
 				8C50ACEA23928F5C00FAFBC4 /* InputResultViewController.swift in Sources */,
 				8C4230342409F5CD00160A04 /* ScrollKeyBoard.swift in Sources */,
+				8C3FCD5E24D3A09300ADC76B /* PostResultModel.swift in Sources */,
 				8C50ACED23928F5C00FAFBC4 /* SearchViewController.swift in Sources */,
 				8CEA6A1624AB421100A1B283 /* PostResultViewModel.swift in Sources */,
 				8C420D05245E2A2500769F01 /* SettingModel.swift in Sources */,
@@ -785,18 +802,21 @@
 				8C42304124110BFB00160A04 /* ImagePickerControllert.swift in Sources */,
 				8C303D6224334A5C00F080AB /* UserDataModel.swift in Sources */,
 				8C50ACE423928F5C00FAFBC4 /* Pager_LogIn_ViewController.swift in Sources */,
+				8C43514024D537B10035FDC4 /* PostListViewModel.swift in Sources */,
 				8CE1B4B82442EBF6009D8698 /* textField.swift in Sources */,
 				8C420CF62452B19800769F01 /* Extention.swift in Sources */,
 				8C50ACDF23928F5C00FAFBC4 /* SettingsViewController.swift in Sources */,
+				8C43514324D59D260035FDC4 /* ReadUserDefault.swift in Sources */,
 				8C303D712439CAFD00F080AB /* AuthView.swift in Sources */,
 				8C50ACE923928F5C00FAFBC4 /* InitialViewController.swift in Sources */,
-				8C750E01244711EC0003A82C /* PostCardMessageCell.swift in Sources */,
+				8C750E01244711EC0003A82C /* MessageCell.swift in Sources */,
 				8CE1B4B22442EBF6009D8698 /* View.swift in Sources */,
 				8C70D347246157E900150E52 /* Onboarding.swift in Sources */,
 				8C249842246FB5D000F81972 /* AuthViewModel.swift in Sources */,
 				8CE1B4B42442EBF6009D8698 /* labele.swift in Sources */,
 				8CE1B4BC2442EBF6009D8698 /* contentView.swift in Sources */,
 				8C50ACEC23928F5C00FAFBC4 /* SeachResultListViewCOntroller.swift in Sources */,
+				8C43513D24D5365B0035FDC4 /* ViewModelType.swift in Sources */,
 				8C50ACDE23928F5C00FAFBC4 /* LogInViewController.swift in Sources */,
 				8C50ACE723928F5C00FAFBC4 /* SignUpViewController.swift in Sources */,
 			);
@@ -807,14 +827,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CE1B4B52442EBF6009D8698 /* labele.swift in Sources */,
-				8C750E02244711EC0003A82C /* PostCardMessageCell.swift in Sources */,
+				8C750E02244711EC0003A82C /* MessageCell.swift in Sources */,
 				8C54CBB924C705AF0079C316 /* ImageCrop.swift in Sources */,
 				8C980F002463F0340071FFD2 /* R.generated.swift in Sources */,
 				8CF3AE8023F5571D00FC0648 /* SeachResultViewCotroller.swift in Sources */,
 				8C54CBBC24CC15890079C316 /* setUserDefault.swift in Sources */,
 				8C420D09245E7DDB00769F01 /* Alert.swift in Sources */,
 				8CF3AE8223F5571D00FC0648 /* Pager_SignUp_ViewController.swift in Sources */,
-				8C420D0024540EB000769F01 /* DataListModel.swift in Sources */,
+				8C420D0024540EB000769F01 /* PostListModel.swift in Sources */,
 				8C42303F240FB98600160A04 /* UDKey.swift in Sources */,
 				8CF3AE8523F5571D00FC0648 /* inputDataListCell.swift in Sources */,
 				8CEA6A14247A9DDC00A1B283 /* UserDataViewModel.swift in Sources */,
@@ -828,6 +848,7 @@
 				8CE1B4BF2442EBF6009D8698 /* Button.swift in Sources */,
 				8CF3AE8C23F5571D00FC0648 /* InputResultViewController.swift in Sources */,
 				8CE1B4B32442EBF6009D8698 /* View.swift in Sources */,
+				8C3FCD5F24D3A09300ADC76B /* PostResultModel.swift in Sources */,
 				8C8B06FF242597E8007F7494 /* MuchPopUpVC.swift in Sources */,
 				8CEA6A1724AB421100A1B283 /* PostResultViewModel.swift in Sources */,
 				8CE1B4B72442EBF6009D8698 /* ShadowButton.swift in Sources */,
@@ -843,9 +864,11 @@
 				8CF3AE9123F5571D00FC0648 /* SeachResultMultipleViewCOntroller.swift in Sources */,
 				8CF3AE9223F5571D00FC0648 /* InputDataListViewController.swift in Sources */,
 				8C303D69243879F500F080AB /* AuthModel.swift in Sources */,
+				8C43514124D537B10035FDC4 /* PostListViewModel.swift in Sources */,
 				8CF3AE9423F5571D00FC0648 /* SelectViewController.swift in Sources */,
 				8C303D722439CAFD00F080AB /* AuthView.swift in Sources */,
 				8C420CF72452B19800769F01 /* Extention.swift in Sources */,
+				8C43514424D59D260035FDC4 /* ReadUserDefault.swift in Sources */,
 				8CF3AE9523F5571D00FC0648 /* UserDataInputViewController.swift in Sources */,
 				8CF3AE9723F5571D00FC0648 /* Pager_LogIn_ViewController.swift in Sources */,
 				8CF3AE9823F5571D00FC0648 /* SettingsViewController.swift in Sources */,
@@ -855,8 +878,9 @@
 				8CF3AE9923F5571D00FC0648 /* InitialViewController.swift in Sources */,
 				8CF3AE9A23F5571D00FC0648 /* SeachResultListViewCOntroller.swift in Sources */,
 				8CF3AE9B23F5571D00FC0648 /* LogInViewController.swift in Sources */,
+				8C43513E24D5365B0035FDC4 /* ViewModelType.swift in Sources */,
 				8CF3AE9C23F5571D00FC0648 /* SignUpViewController.swift in Sources */,
-				8CE1B4C32443A2AB009D8698 /* PostCardeTableViewCell.swift in Sources */,
+				8CE1B4C32443A2AB009D8698 /* ProfileCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

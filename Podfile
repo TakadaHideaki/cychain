@@ -28,6 +28,7 @@ pod 'lottie-ios'
 pod 'R.swift'
 pod 'RxSwift'
 pod 'RxCocoa'
+pod 'RxDataSources'
 
 end
 
@@ -52,6 +53,7 @@ pod 'lottie-ios'
 pod 'R.swift'
 pod 'RxSwift'
 pod 'RxCocoa'
+pod 'RxDataSources'
 
 end
 

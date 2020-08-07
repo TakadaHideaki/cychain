@@ -169,6 +169,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.3):
     - BoringSSL-GRPC/Interface (= 0.0.3)
   - BoringSSL-GRPC/Interface (0.0.3)
+  - Differentiator (4.0.1)
   - FBSDKCoreKit (5.11.1):
     - FBSDKCoreKit/Basics (= 5.11.1)
     - FBSDKCoreKit/Core (= 5.11.1)
@@ -367,6 +368,10 @@ PODS:
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
   - RxSwift (5.1.1)
@@ -394,6 +399,7 @@ DEPENDENCIES:
   - R.swift
   - RSKImageCropper
   - RxCocoa
+  - RxDataSources
   - RxSwift
   - TextFieldEffects
   - XCGLogger (~> 7.0.0)
@@ -404,6 +410,7 @@ SPEC REPOS:
     - abseil
     - AppAuth
     - BoringSSL-GRPC
+    - Differentiator
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
@@ -439,6 +446,7 @@ SPEC REPOS:
     - R.swift.Library
     - RSKImageCropper
     - RxCocoa
+    - RxDataSources
     - RxRelay
     - RxSwift
     - SDWebImage
@@ -450,6 +458,7 @@ SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   FBSDKCoreKit: 5aada61a229054694810f3cee231f986004b3c49
   FBSDKLoginKit: 0e4572e0279e477103b57978e3ea05fac1dd673d
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
@@ -485,6 +494,7 @@ SPEC CHECKSUMS:
   R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SDWebImage: 6ac2eb96571bff96ecde31a987172c5934a0eb7d
@@ -492,6 +502,6 @@ SPEC CHECKSUMS:
   XCGLogger: 0434f15e3909cdc450bb63faf638b8792ab782ab
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 5b0e1cbb82c3602f25209a3fa8db9d616e6fbf66
+PODFILE CHECKSUM: 61f1e26715bba2eccb01b7b8014711932f26adf1
 
 COCOAPODS: 1.8.4

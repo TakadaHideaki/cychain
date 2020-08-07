@@ -21,7 +21,6 @@ class setFirebase {
 //            })
 //        }
         
-        log.debug(data.iconImage)
         
         
         

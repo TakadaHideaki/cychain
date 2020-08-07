@@ -46,7 +46,7 @@ extension SeachResultMultipleViewCOntroller {
         switch indexPath.section {
         case 0:
             
-            let profileCell = tableView1.dequeueReusableCell(withIdentifier: "PostCardeTableViewCell", for: indexPath) as! PostCardeTableViewCell
+            let profileCell = tableView1.dequeueReusableCell(withIdentifier: "PostCardeTableViewCell", for: indexPath) as! ProfileCell
             
             guard let names = nameArray else { return profileCell }
             
@@ -75,7 +75,7 @@ extension SeachResultMultipleViewCOntroller {
             
         case 1:
             
-            let messagecell = tableView1.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! PostCardMessageCell
+            let messagecell = tableView1.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! MessageCell
             messagecell.messageLabel.text = value?["message"] as? String ?? ""
             return messagecell
             

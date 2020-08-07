@@ -76,7 +76,7 @@ extension SeachResultViewCotroller: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             
-            let profileCell = tableView.dequeueReusableCell(withIdentifier: "PostCardeTableViewCell", for: indexPath) as! PostCardeTableViewCell
+            let profileCell = tableView.dequeueReusableCell(withIdentifier: "PostCardeTableViewCell", for: indexPath) as! ProfileCell
             
             profileCell.mynameLabel.text = matchDataModel?.names?[0]
             profileCell.targetLabel.text = matchDataModel?.names?[1]
@@ -105,7 +105,7 @@ extension SeachResultViewCotroller: UITableViewDataSource {
             
         case 1:
             
-            let messagecell = tableView.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! PostCardMessageCell
+            let messagecell = tableView.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! MessageCell
             messagecell.messageLabel.text = matchDataModel?.message ?? ""
             return messagecell
             

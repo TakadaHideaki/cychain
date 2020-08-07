@@ -7,8 +7,7 @@ class ImageCrop: NSObject {
     
     weak var delegate: UIViewController?
     //output
-    private let image = BehaviorRelay<UIImage>(value: R.image.user10()!)
-
+    private let image = BehaviorRelay<UIImage>(value: R.image.user12()!)
     var croppedImage: Observable<UIImage> {
         return image.asObservable()
     }

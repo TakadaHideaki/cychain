@@ -27,6 +27,7 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
+        bind()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -45,9 +46,6 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
         messageTextView.keyBoardtoolBar(textView: messageTextView)
         customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIcon, for: .normal)
-        
-   
-        bind()
     }
     
     
@@ -78,15 +76,17 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
         //viewModelから選択画像を受け取りCropVCへ渡す
         output.selectedImage
             .subscribe(onNext: { image in
-                log.debug(image)
                 self.imageCrop.RSKImageCropVC(image: image)
             })
             .disposed(by: disposeBag)
         
         //ViewModelから切り抜き画像のEventを受け取り、アイコンボタンにセット
         output.iconButtonImage
+            .skip(1)
             .drive(iconRegistButton.rx.image())
             .disposed(by: disposeBag)
+        
+        log.debug(output.iconButtonImage)
         
         
         //textFieldが未入力or13文字以上でアラート
@@ -104,18 +104,24 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
                 self.RegistationOverAlert(vc: R.storyboard.main.list()!)
             })
             .disposed(by: disposeBag)
-    
-        //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
-         output.nextVC
-             .subscribe(onNext: { value in
-                let vc = InputResultViewController(data: value)
-                self.navigationController?.pushViewController(vc, animated: true)
-                
-//                   self.presentVC(vc: vc, animation: true)
-             })
-             .disposed(by: disposeBag)
         
+        //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
+        output.nextVC
+            .subscribe(onNext: { value in
+                
+                let sb = R.storyboard.main()
+                let vc = sb.instantiateViewController(withIdentifier: "InputResultVC") as? InputResultViewController
+                vc?.posedtData = value
+                log.debug(value)
+                self.navigationController?.pushViewController(vc!, animated: true)
+            /*    let newVC = InputResultViewController.returnVC(data: value)
+                self.navigationController?.pushViewController(newVC, animated: true) */
+            })
+            .disposed(by: disposeBag)
 
+
+        
+        
     }
 
     

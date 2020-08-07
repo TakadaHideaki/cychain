@@ -1,6 +1,6 @@
 import UIKit
 
-class PostCardeTableViewCell: UITableViewCell {
+class ProfileCell: UITableViewCell {
 
 
 
