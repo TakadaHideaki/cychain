@@ -21,6 +21,8 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
     var iconImage: UIImage?
     var iconSet: ImagePickerController?
     
+    var pairName: [String: String]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

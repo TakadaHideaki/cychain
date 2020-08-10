@@ -49,18 +49,7 @@ extension UserDataViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        //UserDataを纏めるTextsへ
-        let substitutionToTexts = Observable
-            .combineLatest(input.myNameRelay.asObservable(),
-                           input.targetRelay.asObservable(),
-                           input.messageRelay.asObservable(),
-                           input.imageCropped.asObservable()) { my, target, message, iconImage  in
-                            Texts(my: my,
-                                  target: target,
-                                  message: message,
-                                  iconImage: iconImage)
-        }
-        //投稿数Check
+//①      投稿数Check
         var postsCheck: Observable<Bool> {
             if let ppstCount = UD.object(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String : String]]  {
                 switch ppstCount.count {
@@ -71,34 +60,36 @@ extension UserDataViewModel: ViewModelType {
                 return Observable.of(true)               //投稿値歴無し
             }
         }
-        //textField文字数check
-        //        let characterCheck = input.postButtontapped
-        //            .withLatestFrom(postsCheck)
-        //            .filter { $0 }
-        //            .map { _ in () }
-        //            .withLatestFrom(substitutionToTexts) { _, texts in texts }
         
+//②      UserDataを纏めるTextsへ
+        let substitutionToTexts = Observable
+            .combineLatest(input.myNameRelay.asObservable(),
+                           input.targetRelay.asObservable(),
+                           input.messageRelay.asObservable(),
+                           input.imageCropped.asObservable()) { my, target, message, iconImage  in
+                            Texts(my: my,
+                                  target: target,
+                                  message: message,
+                                  iconImage: iconImage)
+        }
+        
+//③     投稿ボタン押下→投稿数クリア(①) →Textsに投稿データをセット(②)
         let characterCheck = input.postButtontapped
             .withLatestFrom(postsCheck)
             .filter { $0 }
             .map { _ in () }
             .withLatestFrom(substitutionToTexts) { _, texts in texts }
-            .map { return self.setUserDefaultModel?.setUd(data: $0) }
-            .flatMap { Observable.from(optional: $0) }
         
-        //文字数NG
+        // ③→ 文字数NG
         let overrun = characterCheck.filter { !$0.isValid }.map { _ in () }
-        //文字数OK
+        
+        // ③→ 文字数OK
         let apprppriate = characterCheck.filter { $0.isValid }
-        
-        //Userdafaultとfirebaseへ保存
-        characterCheck
-            .subscribe(onNext: { value in
-                //                self.setUserDefaultModel?.save(data: value)
-                self.setFirebaseModel?.setFirebae(data: value)
-            })
-            .disposed(by: disposeBag)
-        
+            .flatMapLatest{ //save(Uerdefault)
+                return (self.setUserDefaultModel?.setUd(data: $0))! }
+            .flatMap{ //save(firebase)
+                return (self.setFirebaseModel?.set(data: $0))! }
+            .flatMap { Observable.from(optional: $0) }
         
         
         return Output(onIcButtonClickEvent: input.iconButtontapped,
@@ -106,8 +97,9 @@ extension UserDataViewModel: ViewModelType {
                       iconButtonImage: input.imageCropped.asDriver(onErrorDriveWith: Driver.empty()),
                       postsCountOver: postsCheck,
                       characterCountOverrun: overrun,
-                      nextVC: apprppriate
-        )}
+                      nextVC: apprppriate )
+        
+    }
     
     
     

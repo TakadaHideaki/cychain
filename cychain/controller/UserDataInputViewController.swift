@@ -28,6 +28,8 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
         super.viewDidLoad()
         initializeUI()
         bind()
+//        UD.removeObject(forKey: Name.KeyName.uniqueNmame.rawValue)
+
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -85,9 +87,6 @@ class UserDataInputViewController: UIViewController, UITextViewDelegate, UITextF
             .skip(1)
             .drive(iconRegistButton.rx.image())
             .disposed(by: disposeBag)
-        
-        log.debug(output.iconButtonImage)
-        
         
         //textFieldが未入力or13文字以上でアラート
         output.characterCountOverrun

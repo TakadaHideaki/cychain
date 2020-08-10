@@ -3,7 +3,6 @@ import RxDataSources
 import Firebase
 
 struct PostListSectionModel {
-//    var myname: [String]
     var items: [Item]
 }
 

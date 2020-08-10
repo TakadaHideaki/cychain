@@ -58,6 +58,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     
     // 初めてのログインならonboardingを表示
     func confirmInitialLaunch() {
+        log.debug("confirmInitialLaunch")
         if UD.bool(forKey: Name.KeyName.flag.rawValue) {
             UD.set(false, forKey: Name.KeyName.flag.rawValue)
             self.pushVC(vc: R.storyboard.main.onboardingVC()!, animation: false)
@@ -66,6 +67,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     
     // ログイン中の場合はログイン画面をスキップ
     func LoggedIn() {
+        log.debug("LoggedIn")
         if Auth.auth().currentUser != nil {
             self.presentVC(vc: R.storyboard.main.tabVC()!, animation: true)
         }
@@ -74,6 +76,7 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     // NotificationCenterに監視対象として登録
     // ログインが成功したらhome画面へ遷移
      func configureObserver() {
+        log.debug("configureObserver")
          NotificationCenter.default.addObserver(
              self,
              selector: #selector(loginCompleted),

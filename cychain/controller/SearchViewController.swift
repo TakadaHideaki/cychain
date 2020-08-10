@@ -26,6 +26,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialazeUI()
+
     }
     
     func initialazeUI() {

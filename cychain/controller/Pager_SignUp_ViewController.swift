@@ -34,6 +34,7 @@ class Pager_SignUp_ViewController: UIViewController, GIDSignInDelegate, Indicato
     func gmailButtontapAction(button: UIButton) {
         button.rx.tap
             .subscribe(onNext: {
+                log.debug("gmailButtontapAction")
                 //googleでアカウント登録画面に遷移
                 GIDSignIn.sharedInstance().signIn()
             })
