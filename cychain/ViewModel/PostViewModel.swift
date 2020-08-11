@@ -16,7 +16,7 @@ struct Texts {
     }
 }
 
-struct UserDataViewModel {
+struct PostViewModel {
     let setUserDefaultModel: setUserDefault?
     let setFirebaseModel: setFirebase?
     private let disposeBag = DisposeBag()
@@ -27,7 +27,7 @@ struct UserDataViewModel {
     }
 }
 
-extension UserDataViewModel: ViewModelType {
+extension PostViewModel: ViewModelType {
     struct Input {
         let postButtontapped: Observable<Void>
         let iconButtontapped: Observable<Void>

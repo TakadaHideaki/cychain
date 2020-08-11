@@ -115,8 +115,8 @@
 		8CE1B4C32443A2AB009D8698 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C02443A2AB009D8698 /* ProfileCell.swift */; };
 		8CE1B4C42443A2AB009D8698 /* PostCardeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C12443A2AB009D8698 /* PostCardeTableViewCell.xib */; };
 		8CE1B4C52443A2AB009D8698 /* PostCardeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE1B4C12443A2AB009D8698 /* PostCardeTableViewCell.xib */; };
-		8CEA6A13247A9DDC00A1B283 /* UserDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CEA6A12247A9DDC00A1B283 /* UserDataViewModel.swift */; };
-		8CEA6A14247A9DDC00A1B283 /* UserDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CEA6A12247A9DDC00A1B283 /* UserDataViewModel.swift */; };
+		8CEA6A13247A9DDC00A1B283 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CEA6A12247A9DDC00A1B283 /* PostViewModel.swift */; };
+		8CEA6A14247A9DDC00A1B283 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CEA6A12247A9DDC00A1B283 /* PostViewModel.swift */; };
 		8CEA6A1624AB421100A1B283 /* PostResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CEA6A1524AB421100A1B283 /* PostResultViewModel.swift */; };
 		8CEA6A1724AB421100A1B283 /* PostResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CEA6A1524AB421100A1B283 /* PostResultViewModel.swift */; };
 		8CF3AE7A23F5544E00FC0648 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8CF3AE7923F5544E00FC0648 /* GoogleService-Info.plist */; };
@@ -238,7 +238,7 @@
 		8CE1B4B12442EBF6009D8698 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		8CE1B4C02443A2AB009D8698 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		8CE1B4C12443A2AB009D8698 /* PostCardeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCardeTableViewCell.xib; sourceTree = "<group>"; };
-		8CEA6A12247A9DDC00A1B283 /* UserDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataViewModel.swift; sourceTree = "<group>"; };
+		8CEA6A12247A9DDC00A1B283 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		8CEA6A1524AB421100A1B283 /* PostResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResultViewModel.swift; sourceTree = "<group>"; };
 		8CF3AE7923F5544E00FC0648 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8CF3AEAB23F5571D00FC0648 /* cychain copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cychain copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -426,7 +426,7 @@
 		8CEA6A11247A9D7800A1B283 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				8CEA6A12247A9DDC00A1B283 /* UserDataViewModel.swift */,
+				8CEA6A12247A9DDC00A1B283 /* PostViewModel.swift */,
 				8CEA6A1524AB421100A1B283 /* PostResultViewModel.swift */,
 				8C43513F24D537B10035FDC4 /* PostListViewModel.swift */,
 				8C43513C24D5365B0035FDC4 /* ViewModelType.swift */,
@@ -775,7 +775,7 @@
 				8CE1B4C22443A2AB009D8698 /* ProfileCell.swift in Sources */,
 				8CE1B4B62442EBF6009D8698 /* ShadowButton.swift in Sources */,
 				8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */,
-				8CEA6A13247A9DDC00A1B283 /* UserDataViewModel.swift in Sources */,
+				8CEA6A13247A9DDC00A1B283 /* PostViewModel.swift in Sources */,
 				8CE1B4BE2442EBF6009D8698 /* Button.swift in Sources */,
 				8C7B1EBE21D925BC00AFE846 /* AppDelegate.swift in Sources */,
 				8CE1B4BA2442EBF6009D8698 /* textView.swift in Sources */,
@@ -837,7 +837,7 @@
 				8C420D0024540EB000769F01 /* PostListModel.swift in Sources */,
 				8C42303F240FB98600160A04 /* UDKey.swift in Sources */,
 				8CF3AE8523F5571D00FC0648 /* inputDataListCell.swift in Sources */,
-				8CEA6A14247A9DDC00A1B283 /* UserDataViewModel.swift in Sources */,
+				8CEA6A14247A9DDC00A1B283 /* PostViewModel.swift in Sources */,
 				8CF3AE8723F5571D00FC0648 /* AppDelegate.swift in Sources */,
 				8CE1B4B92442EBF6009D8698 /* textField.swift in Sources */,
 				8CE1B4BD2442EBF6009D8698 /* contentView.swift in Sources */,

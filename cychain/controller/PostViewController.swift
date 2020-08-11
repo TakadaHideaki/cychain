@@ -16,7 +16,7 @@ class PostViewController: UIViewController, ScrollKeyBoard {
     @IBOutlet weak var postButton: Button!
     
     private let disposeBag = DisposeBag()
-    private let viewModel = UserDataViewModel()
+    private let viewModel = PostViewModel()
     private let defaultIcon = R.image.user10()
     private let iconSet = ImagePickerController()
     private let imageCrop = ImageCrop()
@@ -54,7 +54,7 @@ class PostViewController: UIViewController, ScrollKeyBoard {
     
     
     private func bind() {
-        let input = UserDataViewModel.Input(
+        let input = PostViewModel.Input(
             postButtontapped: postButton.rx.tap.asObservable(),
             iconButtontapped: iconRegistButton.rx.tap.asObservable(),
             messageTapped: messageTextView.rx.didBeginEditing.asObservable() ,
