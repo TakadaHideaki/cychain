@@ -9,29 +9,30 @@ extension ScrollKeyBoard where Self: UIViewController {
     
     
     func configureObserver() {
-        
+        log.debug("configureObserver")
+
         let center = NotificationCenter.default
         let mainQueue = OperationQueue.main
-        var token: NSObjectProtocol?
-        var token1: NSObjectProtocol?
+        var showToken: NSObjectProtocol?
+        var hideToken: NSObjectProtocol?
         
-        token = center.addObserver(forName: UIResponder.keyboardWillShowNotification,
+        showToken = center.addObserver(forName: UIResponder.keyboardWillShowNotification,
                                    object: nil,
                                    queue: mainQueue
         ) { (notification) in do {
             self.keyboardWillShow(notification)
             }
-            center.removeObserver(token as Any)
+            center.removeObserver(showToken as Any)
         }
         
         
-        token1 = center.addObserver(forName: UIResponder.keyboardWillHideNotification,
+        hideToken = center.addObserver(forName: UIResponder.keyboardWillHideNotification,
                                     object: nil,
                                     queue: mainQueue
         ) { (notification) in do {
             self.keyboardWillHide(notification)
             }
-            center.removeObserver(token1 as Any)
+            center.removeObserver(hideToken as Any)
         }
     }
     

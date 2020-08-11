@@ -27,11 +27,11 @@ struct UserDataViewModel {
     }
 }
 
-
 extension UserDataViewModel: ViewModelType {
     struct Input {
         let postButtontapped: Observable<Void>
         let iconButtontapped: Observable<Void>
+        let messageTapped: Observable<Void>
         let myNameRelay: Observable<String>
         let targetRelay: Observable<String>
         let messageRelay: Observable<String>
@@ -41,6 +41,7 @@ extension UserDataViewModel: ViewModelType {
     
     struct Output {
         let onIcButtonClickEvent: Observable<Void>
+        let messageTapp: Observable<Void>
         let selectedImage: Observable<UIImage>
         let iconButtonImage: Driver<UIImage>
         let postsCountOver: Observable<Bool>
@@ -93,6 +94,7 @@ extension UserDataViewModel: ViewModelType {
         
         
         return Output(onIcButtonClickEvent: input.iconButtontapped,
+                      messageTapp: input.messageTapped,
                       selectedImage: input.imageSelected,
                       iconButtonImage: input.imageCropped.asDriver(onErrorDriveWith: Driver.empty()),
                       postsCountOver: postsCheck,

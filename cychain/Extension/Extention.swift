@@ -56,7 +56,7 @@ extension UIViewController {
     }
     
     
-    
+    //インディケーター
     func indicator() {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.center = view.center

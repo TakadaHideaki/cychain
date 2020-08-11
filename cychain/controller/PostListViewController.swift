@@ -6,7 +6,7 @@ import RxDataSources
 import GoogleMobileAds
 
 
-class InputDataListViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate {
+class PostListViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate {
     
     
     @IBOutlet var tableView: UITableView!
@@ -100,7 +100,7 @@ class InputDataListViewController: UIViewController, UINavigationControllerDeleg
     
 }
 
-extension InputDataListViewController: UITableViewDelegate {
+extension PostListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
            return 80

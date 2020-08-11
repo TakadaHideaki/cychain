@@ -58,11 +58,11 @@
 		8C50ACE323928F5C00FAFBC4 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD123928F5C00FAFBC4 /* TermsViewController.swift */; };
 		8C50ACE423928F5C00FAFBC4 /* Pager_LogIn_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD223928F5C00FAFBC4 /* Pager_LogIn_ViewController.swift */; };
 		8C50ACE523928F5C00FAFBC4 /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD323928F5C00FAFBC4 /* SelectViewController.swift */; };
-		8C50ACE623928F5C00FAFBC4 /* InputDataListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD423928F5C00FAFBC4 /* InputDataListViewController.swift */; };
+		8C50ACE623928F5C00FAFBC4 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD423928F5C00FAFBC4 /* PostListViewController.swift */; };
 		8C50ACE723928F5C00FAFBC4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD523928F5C00FAFBC4 /* SignUpViewController.swift */; };
-		8C50ACE823928F5C00FAFBC4 /* UserDataInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD623928F5C00FAFBC4 /* UserDataInputViewController.swift */; };
+		8C50ACE823928F5C00FAFBC4 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD623928F5C00FAFBC4 /* PostViewController.swift */; };
 		8C50ACE923928F5C00FAFBC4 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD723928F5C00FAFBC4 /* InitialViewController.swift */; };
-		8C50ACEA23928F5C00FAFBC4 /* InputResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD823928F5C00FAFBC4 /* InputResultViewController.swift */; };
+		8C50ACEA23928F5C00FAFBC4 /* PostResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD823928F5C00FAFBC4 /* PostResultViewController.swift */; };
 		8C50ACEB23928F5C00FAFBC4 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD923928F5C00FAFBC4 /* EditViewController.swift */; };
 		8C50ACEC23928F5C00FAFBC4 /* SeachResultListViewCOntroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACDA23928F5C00FAFBC4 /* SeachResultListViewCOntroller.swift */; };
 		8C50ACED23928F5C00FAFBC4 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */; };
@@ -127,13 +127,13 @@
 		8CF3AE8823F5571D00FC0648 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBF239289AC00FAFBC4 /* NameCell.swift */; };
 		8CF3AE8923F5571D00FC0648 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD923928F5C00FAFBC4 /* EditViewController.swift */; };
 		8CF3AE8A23F5571D00FC0648 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD123928F5C00FAFBC4 /* TermsViewController.swift */; };
-		8CF3AE8C23F5571D00FC0648 /* InputResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD823928F5C00FAFBC4 /* InputResultViewController.swift */; };
+		8CF3AE8C23F5571D00FC0648 /* PostResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD823928F5C00FAFBC4 /* PostResultViewController.swift */; };
 		8CF3AE8D23F5571D00FC0648 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */; };
 		8CF3AE8F23F5571D00FC0648 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */; };
 		8CF3AE9123F5571D00FC0648 /* SeachResultMultipleViewCOntroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCB23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift */; };
-		8CF3AE9223F5571D00FC0648 /* InputDataListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD423928F5C00FAFBC4 /* InputDataListViewController.swift */; };
+		8CF3AE9223F5571D00FC0648 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD423928F5C00FAFBC4 /* PostListViewController.swift */; };
 		8CF3AE9423F5571D00FC0648 /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD323928F5C00FAFBC4 /* SelectViewController.swift */; };
-		8CF3AE9523F5571D00FC0648 /* UserDataInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD623928F5C00FAFBC4 /* UserDataInputViewController.swift */; };
+		8CF3AE9523F5571D00FC0648 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD623928F5C00FAFBC4 /* PostViewController.swift */; };
 		8CF3AE9723F5571D00FC0648 /* Pager_LogIn_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD223928F5C00FAFBC4 /* Pager_LogIn_ViewController.swift */; };
 		8CF3AE9823F5571D00FC0648 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */; };
 		8CF3AE9923F5571D00FC0648 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD723928F5C00FAFBC4 /* InitialViewController.swift */; };
@@ -199,11 +199,11 @@
 		8C50ACD123928F5C00FAFBC4 /* TermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		8C50ACD223928F5C00FAFBC4 /* Pager_LogIn_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager_LogIn_ViewController.swift; sourceTree = "<group>"; };
 		8C50ACD323928F5C00FAFBC4 /* SelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectViewController.swift; sourceTree = "<group>"; };
-		8C50ACD423928F5C00FAFBC4 /* InputDataListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDataListViewController.swift; sourceTree = "<group>"; };
+		8C50ACD423928F5C00FAFBC4 /* PostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
 		8C50ACD523928F5C00FAFBC4 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		8C50ACD623928F5C00FAFBC4 /* UserDataInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataInputViewController.swift; sourceTree = "<group>"; };
+		8C50ACD623928F5C00FAFBC4 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		8C50ACD723928F5C00FAFBC4 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
-		8C50ACD823928F5C00FAFBC4 /* InputResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputResultViewController.swift; sourceTree = "<group>"; };
+		8C50ACD823928F5C00FAFBC4 /* PostResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostResultViewController.swift; sourceTree = "<group>"; };
 		8C50ACD923928F5C00FAFBC4 /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		8C50ACDA23928F5C00FAFBC4 /* SeachResultListViewCOntroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeachResultListViewCOntroller.swift; sourceTree = "<group>"; };
 		8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -347,9 +347,9 @@
 				8C50ACD523928F5C00FAFBC4 /* SignUpViewController.swift */,
 				8C50ACCC23928F5C00FAFBC4 /* LogInViewController.swift */,
 				8C50ACD323928F5C00FAFBC4 /* SelectViewController.swift */,
-				8C50ACD623928F5C00FAFBC4 /* UserDataInputViewController.swift */,
-				8C50ACD823928F5C00FAFBC4 /* InputResultViewController.swift */,
-				8C50ACD423928F5C00FAFBC4 /* InputDataListViewController.swift */,
+				8C50ACD623928F5C00FAFBC4 /* PostViewController.swift */,
+				8C50ACD823928F5C00FAFBC4 /* PostResultViewController.swift */,
+				8C50ACD423928F5C00FAFBC4 /* PostListViewController.swift */,
 				8C50ACD923928F5C00FAFBC4 /* EditViewController.swift */,
 				8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */,
 				8C8B06FD242597E8007F7494 /* MuchPopUpVC.swift */,
@@ -784,7 +784,7 @@
 				8C50ACEB23928F5C00FAFBC4 /* EditViewController.swift in Sources */,
 				8C50ACE323928F5C00FAFBC4 /* TermsViewController.swift in Sources */,
 				8C8B06FE242597E8007F7494 /* MuchPopUpVC.swift in Sources */,
-				8C50ACEA23928F5C00FAFBC4 /* InputResultViewController.swift in Sources */,
+				8C50ACEA23928F5C00FAFBC4 /* PostResultViewController.swift in Sources */,
 				8C4230342409F5CD00160A04 /* ScrollKeyBoard.swift in Sources */,
 				8C3FCD5E24D3A09300ADC76B /* PostResultModel.swift in Sources */,
 				8C50ACED23928F5C00FAFBC4 /* SearchViewController.swift in Sources */,
@@ -795,10 +795,10 @@
 				8C303D68243879F500F080AB /* AuthModel.swift in Sources */,
 				8C50ACDD23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift in Sources */,
 				8C8B070A2427566E007F7494 /* MatchData.swift in Sources */,
-				8C50ACE623928F5C00FAFBC4 /* InputDataListViewController.swift in Sources */,
+				8C50ACE623928F5C00FAFBC4 /* PostListViewController.swift in Sources */,
 				8C3E3132241CE743008A4DAF /* EditData.swift in Sources */,
 				8C50ACE523928F5C00FAFBC4 /* SelectViewController.swift in Sources */,
-				8C50ACE823928F5C00FAFBC4 /* UserDataInputViewController.swift in Sources */,
+				8C50ACE823928F5C00FAFBC4 /* PostViewController.swift in Sources */,
 				8C42304124110BFB00160A04 /* ImagePickerControllert.swift in Sources */,
 				8C303D6224334A5C00F080AB /* UserDataModel.swift in Sources */,
 				8C50ACE423928F5C00FAFBC4 /* Pager_LogIn_ViewController.swift in Sources */,
@@ -846,7 +846,7 @@
 				8CF3AE8923F5571D00FC0648 /* EditViewController.swift in Sources */,
 				8CF3AE8A23F5571D00FC0648 /* TermsViewController.swift in Sources */,
 				8CE1B4BF2442EBF6009D8698 /* Button.swift in Sources */,
-				8CF3AE8C23F5571D00FC0648 /* InputResultViewController.swift in Sources */,
+				8CF3AE8C23F5571D00FC0648 /* PostResultViewController.swift in Sources */,
 				8CE1B4B32442EBF6009D8698 /* View.swift in Sources */,
 				8C3FCD5F24D3A09300ADC76B /* PostResultModel.swift in Sources */,
 				8C8B06FF242597E8007F7494 /* MuchPopUpVC.swift in Sources */,
@@ -862,14 +862,14 @@
 				8CBD3E2F245067AB00DA7FCE /* ImagePickerControllert.swift in Sources */,
 				8C303D6324334A5C00F080AB /* UserDataModel.swift in Sources */,
 				8CF3AE9123F5571D00FC0648 /* SeachResultMultipleViewCOntroller.swift in Sources */,
-				8CF3AE9223F5571D00FC0648 /* InputDataListViewController.swift in Sources */,
+				8CF3AE9223F5571D00FC0648 /* PostListViewController.swift in Sources */,
 				8C303D69243879F500F080AB /* AuthModel.swift in Sources */,
 				8C43514124D537B10035FDC4 /* PostListViewModel.swift in Sources */,
 				8CF3AE9423F5571D00FC0648 /* SelectViewController.swift in Sources */,
 				8C303D722439CAFD00F080AB /* AuthView.swift in Sources */,
 				8C420CF72452B19800769F01 /* Extention.swift in Sources */,
 				8C43514424D59D260035FDC4 /* ReadUserDefault.swift in Sources */,
-				8CF3AE9523F5571D00FC0648 /* UserDataInputViewController.swift in Sources */,
+				8CF3AE9523F5571D00FC0648 /* PostViewController.swift in Sources */,
 				8CF3AE9723F5571D00FC0648 /* Pager_LogIn_ViewController.swift in Sources */,
 				8CF3AE9823F5571D00FC0648 /* SettingsViewController.swift in Sources */,
 				8C265FDA24403A6F00E21AFF /* EditData.swift in Sources */,

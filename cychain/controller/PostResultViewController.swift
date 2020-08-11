@@ -4,7 +4,7 @@ import RxCocoa
 import RxDataSources
 import GoogleMobileAds
 
-class InputResultViewController: UIViewController {
+class PostResultViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -94,7 +94,7 @@ class InputResultViewController: UIViewController {
 
 
 
-extension InputResultViewController: UITableViewDelegate {
+extension PostResultViewController: UITableViewDelegate {
     
     func  tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()

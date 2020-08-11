@@ -57,8 +57,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //マッチポップで[結果を見る]を押したら結果へ
-        //[×]を押したらポップアップのdismissのみ
+        //マッチング後のポップアップで
+        //[結果を見る]押下は結果VCへ
+        //[×]押下はdismiss
         guard let presented = self.presentedViewController else { return }
         if type(of: presented) == MuchPopUpVC.self {
             

@@ -109,7 +109,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate,UITex
         
 //        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
 //        userDataModel.setFirebase()//firebase更新
-        pushVC(vc: R.storyboard.main.inputResultVC()!, animation: true)
+        pushVC(vc: R.storyboard.main.PostResultViewController()!, animation: true)
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
