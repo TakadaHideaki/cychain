@@ -35,27 +35,36 @@ class setUserDefault {
         }
     }
     
-    func read() -> [[String: String]] {
-        if let value = UD.array(forKey: key) as? [[String: String]] {
-            return value
-        }
-        return []
-    }
+  
     
- /*   func read() -> Observable<[[String: String]]> {
-      return Observable.create { [unowned self] observer in
-          var ud = [[String:String]]()
-          UD.rx.observe([[String:String]].self, self.key)
-              .subscribe(onNext: {
-                  if let value = $0 {
-                      ud = value
-                  }
-              })
-              .disposed(by: self.disposeBag)
-          observer.onNext(ud)
-          return Disposables.create()
+    func readUserdefault(indexPath: IndexPath) -> [String: String] {
+           if let value = UD.array(forKey: key) as? [[String: String]] {
+            return value[indexPath.row]
+           }
+        return [:]
+       }
+    
+//    func readUserdefault(indexPath: IndexPath) -> Observable<[String: String]> {
+//      return Observable.create { [unowned self] observer in
+//          var ud = [String:String]()
+//          UD.rx.observe([[String:String]].self, self.key)
+//              .subscribe(onNext: {
+//                  if let value = $0 {
+//                    ud = value[indexPath.row]
+//                  }
+//              })
+//              .disposed(by: self.disposeBag)
+//          observer.onNext(ud)
+//          return Disposables.create()
+//      }
+//  }
+    
+    func read() -> [[String: String]] {
+          if let value = UD.array(forKey: key) as? [[String: String]] {
+              return value
+          }
+          return []
       }
-  }*/
     
     func reset(indexPath: IndexPath) -> Observable<[[String: String]]> {
         return Observable.create { [unowned self] observer in

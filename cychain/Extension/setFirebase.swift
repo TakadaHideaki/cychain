@@ -26,13 +26,13 @@ class setFirebase {
             
             switch datas.icon {
             case R.image.user12():
-    //            datas.ref.setValue(["message": data.message])
+                datas.ref.setValue(["message": data.message])
                 observer.onNext(data)
                 return Disposables.create()
             default:
-    //            setIconStorage(icon: datas.icon, ref: datas.storageRef, complete: { imageURL in
-    //                datas.ref.setValue(["message": data.message as Any, "image": imageURL])
-    //            })
+                setIconStorage(icon: datas.icon, ref: datas.storageRef, complete: { imageURL in
+                    datas.ref.setValue(["message": data.message as Any, "image": imageURL])
+                })
                 observer.onNext(data)
                 return Disposables.create()
             
@@ -42,21 +42,21 @@ class setFirebase {
     
        func delete(data: [[String: String]]) -> Observable<Void> {
             return Observable.create { observer in
-    //            data[0].forEach {
-    //                let datas = FirebaseObj(my: $0.key, target: $0.value, icon: R.image.user10()!)
-    //                datas.ref.removeValue()
-    //                datas.storageRef.delete { error in
-    //                    if let error = error {
-    //                        let nsError = error as NSError
-    //                        if nsError.domain == StorageErrorDomain &&
-    //                            nsError.code == StorageErrorCode.objectNotFound.rawValue {
-    //                            log.debug("Storage Nofile")
-    //                        }
-    //                    } else {
-    //                        log.debug("Storege Delete Success")
-    //                    }
-    //                }
-    //            }
+                data[0].forEach {
+                    let datas = FirebaseObj(my: $0.key, target: $0.value, icon: R.image.user10()!)
+                    datas.ref.removeValue()
+                    datas.storageRef.delete { error in
+                        if let error = error {
+                            let nsError = error as NSError
+                            if nsError.domain == StorageErrorDomain &&
+                                nsError.code == StorageErrorCode.objectNotFound.rawValue {
+                                log.debug("Storage Nofile")
+                            }
+                        } else {
+                            log.debug("Storege Delete Success")
+                        }
+                    }
+                }
                 observer.onNext(())
                 return Disposables.create()
             }

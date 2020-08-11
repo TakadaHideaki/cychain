@@ -35,7 +35,7 @@ class PostViewController: UIViewController, ScrollKeyBoard {
         delegateSet()
         initializeUI()
         bind()
-        //        UD.removeObject(forKey: Name.KeyName.uniqueNmame.rawValue)
+//                UD.removeObject(forKey: Name.KeyName.uniqueNmame.rawValue)
     }
     
     func delegateSet() {

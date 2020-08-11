@@ -39,20 +39,13 @@ extension PostListViewModel: ViewModelType {
 
         
         //Cell押下で該当の名前(ペア)を取得
-        var selectedPairNames: Observable<[String:String]>? { input.onSelectedCell
-            .withLatestFrom(cellObj) { indexPath, _  in
-                var names: [String: String]?
-                UD.rx.observe([[String: String]].self, self.key)
-                    .subscribe(onNext: {
-                        if let value = $0 {
-                            names = value[indexPath.row]
-                        }
-                    })
-                    .disposed(by: self.disposeBag)
-                return names!
+        var selectedPairNames: Observable<[String:String]>? {
+            input.onSelectedCell
+                .withLatestFrom(cellObj) { indexPath, _  in
+                    return self.userdefault.readUserdefault(indexPath:indexPath)
             }
         }
- 
+            
         //Cell削除→ 表示用Cellデータから該当データ(名前)を削除
         let resetpostList = { (udData : [[String: String]]) -> Observable<[[String: String]]> in
             //            postList = Observable.just([PostListSectionModel(items: udData)])
