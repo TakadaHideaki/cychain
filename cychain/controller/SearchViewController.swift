@@ -1,13 +1,16 @@
 import UIKit
 import Firebase
-import FirebaseUI
+import RxSwift
+import RxCocoa
 import AudioToolbox
 import NVActivityIndicatorView
 import GoogleMobileAds
 import Lottie
 
 
-class SearchViewController: UIViewController, UITextFieldDelegate {
+//class SearchViewController: UIViewController, UITextFieldDelegate {
+class SearchViewController: UIViewController {
+
     
     
     @IBOutlet var myNameTextField: UITextField!
@@ -18,22 +21,26 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var popButton: UIButton!
     
+    private let viewModel = SearchViewModel()
+    private let disposeBag = DisposeBag()
     
     //mutchiUserData == [UID: [message:メッセージ、image:写真]]
-    lazy var mutchiUserData = [String: [String: Any]]()
+//    lazy var mutchiUserData = [String: [String: Any]]()
     var muchPopUpVC: MuchPopUpVC?
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initialazeUI()
+        bind()
+
 
     }
     
     func initialazeUI() {
-        myNameTextField.delegate = self
-        searchNameTextField.delegate = self
+//        myNameTextField.delegate = self
+//        searchNameTextField.delegate = self
         indicator()
-        labelHidden()
+        //tapSearchButton()
         customNavigationBar()
         muchPopUpVC = R.storyboard.main.muchPopUpVC()
     }
@@ -42,38 +49,116 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         myNameTextField.text = ""
         searchNameTextField.text = ""
-        labelHidden()
+        //        labelHidden()
     }
     
     
-    override func viewWillLayoutSubviews() {
-        _ = self.initViewLayout
-    }
-    lazy var initViewLayout : Void = {
-        admob()
-    }()
+    /*
+     
+     override func viewWillLayoutSubviews() {
+     _ = self.initViewLayout
+     }
+     lazy var initViewLayout : Void = {
+     admob()
+     }()
+     
+     
+     override func viewWillAppear(_ animated: Bool) {
+     super.viewWillAppear(animated)
+     
+     //マッチング後のポップアップで
+     //[結果を見る]押下は結果VCへ
+     //[×]押下はdismiss
+     guard let presented = self.presentedViewController else { return }
+     if type(of: presented) == MuchPopUpVC.self {
+     
+     switch muchPopUpVC?.numberOfMatching {
+     case .oneMatch: pushVC(vc: R.storyboard.main.seachResultVC()!, animation: false)
+     case .multipleMatch: pushVC(vc: R.storyboard.main.seachResultListVC()!, animation: false)
+     case .dissmiss: break
+     case .none: break
+     }
+     }
+     }*/
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    
+    
+    
+    
+    
+    private func bind() {
+        let input = SearchViewModel.Input(
+            userName: myNameTextField.rx.text.orEmpty.map{ $0.deleteSpace() },
+            searchName: searchNameTextField.rx.text.orEmpty.map{ $0.deleteSpace() },
+            searchButtonTapped: searchButton.rx.tap.asObservable()
+        )
         
-        //マッチング後のポップアップで
-        //[結果を見る]押下は結果VCへ
-        //[×]押下はdismiss
-        guard let presented = self.presentedViewController else { return }
-        if type(of: presented) == MuchPopUpVC.self {
-            
-            switch muchPopUpVC?.numberOfMatching {
-            case .oneMatch: pushVC(vc: R.storyboard.main.seachResultVC()!, animation: false)
-            case .multipleMatch: pushVC(vc: R.storyboard.main.seachResultListVC()!, animation: false)
-            case .dissmiss: break
-            case .none: break
-            }
-        }
-    }
+        let output = viewModel.transform(input: input)
+        //SearchButtonEnabled
+        output.ButtonEnabled.drive(self.searchButton.rx.isEnabled).disposed(by: disposeBag)
+        //マッチしなかったらマッチ無しラベル表示
+        output.noMatch.drive(noPostLabel.rx.isHidden).disposed(by: disposeBag)
+        output.noMatch.drive(popButton.rx.isHidden).disposed(by: disposeBag)
+        
+        output.noMatch.asObservable().subscribe(onNext: { _ in
+            log.debug("a")
+            self.animationView.isHidden = true })
+            .disposed(by: disposeBag)
+        
+        
+        let hiddenLabel = output.match
+            .map{_ in true }
+            .startWith(true)
+            .asDriver(onErrorDriveWith: Driver.empty())
+        
+        hiddenLabel.drive(noPostLabel.rx.isHidden).disposed(by: disposeBag)
+        hiddenLabel.drive(popButton.rx.isHidden).disposed(by: disposeBag)
+        
+        output.match.skip(1).subscribe(onNext: { [weak self] _ in
+            self?.mutchAction()
+        })
+        .disposed(by: disposeBag)
 
+        output.nextVC.subscribe().disposed(by: disposeBag)
+
+        
+        
+        
+    }
+ 
     
-    @IBAction func searchAction(_ sender: Any) {
+    func mutchAction() {
+        animationView.isHidden = false
+        startAnimateion()
+        AudioServicesPlaySystemSound(1003)
+        AudioServicesDisposeSystemSoundID(1003)
+    }
+    
+    func startAnimateion() {
+        self.animationView.play()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                   if let muchPopUpVC = self.muchPopUpVC {
+                       self.present(muchPopUpVC, animated: false)
+                   }
+               }
+    }
+}
+ 
+
+
+        
+    /*
+
+ func tapSearchButton() {
+     self.searchButton.addTarget(self, action: #selector(tapButton(_ :)), for: .touchDown)
+ }
+     @objc func tapButton(_ sender: UIButton) {
+        searchButtonTapped()
+}
+}
+　//func searchButtonTapped() {
+    
         
         let myName = myNameTextField.text?.deleteSpace() ?? ""
         let searchName = searchNameTextField.text?.deleteSpace() ?? ""
@@ -118,6 +203,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             })
         }
     }
+ 
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -167,3 +253,4 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
 
 }
+*/

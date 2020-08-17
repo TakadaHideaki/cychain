@@ -56,7 +56,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         GADMobileAds.sharedInstance().start()
         
-        UD.register(defaults: [Name.KeyName.flag.rawValue: true])
+//        let domain = Bundle.main.bundleIdentifier!
+//              UD.removePersistentDomain(forName: domain)
+        
+  
+        UD.register(defaults: [Name.KeyName.uniqueNmame.rawValue: [[:]],
+                               Name.KeyName.block.rawValue: "",
+                               Name.KeyName.flag.rawValue: true]
+        )
         
         return true
     }

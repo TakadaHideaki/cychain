@@ -1,4 +1,6 @@
 import UIKit
+import RxSwift
+import RxCocoa
 import RxDataSources
 import Firebase
 
@@ -13,6 +15,38 @@ extension PostListSectionModel: SectionModelType {
         self = original
         self.items = items
     }
+}
+
+class PostListModel {
+    
+//    func observeUserDefault(complete: @escaping ( [PostListSectionModel]) -> ()) {
+//        UD.rx.observe([[String: String]].self, Name.KeyName.uniqueNmame.rawValue)
+//            .subscribe(onNext: {
+//                if let value = $0 {
+//                    complete([PostListSectionModel(items: value)])
+//                }
+//            })
+//            .disposed(by: DisposeBag())
+//    }
+    
+//    var observeUserDefaul =
+//    UD.array(forKey: Name.KeyName.uniqueNmame.rawValue) as? [[String:String]]
+                
+            //        cellObj.accept([PostListSectionModel(items: model.observeUserDefaul! )])
+
+    
+//    func observeUserDefault(complete: @escaping ( [[String:String]]) -> ()) {
+//           UD.rx.observe([[String: String]].self, Name.KeyName.uniqueNmame.rawValue)
+//               .subscribe(onNext: {
+//                   if let value = $0 {
+//                       complete(value)
+//                   }
+//               })
+//               .disposed(by: DisposeBag())
+//       }
+    
+    
+    
 }
 
 

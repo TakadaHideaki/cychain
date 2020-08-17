@@ -5,6 +5,7 @@ import FirebaseDatabase
 import RSKImageCropper
 
 class EditViewController: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIScrollViewDelegate, ScrollKeyBoard {
+
     
     
     @IBOutlet weak var myNameTextField: UITextField!

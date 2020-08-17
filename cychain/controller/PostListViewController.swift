@@ -13,7 +13,7 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
     
     private var dataSource: RxTableViewSectionedReloadDataSource<PostListSectionModel>!
     private let disposeBag = DisposeBag()
-    private let userDefaultClass = setUserDefault()
+    private let userDefaultClass = SetUserDefault()
     var indicatorView = UIActivityIndicatorView()
     var viewmodel = PostListViewModel()
     
@@ -91,11 +91,8 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
             .disposed(by: disposeBag)
         
         //Cell削除
-        output.deleteCompleted
-            .subscribe(onNext: {
-                log.debug("deleteCompleted")
-            })
-            .disposed(by: disposeBag)
+        output.deleteCompleted.subscribe().disposed(by: disposeBag)
+
     }
     
 }

@@ -5,8 +5,6 @@ import TextFieldEffects
 import RSKImageCropper
 
 class PostViewController: UIViewController, ScrollKeyBoard {
-
-    
     
     @IBOutlet weak var myNameTextField: UITextField!
     @IBOutlet weak var targetNameTextField: UITextField!
@@ -35,7 +33,6 @@ class PostViewController: UIViewController, ScrollKeyBoard {
         delegateSet()
         initializeUI()
         bind()
-//                UD.removeObject(forKey: Name.KeyName.uniqueNmame.rawValue)
     }
     
     func delegateSet() {
@@ -51,7 +48,6 @@ class PostViewController: UIViewController, ScrollKeyBoard {
         customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIcon, for: .normal)
     }
-    
     
     private func bind() {
         let input = PostViewModel.Input(
@@ -69,12 +65,13 @@ class PostViewController: UIViewController, ScrollKeyBoard {
         
         //アイコンボタンタップ（フォトライブラリへ遷移）
         output.onIcButtonClickEvent
-            .subscribe(onNext: { self.iconSet.iconButtonTapped()})
+            .subscribe(onNext: { [weak self]  in
+                self?.iconSet.iconButtonTapped()})
             .disposed(by: disposeBag)
         
         //viewModelから選択画像を受け取りCropVCへ渡す
         output.selectedImage
-            .subscribe(onNext: { self.imageCrop.RSKImageCropVC(image: $0)})
+            .subscribe(onNext: { [weak self]  value in self?.imageCrop.RSKImageCropVC(image: value)})
             .disposed(by: disposeBag)
         
         //ViewModelから切り抜き画像のEventを受け取り、アイコンボタンにセット
@@ -85,31 +82,35 @@ class PostViewController: UIViewController, ScrollKeyBoard {
         
         //textField.Text >14 or 0 _Alert
         output.characterCountOverrun
-            .subscribe(onNext: { self.charactorErrorAlert()})
+            .subscribe(onNext: { [weak self]  in
+                self?.charactorErrorAlert()})
             .disposed(by: disposeBag)
         
         //投稿数>10_Alert
         output.postsCountOver
             .filter{ !$0 }
             .map { _ in () }
-            .subscribe(onNext: { self.RegistationOverAlert(vc: R.storyboard.main.list()!)})
+            .subscribe(onNext: { [weak self]  in
+                self?.RegistationOverAlert(vc: R.storyboard.main.list()!)})
+            .disposed(by: disposeBag)
+        
+        //messageTextViewのLabelの表示/非表示
+        output.messageLabelEnable
+            .drive( self.messageLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
         //messageTextView_Tapp
-        output.messageTapp
-            .subscribe(onNext: {
-                log.debug("messageTapp")
-//                self.configureObserver() //
-//                self.messageLabel.isHidden = true
-            }
-        )
-            .disposed(by: disposeBag)
+     /*   output.messageTapp
+              .subscribe(onNext: { [weak self]  in
+                  self?.configureObserver()
+              })
+                .disposed(by: disposeBag)*/
 
         //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
         output.nextVC
             .subscribe(onNext: {
                 self.messageTextView.resignFirstResponder()
-                self.configureObserver()
+//                self.configureObserver()
 
                 let sb = R.storyboard.main()
                 let vc = sb.instantiateViewController(withIdentifier: "PostResultViewController") as? PostResultViewController
@@ -166,7 +167,6 @@ extension PostViewController: UITextViewDelegate {
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         configureObserver()
-        self.messageLabel.isHidden = true
         return  true
     }
     
@@ -186,6 +186,7 @@ extension PostViewController: UITextViewDelegate {
     
     
 }
+
 
     
 

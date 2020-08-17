@@ -2,5 +2,4 @@ Pods/*
 abcd.xcworkspace/xcuserdata
 abcd.xcworkspace
 GoogleService-Info-Product/
-abcd-Bridging-Header.h
 *.generated.swift

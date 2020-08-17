@@ -7,7 +7,6 @@ protocol ScrollKeyBoard {
 
 extension ScrollKeyBoard where Self: UIViewController {
     
-    
     func configureObserver() {
         log.debug("configureObserver")
 
