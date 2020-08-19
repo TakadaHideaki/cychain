@@ -3048,9 +3048,6 @@ Cg
                                         <state key="normal" title="×">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
-                                        <connections>
-                                            <action selector="dismissButton:" destination="Xwd-lX-xSG" eventType="touchUpInside" id="CjH-Ra-wC0"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3108,9 +3105,6 @@ Cg
                                         <point key="value" x="0.0" y="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="nextView:" destination="Xwd-lX-xSG" eventType="touchUpInside" id="Swx-X4-aMp"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3150,6 +3144,8 @@ Cg
                     <connections>
                         <outlet property="animationView" destination="Igd-Wm-PtU" id="P2K-dq-Bkl"/>
                         <outlet property="contentView" destination="EgM-fx-5XH" id="Yer-Bk-AL7"/>
+                        <outlet property="dismissButton" destination="ZNG-Ym-7oH" id="rzL-Lf-yJ7"/>
+                        <outlet property="nextViewButton" destination="IrQ-zt-aL7" id="99b-N8-s1d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pjm-8W-WB3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

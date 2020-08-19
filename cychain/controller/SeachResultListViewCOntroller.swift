@@ -8,6 +8,9 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     var value = [[String:Any]]()
     var mutchingUserData: [String: [String: Any]]?
     var matchDataModel: MatchData?
+}
+
+/*
 
     
     @IBOutlet weak var tableView: UITableView!
@@ -91,3 +94,4 @@ extension SeachResultListViewCOntroller: UITableViewDelegate {
     }
 }
 
+*/

@@ -1,8 +1,7 @@
-import UIKit
+import Foundation
 import RxSwift
 import RxCocoa
 import RxDataSources
-import Firebase
 
 struct PostListSectionModel {
     var items: [Item]

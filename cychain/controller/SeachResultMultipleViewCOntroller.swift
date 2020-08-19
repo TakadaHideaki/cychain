@@ -10,6 +10,8 @@ class SeachResultMultipleViewCOntroller: SeachResultViewCotroller {
     var value: [String:Any]?
     var nameArray: [String]?
     var account: String?
+}
+/*
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,3 +134,5 @@ extension SeachResultMultipleViewCOntroller {
     
     
 }
+ 
+ */

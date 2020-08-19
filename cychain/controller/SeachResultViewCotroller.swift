@@ -13,8 +13,11 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
     var report: UIAlertAction?
     var block: UIAlertAction?
     var indicator = UIActivityIndicatorView()
-    
 
+}
+    
+    
+    /*
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
@@ -212,3 +215,4 @@ extension SeachResultViewCotroller {
 
     
 
+*/

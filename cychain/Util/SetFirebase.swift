@@ -98,7 +98,7 @@ class SetFirebase {
      
      }*/
     
-    func observe(value: SerachWord) {
+    func observe(value: SearchWord) {
         
         let obj = FirebaseObj.init(my: value.userName,
                                    target: value.searchName,

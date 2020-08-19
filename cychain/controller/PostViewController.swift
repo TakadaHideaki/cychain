@@ -71,7 +71,8 @@ class PostViewController: UIViewController, ScrollKeyBoard {
         
         //viewModelから選択画像を受け取りCropVCへ渡す
         output.selectedImage
-            .subscribe(onNext: { [weak self]  value in self?.imageCrop.RSKImageCropVC(image: value)})
+            .subscribe(onNext: { [weak self]  value in
+                self?.imageCrop.RSKImageCropVC(image: value)})
             .disposed(by: disposeBag)
         
         //ViewModelから切り抜き画像のEventを受け取り、アイコンボタンにセット
@@ -115,7 +116,6 @@ class PostViewController: UIViewController, ScrollKeyBoard {
                 let sb = R.storyboard.main()
                 let vc = sb.instantiateViewController(withIdentifier: "PostResultViewController") as? PostResultViewController
                 vc?.posedtData = $0
-                log.debug($0)
                 self.navigationController?.pushViewController(vc!, animated: true)
                 /*   let newVC = InputResultViewController.returnVC(data: value)
                  self.navigationController?.pushViewController(newVC, animated: true)*/

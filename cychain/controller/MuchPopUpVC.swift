@@ -1,4 +1,6 @@
 import UIKit
+import RxSwift
+import RxCocoa
 import Lottie
 
 class MuchPopUpVC: UIViewController {
@@ -7,14 +9,13 @@ class MuchPopUpVC: UIViewController {
     
     @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var contentView: contentView!
+    @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var nextViewButton: Button!
     
-    var numberOfMatching: match?
-
-    enum match {
-        case oneMatch
-        case multipleMatch
-        case dissmiss
-    }
+    private let viewModel = MatchPopupViewModel()
+    private let disposeBag = DisposeBag()
+    
+    var matchCount: Int?
     
     override func viewWillAppear(_ animated: Bool) {
          super.viewWillAppear(animated)
@@ -22,27 +23,58 @@ class MuchPopUpVC: UIViewController {
         animationView.play()
     }
     
-     override func viewDidDisappear(_ animated: Bool) {
-           super.viewDidDisappear(animated)
-        animationView.stop()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bind()
     }
-
     
-    @IBAction func dismissButton(_ sender: Any) {
-        numberOfMatching = .dissmiss
-        self.dismiss(animated: true, completion: nil)
-    }
+    override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(animated)
+         animationView.stop()
+     }
+    
+    private func bind() {
+        
+        let input = MatchPopupViewModel
+            .Input(nextViewButtonTapped: nextViewButton.rx.tap.asObservable(),
+                   dismissButtonTapped: dismissButton.rx.tap.asObservable())
 
-    @IBAction func nextView(_ sender: Any) {
+        let output = viewModel.transform(input: input)
         
-        let matchData = MatchData.shared
+        //バツボタンタップ
+        output.nextVC.subscribe(onNext: {
+            self.dismiss(animated: false, completion: nil)
+        })
+            .disposed(by: disposeBag)
+          //マッチボタンタップ
+        output.dismiss.subscribe(onNext: {
+            self.matchCount = 0
+            self.dismiss(animated: false, completion: nil)
+        })
+            .disposed(by: disposeBag)
         
-        if matchData.muchData?.count == 1{
-            numberOfMatching = .oneMatch
-        } else {
-            numberOfMatching = .multipleMatch
-        }
-        self.dismiss(animated: true, completion: nil)
     }
+    
+  
+    
+    
+
+//
+//    @IBAction func dismissButton(_ sender: Any) {
+//        numberOfMatching = .dissmiss
+//        self.dismiss(animated: true, completion: nil)
+//    }
+//
+//    @IBAction func nextView(_ sender: Any) {
+//
+//        let matchData = MatchData.shared
+//
+//        if matchData.muchData?.count == 1{
+//            numberOfMatching = .oneMatch
+//        } else {
+//            numberOfMatching = .multipleMatch
+//        }
+//        self.dismiss(animated: true, completion: nil)
+//    }
     
 }

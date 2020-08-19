@@ -51,6 +51,10 @@
 		8C48B7A624E4D249000346AB /* SetFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C48B7A224E4D249000346AB /* SetFirebase.swift */; };
 		8C4B052924E2688600FA724F /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B052824E2688600FA724F /* SearchViewModel.swift */; };
 		8C4B052A24E2688600FA724F /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B052824E2688600FA724F /* SearchViewModel.swift */; };
+		8C4CF5AF24EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */; };
+		8C4CF5B024EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */; };
+		8C4CF5B224ECA30E002C8173 /* MatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B124ECA30E002C8173 /* MatchModel.swift */; };
+		8C4CF5B324ECA30E002C8173 /* MatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B124ECA30E002C8173 /* MatchModel.swift */; };
 		8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */; };
 		8C50ACC7239289AC00FAFBC4 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBF239289AC00FAFBC4 /* NameCell.swift */; };
 		8C50ACDC23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */; };
@@ -190,6 +194,8 @@
 		8C48B7A124E4D249000346AB /* SetUserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUserDefault.swift; sourceTree = "<group>"; };
 		8C48B7A224E4D249000346AB /* SetFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetFirebase.swift; sourceTree = "<group>"; };
 		8C4B052824E2688600FA724F /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchPopupViewModel.swift; sourceTree = "<group>"; };
+		8C4CF5B124ECA30E002C8173 /* MatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchModel.swift; sourceTree = "<group>"; };
 		8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inputDataListCell.swift; sourceTree = "<group>"; };
 		8C50ACBF239289AC00FAFBC4 /* NameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameCell.swift; sourceTree = "<group>"; };
 		8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager_SignUp_ViewController.swift; sourceTree = "<group>"; };
@@ -302,6 +308,7 @@
 				8C3FCD5D24D3A09300ADC76B /* PostResultModel.swift */,
 				8C420CFE24540EB000769F01 /* PostListModel.swift */,
 				8C8B07092427566D007F7494 /* MatchData.swift */,
+				8C4CF5B124ECA30E002C8173 /* MatchModel.swift */,
 				8C420D04245E2A2500769F01 /* SettingModel.swift */,
 				8C3E3131241CE743008A4DAF /* EditData.swift */,
 				8C4230332409F5CD00160A04 /* ScrollKeyBoard.swift */,
@@ -438,6 +445,7 @@
 				8CEA6A1524AB421100A1B283 /* PostResultViewModel.swift */,
 				8C43513F24D537B10035FDC4 /* PostListViewModel.swift */,
 				8C4B052824E2688600FA724F /* SearchViewModel.swift */,
+				8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */,
 				8C43513C24D5365B0035FDC4 /* ViewModelType.swift */,
 			);
 			path = ViewModel;
@@ -783,6 +791,7 @@
 				8CE1B4C22443A2AB009D8698 /* ProfileCell.swift in Sources */,
 				8CE1B4B62442EBF6009D8698 /* ShadowButton.swift in Sources */,
 				8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */,
+				8C4CF5B224ECA30E002C8173 /* MatchModel.swift in Sources */,
 				8CEA6A13247A9DDC00A1B283 /* PostViewModel.swift in Sources */,
 				8CE1B4BE2442EBF6009D8698 /* Button.swift in Sources */,
 				8C7B1EBE21D925BC00AFE846 /* AppDelegate.swift in Sources */,
@@ -798,6 +807,7 @@
 				8C3FCD5E24D3A09300ADC76B /* PostResultModel.swift in Sources */,
 				8C50ACED23928F5C00FAFBC4 /* SearchViewController.swift in Sources */,
 				8CEA6A1624AB421100A1B283 /* PostResultViewModel.swift in Sources */,
+				8C4CF5AF24EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */,
 				8C420D05245E2A2500769F01 /* SettingModel.swift in Sources */,
 				8C50ACE023928F5C00FAFBC4 /* PolicyViewController.swift in Sources */,
 				8C303D68243879F500F080AB /* AuthModel.swift in Sources */,
@@ -845,6 +855,7 @@
 				8C420D0024540EB000769F01 /* PostListModel.swift in Sources */,
 				8C42303F240FB98600160A04 /* UDKey.swift in Sources */,
 				8CF3AE8523F5571D00FC0648 /* inputDataListCell.swift in Sources */,
+				8C4CF5B324ECA30E002C8173 /* MatchModel.swift in Sources */,
 				8CEA6A14247A9DDC00A1B283 /* PostViewModel.swift in Sources */,
 				8CF3AE8723F5571D00FC0648 /* AppDelegate.swift in Sources */,
 				8CE1B4B92442EBF6009D8698 /* textField.swift in Sources */,
@@ -860,6 +871,7 @@
 				8C3FCD5F24D3A09300ADC76B /* PostResultModel.swift in Sources */,
 				8C8B06FF242597E8007F7494 /* MuchPopUpVC.swift in Sources */,
 				8CEA6A1724AB421100A1B283 /* PostResultViewModel.swift in Sources */,
+				8C4CF5B024EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */,
 				8CE1B4B72442EBF6009D8698 /* ShadowButton.swift in Sources */,
 				8C420D06245E2A2500769F01 /* SettingModel.swift in Sources */,
 				8CE1B4BB2442EBF6009D8698 /* textView.swift in Sources */,
