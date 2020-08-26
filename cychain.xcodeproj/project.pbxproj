@@ -55,6 +55,8 @@
 		8C4CF5B024EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */; };
 		8C4CF5B224ECA30E002C8173 /* MatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B124ECA30E002C8173 /* MatchModel.swift */; };
 		8C4CF5B324ECA30E002C8173 /* MatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B124ECA30E002C8173 /* MatchModel.swift */; };
+		8C4CF5B824EE21B1002C8173 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */; };
+		8C4CF5B924EE21B1002C8173 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */; };
 		8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */; };
 		8C50ACC7239289AC00FAFBC4 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBF239289AC00FAFBC4 /* NameCell.swift */; };
 		8C50ACDC23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */; };
@@ -196,6 +198,7 @@
 		8C4B052824E2688600FA724F /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchPopupViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5B124ECA30E002C8173 /* MatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchModel.swift; sourceTree = "<group>"; };
+		8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inputDataListCell.swift; sourceTree = "<group>"; };
 		8C50ACBF239289AC00FAFBC4 /* NameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameCell.swift; sourceTree = "<group>"; };
 		8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager_SignUp_ViewController.swift; sourceTree = "<group>"; };
@@ -446,6 +449,7 @@
 				8C43513F24D537B10035FDC4 /* PostListViewModel.swift */,
 				8C4B052824E2688600FA724F /* SearchViewModel.swift */,
 				8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */,
+				8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */,
 				8C43513C24D5365B0035FDC4 /* ViewModelType.swift */,
 			);
 			path = ViewModel;
@@ -797,6 +801,7 @@
 				8C7B1EBE21D925BC00AFE846 /* AppDelegate.swift in Sources */,
 				8CE1B4BA2442EBF6009D8698 /* textView.swift in Sources */,
 				8C48B7A524E4D249000346AB /* SetFirebase.swift in Sources */,
+				8C4CF5B824EE21B1002C8173 /* SearchResultViewController.swift in Sources */,
 				8C420CF92452B27F00769F01 /* String.swift in Sources */,
 				8C50ACC7239289AC00FAFBC4 /* NameCell.swift in Sources */,
 				8C50ACEB23928F5C00FAFBC4 /* EditViewController.swift in Sources */,
@@ -861,6 +866,7 @@
 				8CE1B4B92442EBF6009D8698 /* textField.swift in Sources */,
 				8CE1B4BD2442EBF6009D8698 /* contentView.swift in Sources */,
 				8C48B7A624E4D249000346AB /* SetFirebase.swift in Sources */,
+				8C4CF5B924EE21B1002C8173 /* SearchResultViewController.swift in Sources */,
 				8C420CFA2452B27F00769F01 /* String.swift in Sources */,
 				8CF3AE8823F5571D00FC0648 /* NameCell.swift in Sources */,
 				8CF3AE8923F5571D00FC0648 /* EditViewController.swift in Sources */,

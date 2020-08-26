@@ -3,41 +3,68 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-struct MatchModel {
-    let userNmae: String
-    let searchName: String
-    let matchUserID: [String]
-    let values: [[String: Any]]
-
+class MatchModel {
     
-     init(data: MatchData) {
-        self.userNmae = data.searchWord.userName
-        self.searchName = data.searchWord.searchName
-        self.matchUserID = data.data.map{$0.key}
-        self.values = data.data.map{$0.1}
-//        values.forEach {
-//            if let mess = $0["message"] as? String {
-//                self.message = mess
-//            }
-//        }
-            
-            
-            
+    static let shared = MatchModel()
+    private init() {}
+    
+    var singleMatch: [String: [String: Any]]?
+    var reportData: Observable<[String: String]>?
+    var blockID: Observable<String>?
+    
+    
+    func setData(data: MatchData) {
+        
+        let user = data.searchWord.userName
+        let search = data.searchWord.searchName
+        let id = data.data.map{$0.0}[0]
+        let msg = data.data.map{$0.1}[0]["message"]as? String ?? ""
+        let icon = R.image.user12()!
+        
+        if let stringImage = data.data.map({$0.1})[0]["image"] as? String {
+            log.debug(stringImage)
+            convertURLtoUIImage(stringImage: stringImage, { complete in
+                self.singleMatch = [id:["user": user, "search": search, "msg": msg, "image": complete]]
+            })
+        } else {
+            self.singleMatch = [id:["user": user, "search": search, "msg": msg, "image": icon]]
+        }
+        
+//        self.singleMatch = [id:["user": user, "search": search, "msg": msg, "image": icon]]
+        self.reportData = Observable.just(["user": user, "search": search, "msg": msg])
+        self.blockID = Observable.just(id)
+    }
+    
+    func convertURLtoUIImage(stringImage: String, _ complete: @escaping (UIImage) -> ()) {
+        
+        let url = URL(string: stringImage) //let url = urlString.flatMap(URL.init)でも可
+        DispatchQueue.global().async {
+            do {
+                let imageData = try Data(contentsOf: url!)
+                DispatchQueue.main.async {
+                    complete(UIImage(data:imageData as Data)!)
+                }
+            } catch {
+                return
+            }
         }
     }
     
-    
-
-
+    func registBlockID(blockID: String) {
+        var block = UD.array(forKey: Name.KeyName.block.rawValue) ?? []
+        block += [blockID]
+        UD.set(block, forKey: Name.KeyName.block.rawValue)
+    }
+}
 
 struct MatchSectionModel {
-    var matchNames: [String: String]
+    var sectionTitle: String
     var items: [Item]
 }
 
 extension MatchSectionModel: SectionModelType {
     
-    typealias Item = [String:[String: String]]
+    typealias Item = [String:[String: Any]]
     
     init(original: MatchSectionModel, items: [Item] ) {
         self = original

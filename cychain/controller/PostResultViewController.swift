@@ -5,13 +5,12 @@ import RxDataSources
 import GoogleMobileAds
 
 class PostResultViewController: UIViewController {
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    private var dataSource: RxTableViewSectionedReloadDataSource<SectionModel>!
-    private let viewModel = PostResultViewModel()
-    private let disposeBag = DisposeBag()
-    var posedtData: Texts?
+        
+    final private var dataSource: RxTableViewSectionedReloadDataSource<SectionModel>!
+    final private let viewModel = PostResultViewModel()
+    final private let disposeBag = DisposeBag()
+    final var posedtData: Texts?
+    var tableView: UITableView!
     /*
     static func returnVC(data: Texts) -> InputResultViewController {
      let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -37,13 +36,37 @@ class PostResultViewController: UIViewController {
         registCell()
         setCell()
         bind()
+        
     }
     
+//    func setTableView() {
+//          self.tableView = {
+//          let tableView = UITableView(frame: self.view.bounds, style: .plain)
+//          tableView.autoresizingMask = [
+//            .flexibleWidth,
+//            .flexibleHeight
+//          ]
+//          self.view.addSubview(tableView)
+//
+//          return tableView
+//
+//        }()
+//    }
+   
+    
     func initializeTableView() {
+        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+                tableView.autoresizingMask = [
+                  .flexibleWidth,
+                  .flexibleHeight
+                ]
+                self.view.addSubview(tableView)
+              self.tableView = tableView
+        
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
-    private func registCell() {
+     func registCell() {
         let nib = UINib(resource: R.nib.postCardeTableViewCell)
         tableView.register(nib, forCellReuseIdentifier: "P_Cell")
         
@@ -51,7 +74,7 @@ class PostResultViewController: UIViewController {
         tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
     }
     
-    private func setCell() {
+     func setCell() {
         dataSource = RxTableViewSectionedReloadDataSource<SectionModel> (
             configureCell: { _, tableView, indexPath, item in
                 switch indexPath.section {
@@ -80,7 +103,7 @@ class PostResultViewController: UIViewController {
     }
     
     
-    private func bind() {
+     func bind() {
         guard let posedtData = self.posedtData else {return}
         let input = PostResultViewModel.Input(postData: Observable.just([posedtData]))
         let output = viewModel.transform(input: input)
@@ -89,6 +112,7 @@ class PostResultViewController: UIViewController {
         output.cellObj
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
     }
 }
 

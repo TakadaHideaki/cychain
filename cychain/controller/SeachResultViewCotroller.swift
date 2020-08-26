@@ -1,29 +1,250 @@
 import UIKit
+import RxSwift
+import RxCocoa
+import RxDataSources
 import MessageUI
 import GoogleMobileAds
 
-class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegate, MFMailComposeViewControllerDelegate {
+class SeachResultViewCotroller: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var coverView: UIView!
+    @IBOutlet weak var naviBarButton: UIBarButtonItem!
     
-    var names: [String]?//[nyname, searchname]
-    var message_image_Data = [String: Any]()//[message:メッセージ、image:写真]
-    var matchDataModel: MatchData?
-    var report: UIAlertAction?
-    var block: UIAlertAction?
-    var indicator = UIActivityIndicatorView()
+    private var dataSource: RxTableViewSectionedReloadDataSource<MatchSectionModel>!
+    private let viewModel = SingleMatchViewModel()
+    private let disposeBag = DisposeBag()
+    private var report: UIAlertAction?
+    private var block: UIAlertAction?
+    private let indicatorView = UIActivityIndicatorView.init(style: .whiteLarge)
+    private var coverView: UIView?
 
+    var tableView: UITableView!
+    
+    
+    private let reportRelay = BehaviorRelay<Void>(value: ())
+    var reportObservable: Observable<Void> { return reportRelay.asObservable() }
+    
+    private let blockRelay = BehaviorRelay<Void>(value: ())
+    var blockObservable: Observable<Void> { return blockRelay.asObservable() }
+
+    
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
+        admob()
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initializeUI()
+        initializeTableView()
+        registCell()
+        bind()
+        setCell()
+    }
+    
+    func initializeUI() {
+        self.navigationItem.hidesBackButton = true
+        customNavigationBar()
+        
+        coverView = UIView(frame: self.view.frame)
+        coverView?.backgroundColor = .white
+        coverView?.alpha = 0.5
+        
+        indicatorView.center = view.center
+        indicatorView.color = .gray
+    
+        self.view.addSubview(coverView!)
+        self.view.addSubview(indicatorView)
+        self.view.bringSubviewToFront(coverView!)
+        self.view.bringSubviewToFront(indicatorView)
+    }
+    
+    func initializeTableView() {
+        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.separatorStyle = .none
+        self.view.addSubview(tableView)
+        self.tableView = tableView
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+    }
+    
+    func registCell() {
+          let nib = UINib(resource: R.nib.postCardeTableViewCell)
+          tableView.register(nib, forCellReuseIdentifier: "P_Cell")
+          
+          let messageNib = UINib(resource: R.nib.postCardMessageCell)
+          tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
+      }
+    
+         func setCell() {
+        dataSource = RxTableViewSectionedReloadDataSource<MatchSectionModel> (
+            configureCell: { _, tableView, indexPath, item in
+                switch indexPath.section {
+                case 0:
+                    let profileCell = tableView.dequeueReusableCell(withIdentifier: "P_Cell", for: indexPath) as! ProfileCell
+                                        
+                    profileCell.mynameLabel.text = item.map{$0.1}[0]["user"] as? String
+                    profileCell.targetLabel.text = item.map{$0.1}[0]["search"] as? String
+                    profileCell.profileImage.image = item.map{$0.1}[0]["image"] as? UIImage
+
+                    profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
+                    profileCell.targetLabel.adjustsFontSizeToFitWidth = true
+                    profileCell.mynameLabel.minimumScaleFactor = 0.5
+                    profileCell.targetLabel.minimumScaleFactor = 0.5
+                    return profileCell
+                    
+                case 1:
+                    let messagecell = tableView.dequeueReusableCell(withIdentifier: "M_Cell", for: indexPath) as! MessageCell
+                    messagecell.messageLabel.text = item.map{$0.1}[0]["msg"] as? String
+
+                    return messagecell
+                    
+                default: break
+                }
+                return UITableViewCell()
+        })
+    }
+    
+     func bind() {
+        let input = SingleMatchViewModel.Input(
+            naviBarButtonTaaped: naviBarButton.rx.tap.asObservable(),
+            reportTapped: self.reportObservable,
+            blockTapped: self.blockObservable
+        )
+        
+        let output = viewModel.transform(input: input)
+        //cellData
+        output.cellObj
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        //indicaotr & CoverView
+        output.indicator.drive(self.indicatorView.rx.isAnimating).disposed(by: disposeBag)
+        output.indicator.asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.coverView?.isHidden = true
+            })
+            .disposed(by: disposeBag)
+
+        //NavBarBtnTap(Repot or Block)
+        output.naviBarButtonEvent
+            .subscribe(onNext: { [weak self] _ in
+                self?.repotAction()
+            })
+        .disposed(by: disposeBag)
+        
+        //ReportTapp
+        output.reportObj.skip(1).subscribe(onNext: { [weak self] data in
+            self?.sendMailAction(user: data["user"]!, blockUser: data["search"]!, msg: data["msg"]! )
+        })
+            .disposed(by: disposeBag)
+        
+        //BlockTapp
+        output.blockID.skip(1).subscribe(onNext: { [weak self] _ in
+            self?.blockAction()
+        })
+            .disposed(by: disposeBag)
+    }
+    
+
+    
+    
+     
 }
+
+extension SeachResultViewCotroller: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+           return 210
+       }
+    
+    func  tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.backgroundColor = UIColor.clear
+        label.textColor = UIColor.gray
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.text = dataSource[section].sectionTitle
+        return label
+    }
+}
+
+
+extension SeachResultViewCotroller: MFMailComposeViewControllerDelegate {
+     func repotAction() {
+ 
+         //Definition_Alert
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        //ReportAction(sendMail)
+        let report = UIAlertAction(title: "投稿者を通報", style: .default) {
+            (action: UIAlertAction!) in
+            self.reportRelay.accept(())
+        }
+        //userBlock（検索に引っかからないようにする）
+        let block = UIAlertAction(title: "投稿者をブロック", style: .default) {
+            (action: UIAlertAction!) in
+            self.blockRelay.accept(())
+        }
+        // Cancel
+        let cancel = UIAlertAction(title: "cancel", style: .cancel){
+                   (action: UIAlertAction!) in
+        }
+        
+        let actions = [report, block, cancel]
+        actions.forEach { alert.addAction($0) }
+        self.present(alert, animated: true)
+    }
+    
+
+    func sendMailAction(user: String, blockUser: String, msg: String) {
+        //SendMaill_OK
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([ADDRESS])
+            mail.setSubject("通報")
+            //MSG
+            mail.setMessageBody("通報理由(任意)\n\n\n投稿者名:\(user)\n投稿相手名:\(blockUser)\nmessage:\(msg)", isHTML: false)
+            self.present(mail, animated: true)
+        
+        } else {
+            //SendMaill_NG
+            sendMailErrorAlert()
+        }
+        //error
+        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+            if error != nil {
+                log.debug(error!)//送信失敗
+            } else {
+                controller.dismiss(animated: true)
+            }
+        }
+    }
+    
+    func blockAction() {
+        let alert = UIAlertController(title: "この投稿をしたユーザーをブロックしました", message: "", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                alert.dismiss(animated: true)
+            })
+        })
+    }
+    
+}
+
+
+
+/*
     
     
-    /*
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
         initalizeTableView()
         cellRegist()
-        matchDataModel = MatchData.shared
+//        matchDataModel = MatchData.shared
     }
     
     func initializeUI() {
@@ -57,7 +278,7 @@ class SeachResultViewCotroller: UIViewController, UIImagePickerControllerDelegat
     
     //navigationbar右上にブロック+通報のボタン設置
     @IBAction func report(_ sender: Any) {
-        repotAction()
+//        repotAction()
     }
 }
     
@@ -83,13 +304,13 @@ extension SeachResultViewCotroller: UITableViewDataSource {
             
             profileCell.mynameLabel.text = matchDataModel?.names?[0]
             profileCell.targetLabel.text = matchDataModel?.names?[1]
-            
+
             profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
             profileCell.targetLabel.adjustsFontSizeToFitWidth = true
             profileCell.mynameLabel.minimumScaleFactor = 0.5
             profileCell.targetLabel.minimumScaleFactor = 0.5
             
-            //アイコン登録があったらアイコンのURLをUIImageに変換する
+            アイコン登録があったらアイコンのURLをUIImageに変換する
             if let urlImage = matchDataModel?.URLImage {
                 matchDataModel?.convertURLtoUIImage(URLImage: urlImage, { complete in
                     profileCell.profileImage.image = complete
@@ -109,7 +330,7 @@ extension SeachResultViewCotroller: UITableViewDataSource {
         case 1:
             
             let messagecell = tableView.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! MessageCell
-            messagecell.messageLabel.text = matchDataModel?.message ?? ""
+//            messagecell.messageLabel.text = matchDataModel?.message ?? ""
             return messagecell
             
         default: break
@@ -138,81 +359,51 @@ extension SeachResultViewCotroller:UITableViewDelegate {
         }
         return label
     }
-}
-
-
-extension SeachResultViewCotroller {
-    //通報
-     func repotAction() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let report = UIAlertAction(title: "投稿者を通報", style: .default) {
-            (action: UIAlertAction!) in
-            self.sendMailAction()
-        }
-        //投稿ユーザーブッロク（検索に引っかからないようにする）
-        let block = UIAlertAction(title: "投稿者をブロック", style: .default) {
-            (action: UIAlertAction!) in
-            self.blockAction()
-        }
-        // Cancelボタン
-        let cancel = UIAlertAction(title: "cancel", style: .cancel){
-                   (action: UIAlertAction!) in
-        }
-        
-        let actions = [report, block, cancel]
-        actions.forEach { alert.addAction($0) }
-        self.present(alert, animated: true)
-    }
+}*/
+ //
+ //    @objc func sendMailAction() {
+ //
+ ////        guard let my = item.map{$0.1}[0]["user"] as? String else { return }
+ ////        guard let blockUserName = matchDataModel?.names?[1] else { return }
+ ////        let msg = matchDataModel?.message ?? ""
+ //        //メール送信が可能なら
+ //        if MFMailComposeViewController.canSendMail() {
+ //            let mail = MFMailComposeViewController()
+ //            mail.mailComposeDelegate = self
+ //            mail.setToRecipients([ADDRESS])
+ //            mail.setSubject("通報")
+ //            //メッセージ本文
+ //            mail.setMessageBody("通報理由(任意)\n\n\n投稿者名:\(my)\n投稿相手名:\(blockUserName)\nmessage:\(msg)", isHTML: false)
+ //
+ //            self.present(mail, animated: true)
+ //
+ //        } else {
+ //            //メール送信が不可能
+ //            sendMailErrorAlert()
+ //        }
+ //        //エラー処理
+ //        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+ //            if error != nil {
+ //                log.debug(error!)//送信失敗
+ //            } else {
+ //                controller.dismiss(animated: true)
+ //            }
+ //        }
+ //    }
+ 
     
-    
-    @objc func sendMailAction() {
-
-        guard let my = matchDataModel?.names?[0] else { return }
-        guard let target = matchDataModel?.names?[1] else { return }
-        let message = matchDataModel?.message ?? ""
-        //メール送信が可能なら
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setToRecipients([ADDRESS])
-            mail.setSubject("通報")
-            //メッセージ本文
-            mail.setMessageBody("通報理由(任意)\n\n\n投稿者名:\(my)\n投稿相手名:\(target)\nmessage:\(message)", isHTML: false)
-            
-            self.present(mail, animated: true)
-            
-        } else {
-            //メール送信が不可能
-            sendMailErrorAlert()
-        }
-        //エラー処理
-        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-            if error != nil {
-                log.debug(error!)//送信失敗
-            } else {
-                controller.dismiss(animated: true)
-            }
-        }
-    }
-    
-    
-    
-   @objc func blockAction() {
-        //ブロックユーザー登録
-        matchDataModel?.blockUserRegistration(blockID: (matchDataModel?.matchuserID)!)
-        let alert = UIAlertController(title: "この投稿をしたユーザーをブロックしました", message: "", preferredStyle: .alert)
-        self.present(alert, animated: true, completion: {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                alert.dismiss(animated: true)
-            })
-        })
-    }
-    
-}
-    
-    
+    //
+    //   @objc func blockAction() {
+    //        //ブロックユーザー登録
+    ////        matchDataModel?.blockUserRegistration(blockID: (matchDataModel?.matchuserID)!)
+    //        let alert = UIAlertController(title: "この投稿をしたユーザーをブロックしました", message: "", preferredStyle: .alert)
+    //        self.present(alert, animated: true, completion: {
+    //            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+    //                alert.dismiss(animated: true)
+    //            })
+    //        })
+    //    }
 
     
 
-*/
+

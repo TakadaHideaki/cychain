@@ -955,9 +955,6 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="tableView" destination="jme-WA-GVn" id="1ZK-W3-YEh"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x1l-PW-wFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2804,24 +2801,17 @@ Cg
         <!--Post Card-->
         <scene sceneID="A7f-9e-e0L">
             <objects>
-                <viewController storyboardIdentifier="SeachResultVC" title="Post Card" id="Gsz-BR-pK6" customClass="SeachResultViewCotroller" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SeachResultVC" title="Post Card" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="Gsz-BR-pK6" customClass="SeachResultViewCotroller" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZxU-4t-eKT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="210" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ADi-cX-QwN">
                                 <rect key="frame" x="0.0" y="88" width="414" height="764"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.59999999999999998" green="0.51372549020000002" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
-                            <view alpha="0.94999999999999996" contentMode="scaleToFill" id="AnI-gD-oKr">
-                                <rect key="frame" x="-10" y="88" width="434" height="764"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="ffu-iz-wsc"/>
-                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ADi-cX-QwN" firstAttribute="leading" secondItem="7HG-gR-gBa" secondAttribute="leading" id="2fD-Q3-PDI"/>
                             <constraint firstItem="ADi-cX-QwN" firstAttribute="top" secondItem="7HG-gR-gBa" secondAttribute="top" id="HKm-vW-8bL"/>
@@ -2834,21 +2824,17 @@ Cg
                     <navigationItem key="navigationItem" title="Post Card" id="CAK-WW-vac">
                         <barButtonItem key="rightBarButtonItem" title="menu" image="menu" id="Gwh-4e-7LY">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="report:" destination="Gsz-BR-pK6" id="HBN-cl-ASV"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="coverView" destination="AnI-gD-oKr" id="dXu-rd-L7T"/>
-                        <outlet property="tableView" destination="ADi-cX-QwN" id="6he-Nn-3fE"/>
+                        <outlet property="naviBarButton" destination="Gwh-4e-7LY" id="5dx-uQ-uAm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kkj-Hf-Pr6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6300" y="-3226.847290640394"/>
+            <point key="canvasLocation" x="-6300.0000000000009" y="-3227.0089285714284"/>
         </scene>
         <!--Post Card-->
         <scene sceneID="Jfu-kx-iwT">
@@ -3640,7 +3626,6 @@ Cg
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Brs-1b-JDc"/>
         <segue reference="N0k-Rs-K8Q"/>
     </inferredMetricsTieBreakers>
     <resources>

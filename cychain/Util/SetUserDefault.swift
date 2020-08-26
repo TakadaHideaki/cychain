@@ -73,17 +73,12 @@ class SetUserDefault {
 
     
     func read() -> [[String: String]] {
-          if let value = UD.array(forKey: key) as? [[String: String]] {
-              return value
-          }
-          return []
+          return  UD.array(forKey: key) as? [[String: String]] ?? []
       }
     
     func readBlockUaser() -> [String] {
-        if let value = UD.object(forKey: Name.KeyName.block.rawValue) as? [String] {
-                return value
-            }
-            return []
+        return UD.object(forKey: Name.KeyName.block.rawValue) as? [String] ?? []
+         
         }
     
   func reset(indexPath: IndexPath) -> Observable<[String: String]> {

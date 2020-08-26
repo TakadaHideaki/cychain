@@ -7,11 +7,16 @@ struct FirebaseObj {
     let my: String
     let target: String
     let icon: UIImage
-    var ref: DatabaseReference {
+    var setRef: DatabaseReference {
         get {
-            Database.database().reference().child("\(my)/\(target)/")
+            Database.database().reference().child("\(my)/\(target)/\(USER_ID!)")
         }
     }
+    var observeRef: DatabaseReference {
+          get {
+              Database.database().reference().child("\(my)/\(target)")
+          }
+      }
     var storageRef: StorageReference {
         get {
             STORAGE.child("\(my)/\(target)/\(USER_ID!)/\("imageData")")
@@ -46,15 +51,15 @@ class SetFirebase {
      }
      }*/
     func set(data: Texts)  {
-        //            let datas = FirebaseObj.init(my: data.my,target: data.target,icon: data.iconImage)
-        //            switch datas.icon {
-        //            case R.image.user12():
-        //                datas.ref.setValue(["message": data.message])
-        //            default:
-        //                setIconStorage(icon: datas.icon, ref: datas.storageRef, complete: { imageURL in
-        //                    datas.ref.setValue(["message": data.message as Any, "image": imageURL])
-        //                })
-        //            }
+        let datas = FirebaseObj.init(my: data.my,target: data.target,icon: data.iconImage)
+        switch datas.icon {
+        case R.image.user12():
+            datas.setRef.setValue(["message": data.message])
+        default:
+            setIconStorage(icon: datas.icon, ref: datas.storageRef, complete: { imageURL in
+                datas.setRef.setValue(["message": data.message as Any, "image": imageURL])
+            })
+        }
     }
     
     
@@ -104,18 +109,22 @@ class SetFirebase {
                                    target: value.searchName,
                                    icon: R.image.user10()!
         )
-        obj.ref.observeSingleEvent(of: .value, with: { dataSnapshot in
+        obj.observeRef.observeSingleEvent(of: .value, with: { dataSnapshot in
             if dataSnapshot.value is NSNull {
                 self.f.accept(nil)
-                log.debug("nil")
-
             } else {
-                log.debug("nilggg")
-
                 let mutchiUserData = dataSnapshot.value
                 self.f.accept(mutchiUserData as? [String: [String : Any]])
             }
         })
+        
+        // SamyData
+        
+//        self.f.accept(["TestID":["message": "TestMessage"]])
+
+        
+        
+        
     }
 
 

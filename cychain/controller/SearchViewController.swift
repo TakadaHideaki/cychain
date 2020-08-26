@@ -7,10 +7,7 @@ import NVActivityIndicatorView
 import GoogleMobileAds
 import Lottie
 
-
-//class SearchViewController: UIViewController, UITextFieldDelegate {
 class SearchViewController: UIViewController {
-
     
     
     @IBOutlet var myNameTextField: UITextField!
@@ -22,43 +19,38 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var popButton: UIButton!
     
     private let viewModel = SearchViewModel()
-    private var matchwModel: MatchModel?
+    private var matchModel = MatchModel.shared
+    var muchPopUpVC: MuchPopUpVC?
     private let indicatorView = UIActivityIndicatorView()
 
 
     private let disposeBag = DisposeBag()
-    
-    //mutchiUserData == [UID: [message:メッセージ、image:写真]]
-//    lazy var mutchiUserData = [String: [String: Any]]()
-    var muchPopUpVC: MuchPopUpVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         muchPopUpVC = R.storyboard.main.muchPopUpVC()
         initialazeUI()
         bind()
+        
+//        let a = UD.object(forKey: Name.KeyName.block.rawValue) as? [String] ??
+//        []
+//        log.debug(a)
     }
     
     func initialazeUI() {
-//        myNameTextField.delegate = self
-//        searchNameTextField.delegate = self
-//        indicator()
-        //tapSearchButton()
+        myNameTextField.delegate = self
+        searchNameTextField.delegate = self
         customNavigationBar()
         setIndicator()
-      
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         myNameTextField.text = ""
         searchNameTextField.text = ""
-        //        labelHidden()
+        labelHidden()
     }
     
-    
-    
-     
      override func viewWillLayoutSubviews() {
      _ = self.initViewLayout
      }
@@ -69,21 +61,14 @@ class SearchViewController: UIViewController {
      
      override func viewWillAppear(_ animated: Bool) {
      super.viewWillAppear(animated)
-     
-     
-     
-     //マッチング後のポップアップで
-     //[結果を見る]押下は結果VCへ
-     //[×]押下はdismiss
+     //マッチング後のポップアップから復帰した時の処理
+     //ポップアップの[結果を見る]押下は結果VCへ遷移、[×]押下はdismiss
         guard let presented = self.presentedViewController else { return }
         if type(of: presented) == MuchPopUpVC.self {
-            
-            self.animationView.isHidden = true
-            
             switch muchPopUpVC?.matchCount {
-            case 1: pushVC(vc: R.storyboard.main.seachResultVC()!, animation: false)
-            case 2,3: pushVC(vc: R.storyboard.main.seachResultListVC()!, animation: false)
             case 0: break
+            case 1: presentVC(vc: R.storyboard.main.seachResultVC()!, animation: false)
+            case 2,3: pushVC(vc: R.storyboard.main.seachResultListVC()!, animation: false)
             default: break
             }
         }
@@ -98,54 +83,47 @@ class SearchViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
+        //indicator
+        output.contolIndicator.drive(self.indicatorView.rx.isAnimating).disposed(by: disposeBag)
+        
         //SearchButtonEnabled
         output.ButtonEnabled.drive(self.searchButton.rx.isEnabled).disposed(by: disposeBag)
         
-        //マッチ無し
+        //NoMatchAction
         output.noMatch.drive(noPostLabel.rx.isHidden).disposed(by: disposeBag)
         output.noMatch.drive(popButton.rx.isHidden).disposed(by: disposeBag)
-        output.noMatch.drive(self.indicatorView.rx.isAnimating).disposed(by: disposeBag)
 
         output.noMatch.asObservable().subscribe(onNext: { _ in
-            self.animationView.isHidden = true })
+            log.debug("nomatch")
+            self.animationView.isHidden = true
+        })
             .disposed(by: disposeBag)
         
-        //マッチ
+        //MatchAction
         output.hidden.drive(noPostLabel.rx.isHidden).disposed(by: disposeBag)
         output.hidden.drive(popButton.rx.isHidden).disposed(by: disposeBag)
-        output.stopIndicator.drive(self.indicatorView.rx.isAnimating).disposed(by: disposeBag)
+//        output.stopIndicator.drive(self.indicatorView.rx.isAnimating).disposed(by: disposeBag)
         
         output.match.take(1).subscribe(onNext: { [weak self] value in
-           
+            log.debug("match")
+
             self?.muchPopUpVC?.matchCount = value.data.count
 //            self?.muchPopUpVC?.matchCount = 1
             self?.mutchAction()
-            self?.matchwModel = MatchModel(data: value)
+            self?.matchModel.setData(data: value)
         })
         .disposed(by: disposeBag)
-
-        output.searchStart.drive(self.indicatorView.rx.isAnimating).disposed(by: disposeBag)
-
-        
-        
-        
     }
  
-    
     func mutchAction() {
-        animationView.isHidden = false
-        self.animationView.play()
-        switchPopupVC()
         AudioServicesPlaySystemSound(1003)
         AudioServicesDisposeSystemSoundID(1003)
-    }
-    
-    func switchPopupVC() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                   if let muchPopUpVC = self.muchPopUpVC {
-                       self.present(muchPopUpVC, animated: false)
-                   }
-               }
+        self.animationView.isHidden = false
+        self.animationView.play() { finished in
+            log.debug("animationStart")
+            guard let vc = self.muchPopUpVC else { return }
+            self.present(vc, animated: false)
+        }
     }
     
     func setIndicator() {
@@ -153,6 +131,11 @@ class SearchViewController: UIViewController {
         indicatorView.style = .whiteLarge
         indicatorView.color = .gray
         view.addSubview(indicatorView)
+    }
+     func labelHidden() {
+        noPostLabel.isHidden = true
+        popButton.isHidden = true
+        animationView.isHidden = true
     }
 }
 

@@ -5,6 +5,9 @@ import RxCocoa
 struct MatchData {
     let searchWord: SearchWord
     let data: [String:[String:Any]]
+    
+    private let disposeBag = DisposeBag()
+
 }
 
 struct SearchWord {
@@ -33,19 +36,17 @@ extension SearchViewModel: ViewModelType {
         let userName: Observable<String>
         let searchName: Observable<String>
         let searchButtonTapped: Observable<Void>
-        
     }
+    
     struct Output {
         let ButtonEnabled: Driver<Bool>
         let noMatch: Driver<Bool>
         let match: Observable<MatchData>
-        let searchStart: Driver<Bool>
+        let contolIndicator: Driver<Bool>
         let hidden: Driver<Bool>
-        let stopIndicator: Driver<Bool>
-        
     }
+    
     func transform(input: Input) -> Output {
-
         let substitutionToText = Observable
                 .combineLatest(input.userName.asObservable(),
                                input.searchName.asObservable()) { user, search  in
@@ -78,7 +79,9 @@ extension SearchViewModel: ViewModelType {
             .of(obseved_NoMatch, noData)
             .merge()
             .asDriver(onErrorDriveWith: Driver.empty())
+            .skip(1)
             .startWith(true)
+            .do(onNext: {_ in log.debug("noMatch")})
         
         let match = Observable
             .combineLatest(
@@ -87,28 +90,39 @@ extension SearchViewModel: ViewModelType {
                     MatchData(searchWord: searchWord,
                                data: value)
         }
+        .do(onNext: {_ in log.debug("match_ViewModel")})
+
         
-        let hidden = match
+        let mach_UIhidden = match
         .map{_ in true }
         .startWith(true)
         .asDriver(onErrorDriveWith: Driver.empty())
+
+        let bool_match = obseved_match
+            .map{ _ in false }
         
-        let stopindicator = match
-        .map{_ in false }
-        .startWith(false)
-        .asDriver(onErrorDriveWith: Driver.empty())
-   
-                                        
+        let merge_Match_NoMatch = Observable
+            .of(obseved_NoMatch, bool_match)
+            .merge()
+            .skip(1)
+            .asDriver(onErrorDriveWith: Driver.empty())
+        
+        let icator = Driver
+            .of(searchStart, merge_Match_NoMatch)
+            .merge()
+            .skip(1)
+            .asDriver(onErrorDriveWith: Driver.empty())
+            .do(onNext: {_ in log.debug("stopindicator")})
 
         return Output( ButtonEnabled: buttonEnabled,
                        noMatch: noMatch,
                        match: match,
-                       searchStart: searchStart,
-                       hidden: hidden,
-                       stopIndicator: stopindicator
+                       contolIndicator: icator,
+                       hidden: mach_UIhidden
         )
         
     }
+    
     
     
     
@@ -123,6 +137,18 @@ extension SearchViewModel: ViewModelType {
     
     
 }
+
+//        let mauch_stopindicator = match
+//        .skip(1)
+//        .map{_ in false }
+//        .asDriver(onErrorDriveWith: Driver.empty())
+        
+//        let stopindicator = Driver
+//            .of(searchStart, mauch_stopindicator)
+//            .merge()
+//            .map{_ in false }
+//            .asDriver(onErrorDriveWith: Driver.empty())
+//            .do(onNext: {_ in log.debug("stopindicator")})
 
 
         
