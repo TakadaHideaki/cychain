@@ -9,8 +9,12 @@ class MatchModel {
     private init() {}
     
     var singleMatch: [String: [String: Any]]?
-    var reportData: Observable<[String: String]>?
+    var reportData: [String: String]?
     var blockID: Observable<String>?
+    var data: [String: [String: Any]]?
+    var iDAray = [String]()
+    var values = [[String: Any]]()
+    
     
     
     func setData(data: MatchData) {
@@ -22,7 +26,6 @@ class MatchModel {
         let icon = R.image.user12()!
         
         if let stringImage = data.data.map({$0.1})[0]["image"] as? String {
-            log.debug(stringImage)
             convertURLtoUIImage(stringImage: stringImage, { complete in
                 self.singleMatch = [id:["user": user, "search": search, "msg": msg, "image": complete]]
             })
@@ -30,13 +33,42 @@ class MatchModel {
             self.singleMatch = [id:["user": user, "search": search, "msg": msg, "image": icon]]
         }
         
-//        self.singleMatch = [id:["user": user, "search": search, "msg": msg, "image": icon]]
-        self.reportData = Observable.just(["user": user, "search": search, "msg": msg])
+        self.reportData = ["user": user, "search": search, "msg": msg]
         self.blockID = Observable.just(id)
+        
+//         data.data.forEach {
+//            if let image = $0.value["image"] as? String {
+//                let id = $0.key
+//                convertURLtoUIImage(stringImage: image, { complete in
+//                    self.data![id]!["image"] = complete
+//                }
+//
+//                )
+//            }
+//        }
+        var data = data.data
+        data.forEach {
+            if let urlImage = $0.value["image"] as? String {
+                let id = $0.key
+                var img: UIImage?
+                convertURLtoUIImage(stringImage: urlImage, { complete in
+                    img = complete
+                })
+                data[id]!["image"] = img
+                self.iDAray += [id]
+                self.values += [data[id]!]
+            
+            } else {
+                let id = $0.key
+                data[id]?["image"] = R.image.user12()!
+                self.iDAray += [id]
+                self.values += [data[id]!]
+            }
+        }
     }
     
     func convertURLtoUIImage(stringImage: String, _ complete: @escaping (UIImage) -> ()) {
-        
+
         let url = URL(string: stringImage) //let url = urlString.flatMap(URL.init)でも可
         DispatchQueue.global().async {
             do {

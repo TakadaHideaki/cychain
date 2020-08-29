@@ -56,12 +56,9 @@ class PostResultViewController: UIViewController {
     
     func initializeTableView() {
         let tableView = UITableView(frame: self.view.bounds, style: .plain)
-                tableView.autoresizingMask = [
-                  .flexibleWidth,
-                  .flexibleHeight
-                ]
-                self.view.addSubview(tableView)
-              self.tableView = tableView
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(tableView)
+        self.tableView = tableView
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
     }

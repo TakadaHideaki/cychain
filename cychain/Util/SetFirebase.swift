@@ -105,22 +105,24 @@ class SetFirebase {
     
     func observe(value: SearchWord) {
         
-        let obj = FirebaseObj.init(my: value.userName,
-                                   target: value.searchName,
-                                   icon: R.image.user10()!
-        )
-        obj.observeRef.observeSingleEvent(of: .value, with: { dataSnapshot in
-            if dataSnapshot.value is NSNull {
-                self.f.accept(nil)
-            } else {
-                let mutchiUserData = dataSnapshot.value
-                self.f.accept(mutchiUserData as? [String: [String : Any]])
-            }
-        })
+//        let obj = FirebaseObj.init(my: value.userName,
+//                                   target: value.searchName,
+//                                   icon: R.image.user10()!
+//        )
+//        obj.observeRef.observeSingleEvent(of: .value, with: { dataSnapshot in
+//            if dataSnapshot.value is NSNull {
+//                self.f.accept(nil)
+//            } else {
+//                let mutchiUserData = dataSnapshot.value
+//                self.f.accept(mutchiUserData as? [String: [String : Any]])
+//            }
+//        })
         
         // SamyData
         
-//        self.f.accept(["TestID":["message": "TestMessage"]])
+        self.f.accept(["TestIDA":["message": "TestMessage"], "TestIDB":["message": "TestMessage"]])
+//        self.f.accept(["TestIDA":["message": "TestMessage"]])
+
 
         
         

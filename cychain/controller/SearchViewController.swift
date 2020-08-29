@@ -68,7 +68,7 @@ class SearchViewController: UIViewController {
             switch muchPopUpVC?.matchCount {
             case 0: break
             case 1: presentVC(vc: R.storyboard.main.seachResultVC()!, animation: false)
-            case 2,3: pushVC(vc: R.storyboard.main.seachResultListVC()!, animation: false)
+            case 2,3: presentVC(vc: R.storyboard.main.seachResultListVC()!, animation: false)
             default: break
             }
         }

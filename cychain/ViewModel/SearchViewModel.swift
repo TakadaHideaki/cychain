@@ -5,9 +5,7 @@ import RxCocoa
 struct MatchData {
     let searchWord: SearchWord
     let data: [String:[String:Any]]
-    
     private let disposeBag = DisposeBag()
-
 }
 
 struct SearchWord {
@@ -47,6 +45,7 @@ extension SearchViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
+        //userName & SearchNameを、SearchWordにSet
         let substitutionToText = Observable
                 .combineLatest(input.userName.asObservable(),
                                input.searchName.asObservable()) { user, search  in

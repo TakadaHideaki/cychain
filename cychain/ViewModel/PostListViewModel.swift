@@ -45,7 +45,7 @@ extension PostListViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
-        //Cell押下で該当の名前(ペア)を取得
+        //Cell押下 該当の名前(ペア)取得
         var selectedPairNames: Observable<[String:String]>? {
             input.onSelectedCell
                 .withLatestFrom(cellObj) { indexPath, _  in

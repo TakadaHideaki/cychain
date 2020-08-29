@@ -1,26 +1,36 @@
 import UIKit
+import RxSwift
+import RxCocoa
+import RxDataSources
 import GoogleMobileAds
 
-class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDelegate  {
-    
-    var names: [String]?
-    var userID = [String]()
-    var value = [[String:Any]]()
-    var mutchingUserData: [String: [String: Any]]?
-    var matchDataModel: MatchData?
-}
-
-/*
+class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate  {
 
     
     @IBOutlet weak var tableView: UITableView!
+
+    
+    
+    private var dataSource: RxTableViewSectionedReloadDataSource<MultipleSectionModel>!
+    private let viewModel = SearchResultMultipleViewModel()
+    private let disposeBag = DisposeBag()
+    private var model = multiMatchModel()
+    
+    override func viewWillLayoutSubviews() {
+        _ = self.initViewLayout
+    }
+    lazy var initViewLayout : Void = {
+        admob()
+    }()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initalizeUI()
         initializeTableView()
-        userDataSet()
-        tableView.reloadData()
+        setCell()
+        bind()
     }
     
     func initalizeUI() {
@@ -29,11 +39,9 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     }
     
     func initializeTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.tableFooterView = UIView(frame: .zero)  
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -41,32 +49,64 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
+        tableView.reloadData()
     }
     
-    
-    func userDataSet() {
-        matchDataModel = MatchData.shared
-        guard let userName = matchDataModel?.names,
-               let muchData = matchDataModel?.muchData
-               else { return }
-        
-        names = userName
-        muchData.forEach {
-            userID += [$0.key]
-            value += [$0.value]
+    func setCell() {
+        dataSource = RxTableViewSectionedReloadDataSource<MultipleSectionModel> (
+            configureCell: { _, tableView, indexPath, item in
+                let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
+                cell.textLabel?.text = ("\([indexPath.row + 1])件目")
+                return cell
+        })
+        dataSource.canEditRowAtIndexPath = { dataSource, indexPath in
+            return true
         }
     }
     
-    
-    override func viewWillLayoutSubviews() {
-        _ = self.initViewLayout
+    private func bind() {
+        let input = SearchResultMultipleViewModel
+            .Input(onSelectedCell: tableView.rx.itemSelected.asObservable())
+        
+        
+        let output = viewModel.transform(input: input)
+        //表示用cellデータ
+        output.cellObj
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+//
+        output.selectVellObj
+            .subscribe(onNext: {
+                log.debug("selectcell")
+                self.model.setData(selectIndexPathRow: $0)
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultMultipleViewCOntroller") as? SeachResultMultipleViewCOntroller
+                self.presentVC(vc: vc!, animation: true)
+            })
+        .disposed(by: disposeBag)
+
+        
+        
     }
-    lazy var initViewLayout : Void = {
-        admob()
-    }()
+    
+    
+    
+    
+    
 }
 
-extension SeachResultListViewCOntroller: UITableViewDataSource {
+    
+    
+
+    
+
+
+    
+    
+    
+    
+
+
+/*extension SeachResultListViewCOntroller: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,6 +132,22 @@ extension SeachResultListViewCOntroller: UITableViewDelegate {
         SeachResultMultipleVC.value = value[indexPath.row]
         self.navigationController?.pushViewController(SeachResultMultipleVC, animated: true)
     }
-}
+}*/
 
-*/
+
+
+
+
+//    func userDataSet() {
+//        matchDataModel = MatchData.shared
+//        guard let userName = matchDataModel?.names,
+//               let muchData = matchDataModel?.muchData
+//               else { return }
+//
+//        names = userName
+//        muchData.forEach {
+//            userID += [$0.key]
+//            value += [$0.value]
+//        }
+//    }
+

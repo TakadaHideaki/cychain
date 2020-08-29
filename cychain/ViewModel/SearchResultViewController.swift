@@ -20,10 +20,8 @@ extension SingleMatchViewModel: ViewModelType {
         let reportObj: Observable<[String: String]>
         let blockID: Observable<String>
         let indicator: Driver<Bool>
-
-
     }
-//
+    
     func transform(input: Input) -> Output {
         
         let cellObj = BehaviorRelay<[MatchSectionModel]>(value: [MatchSectionModel(sectionTitle: "PostCard",
@@ -39,7 +37,8 @@ extension SingleMatchViewModel: ViewModelType {
             .do(onNext: { _ in log.debug("indicator")})
 
         
-        let reportDataTapped = input.reportTapped.withLatestFrom(model.reportData!)
+        let report = Observable.from(optional: model.reportData)
+        let reportDataTapped = input.reportTapped.withLatestFrom(report)
         
         let blockTapped = input.blockTapped
             .skip(1)

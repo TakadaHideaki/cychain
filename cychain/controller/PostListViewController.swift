@@ -1,5 +1,5 @@
 import UIKit
-import Firebase
+//import Firebase
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -9,31 +9,36 @@ import GoogleMobileAds
 class PostListViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate {
     
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
     private var dataSource: RxTableViewSectionedReloadDataSource<PostListSectionModel>!
     private let disposeBag = DisposeBag()
     private let userDefaultClass = SetUserDefault()
+//    var tableView: UITableView?
     var indicatorView = UIActivityIndicatorView()
     var viewmodel = PostListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
-        initializeTableView()
         setCell()
         bind()
-      
     }
     
     func initializeUI() {
         self.navigationItem.hidesBackButton = true
         customNavigationBar()
+        settableView()
     }
     
-    func initializeTableView() {
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+    func settableView() {
+//        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+//        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        tableView.register(UINib(nibName: "inputDataListCell", bundle: nil),forCellReuseIdentifier: "cell")
+//        self.tableView = tableView
+//        self.view.addSubview(self.tableView!)
         tableView.tableFooterView = UIView(frame: .zero)
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
     override func viewWillLayoutSubviews() {
@@ -45,20 +50,17 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         tabBarController?.tabBar.isHidden = false
-        
-        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+        if let indexPathForSelectedRow = tableView?.indexPathForSelectedRow {
+            tableView!.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
-        tableView.reloadData()
+        tableView!.reloadData()
     }
     
     private func setCell() {
         dataSource = RxTableViewSectionedReloadDataSource<PostListSectionModel> (
             configureCell: { _, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? inputDataListCell
-                
                 item.keys.forEach{ cell?.myName.text = $0 }
                 item.values.forEach{ cell?.targetName.text = $0 }
                 return cell!
@@ -71,13 +73,16 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
     
     private func bind() {
         let input = PostListViewModel
-            .Input(onDeleteCell: tableView.rx.itemDeleted.asObservable(), onSelectedCell: tableView.rx.itemSelected.asObservable())
+            .Input(onDeleteCell: tableView!.rx.itemDeleted.asObservable(),
+                   onSelectedCell: tableView!.rx.itemSelected.asObservable())
         
         let output = viewmodel.transform(input: input)
         //表示用cellデータ
         output.cellObj?
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+        .debug()
+            .bind(to: tableView!.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+            
         
         //cellタップ
         output.selectedPairName?

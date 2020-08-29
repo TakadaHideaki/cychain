@@ -7,23 +7,19 @@ import GoogleMobileAds
 
 class SeachResultViewCotroller: UIViewController {
     
-    @IBOutlet weak var naviBarButton: UIBarButtonItem!
-    
-    private var dataSource: RxTableViewSectionedReloadDataSource<MatchSectionModel>!
+        
+    var dataSource: RxTableViewSectionedReloadDataSource<MatchSectionModel>!
     private let viewModel = SingleMatchViewModel()
-    private let disposeBag = DisposeBag()
-    private var report: UIAlertAction?
-    private var block: UIAlertAction?
-    private let indicatorView = UIActivityIndicatorView.init(style: .whiteLarge)
-    private var coverView: UIView?
-
+    let disposeBag = DisposeBag()
+    var report: UIAlertAction?
+    var block: UIAlertAction?
+    let indicatorView = UIActivityIndicatorView.init(style: .whiteLarge)
+    var coverView: UIView?
     var tableView: UITableView!
-    
-    
-    private let reportRelay = BehaviorRelay<Void>(value: ())
+    var naviBarButton: UIBarButtonItem!
+    let reportRelay = BehaviorRelay<Void>(value: ())
     var reportObservable: Observable<Void> { return reportRelay.asObservable() }
-    
-    private let blockRelay = BehaviorRelay<Void>(value: ())
+    let blockRelay = BehaviorRelay<Void>(value: ())
     var blockObservable: Observable<Void> { return blockRelay.asObservable() }
 
     
@@ -37,27 +33,38 @@ class SeachResultViewCotroller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
-        initializeTableView()
-        registCell()
-        bind()
         setCell()
+        bind()
     }
     
     func initializeUI() {
-        self.navigationItem.hidesBackButton = true
-        customNavigationBar()
-        
+        setBarButton()
+        setIndicator()
+        setCoverView()
+        initializeTableView()
+        registCell()
+    }
+    
+    func setIndicator() {
+        indicatorView.center = view.center
+        indicatorView.color = .gray
+        self.view.addSubview(indicatorView)
+        self.view.bringSubviewToFront(indicatorView)
+    }
+    
+    func setCoverView() {
         coverView = UIView(frame: self.view.frame)
         coverView?.backgroundColor = .white
         coverView?.alpha = 0.5
-        
-        indicatorView.center = view.center
-        indicatorView.color = .gray
-    
         self.view.addSubview(coverView!)
-        self.view.addSubview(indicatorView)
         self.view.bringSubviewToFront(coverView!)
-        self.view.bringSubviewToFront(indicatorView)
+    }
+    
+    func setBarButton() {
+        naviBarButton = UIBarButtonItem()
+        naviBarButton.image = R.image.menu()!
+        naviBarButton.style = .plain
+        self.navigationItem.rightBarButtonItem = naviBarButton
     }
     
     func initializeTableView() {
@@ -117,7 +124,7 @@ class SeachResultViewCotroller: UIViewController {
         let output = viewModel.transform(input: input)
         //cellData
         output.cellObj
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         //indicaotr & CoverView
@@ -233,177 +240,3 @@ extension SeachResultViewCotroller: MFMailComposeViewControllerDelegate {
     }
     
 }
-
-
-
-/*
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initializeUI()
-        initalizeTableView()
-        cellRegist()
-//        matchDataModel = MatchData.shared
-    }
-    
-    func initializeUI() {
-        self.navigationItem.hidesBackButton = true
-        customNavigationBar()
-        indicator.center = view.center
-        indicator.style = .whiteLarge
-        indicator.color = .black
-        view.addSubview(indicator)
-        self.view.bringSubviewToFront(indicator)
-        indicator.startAnimating()
-    }
-    
-     func initalizeTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.tableFooterView = UIView(frame: .zero)
-
-    }
-    func cellRegist() {
-        tableView.register(UINib(nibName: "PostCardeTableViewCell", bundle: nil), forCellReuseIdentifier: "PostCardeTableViewCell")
-        tableView.register(UINib(nibName: "PostCardMessageCell", bundle: nil), forCellReuseIdentifier: "PostCardMessageCell")
-    }
-    
-    override func viewWillLayoutSubviews() {
-        _ = self.initViewLayout
-    }
-    lazy var initViewLayout : Void = {
-        admob()
-    }()
-    
-    //navigationbar右上にブロック+通報のボタン設置
-    @IBAction func report(_ sender: Any) {
-//        repotAction()
-    }
-}
-    
-extension SeachResultViewCotroller: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        
-        switch indexPath.section {
-        case 0:
-            
-            let profileCell = tableView.dequeueReusableCell(withIdentifier: "PostCardeTableViewCell", for: indexPath) as! ProfileCell
-            
-            profileCell.mynameLabel.text = matchDataModel?.names?[0]
-            profileCell.targetLabel.text = matchDataModel?.names?[1]
-
-            profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
-            profileCell.targetLabel.adjustsFontSizeToFitWidth = true
-            profileCell.mynameLabel.minimumScaleFactor = 0.5
-            profileCell.targetLabel.minimumScaleFactor = 0.5
-            
-            アイコン登録があったらアイコンのURLをUIImageに変換する
-            if let urlImage = matchDataModel?.URLImage {
-                matchDataModel?.convertURLtoUIImage(URLImage: urlImage, { complete in
-                    profileCell.profileImage.image = complete
-                    //アイコンに画像設定が終わったらインディケーターoff
-                    self.coverView.isHidden = true
-                    self.indicator.stopAnimating()
-                    
-                })
-            } else {
-                //アイコン登録が無かっったらデフォルトアイコンをセット
-                profileCell.profileImage.image = R.image.user12()
-                self.coverView.isHidden = true
-                self.indicator.stopAnimating()
-            }
-            return profileCell
-            
-        case 1:
-            
-            let messagecell = tableView.dequeueReusableCell(withIdentifier: "PostCardMessageCell", for: indexPath) as! MessageCell
-//            messagecell.messageLabel.text = matchDataModel?.message ?? ""
-            return messagecell
-            
-        default: break
-            
-        }
-        return UITableViewCell()
-    }
-    
-    
-}
-
-extension SeachResultViewCotroller:UITableViewDelegate {
-    
-    func  tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
-        let label = UILabel()
-        label.backgroundColor = .clear
-        label.textColor = .gray
-        label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 20)
-        
-        switch section {
-        case 0: label.text = "posting card"
-        case 1: label.text = "message"
-        default: break
-        }
-        return label
-    }
-}*/
- //
- //    @objc func sendMailAction() {
- //
- ////        guard let my = item.map{$0.1}[0]["user"] as? String else { return }
- ////        guard let blockUserName = matchDataModel?.names?[1] else { return }
- ////        let msg = matchDataModel?.message ?? ""
- //        //メール送信が可能なら
- //        if MFMailComposeViewController.canSendMail() {
- //            let mail = MFMailComposeViewController()
- //            mail.mailComposeDelegate = self
- //            mail.setToRecipients([ADDRESS])
- //            mail.setSubject("通報")
- //            //メッセージ本文
- //            mail.setMessageBody("通報理由(任意)\n\n\n投稿者名:\(my)\n投稿相手名:\(blockUserName)\nmessage:\(msg)", isHTML: false)
- //
- //            self.present(mail, animated: true)
- //
- //        } else {
- //            //メール送信が不可能
- //            sendMailErrorAlert()
- //        }
- //        //エラー処理
- //        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
- //            if error != nil {
- //                log.debug(error!)//送信失敗
- //            } else {
- //                controller.dismiss(animated: true)
- //            }
- //        }
- //    }
- 
-    
-    //
-    //   @objc func blockAction() {
-    //        //ブロックユーザー登録
-    ////        matchDataModel?.blockUserRegistration(blockID: (matchDataModel?.matchuserID)!)
-    //        let alert = UIAlertController(title: "この投稿をしたユーザーをブロックしました", message: "", preferredStyle: .alert)
-    //        self.present(alert, animated: true, completion: {
-    //            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-    //                alert.dismiss(animated: true)
-    //            })
-    //        })
-    //    }
-
-    
-
-

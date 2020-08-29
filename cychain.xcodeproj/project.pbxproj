@@ -57,6 +57,16 @@
 		8C4CF5B324ECA30E002C8173 /* MatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B124ECA30E002C8173 /* MatchModel.swift */; };
 		8C4CF5B824EE21B1002C8173 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */; };
 		8C4CF5B924EE21B1002C8173 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */; };
+		8C4CF5BE24F6A69F002C8173 /* multiMatchListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5BD24F6A69F002C8173 /* multiMatchListModel.swift */; };
+		8C4CF5BF24F6A69F002C8173 /* multiMatchListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5BD24F6A69F002C8173 /* multiMatchListModel.swift */; };
+		8C4CF5C124F6A6E1002C8173 /* SearchResultMultipleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */; };
+		8C4CF5C224F6A6E1002C8173 /* SearchResultMultipleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */; };
+		8C4CF5C424F9072A002C8173 /* MultiMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */; };
+		8C4CF5C524F9072A002C8173 /* MultiMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */; };
+		8C4CF5C724F90AF4002C8173 /* multiMatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */; };
+		8C4CF5C824F90AF4002C8173 /* multiMatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */; };
+		8C4CF5CA24F93BE2002C8173 /* MultiMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C924F93BE2002C8173 /* MultiMatchViewController.swift */; };
+		8C4CF5CB24F93BE2002C8173 /* MultiMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C924F93BE2002C8173 /* MultiMatchViewController.swift */; };
 		8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */; };
 		8C50ACC7239289AC00FAFBC4 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBF239289AC00FAFBC4 /* NameCell.swift */; };
 		8C50ACDC23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */; };
@@ -199,6 +209,11 @@
 		8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchPopupViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5B124ECA30E002C8173 /* MatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchModel.swift; sourceTree = "<group>"; };
 		8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		8C4CF5BD24F6A69F002C8173 /* multiMatchListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiMatchListModel.swift; sourceTree = "<group>"; };
+		8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultMultipleViewModel.swift; sourceTree = "<group>"; };
+		8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiMatchViewModel.swift; sourceTree = "<group>"; };
+		8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiMatchModel.swift; sourceTree = "<group>"; };
+		8C4CF5C924F93BE2002C8173 /* MultiMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiMatchViewController.swift; sourceTree = "<group>"; };
 		8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inputDataListCell.swift; sourceTree = "<group>"; };
 		8C50ACBF239289AC00FAFBC4 /* NameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameCell.swift; sourceTree = "<group>"; };
 		8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager_SignUp_ViewController.swift; sourceTree = "<group>"; };
@@ -312,6 +327,8 @@
 				8C420CFE24540EB000769F01 /* PostListModel.swift */,
 				8C8B07092427566D007F7494 /* MatchData.swift */,
 				8C4CF5B124ECA30E002C8173 /* MatchModel.swift */,
+				8C4CF5BD24F6A69F002C8173 /* multiMatchListModel.swift */,
+				8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */,
 				8C420D04245E2A2500769F01 /* SettingModel.swift */,
 				8C3E3131241CE743008A4DAF /* EditData.swift */,
 				8C4230332409F5CD00160A04 /* ScrollKeyBoard.swift */,
@@ -373,6 +390,7 @@
 				8C50ACCF23928F5C00FAFBC4 /* SeachResultViewCotroller.swift */,
 				8C50ACDA23928F5C00FAFBC4 /* SeachResultListViewCOntroller.swift */,
 				8C50ACCB23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift */,
+				8C4CF5C924F93BE2002C8173 /* MultiMatchViewController.swift */,
 				8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */,
 				8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */,
 				8C50ACD123928F5C00FAFBC4 /* TermsViewController.swift */,
@@ -450,6 +468,8 @@
 				8C4B052824E2688600FA724F /* SearchViewModel.swift */,
 				8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */,
 				8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */,
+				8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */,
+				8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */,
 				8C43513C24D5365B0035FDC4 /* ViewModelType.swift */,
 			);
 			path = ViewModel;
@@ -798,6 +818,8 @@
 				8C4CF5B224ECA30E002C8173 /* MatchModel.swift in Sources */,
 				8CEA6A13247A9DDC00A1B283 /* PostViewModel.swift in Sources */,
 				8CE1B4BE2442EBF6009D8698 /* Button.swift in Sources */,
+				8C4CF5CA24F93BE2002C8173 /* MultiMatchViewController.swift in Sources */,
+				8C4CF5C724F90AF4002C8173 /* multiMatchModel.swift in Sources */,
 				8C7B1EBE21D925BC00AFE846 /* AppDelegate.swift in Sources */,
 				8CE1B4BA2442EBF6009D8698 /* textView.swift in Sources */,
 				8C48B7A524E4D249000346AB /* SetFirebase.swift in Sources */,
@@ -827,6 +849,7 @@
 				8C50ACE423928F5C00FAFBC4 /* Pager_LogIn_ViewController.swift in Sources */,
 				8C43514024D537B10035FDC4 /* PostListViewModel.swift in Sources */,
 				8CE1B4B82442EBF6009D8698 /* textField.swift in Sources */,
+				8C4CF5C424F9072A002C8173 /* MultiMatchViewModel.swift in Sources */,
 				8C48B7A324E4D249000346AB /* SetUserDefault.swift in Sources */,
 				8C420CF62452B19800769F01 /* Extention.swift in Sources */,
 				8C50ACDF23928F5C00FAFBC4 /* SettingsViewController.swift in Sources */,
@@ -836,6 +859,7 @@
 				8CE1B4B22442EBF6009D8698 /* View.swift in Sources */,
 				8C70D347246157E900150E52 /* Onboarding.swift in Sources */,
 				8C249842246FB5D000F81972 /* AuthViewModel.swift in Sources */,
+				8C4CF5BE24F6A69F002C8173 /* multiMatchListModel.swift in Sources */,
 				8CE1B4B42442EBF6009D8698 /* labele.swift in Sources */,
 				8C4B052924E2688600FA724F /* SearchViewModel.swift in Sources */,
 				8CE1B4BC2442EBF6009D8698 /* contentView.swift in Sources */,
@@ -843,6 +867,7 @@
 				8C43513D24D5365B0035FDC4 /* ViewModelType.swift in Sources */,
 				8C50ACDE23928F5C00FAFBC4 /* LogInViewController.swift in Sources */,
 				8C50ACE723928F5C00FAFBC4 /* SignUpViewController.swift in Sources */,
+				8C4CF5C124F6A6E1002C8173 /* SearchResultMultipleViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,6 +888,8 @@
 				8C4CF5B324ECA30E002C8173 /* MatchModel.swift in Sources */,
 				8CEA6A14247A9DDC00A1B283 /* PostViewModel.swift in Sources */,
 				8CF3AE8723F5571D00FC0648 /* AppDelegate.swift in Sources */,
+				8C4CF5CB24F93BE2002C8173 /* MultiMatchViewController.swift in Sources */,
+				8C4CF5C824F90AF4002C8173 /* multiMatchModel.swift in Sources */,
 				8CE1B4B92442EBF6009D8698 /* textField.swift in Sources */,
 				8CE1B4BD2442EBF6009D8698 /* contentView.swift in Sources */,
 				8C48B7A624E4D249000346AB /* SetFirebase.swift in Sources */,
@@ -892,6 +919,7 @@
 				8C303D69243879F500F080AB /* AuthModel.swift in Sources */,
 				8C43514124D537B10035FDC4 /* PostListViewModel.swift in Sources */,
 				8CF3AE9423F5571D00FC0648 /* SelectViewController.swift in Sources */,
+				8C4CF5C524F9072A002C8173 /* MultiMatchViewModel.swift in Sources */,
 				8C48B7A424E4D249000346AB /* SetUserDefault.swift in Sources */,
 				8C303D722439CAFD00F080AB /* AuthView.swift in Sources */,
 				8C420CF72452B19800769F01 /* Extention.swift in Sources */,
@@ -901,6 +929,7 @@
 				8C265FDA24403A6F00E21AFF /* EditData.swift in Sources */,
 				8C70D348246157E900150E52 /* Onboarding.swift in Sources */,
 				8C249843246FB5D000F81972 /* AuthViewModel.swift in Sources */,
+				8C4CF5BF24F6A69F002C8173 /* multiMatchListModel.swift in Sources */,
 				8CF3AE9923F5571D00FC0648 /* InitialViewController.swift in Sources */,
 				8C4B052A24E2688600FA724F /* SearchViewModel.swift in Sources */,
 				8CF3AE9A23F5571D00FC0648 /* SeachResultListViewCOntroller.swift in Sources */,
@@ -908,6 +937,7 @@
 				8C43513E24D5365B0035FDC4 /* ViewModelType.swift in Sources */,
 				8CF3AE9C23F5571D00FC0648 /* SignUpViewController.swift in Sources */,
 				8CE1B4C32443A2AB009D8698 /* ProfileCell.swift in Sources */,
+				8C4CF5C224F6A6E1002C8173 /* SearchResultMultipleViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

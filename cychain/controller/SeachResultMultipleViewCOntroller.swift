@@ -2,8 +2,8 @@ import UIKit
 import GoogleMobileAds
 import MessageUI
 
-class SeachResultMultipleViewCOntroller: SeachResultViewCotroller {}
-/*
+class SeachResultMultipleViewCOntroller: SeachResultViewCotroller {
+
     
     @IBOutlet weak var tableView1: UITableView!
     @IBOutlet weak var coverView1: UIView!
@@ -12,7 +12,9 @@ class SeachResultMultipleViewCOntroller: SeachResultViewCotroller {}
     var nameArray: [String]?
     var account: String?
 }
+
 /*
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,6 +137,5 @@ extension SeachResultMultipleViewCOntroller {
     
     
 }
- 
  */
- */
+
