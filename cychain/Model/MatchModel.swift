@@ -15,8 +15,6 @@ class MatchModel {
     var iDAray = [String]()
     var values = [[String: Any]]()
     
-    
-    
     func setData(data: MatchData) {
         
         let user = data.searchWord.userName

@@ -1,20 +1,39 @@
 import Foundation
+import RxSwift
 import RxDataSources
 
-struct multiMatchModel {
+class multiMatchModel {
+    
+    static let shared = multiMatchModel()
+    private init() {}
+    
     private let model = MatchModel.shared
     var selectIndexPathRow: Int?
     var matchData: [String: [String: Any]]?
+    var reportData: [String: String]?
+    var blockID: Observable<String>?
 
-    mutating func setData(selectIndexPathRow: Int) {
-        
+     func setData(selectIndexPathRow: Int) {
         let user = model.reportData?["user"] ?? ""
         let search = model.reportData?["search"] ?? ""
         let id = model.iDAray[selectIndexPathRow]
-        let msg = model.values[selectIndexPathRow]["msg"] ?? ""
+        let msg = model.values[selectIndexPathRow]["msg"] as? String ?? ""
         let icon = model.values[selectIndexPathRow]["image"] ?? R.image.user12()!
         
-        self.matchData =  [id: ["user": user, "search": search, "msg": msg, "image": icon]]
+   
+        
+        self.matchData = [id: ["user": user, "search": search, "msg": msg, "image": icon]]
+        self.reportData = ["user": user, "search": search, "msg": msg]
+        self.blockID = Observable.just(id).debug()
+        
+//        log.debug(self.matchData)
+//        log.debug(self.reportData)
+//        log.debug(model.iDAray)
+//        log.debug(model.iDAray[selectIndexPathRow])
+
+
+
+
     }
 }
 

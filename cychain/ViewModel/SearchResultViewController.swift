@@ -34,7 +34,6 @@ extension SingleMatchViewModel: ViewModelType {
             .map{_ in false}
             .startWith(true)
             .asDriver(onErrorDriveWith: Driver.empty())
-            .do(onNext: { _ in log.debug("indicator")})
 
         
         let report = Observable.from(optional: model.reportData)
@@ -43,7 +42,6 @@ extension SingleMatchViewModel: ViewModelType {
         let blockTapped = input.blockTapped
             .skip(1)
             .withLatestFrom(model.blockID!)
-            .do(onNext: { _ in  log.debug("block")})
 
 //            .do(onNext: { self.model.registBlockID(blockID: $0)})
 

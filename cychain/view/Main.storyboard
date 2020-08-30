@@ -2862,18 +2862,10 @@ Cg
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Post Card" id="Pvq-J5-WDp">
-                        <barButtonItem key="rightBarButtonItem" title="通報" image="menu" id="sLo-7d-z9M">
-                            <connections>
-                                <action selector="report1:" destination="Wkr-BQ-r51" id="Tyn-Am-IwH"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="通報" image="menu" id="sLo-7d-z9M"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="coverView1" destination="2Lw-Qk-rqA" id="H9T-1O-7Gd"/>
-                        <outlet property="tableView1" destination="eVZ-1Z-m82" id="GVc-Zh-5R8"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhi-SY-2u5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

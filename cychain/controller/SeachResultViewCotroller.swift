@@ -8,7 +8,7 @@ import GoogleMobileAds
 class SeachResultViewCotroller: UIViewController {
     
         
-    var dataSource: RxTableViewSectionedReloadDataSource<MatchSectionModel>!
+    private var dataSource: RxTableViewSectionedReloadDataSource<MatchSectionModel>!
     private let viewModel = SingleMatchViewModel()
     let disposeBag = DisposeBag()
     var report: UIAlertAction?
@@ -155,10 +155,6 @@ class SeachResultViewCotroller: UIViewController {
             .disposed(by: disposeBag)
     }
     
-
-    
-    
-     
 }
 
 extension SeachResultViewCotroller: UITableViewDelegate {

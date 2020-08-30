@@ -12,7 +12,7 @@ extension SearchResultMultipleViewModel: ViewModelType {
     }
     struct Output {
         let cellObj: Observable<[MultipleSectionModel]>
-        let selectVellObj: Observable<Int>
+        let selectCellObj: Observable<Int>
     }
     
     func transform(input: Input) -> Output {
@@ -21,10 +21,9 @@ extension SearchResultMultipleViewModel: ViewModelType {
                 
         let selectCellObj = input.onSelectedCell
             .map{ $0.row }
-            .debug()
         
         return Output(cellObj: cellObj.asObservable(),
-                      selectVellObj: selectCellObj)
+                      selectCellObj: selectCellObj)
     }
     
 }

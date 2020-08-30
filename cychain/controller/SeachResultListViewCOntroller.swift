@@ -8,13 +8,10 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
 
     
     @IBOutlet weak var tableView: UITableView!
-
-    
-    
     private var dataSource: RxTableViewSectionedReloadDataSource<MultipleSectionModel>!
     private let viewModel = SearchResultMultipleViewModel()
     private let disposeBag = DisposeBag()
-    private var model = multiMatchModel()
+    private var model = multiMatchModel.shared
     
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
@@ -75,9 +72,8 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 //
-        output.selectVellObj
+        output.selectCellObj
             .subscribe(onNext: {
-                log.debug("selectcell")
                 self.model.setData(selectIndexPathRow: $0)
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultMultipleViewCOntroller") as? SeachResultMultipleViewCOntroller
                 self.presentVC(vc: vc!, animation: true)
