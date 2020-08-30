@@ -39,6 +39,7 @@ extension MultiMatchViewModel: ViewModelType {
         let report = Observable.from(optional: model.reportData)
         
         let reportDataTapped = input.reportTapped
+            .skip(1)
             .withLatestFrom(report)
         
         let blockTapped = input.blockTapped

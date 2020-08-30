@@ -65,8 +65,6 @@
 		8C4CF5C524F9072A002C8173 /* MultiMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */; };
 		8C4CF5C724F90AF4002C8173 /* multiMatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */; };
 		8C4CF5C824F90AF4002C8173 /* multiMatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */; };
-		8C4CF5CA24F93BE2002C8173 /* MultiMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C924F93BE2002C8173 /* MultiMatchViewController.swift */; };
-		8C4CF5CB24F93BE2002C8173 /* MultiMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C924F93BE2002C8173 /* MultiMatchViewController.swift */; };
 		8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */; };
 		8C50ACC7239289AC00FAFBC4 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBF239289AC00FAFBC4 /* NameCell.swift */; };
 		8C50ACDC23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */; };
@@ -213,7 +211,6 @@
 		8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultMultipleViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiMatchViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiMatchModel.swift; sourceTree = "<group>"; };
-		8C4CF5C924F93BE2002C8173 /* MultiMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiMatchViewController.swift; sourceTree = "<group>"; };
 		8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inputDataListCell.swift; sourceTree = "<group>"; };
 		8C50ACBF239289AC00FAFBC4 /* NameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameCell.swift; sourceTree = "<group>"; };
 		8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager_SignUp_ViewController.swift; sourceTree = "<group>"; };
@@ -390,7 +387,6 @@
 				8C50ACCF23928F5C00FAFBC4 /* SeachResultViewCotroller.swift */,
 				8C50ACDA23928F5C00FAFBC4 /* SeachResultListViewCOntroller.swift */,
 				8C50ACCB23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift */,
-				8C4CF5C924F93BE2002C8173 /* MultiMatchViewController.swift */,
 				8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */,
 				8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */,
 				8C50ACD123928F5C00FAFBC4 /* TermsViewController.swift */,
@@ -818,7 +814,6 @@
 				8C4CF5B224ECA30E002C8173 /* MatchModel.swift in Sources */,
 				8CEA6A13247A9DDC00A1B283 /* PostViewModel.swift in Sources */,
 				8CE1B4BE2442EBF6009D8698 /* Button.swift in Sources */,
-				8C4CF5CA24F93BE2002C8173 /* MultiMatchViewController.swift in Sources */,
 				8C4CF5C724F90AF4002C8173 /* multiMatchModel.swift in Sources */,
 				8C7B1EBE21D925BC00AFE846 /* AppDelegate.swift in Sources */,
 				8CE1B4BA2442EBF6009D8698 /* textView.swift in Sources */,
@@ -888,7 +883,6 @@
 				8C4CF5B324ECA30E002C8173 /* MatchModel.swift in Sources */,
 				8CEA6A14247A9DDC00A1B283 /* PostViewModel.swift in Sources */,
 				8CF3AE8723F5571D00FC0648 /* AppDelegate.swift in Sources */,
-				8C4CF5CB24F93BE2002C8173 /* MultiMatchViewController.swift in Sources */,
 				8C4CF5C824F90AF4002C8173 /* multiMatchModel.swift in Sources */,
 				8CE1B4B92442EBF6009D8698 /* textField.swift in Sources */,
 				8CE1B4BD2442EBF6009D8698 /* contentView.swift in Sources */,

@@ -20,20 +20,9 @@ class multiMatchModel {
         let msg = model.values[selectIndexPathRow]["msg"] as? String ?? ""
         let icon = model.values[selectIndexPathRow]["image"] ?? R.image.user12()!
         
-   
-        
         self.matchData = [id: ["user": user, "search": search, "msg": msg, "image": icon]]
         self.reportData = ["user": user, "search": search, "msg": msg]
-        self.blockID = Observable.just(id).debug()
-        
-//        log.debug(self.matchData)
-//        log.debug(self.reportData)
-//        log.debug(model.iDAray)
-//        log.debug(model.iDAray[selectIndexPathRow])
-
-
-
-
+        self.blockID = Observable.just(id)
     }
 }
 

@@ -2861,9 +2861,7 @@ Cg
                         <viewLayoutGuide key="safeArea" id="iMQ-5m-tBa"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Post Card" id="Pvq-J5-WDp">
-                        <barButtonItem key="rightBarButtonItem" title="通報" image="menu" id="sLo-7d-z9M"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Post Card" id="Pvq-J5-WDp"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
@@ -3618,7 +3616,6 @@ Cg
         <image name="gear" width="26.666666030883789" height="26.666666030883789"/>
         <image name="home" width="26.666666030883789" height="26.666666030883789"/>
         <image name="list" width="26.666666030883789" height="26.666666030883789"/>
-        <image name="menu" width="24" height="24"/>
         <image name="popviewicon" width="479" height="456"/>
         <image name="search" width="26.666666030883789" height="26.666666030883789"/>
         <image name="user10" width="48" height="48"/>

@@ -41,7 +41,7 @@ class SeachResultMultipleViewCOntroller: SeachResultViewCotroller {
     
     override func bind() {
         let input = MultiMatchViewModel.Input(
-            naviBarButtonTaaped: naviBarButton.rx.tap.asObservable(),
+            naviBarButtonTaaped: naviBarButton.rx.tap.asObservable().debug(),
             reportTapped: self.reportObservable,
             blockTapped: self.blockObservable
         )
@@ -59,6 +59,12 @@ class SeachResultMultipleViewCOntroller: SeachResultViewCotroller {
                 self?.coverView?.isHidden = true
             })
             .disposed(by: disposeBag)
+        
+        output.naviBarButtonEvent
+                 .subscribe(onNext: { [weak self] _ in
+                     self?.repotAction()
+                 })
+             .disposed(by: disposeBag)
         
         //ReportTapp
         output.reportObj.skip(1).subscribe(onNext: { [weak self] data in
