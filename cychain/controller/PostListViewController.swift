@@ -34,11 +34,14 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
     func settableView() {
 //        let tableView = UITableView(frame: self.view.bounds, style: .plain)
 //        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        tableView.register(UINib(nibName: "inputDataListCell", bundle: nil),forCellReuseIdentifier: "cell")
 //        self.tableView = tableView
 //        self.view.addSubview(self.tableView!)
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
+    }
+    
+    func sregistCell() {
+        self.tableView.register(inputDataListCell.self, forCellReuseIdentifier: "cell")
     }
     
     override func viewWillLayoutSubviews() {
@@ -60,6 +63,7 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
     private func setCell() {
         dataSource = RxTableViewSectionedReloadDataSource<PostListSectionModel> (
             configureCell: { _, tableView, indexPath, item in
+                log.debug(item)
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? inputDataListCell
                 item.keys.forEach{ cell?.myName.text = $0 }
                 item.values.forEach{ cell?.targetName.text = $0 }
@@ -69,7 +73,6 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
             return true
         }
     }
-    
     
     private func bind() {
         let input = PostListViewModel

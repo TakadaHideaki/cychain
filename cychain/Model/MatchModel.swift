@@ -14,6 +14,7 @@ class MatchModel {
     var data: [String: [String: Any]]?
     var iDAray = [String]()
     var values = [[String: Any]]()
+    let sectionTitle = ["PostCard", "Message"]
     
     func setData(data: MatchData) {
         
@@ -34,16 +35,6 @@ class MatchModel {
         self.reportData = ["user": user, "search": search, "msg": msg]
         self.blockID = Observable.just(id)
         
-//         data.data.forEach {
-//            if let image = $0.value["image"] as? String {
-//                let id = $0.key
-//                convertURLtoUIImage(stringImage: image, { complete in
-//                    self.data![id]!["image"] = complete
-//                }
-//
-//                )
-//            }
-//        }
         var data = data.data
         data.forEach {
             if let urlImage = $0.value["image"] as? String {

@@ -21,16 +21,6 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         super.viewDidLoad()
         initializeUI()
         LoggedIn()
-        
-        let aa = BehaviorRelay<[String:[String:String]]>(value: ["String" : ["String" : "String"]])
-//        let filter_BlockID = Observable<[String:[String:String]]> {
-//            return aa
-//        }
-        
-        let blockID = ["a"]
-
-//        filter_BlockID = []
-
     }
 
     

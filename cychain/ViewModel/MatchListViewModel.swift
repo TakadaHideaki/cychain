@@ -2,11 +2,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct SearchResultMultipleViewModel {
+struct MatchListViewModel {
     private let model = MatchModel.shared
     private let disposeBag = DisposeBag()
 }
-extension SearchResultMultipleViewModel: ViewModelType {
+extension MatchListViewModel: ViewModelType {
     struct Input {
         let onSelectedCell: Observable<IndexPath>
     }

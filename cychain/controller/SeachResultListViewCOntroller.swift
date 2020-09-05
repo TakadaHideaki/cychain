@@ -8,8 +8,9 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
 
     
     @IBOutlet weak var tableView: UITableView!
+    
     private var dataSource: RxTableViewSectionedReloadDataSource<MultipleSectionModel>!
-    private let viewModel = SearchResultMultipleViewModel()
+    private let viewModel = MatchListViewModel()
     private let disposeBag = DisposeBag()
     private var model = multiMatchModel.shared
     
@@ -19,9 +20,7 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     lazy var initViewLayout : Void = {
         admob()
     }()
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initalizeUI()
@@ -62,7 +61,7 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     }
     
     private func bind() {
-        let input = SearchResultMultipleViewModel
+        let input = MatchListViewModel
             .Input(onSelectedCell: tableView.rx.itemSelected.asObservable())
         
         
@@ -75,7 +74,7 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
         output.selectCellObj
             .subscribe(onNext: {
                 self.model.setData(selectIndexPathRow: $0)
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultMultipleViewCOntroller") as? SeachResultMultipleViewCOntroller
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "SeachResultMultipleViewCOntroller") as? MultiMatchViewController
                 self.presentVC(vc: vc!, animation: true)
             })
         .disposed(by: disposeBag)

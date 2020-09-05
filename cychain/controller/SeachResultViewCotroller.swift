@@ -6,23 +6,52 @@ import MessageUI
 import GoogleMobileAds
 
 class SeachResultViewCotroller: UIViewController {
-    
-        
-    private var dataSource: RxTableViewSectionedReloadDataSource<MatchSectionModel>!
+   
     private let viewModel = SingleMatchViewModel()
+    var cellObject: BaseViewModel = SingleMatchViewModel()
     let disposeBag = DisposeBag()
-    var report: UIAlertAction?
-    var block: UIAlertAction?
     let indicatorView = UIActivityIndicatorView.init(style: .whiteLarge)
-    var coverView: UIView?
-    var tableView: UITableView!
-    var naviBarButton: UIBarButtonItem!
+    var coverView = UIView()
+    var tableView = UITableView()
+    var naviBarButton = UIBarButtonItem()
     let reportRelay = BehaviorRelay<Void>(value: ())
     var reportObservable: Observable<Void> { return reportRelay.asObservable() }
     let blockRelay = BehaviorRelay<Void>(value: ())
     var blockObservable: Observable<Void> { return blockRelay.asObservable() }
-
     
+    private lazy var dataSource =
+          RxTableViewSectionedReloadDataSource<MatchSectionModel> (
+              configureCell: configureCell
+      )
+
+    private lazy var configureCell: RxTableViewSectionedReloadDataSource<MatchSectionModel>.ConfigureCell = {
+        [weak self] _, tableView, indexPath, item in
+
+                switch indexPath.section {
+                case 0:
+                    let profileCell = tableView.dequeueReusableCell(withIdentifier: "P_Cell", for: indexPath) as! ProfileCell
+
+                    profileCell.mynameLabel.text = item.map{$0.1}[0]["user"] as? String
+                    profileCell.targetLabel.text = item.map{$0.1}[0]["search"] as? String
+                    profileCell.profileImage.image = item.map{$0.1}[0]["image"] as? UIImage
+
+                    profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
+                    profileCell.targetLabel.adjustsFontSizeToFitWidth = true
+                    profileCell.mynameLabel.minimumScaleFactor = 0.5
+                    profileCell.targetLabel.minimumScaleFactor = 0.5
+                    return profileCell
+
+                case 1:
+                    let messagecell = tableView.dequeueReusableCell(withIdentifier: "M_Cell", for: indexPath) as! MessageCell
+                    messagecell.messageLabel.text = item.map{$0.1}[0]["msg"] as? String
+
+                    return messagecell
+
+                default: break
+                }
+                return UITableViewCell()
+        }
+
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
     }
@@ -32,10 +61,12 @@ class SeachResultViewCotroller: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        changeCellObj()
         initializeUI()
-        setCell()
         bind()
     }
+    
+    func changeCellObj() {}
     
     func initializeUI() {
         setBarButton()
@@ -54,10 +85,10 @@ class SeachResultViewCotroller: UIViewController {
     
     func setCoverView() {
         coverView = UIView(frame: self.view.frame)
-        coverView?.backgroundColor = .white
-        coverView?.alpha = 0.5
-        self.view.addSubview(coverView!)
-        self.view.bringSubviewToFront(coverView!)
+        coverView.backgroundColor = .white
+        coverView.alpha = 0.5
+        self.view.addSubview(coverView)
+        self.view.bringSubviewToFront(coverView)
     }
     
     func setBarButton() {
@@ -85,34 +116,6 @@ class SeachResultViewCotroller: UIViewController {
           tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
       }
     
-         func setCell() {
-        dataSource = RxTableViewSectionedReloadDataSource<MatchSectionModel> (
-            configureCell: { _, tableView, indexPath, item in
-                switch indexPath.section {
-                case 0:
-                    let profileCell = tableView.dequeueReusableCell(withIdentifier: "P_Cell", for: indexPath) as! ProfileCell
-                                        
-                    profileCell.mynameLabel.text = item.map{$0.1}[0]["user"] as? String
-                    profileCell.targetLabel.text = item.map{$0.1}[0]["search"] as? String
-                    profileCell.profileImage.image = item.map{$0.1}[0]["image"] as? UIImage
-
-                    profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
-                    profileCell.targetLabel.adjustsFontSizeToFitWidth = true
-                    profileCell.mynameLabel.minimumScaleFactor = 0.5
-                    profileCell.targetLabel.minimumScaleFactor = 0.5
-                    return profileCell
-                    
-                case 1:
-                    let messagecell = tableView.dequeueReusableCell(withIdentifier: "M_Cell", for: indexPath) as! MessageCell
-                    messagecell.messageLabel.text = item.map{$0.1}[0]["msg"] as? String
-
-                    return messagecell
-                    
-                default: break
-                }
-                return UITableViewCell()
-        })
-    }
     
      func bind() {
         let input = SingleMatchViewModel.Input(
@@ -122,16 +125,17 @@ class SeachResultViewCotroller: UIViewController {
         )
         
         let output = viewModel.transform(input: input)
+
         //cellData
-        output.cellObj
+        cellObject.cellObj
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+                    .disposed(by: disposeBag)
         
         //indicaotr & CoverView
         output.indicator.drive(self.indicatorView.rx.isAnimating).disposed(by: disposeBag)
         output.indicator.asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.coverView?.isHidden = true
+                self?.coverView.isHidden = true
             })
             .disposed(by: disposeBag)
 

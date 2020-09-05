@@ -120,7 +120,7 @@ class SetFirebase {
         
         // SamyData
         
-        self.f.accept(["TestIDA":["message": "TestMessage"], "TestIDB":["message": "TestMessage"]])
+        self.f.accept(["TestIDA":["message": "TestMessage"], "TestIDB":["message": "Test"]])
 //        self.f.accept(["TestIDA":["message": "TestMessage"]])
 
 

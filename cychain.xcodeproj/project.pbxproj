@@ -45,6 +45,12 @@
 		8C43513E24D5365B0035FDC4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43513C24D5365B0035FDC4 /* ViewModelType.swift */; };
 		8C43514024D537B10035FDC4 /* PostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43513F24D537B10035FDC4 /* PostListViewModel.swift */; };
 		8C43514124D537B10035FDC4 /* PostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43513F24D537B10035FDC4 /* PostListViewModel.swift */; };
+		8C46B63624FB7D2600D03827 /* SingleMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46B63524FB7D2600D03827 /* SingleMatchViewModel.swift */; };
+		8C46B63724FB7D2600D03827 /* SingleMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46B63524FB7D2600D03827 /* SingleMatchViewModel.swift */; };
+		8C46B63924FB7FC700D03827 /* MatchListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46B63824FB7FC700D03827 /* MatchListModel.swift */; };
+		8C46B63A24FB7FC700D03827 /* MatchListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46B63824FB7FC700D03827 /* MatchListModel.swift */; };
+		8C46B63C24FBBD1000D03827 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46B63B24FBBD1000D03827 /* SettingViewModel.swift */; };
+		8C46B63D24FBBD1000D03827 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46B63B24FBBD1000D03827 /* SettingViewModel.swift */; };
 		8C48B7A324E4D249000346AB /* SetUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C48B7A124E4D249000346AB /* SetUserDefault.swift */; };
 		8C48B7A424E4D249000346AB /* SetUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C48B7A124E4D249000346AB /* SetUserDefault.swift */; };
 		8C48B7A524E4D249000346AB /* SetFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C48B7A224E4D249000346AB /* SetFirebase.swift */; };
@@ -55,12 +61,8 @@
 		8C4CF5B024EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */; };
 		8C4CF5B224ECA30E002C8173 /* MatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B124ECA30E002C8173 /* MatchModel.swift */; };
 		8C4CF5B324ECA30E002C8173 /* MatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B124ECA30E002C8173 /* MatchModel.swift */; };
-		8C4CF5B824EE21B1002C8173 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */; };
-		8C4CF5B924EE21B1002C8173 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */; };
-		8C4CF5BE24F6A69F002C8173 /* multiMatchListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5BD24F6A69F002C8173 /* multiMatchListModel.swift */; };
-		8C4CF5BF24F6A69F002C8173 /* multiMatchListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5BD24F6A69F002C8173 /* multiMatchListModel.swift */; };
-		8C4CF5C124F6A6E1002C8173 /* SearchResultMultipleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */; };
-		8C4CF5C224F6A6E1002C8173 /* SearchResultMultipleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */; };
+		8C4CF5C124F6A6E1002C8173 /* MatchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C024F6A6E1002C8173 /* MatchListViewModel.swift */; };
+		8C4CF5C224F6A6E1002C8173 /* MatchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C024F6A6E1002C8173 /* MatchListViewModel.swift */; };
 		8C4CF5C424F9072A002C8173 /* MultiMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */; };
 		8C4CF5C524F9072A002C8173 /* MultiMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */; };
 		8C4CF5C724F90AF4002C8173 /* multiMatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */; };
@@ -68,7 +70,7 @@
 		8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */; };
 		8C50ACC7239289AC00FAFBC4 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACBF239289AC00FAFBC4 /* NameCell.swift */; };
 		8C50ACDC23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */; };
-		8C50ACDD23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCB23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift */; };
+		8C50ACDD23928F5C00FAFBC4 /* MultiMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCB23928F5C00FAFBC4 /* MultiMatchViewController.swift */; };
 		8C50ACDE23928F5C00FAFBC4 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCC23928F5C00FAFBC4 /* LogInViewController.swift */; };
 		8C50ACDF23928F5C00FAFBC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */; };
 		8C50ACE023928F5C00FAFBC4 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */; };
@@ -105,8 +107,6 @@
 		8C8B07052425A6EC007F7494 /* muchpopAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C8B07032425A6EC007F7494 /* muchpopAnimation.json */; };
 		8C8B07072425A785007F7494 /* muchpopAnimation11.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C8B07062425A785007F7494 /* muchpopAnimation11.json */; };
 		8C8B07082425A785007F7494 /* muchpopAnimation11.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C8B07062425A785007F7494 /* muchpopAnimation11.json */; };
-		8C8B070A2427566E007F7494 /* MatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8B07092427566D007F7494 /* MatchData.swift */; };
-		8C8B070B2427566E007F7494 /* MatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8B07092427566D007F7494 /* MatchData.swift */; };
 		8C980EFF2463F0340071FFD2 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C980EFE2463F0330071FFD2 /* R.generated.swift */; };
 		8C980F002463F0340071FFD2 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C980EFE2463F0330071FFD2 /* R.generated.swift */; };
 		8CA19C9022EBC90200ED752F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA19C8F22EBC90200ED752F /* Main.storyboard */; };
@@ -144,7 +144,7 @@
 		8CF3AE8C23F5571D00FC0648 /* PostResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD823928F5C00FAFBC4 /* PostResultViewController.swift */; };
 		8CF3AE8D23F5571D00FC0648 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */; };
 		8CF3AE8F23F5571D00FC0648 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */; };
-		8CF3AE9123F5571D00FC0648 /* SeachResultMultipleViewCOntroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCB23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift */; };
+		8CF3AE9123F5571D00FC0648 /* MultiMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCB23928F5C00FAFBC4 /* MultiMatchViewController.swift */; };
 		8CF3AE9223F5571D00FC0648 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD423928F5C00FAFBC4 /* PostListViewController.swift */; };
 		8CF3AE9423F5571D00FC0648 /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD323928F5C00FAFBC4 /* SelectViewController.swift */; };
 		8CF3AE9523F5571D00FC0648 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD623928F5C00FAFBC4 /* PostViewController.swift */; };
@@ -201,20 +201,21 @@
 		8C42304024110BFA00160A04 /* ImagePickerControllert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerControllert.swift; sourceTree = "<group>"; };
 		8C43513C24D5365B0035FDC4 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		8C43513F24D537B10035FDC4 /* PostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewModel.swift; sourceTree = "<group>"; };
+		8C46B63524FB7D2600D03827 /* SingleMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleMatchViewModel.swift; sourceTree = "<group>"; };
+		8C46B63824FB7FC700D03827 /* MatchListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchListModel.swift; sourceTree = "<group>"; };
+		8C46B63B24FBBD1000D03827 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		8C48B7A124E4D249000346AB /* SetUserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUserDefault.swift; sourceTree = "<group>"; };
 		8C48B7A224E4D249000346AB /* SetFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetFirebase.swift; sourceTree = "<group>"; };
 		8C4B052824E2688600FA724F /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchPopupViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5B124ECA30E002C8173 /* MatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchModel.swift; sourceTree = "<group>"; };
-		8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
-		8C4CF5BD24F6A69F002C8173 /* multiMatchListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiMatchListModel.swift; sourceTree = "<group>"; };
-		8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultMultipleViewModel.swift; sourceTree = "<group>"; };
+		8C4CF5C024F6A6E1002C8173 /* MatchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchListViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiMatchViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiMatchModel.swift; sourceTree = "<group>"; };
 		8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inputDataListCell.swift; sourceTree = "<group>"; };
 		8C50ACBF239289AC00FAFBC4 /* NameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameCell.swift; sourceTree = "<group>"; };
 		8C50ACCA23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager_SignUp_ViewController.swift; sourceTree = "<group>"; };
-		8C50ACCB23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeachResultMultipleViewCOntroller.swift; sourceTree = "<group>"; };
+		8C50ACCB23928F5C00FAFBC4 /* MultiMatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiMatchViewController.swift; sourceTree = "<group>"; };
 		8C50ACCC23928F5C00FAFBC4 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
@@ -245,7 +246,6 @@
 		8C8B06FD242597E8007F7494 /* MuchPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuchPopUpVC.swift; sourceTree = "<group>"; };
 		8C8B07032425A6EC007F7494 /* muchpopAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = muchpopAnimation.json; sourceTree = "<group>"; };
 		8C8B07062425A785007F7494 /* muchpopAnimation11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = muchpopAnimation11.json; sourceTree = "<group>"; };
-		8C8B07092427566D007F7494 /* MatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchData.swift; sourceTree = "<group>"; };
 		8C980EFE2463F0330071FFD2 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		8C9D74F3226C38D6004D34F7 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		8C9D74F5226C38EF004D34F7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -322,9 +322,8 @@
 				8C303D6124334A5C00F080AB /* UserDataModel.swift */,
 				8C3FCD5D24D3A09300ADC76B /* PostResultModel.swift */,
 				8C420CFE24540EB000769F01 /* PostListModel.swift */,
-				8C8B07092427566D007F7494 /* MatchData.swift */,
 				8C4CF5B124ECA30E002C8173 /* MatchModel.swift */,
-				8C4CF5BD24F6A69F002C8173 /* multiMatchListModel.swift */,
+				8C46B63824FB7FC700D03827 /* MatchListModel.swift */,
 				8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */,
 				8C420D04245E2A2500769F01 /* SettingModel.swift */,
 				8C3E3131241CE743008A4DAF /* EditData.swift */,
@@ -386,7 +385,7 @@
 				8C8B06FD242597E8007F7494 /* MuchPopUpVC.swift */,
 				8C50ACCF23928F5C00FAFBC4 /* SeachResultViewCotroller.swift */,
 				8C50ACDA23928F5C00FAFBC4 /* SeachResultListViewCOntroller.swift */,
-				8C50ACCB23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift */,
+				8C50ACCB23928F5C00FAFBC4 /* MultiMatchViewController.swift */,
 				8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */,
 				8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */,
 				8C50ACD123928F5C00FAFBC4 /* TermsViewController.swift */,
@@ -463,9 +462,10 @@
 				8C43513F24D537B10035FDC4 /* PostListViewModel.swift */,
 				8C4B052824E2688600FA724F /* SearchViewModel.swift */,
 				8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */,
-				8C4CF5B724EE21B1002C8173 /* SearchResultViewController.swift */,
-				8C4CF5C024F6A6E1002C8173 /* SearchResultMultipleViewModel.swift */,
+				8C46B63524FB7D2600D03827 /* SingleMatchViewModel.swift */,
+				8C4CF5C024F6A6E1002C8173 /* MatchListViewModel.swift */,
 				8C4CF5C324F9072A002C8173 /* MultiMatchViewModel.swift */,
+				8C46B63B24FBBD1000D03827 /* SettingViewModel.swift */,
 				8C43513C24D5365B0035FDC4 /* ViewModelType.swift */,
 			);
 			path = ViewModel;
@@ -802,6 +802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C50ACE123928F5C00FAFBC4 /* SeachResultViewCotroller.swift in Sources */,
+				8C46B63C24FBBD1000D03827 /* SettingViewModel.swift in Sources */,
 				8C50ACDC23928F5C00FAFBC4 /* Pager_SignUp_ViewController.swift in Sources */,
 				8C54CBB824C705AF0079C316 /* ImageCrop.swift in Sources */,
 				8C980EFF2463F0340071FFD2 /* R.generated.swift in Sources */,
@@ -818,7 +819,6 @@
 				8C7B1EBE21D925BC00AFE846 /* AppDelegate.swift in Sources */,
 				8CE1B4BA2442EBF6009D8698 /* textView.swift in Sources */,
 				8C48B7A524E4D249000346AB /* SetFirebase.swift in Sources */,
-				8C4CF5B824EE21B1002C8173 /* SearchResultViewController.swift in Sources */,
 				8C420CF92452B27F00769F01 /* String.swift in Sources */,
 				8C50ACC7239289AC00FAFBC4 /* NameCell.swift in Sources */,
 				8C50ACEB23928F5C00FAFBC4 /* EditViewController.swift in Sources */,
@@ -833,11 +833,11 @@
 				8C420D05245E2A2500769F01 /* SettingModel.swift in Sources */,
 				8C50ACE023928F5C00FAFBC4 /* PolicyViewController.swift in Sources */,
 				8C303D68243879F500F080AB /* AuthModel.swift in Sources */,
-				8C50ACDD23928F5C00FAFBC4 /* SeachResultMultipleViewCOntroller.swift in Sources */,
-				8C8B070A2427566E007F7494 /* MatchData.swift in Sources */,
+				8C50ACDD23928F5C00FAFBC4 /* MultiMatchViewController.swift in Sources */,
 				8C50ACE623928F5C00FAFBC4 /* PostListViewController.swift in Sources */,
 				8C3E3132241CE743008A4DAF /* EditData.swift in Sources */,
 				8C50ACE523928F5C00FAFBC4 /* SelectViewController.swift in Sources */,
+				8C46B63924FB7FC700D03827 /* MatchListModel.swift in Sources */,
 				8C50ACE823928F5C00FAFBC4 /* PostViewController.swift in Sources */,
 				8C42304124110BFB00160A04 /* ImagePickerControllert.swift in Sources */,
 				8C303D6224334A5C00F080AB /* UserDataModel.swift in Sources */,
@@ -851,10 +851,10 @@
 				8C303D712439CAFD00F080AB /* AuthView.swift in Sources */,
 				8C50ACE923928F5C00FAFBC4 /* InitialViewController.swift in Sources */,
 				8C750E01244711EC0003A82C /* MessageCell.swift in Sources */,
+				8C46B63624FB7D2600D03827 /* SingleMatchViewModel.swift in Sources */,
 				8CE1B4B22442EBF6009D8698 /* View.swift in Sources */,
 				8C70D347246157E900150E52 /* Onboarding.swift in Sources */,
 				8C249842246FB5D000F81972 /* AuthViewModel.swift in Sources */,
-				8C4CF5BE24F6A69F002C8173 /* multiMatchListModel.swift in Sources */,
 				8CE1B4B42442EBF6009D8698 /* labele.swift in Sources */,
 				8C4B052924E2688600FA724F /* SearchViewModel.swift in Sources */,
 				8CE1B4BC2442EBF6009D8698 /* contentView.swift in Sources */,
@@ -862,7 +862,7 @@
 				8C43513D24D5365B0035FDC4 /* ViewModelType.swift in Sources */,
 				8C50ACDE23928F5C00FAFBC4 /* LogInViewController.swift in Sources */,
 				8C50ACE723928F5C00FAFBC4 /* SignUpViewController.swift in Sources */,
-				8C4CF5C124F6A6E1002C8173 /* SearchResultMultipleViewModel.swift in Sources */,
+				8C4CF5C124F6A6E1002C8173 /* MatchListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -871,6 +871,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CE1B4B52442EBF6009D8698 /* labele.swift in Sources */,
+				8C46B63D24FBBD1000D03827 /* SettingViewModel.swift in Sources */,
 				8C750E02244711EC0003A82C /* MessageCell.swift in Sources */,
 				8C54CBB924C705AF0079C316 /* ImageCrop.swift in Sources */,
 				8C980F002463F0340071FFD2 /* R.generated.swift in Sources */,
@@ -887,7 +888,6 @@
 				8CE1B4B92442EBF6009D8698 /* textField.swift in Sources */,
 				8CE1B4BD2442EBF6009D8698 /* contentView.swift in Sources */,
 				8C48B7A624E4D249000346AB /* SetFirebase.swift in Sources */,
-				8C4CF5B924EE21B1002C8173 /* SearchResultViewController.swift in Sources */,
 				8C420CFA2452B27F00769F01 /* String.swift in Sources */,
 				8CF3AE8823F5571D00FC0648 /* NameCell.swift in Sources */,
 				8CF3AE8923F5571D00FC0648 /* EditViewController.swift in Sources */,
@@ -904,11 +904,11 @@
 				8CE1B4BB2442EBF6009D8698 /* textView.swift in Sources */,
 				8C4230352409F5CD00160A04 /* ScrollKeyBoard.swift in Sources */,
 				8CF3AE8D23F5571D00FC0648 /* SearchViewController.swift in Sources */,
-				8C8B070B2427566E007F7494 /* MatchData.swift in Sources */,
 				8CF3AE8F23F5571D00FC0648 /* PolicyViewController.swift in Sources */,
 				8CBD3E2F245067AB00DA7FCE /* ImagePickerControllert.swift in Sources */,
+				8C46B63A24FB7FC700D03827 /* MatchListModel.swift in Sources */,
 				8C303D6324334A5C00F080AB /* UserDataModel.swift in Sources */,
-				8CF3AE9123F5571D00FC0648 /* SeachResultMultipleViewCOntroller.swift in Sources */,
+				8CF3AE9123F5571D00FC0648 /* MultiMatchViewController.swift in Sources */,
 				8CF3AE9223F5571D00FC0648 /* PostListViewController.swift in Sources */,
 				8C303D69243879F500F080AB /* AuthModel.swift in Sources */,
 				8C43514124D537B10035FDC4 /* PostListViewModel.swift in Sources */,
@@ -920,10 +920,10 @@
 				8CF3AE9523F5571D00FC0648 /* PostViewController.swift in Sources */,
 				8CF3AE9723F5571D00FC0648 /* Pager_LogIn_ViewController.swift in Sources */,
 				8CF3AE9823F5571D00FC0648 /* SettingsViewController.swift in Sources */,
+				8C46B63724FB7D2600D03827 /* SingleMatchViewModel.swift in Sources */,
 				8C265FDA24403A6F00E21AFF /* EditData.swift in Sources */,
 				8C70D348246157E900150E52 /* Onboarding.swift in Sources */,
 				8C249843246FB5D000F81972 /* AuthViewModel.swift in Sources */,
-				8C4CF5BF24F6A69F002C8173 /* multiMatchListModel.swift in Sources */,
 				8CF3AE9923F5571D00FC0648 /* InitialViewController.swift in Sources */,
 				8C4B052A24E2688600FA724F /* SearchViewModel.swift in Sources */,
 				8CF3AE9A23F5571D00FC0648 /* SeachResultListViewCOntroller.swift in Sources */,
@@ -931,7 +931,7 @@
 				8C43513E24D5365B0035FDC4 /* ViewModelType.swift in Sources */,
 				8CF3AE9C23F5571D00FC0648 /* SignUpViewController.swift in Sources */,
 				8CE1B4C32443A2AB009D8698 /* ProfileCell.swift in Sources */,
-				8C4CF5C224F6A6E1002C8173 /* SearchResultMultipleViewModel.swift in Sources */,
+				8C4CF5C224F6A6E1002C8173 /* MatchListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -102,7 +102,7 @@ extension UIViewController {
         alert(title: "メール送信エラー", message: "メールアドレスがありません", actiontitle: "OK")
     }
     
-    func logOutError() {
+    func logOutErrorAlert() {
         alert(title: "ログアウト失敗", message: "ログアウト出来ませんでした「お問い合わせ」から問い合わせ下さい", actiontitle: "OK")
     }
     
