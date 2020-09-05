@@ -73,7 +73,7 @@ extension SearchViewModel: ViewModelType {
         let filter_BlockID = obseved_match.map { $0.filter { !blockID.contains($0.key) }}
         // ⑤ ④の結果から、マッチ無しのみを抽出
         let noData = filter_BlockID.map{ !$0.isEmpty }.filter{ $0 == false }
-        // ①と⑤をMerge
+        // ⑥ ①と⑤をMerge
         let noMatch = Observable
             .of(obseved_NoMatch, noData)
             .merge()
@@ -82,6 +82,7 @@ extension SearchViewModel: ViewModelType {
             .startWith(true)
             .do(onNext: {_ in log.debug("noMatch")})
         
+        //　⑦ MatchしたらMatchDataにマッチデータをセット
         let match = Observable
             .combineLatest(
                 substitutionToText,
@@ -89,24 +90,22 @@ extension SearchViewModel: ViewModelType {
                     MatchData(searchWord: searchWord,
                                data: value)
         }
-        .do(onNext: {_ in log.debug("match_ViewModel")})
-
-        
+        // ⑧ machした時のUI表示/非表示切り替え(マッチしたらtrue)
         let mach_UIhidden = match
         .map{_ in true }
         .startWith(true)
         .asDriver(onErrorDriveWith: Driver.empty())
-
+        // ⑨ matchしたらfalseにする
         let bool_match = obseved_match
             .map{ _ in false }
-        
+        // ⑩ ①と⑨をmeage
         let merge_Match_NoMatch = Observable
             .of(obseved_NoMatch, bool_match)
             .merge()
             .skip(1)
             .asDriver(onErrorDriveWith: Driver.empty())
-        
-        let icator = Driver
+        // ⑪ indicator表示/非表示
+        let indicator = Driver
             .of(searchStart, merge_Match_NoMatch)
             .merge()
             .skip(1)
@@ -116,7 +115,7 @@ extension SearchViewModel: ViewModelType {
         return Output( ButtonEnabled: buttonEnabled,
                        noMatch: noMatch,
                        match: match,
-                       contolIndicator: icator,
+                       contolIndicator: indicator,
                        hidden: mach_UIhidden
         )
         

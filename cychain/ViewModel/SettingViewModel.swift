@@ -30,14 +30,12 @@ extension SettingViewModel: ViewModelType {
             ]
         )
         
-        
        let menu = input.didSelectedCell
             .do(onNext: { self.cellTapEvent(indexPath: $0)})
             .compactMap { Settings(index: $0) }
         
         let logOut = model.logOutEvent.skip(1)
         let signOut = model.signOutEvent.skip(1)
-
 
         return Output(cellObj: cellObj.asObservable(),
                       selectedCellEvent: menu,
@@ -50,7 +48,7 @@ extension SettingViewModel: ViewModelType {
     
     enum Settings {
         case logOut
-        case deleteAcount
+        case signOut
         case inquiry
         case terms
         case privacy
@@ -59,7 +57,7 @@ extension SettingViewModel: ViewModelType {
             case (0, 0):
                 self = .logOut
             case (0, 1):
-                self = .deleteAcount
+                self = .signOut
             case (1, 0):
                 self = .inquiry
             case (1, 1):
@@ -75,10 +73,8 @@ extension SettingViewModel: ViewModelType {
         guard let selectedMenu = Settings(index: indexPath) else { return }
         switch selectedMenu  {
         case .logOut: model.logOut()
-        case .deleteAcount: model.signOut()
-        case .inquiry: break
-        case .terms: break
-        case .privacy: break
+        case .signOut: model.signOut()
+        case .inquiry, .terms, .privacy: break
         }
     }
     

@@ -93,7 +93,6 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
                 let sb = R.storyboard.main()
                 let vc = sb.instantiateViewController(withIdentifier: "editVC") as? EditViewController
                 vc?.pairName = pair
-                log.debug(pair)
                 self.navigationController?.pushViewController(vc!, animated: true)
             })
             .disposed(by: disposeBag)

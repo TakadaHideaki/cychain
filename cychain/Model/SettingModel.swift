@@ -47,15 +47,11 @@ class SettingModel {
     
     func logOut() {
         do {
-            log.debug("ログアウト成功")
             logOutRelay.accept(LogOut.success)
-//            try Auth.auth().signOut()
-//            self.delegate?.logoutAlert()
+            try Auth.auth().signOut()
             
         } catch _ as NSError {
-            log.debug("ログアウト失敗")
             logOutRelay.accept(LogOut.error)
-//            self.delegate?.sendmailErrorAlert()
         }
     }
     
@@ -89,26 +85,22 @@ class SettingModel {
 //        Auth.auth().currentUser?.delete { error in
 //            if error != nil {
         signOutRelay.accept(SignOut.error)
-//                self.delegate?.signoutErrorAlert()
 //            } else {
         signOutRelay.accept(SignOut.success)
-
-//                self.delegate?.signoutAlert()
 //            }
 //        }
-        
     }
     
 }
-
-enum EnumCells: Int {
-    case plofileCell = 0
-    case messageCell
-    
-    static var count: Int {
-        return EnumCells.messageCell.rawValue + 1
-    }
-}
+//
+//enum EnumCells: Int {
+//    case plofileCell = 0
+//    case messageCell
+//
+//    static var count: Int {
+//        return EnumCells.messageCell.rawValue + 1
+//    }
+//}
 
 enum Section: Int {
     case account = 0

@@ -50,6 +50,7 @@ class SetFirebase {
      }
      }
      }*/
+    
     func set(data: Texts)  {
         let datas = FirebaseObj.init(my: data.my,target: data.target,icon: data.iconImage)
         switch datas.icon {
@@ -61,6 +62,8 @@ class SetFirebase {
             })
         }
     }
+    
+    
     
     
     func delete(data: [String: String]) {

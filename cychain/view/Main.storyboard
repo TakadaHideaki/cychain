@@ -3373,9 +3373,6 @@ Cg
                                         <real key="value" value="29"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="iconButtonTapped:" destination="qoR-G0-sTD" eventType="touchUpInside" id="1ec-gW-6bk"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自分の名前" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3w6-5v-MH2">
                                 <rect key="frame" x="44" y="216" width="71.5" height="17"/>
@@ -3425,9 +3422,6 @@ Cg
                                         <point key="value" x="0.0" y="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="senderData:" destination="qoR-G0-sTD" eventType="touchUpInside" id="T7l-xf-K7o"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6d-vy-rC9">
                                 <rect key="frame" x="44" y="326" width="69" height="20.5"/>
@@ -3472,14 +3466,6 @@ Cg
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="dataSendButton" destination="g7H-cg-eQS" id="t8b-wv-tgm"/>
-                        <outlet property="iconRegistButton" destination="yRT-gc-yeG" id="BcR-dK-2LJ"/>
-                        <outlet property="messageLabel" destination="r6d-vy-rC9" id="dZ6-dS-vYP"/>
-                        <outlet property="messageTextView" destination="eKU-Mc-FRg" id="ThF-TQ-3dm"/>
-                        <outlet property="myNameTextField" destination="4bc-5i-FiE" id="zYG-Ex-3ug"/>
-                        <outlet property="targetNameTextField" destination="BK0-KH-gMR" id="SLx-Rd-664"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kZg-K0-itl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

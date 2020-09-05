@@ -87,10 +87,10 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate  
         output.selectedCellEvent
             .subscribe(onNext: {
                 switch $0 {
-                case .logOut, .deleteAcount: break
+                case .logOut, .signOut: break
                 case .inquiry: self.sendMail()
-                case .terms: self.pushVC(vc: R.storyboard.main.terms1()!, animation: true)
-                case .privacy: self.pushVC(vc: R.storyboard.main.privacyPolicy()!, animation: true)
+                case .terms: self.presentVC(vc: R.storyboard.main.terms1()!, animation: true)
+                case .privacy: self.presentVC(vc: R.storyboard.main.privacyPolicy()!, animation: true)
                 }
             })
             .disposed(by: disposeBag)

@@ -52,13 +52,13 @@ extension PostViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-//①      投稿数Check
+        //① 投稿数Check
         var postsCheck: Observable<Bool> {
             return Observable.just(
                 UD.array(forKey: Name.KeyName.uniqueNmame.rawValue)!.count < 10
             )
         }
-//②      PostDataを纏めTextsへ
+        //② PostDataを纏めTextsへ
         let substitutionToTexts = Observable
             .combineLatest(input.myNameRelay.asObservable(),
                            input.targetRelay.asObservable(),
@@ -70,18 +70,18 @@ extension PostViewModel: ViewModelType {
                                   iconImage: iconImage)
         }
         
-//③     投稿ボタン押下→投稿数クリア(①) →Textsに投稿データをセット(②)
-        let characterCheck = input.postButtontapped
+        //③ 投稿ボタン押下→投稿数クリア(①) →Textsに投稿データをセット(②)
+        let postButtonTap = input.postButtontapped
             .withLatestFrom(postsCheck)
             .filter { $0 }
             .map { _ in () }
             .withLatestFrom(substitutionToTexts) { _, texts in texts }
        
         // ③→ 文字数NG
-        let overrun = characterCheck.filter { !$0.isValid }.map { _ in () }
+        let overrun = postButtonTap.filter { !$0.isValid }.map { _ in () }
    
         // ③→ 文字数OK
-        let apprppriate = characterCheck.filter { $0.isValid }
+        let apprppriate = postButtonTap.filter { $0.isValid }
             .do(onNext: {
                 self.userdefault?.setUd(data: $0)
                 self.firebase?.set(data: $0)
@@ -91,18 +91,14 @@ extension PostViewModel: ViewModelType {
         //Labelの表示/非表示制御
         let messageTextCountCheck = input.messageRelay
             .map{ return $0.count > 0 }
-        
-        
-        
-        
-        
+            .asDriver(onErrorDriveWith: Driver.empty())
         
         
         return Output(onIcButtonClickEvent: input.iconButtontapped,
-                      messageTapp: input.messageTapped.asObservable(),
+                      messageTapp: input.messageTapped,
                       selectedImage: input.imageSelected,
                       iconButtonImage: input.imageCropped.asDriver(onErrorDriveWith: Driver.empty()),
-                      messageLabelEnable: messageTextCountCheck.asDriver(onErrorDriveWith: Driver.empty()),
+                      messageLabelEnable: messageTextCountCheck,
                       postsCountOver: postsCheck,
                       characterCountOverrun: overrun,
                       nextVC: apprppriate

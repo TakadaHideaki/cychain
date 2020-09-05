@@ -13,11 +13,12 @@ class PostViewController: UIViewController, ScrollKeyBoard {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var postButton: Button!
     
-    private let disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
+    let defaultIcon = R.image.user10()
+    let iconSet = ImagePickerController()
+    let imageCrop = ImageCrop()
     private let viewModel = PostViewModel()
-    private let defaultIcon = R.image.user10()
-    private let iconSet = ImagePickerController()
-    private let imageCrop = ImageCrop()
+
     
     //TextViewのpropaty
     let maxLength = 6
@@ -45,15 +46,15 @@ class PostViewController: UIViewController, ScrollKeyBoard {
     
     func initializeUI() {
         messageTextView.keyBoardtoolBar(textView: messageTextView)
-        customNavigationBar()
         self.iconRegistButton.setImage(self.defaultIcon, for: .normal)
+        customNavigationBar()
     }
     
-    private func bind() {
+     func bind() {
         let input = PostViewModel.Input(
             postButtontapped: postButton.rx.tap.asObservable(),
             iconButtontapped: iconRegistButton.rx.tap.asObservable(),
-            messageTapped: messageTextView.rx.didBeginEditing.asObservable() ,
+            messageTapped: messageTextView.rx.didBeginEditing.asObservable(),
             myNameRelay: myNameTextField.rx.text.orEmpty.map{( $0.deleteSpace())},
             targetRelay: targetNameTextField.rx.text.orEmpty.map{( $0.deleteSpace())},
             messageRelay: messageTextView.rx.text.orEmpty.asObservable(),
@@ -68,6 +69,7 @@ class PostViewController: UIViewController, ScrollKeyBoard {
             .subscribe(onNext: { [weak self]  in
                 self?.iconSet.iconButtonTapped()})
             .disposed(by: disposeBag)
+      
         
         //viewModelから選択画像を受け取りCropVCへ渡す
         output.selectedImage
@@ -112,7 +114,6 @@ class PostViewController: UIViewController, ScrollKeyBoard {
             .subscribe(onNext: {
                 self.messageTextView.resignFirstResponder()
 //                self.configureObserver()
-
                 let sb = R.storyboard.main()
                 let vc = sb.instantiateViewController(withIdentifier: "PostResultViewController") as? PostResultViewController
                 vc?.posedtData = $0
