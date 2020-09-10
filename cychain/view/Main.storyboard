@@ -379,7 +379,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rgo-bo-xUk">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" red="0.44705882349999998" green="0.78039215689999997" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="80" id="lEf-2R-zch" customClass="inputDataListCell" customModule="cychain" customModuleProvider="target">
@@ -470,15 +470,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Tvu-bX-VAz"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="list" id="kR2-T1-zzj"/>
                     <navigationItem key="navigationItem" title="リスト" id="p9e-Qq-ePU"/>
                     <connections>
-                        <outlet property="tableView" destination="Rgo-bo-xUk" id="Fx7-Lz-gh0"/>
+                        <outlet property="tableView" destination="Rgo-bo-xUk" id="1ZK-iT-n7C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g1O-Kh-P9S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-9034.782608695652" y="-2495.0892857142858"/>
+            <point key="canvasLocation" x="-8124.6376811594209" y="-2495.0892857142858"/>
         </scene>
         <!--search-->
         <scene sceneID="2nh-6e-bGV">
@@ -3466,10 +3465,18 @@ Cg
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="iconButton" destination="yRT-gc-yeG" id="zzC-iw-q8C"/>
+                        <outlet property="messageLabel" destination="r6d-vy-rC9" id="cnV-yW-vUt"/>
+                        <outlet property="messageTextView" destination="eKU-Mc-FRg" id="tU3-CK-ARv"/>
+                        <outlet property="myNameTextField" destination="4bc-5i-FiE" id="sop-AW-Koh"/>
+                        <outlet property="postButton" destination="g7H-cg-eQS" id="bP0-uA-1eV"/>
+                        <outlet property="targetNameTextField" destination="BK0-KH-gMR" id="Qoz-tf-lKo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kZg-K0-itl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7242" y="-2494"/>
+            <point key="canvasLocation" x="-6331.884057971015" y="-2494.4196428571427"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="jO3-L7-4Go">
@@ -3488,7 +3495,7 @@ Cg
                     <connections>
                         <segue destination="sdv-Hn-fh0" kind="relationship" relationship="viewControllers" id="SHM-aA-USQ"/>
                         <segue destination="GYe-XM-Gxu" kind="relationship" relationship="viewControllers" id="PAH-Ht-NBd"/>
-                        <segue destination="Cu2-pp-SdO" kind="relationship" relationship="viewControllers" id="TMn-rm-dNj"/>
+                        <segue destination="aAh-80-eBR" kind="relationship" relationship="viewControllers" id="TMn-rm-dNj"/>
                         <segue destination="gbL-yu-h3i" kind="relationship" relationship="viewControllers" id="jAM-O7-ZU9"/>
                     </connections>
                 </tabBarController>
@@ -3589,7 +3596,26 @@ Cg
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LL7-Mt-cUS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-8094" y="-2494"/>
+            <point key="canvasLocation" x="-7184.057971014493" y="-2494.4196428571427"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="SBa-QI-Ckc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aAh-80-eBR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" image="list" id="kR2-T1-zzj"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="F5l-4L-kEE">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Cu2-pp-SdO" kind="relationship" relationship="rootViewController" id="5py-Kd-VoZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ckX-SC-u6Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-9034.782608695652" y="-2495.0892857142858"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

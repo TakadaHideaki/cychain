@@ -15,8 +15,8 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
     var attributedText: NSMutableAttributedString?
 
     override func viewDidLoad() {
-        customNavigationBar() //navigationBarデザイン(※記述場所viewDidLoadの前)
-        PagerTabUI()        //ページタブバーデザイン(※記述場所viewDidLoadの前)
+        customNavigationBar() //navigationBarデザイン(※記述場所super.viewDidLoadの前)
+        PagerTabUI()        //ページタブバーデザイン(※記述場所super.viewDidLoadの前)
         
         super.viewDidLoad()
         initializeUI()

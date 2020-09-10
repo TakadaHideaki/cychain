@@ -6,30 +6,23 @@ import RxDataSources
 
 class SettingsViewController: UIViewController, UINavigationControllerDelegate  {
     
-    private lazy var dataSource =
-        RxTableViewSectionedReloadDataSource<SettingSectionModel> (
-            configureCell: configureCell,
-            titleForHeaderInSection: titleForHeaderInSection
-    )
-    
-    private lazy var configureCell: RxTableViewSectionedReloadDataSource<SettingSectionModel>.ConfigureCell = {
-        [weak self] _, tableView, indexPath, item in
+    private lazy var dataSource = RxTableViewSectionedReloadDataSource<SettingSectionModel> (
+        configureCell: { [weak self] _, tableView, indexPath, item in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            switch Section(rawValue: indexPath.section ) {
+            case .account:
+                cell.textLabel?.text = item
+            case .other:
+                cell.textLabel?.text = item
+            default : break
+            }
+            return cell
+        },
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        switch Section(rawValue: indexPath.section ) {
-          case .account:
-            cell.textLabel?.text = item
-          case .other:
-            cell.textLabel?.text = item
-          default : break
-          }
-          return cell
+        titleForHeaderInSection: { datasouse, indexpath in
+            return datasouse.sectionModels[indexpath].sectionTitle
     }
-    
-    private lazy var titleForHeaderInSection: RxTableViewSectionedReloadDataSource<SettingSectionModel>.TitleForHeaderInSection = {
-        datasouse, indexpath in
-        return self.dataSource.sectionModels[indexpath].sectionTitle
-    }
+    )
 
     private let viewModel = SettingViewModel()
     var model = SettingModel()

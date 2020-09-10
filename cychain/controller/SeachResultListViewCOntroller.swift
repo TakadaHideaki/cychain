@@ -9,7 +9,12 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     
     @IBOutlet weak var tableView: UITableView!
     
-    private var dataSource: RxTableViewSectionedReloadDataSource<MultipleSectionModel>!
+    private lazy var dataSource = RxTableViewSectionedReloadDataSource<MultipleSectionModel> (
+        configureCell: { _, tableView, indexPath, item in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
+            cell.textLabel?.text = ("\([indexPath.row + 1])件目")
+            return cell
+    })
     private let viewModel = MatchListViewModel()
     private let disposeBag = DisposeBag()
     private var model = multiMatchModel.shared
@@ -20,24 +25,6 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
     lazy var initViewLayout : Void = {
         admob()
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initalizeUI()
-        initializeTableView()
-        setCell()
-        bind()
-    }
-    
-    func initalizeUI() {
-        self.navigationItem.hidesBackButton = true
-        customNavigationBar()
-    }
-    
-    func initializeTableView() {
-        tableView.tableFooterView = UIView(frame: .zero)
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,18 +34,43 @@ class SeachResultListViewCOntroller: UIViewController, UINavigationControllerDel
         }
         tableView.reloadData()
     }
-    
-    func setCell() {
-        dataSource = RxTableViewSectionedReloadDataSource<MultipleSectionModel> (
-            configureCell: { _, tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
-                cell.textLabel?.text = ("\([indexPath.row + 1])件目")
-                return cell
-        })
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initalizeUI()
+        initializeTableView()
+//        setCell()
+        bind()
+        didSelectCell()
+       
+    }
+    func initalizeUI() {
+        self.navigationItem.hidesBackButton = true
+        customNavigationBar()
+    }
+    func initializeTableView() {
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+    }
+    func didSelectCell() {
         dataSource.canEditRowAtIndexPath = { dataSource, indexPath in
             return true
         }
     }
+    
+ 
+    
+//    func setCell() {
+//        dataSource = RxTableViewSectionedReloadDataSource<MultipleSectionModel> (
+//            configureCell: { _, tableView, indexPath, item in
+//                let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
+//                cell.textLabel?.text = ("\([indexPath.row + 1])件目")
+//                return cell
+//        })
+//        dataSource.canEditRowAtIndexPath = { dataSource, indexPath in
+//            return true
+//        }
+//    }
     
     private func bind() {
         let input = MatchListViewModel

@@ -88,6 +88,8 @@
 		8C50ACED23928F5C00FAFBC4 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */; };
 		8C54CBB824C705AF0079C316 /* ImageCrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C54CBB724C705AF0079C316 /* ImageCrop.swift */; };
 		8C54CBB924C705AF0079C316 /* ImageCrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C54CBB724C705AF0079C316 /* ImageCrop.swift */; };
+		8C5885AF25051EEB00671945 /* EditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5885AE25051EEB00671945 /* EditModel.swift */; };
+		8C5885B025051EEB00671945 /* EditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5885AE25051EEB00671945 /* EditModel.swift */; };
 		8C70D344246153D800150E52 /* Onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C70D343246153D800150E52 /* Onboarding.json */; };
 		8C70D345246153D800150E52 /* Onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C70D343246153D800150E52 /* Onboarding.json */; };
 		8C70D347246157E900150E52 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70D346246157E900150E52 /* Onboarding.swift */; };
@@ -235,6 +237,7 @@
 		8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		8C50ACEE23953A3300FAFBC4 /* abcd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "abcd-Bridging-Header.h"; sourceTree = "<group>"; };
 		8C54CBB724C705AF0079C316 /* ImageCrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCrop.swift; sourceTree = "<group>"; };
+		8C5885AE25051EEB00671945 /* EditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModel.swift; sourceTree = "<group>"; };
 		8C70D343246153D800150E52 /* Onboarding.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Onboarding.json; sourceTree = "<group>"; };
 		8C70D346246157E900150E52 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		8C750DFF244711EC0003A82C /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -330,6 +333,7 @@
 				8C4CF5C624F90AF4002C8173 /* multiMatchModel.swift */,
 				8C420D04245E2A2500769F01 /* SettingModel.swift */,
 				8C3E3131241CE743008A4DAF /* EditData.swift */,
+				8C5885AE25051EEB00671945 /* EditModel.swift */,
 				8C4230332409F5CD00160A04 /* ScrollKeyBoard.swift */,
 			);
 			path = Model;
@@ -838,6 +842,7 @@
 				8C50ACE023928F5C00FAFBC4 /* PolicyViewController.swift in Sources */,
 				8C303D68243879F500F080AB /* AuthModel.swift in Sources */,
 				8C50ACDD23928F5C00FAFBC4 /* MultiMatchViewController.swift in Sources */,
+				8C5885AF25051EEB00671945 /* EditModel.swift in Sources */,
 				8C50ACE623928F5C00FAFBC4 /* PostListViewController.swift in Sources */,
 				8C3E3132241CE743008A4DAF /* EditData.swift in Sources */,
 				8C50ACE523928F5C00FAFBC4 /* SelectViewController.swift in Sources */,
@@ -908,6 +913,7 @@
 				8C420D06245E2A2500769F01 /* SettingModel.swift in Sources */,
 				8CE1B4BB2442EBF6009D8698 /* textView.swift in Sources */,
 				8C4230352409F5CD00160A04 /* ScrollKeyBoard.swift in Sources */,
+				8C5885B025051EEB00671945 /* EditModel.swift in Sources */,
 				8CF3AE8D23F5571D00FC0648 /* SearchViewController.swift in Sources */,
 				8CF3AE8F23F5571D00FC0648 /* PolicyViewController.swift in Sources */,
 				8CBD3E2F245067AB00DA7FCE /* ImagePickerControllert.swift in Sources */,

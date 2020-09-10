@@ -13,13 +13,13 @@ class PostViewController: UIViewController, ScrollKeyBoard {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var postButton: Button!
     
+    final private let viewModel = PostViewModel()
+    let postResurlModel = postResultModel.shared
     let disposeBag = DisposeBag()
     let defaultIcon = R.image.user10()
     let iconSet = ImagePickerController()
     let imageCrop = ImageCrop()
-    private let viewModel = PostViewModel()
-
-    
+   
     //TextViewのpropaty
     let maxLength = 6
     var previousText = ""
@@ -116,13 +116,10 @@ class PostViewController: UIViewController, ScrollKeyBoard {
 //                self.configureObserver()
                 let sb = R.storyboard.main()
                 let vc = sb.instantiateViewController(withIdentifier: "PostResultViewController") as? PostResultViewController
-                vc?.posedtData = $0
+                self.postResurlModel.dataSet(data: $0)
                 self.navigationController?.pushViewController(vc!, animated: true)
-                /*   let newVC = InputResultViewController.returnVC(data: value)
-                 self.navigationController?.pushViewController(newVC, animated: true)*/
             })
             .disposed(by: disposeBag)
-        
     }
     
     

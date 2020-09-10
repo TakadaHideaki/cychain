@@ -39,6 +39,10 @@ extension UIViewController {
         sendInitialViewAlert(title: "ログアウトしました", message: "")
     }
     
+    func editErrorAletr() {
+        sendInitialViewAlert(title: "Postデータがありませんでした", message: "")
+    }
+    
     func passwordresetSuccessAlert() {
         alert(title: "メールを送信しました。", message: "メールでパスワードの再設定を行ってください。", actiontitle: "OK")
     }

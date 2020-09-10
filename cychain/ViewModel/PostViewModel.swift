@@ -5,7 +5,7 @@ import RxCocoa
 struct Texts {
     let my: String
     let target: String
-    let message: String
+    var message: String
     var iconImage: UIImage
 
     var isValid: Bool {

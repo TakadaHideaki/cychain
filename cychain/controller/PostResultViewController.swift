@@ -6,11 +6,57 @@ import GoogleMobileAds
 
 class PostResultViewController: UIViewController {
         
-    final private var dataSource: RxTableViewSectionedReloadDataSource<SectionModel>!
     final private let viewModel = PostResultViewModel()
     final private let disposeBag = DisposeBag()
-    final var posedtData: Texts?
-    var tableView: UITableView!
+    final private lazy var dataSource = RxTableViewSectionedReloadDataSource<SectionModel> (
+        configureCell: { _, tableView, indexPath, item in
+            switch indexPath.section {
+            case 0:
+                let profileCell = tableView.dequeueReusableCell(withIdentifier: "P_Cell", for: indexPath) as! ProfileCell
+                
+                profileCell.mynameLabel.text = item["my"] as? String
+                profileCell.targetLabel.text = item["target"] as? String
+                profileCell.profileImage.image = item["icon"] as? UIImage
+                
+                profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
+                profileCell.targetLabel.adjustsFontSizeToFitWidth = true
+                profileCell.mynameLabel.minimumScaleFactor = 0.5
+                profileCell.targetLabel.minimumScaleFactor = 0.5
+                return profileCell
+                
+            case 1:
+                let messagecell = tableView.dequeueReusableCell(withIdentifier: "M_Cell", for: indexPath) as! MessageCell
+                messagecell.messageLabel.text = item["message"] as? String
+                return messagecell
+                
+            default: break
+            }
+            return UITableViewCell()
+    }
+//        titleForHeaderInSection: { datasouse, indexpath in
+//            return datasouse.sectionModels[indexpath].sectionTitle
+//    }
+    )
+        
+    
+
+//    final var posedtData: Texts?
+//    var tableView: UITableView!
+    lazy var tableView = { () -> UITableView in
+        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.separatorStyle = .none
+        
+        let nib = UINib(resource: R.nib.postCardeTableViewCell)
+        tableView.register(nib, forCellReuseIdentifier: "P_Cell")
+        
+        let messageNib = UINib(resource: R.nib.postCardMessageCell)
+        tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
+        
+        return tableView
+    }()
+    
     /*
     static func returnVC(data: Texts) -> InputResultViewController {
      let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -32,11 +78,15 @@ class PostResultViewController: UIViewController {
  */
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeTableView()
-        registCell()
-        setCell()
+        log.debug("start")
+//        initializeTableView()
+        self.view.addSubview(tableView)
+
+//        registCell()
+//        setCell()
         bind()
-        
+
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
 //    func setTableView() {
@@ -54,56 +104,58 @@ class PostResultViewController: UIViewController {
 //    }
    
     
-    func initializeTableView() {
-        let tableView = UITableView(frame: self.view.bounds, style: .plain)
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.view.addSubview(tableView)
-        self.tableView = tableView
-        
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-    }
+//    func initializeTableView() {
+//        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+//        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        self.view.addSubview(tableView)
+//        self.tableView = tableView
+//
+//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+//    }
     
-     func registCell() {
-        let nib = UINib(resource: R.nib.postCardeTableViewCell)
-        tableView.register(nib, forCellReuseIdentifier: "P_Cell")
-        
-        let messageNib = UINib(resource: R.nib.postCardMessageCell)
-        tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
-    }
+//     func registCell() {
+//        let nib = UINib(resource: R.nib.postCardeTableViewCell)
+//        tableView.register(nib, forCellReuseIdentifier: "P_Cell")
+//
+//        let messageNib = UINib(resource: R.nib.postCardMessageCell)
+//        tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
+//    }
     
-     func setCell() {
-        dataSource = RxTableViewSectionedReloadDataSource<SectionModel> (
-            configureCell: { _, tableView, indexPath, item in
-                switch indexPath.section {
-                case 0:
-                    let profileCell = tableView.dequeueReusableCell(withIdentifier: "P_Cell", for: indexPath) as! ProfileCell
-                    
-                    profileCell.mynameLabel.text = item["my"] as? String
-                    profileCell.targetLabel.text = item["target"] as? String
-                    profileCell.profileImage.image = item["icon"] as? UIImage
-                    
-                    profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
-                    profileCell.targetLabel.adjustsFontSizeToFitWidth = true
-                    profileCell.mynameLabel.minimumScaleFactor = 0.5
-                    profileCell.targetLabel.minimumScaleFactor = 0.5
-                    return profileCell
-                    
-                case 1:
-                    let messagecell = tableView.dequeueReusableCell(withIdentifier: "M_Cell", for: indexPath) as! MessageCell
-                    messagecell.messageLabel.text = item["message"] as? String
-                    return messagecell
-                    
-                default: break
-                }
-                return UITableViewCell()
-        })
-    }
+//     func setCell() {
+//        dataSource = RxTableViewSectionedReloadDataSource<SectionModel> (
+//            configureCell: { _, tableView, indexPath, item in
+//                switch indexPath.section {
+//                case 0:
+//                    let profileCell = tableView.dequeueReusableCell(withIdentifier: "P_Cell", for: indexPath) as! ProfileCell
+//
+//                    profileCell.mynameLabel.text = item["my"] as? String
+//                    profileCell.targetLabel.text = item["target"] as? String
+//                    profileCell.profileImage.image = item["icon"] as? UIImage
+//
+//                    profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
+//                    profileCell.targetLabel.adjustsFontSizeToFitWidth = true
+//                    profileCell.mynameLabel.minimumScaleFactor = 0.5
+//                    profileCell.targetLabel.minimumScaleFactor = 0.5
+//                    return profileCell
+//
+//                case 1:
+//                    let messagecell = tableView.dequeueReusableCell(withIdentifier: "M_Cell", for: indexPath) as! MessageCell
+//                    messagecell.messageLabel.text = item["message"] as? String
+//                    return messagecell
+//
+//                default: break
+//                }
+//                return UITableViewCell()
+//        })
+//    }
     
     
      func bind() {
-        guard let posedtData = self.posedtData else {return}
-        let input = PostResultViewModel.Input(postData: Observable.just([posedtData]))
-        let output = viewModel.transform(input: input)
+//        guard let posedtData = self.posedtData else {return}
+//        let input = PostResultViewModel.Input(postData: Observable.just([posedtData]))
+//        let output = viewModel.transform(input: input)
+        let output = viewModel.transform()
+
 
         
         output.cellObj
@@ -116,6 +168,10 @@ class PostResultViewController: UIViewController {
 
 
 extension PostResultViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 210
+        }
     
     func  tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()

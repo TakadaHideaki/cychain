@@ -10,10 +10,10 @@ class SeachResultViewCotroller: UIViewController {
     private let viewModel = SingleMatchViewModel()
     var cellObject: BaseViewModel = SingleMatchViewModel()
     let disposeBag = DisposeBag()
-    let indicatorView = UIActivityIndicatorView.init(style: .whiteLarge)
-    var coverView = UIView()
-    var tableView = UITableView()
-    var naviBarButton = UIBarButtonItem()
+//    let indicatorView = UIActivityIndicatorView.init(style: .whiteLarge)
+//    var coverView = UIView()
+//    var naviBarButton = UIBarButtonItem()
+//    var tableView = UITableView()
     let reportRelay = BehaviorRelay<Void>(value: ())
     var reportObservable: Observable<Void> { return reportRelay.asObservable() }
     let blockRelay = BehaviorRelay<Void>(value: ())
@@ -21,11 +21,7 @@ class SeachResultViewCotroller: UIViewController {
     
     private lazy var dataSource =
           RxTableViewSectionedReloadDataSource<MatchSectionModel> (
-              configureCell: configureCell
-      )
-
-    private lazy var configureCell: RxTableViewSectionedReloadDataSource<MatchSectionModel>.ConfigureCell = {
-        [weak self] _, tableView, indexPath, item in
+              configureCell: { [weak self] _, tableView, indexPath, item in
 
                 switch indexPath.section {
                 case 0:
@@ -51,6 +47,43 @@ class SeachResultViewCotroller: UIViewController {
                 }
                 return UITableViewCell()
         }
+    )
+    
+    lazy var coverView: UIView = {
+        let view = UIView()
+        view.frame = self.view.bounds
+        view.backgroundColor = .white
+        view.alpha = 0.5
+        return view
+    }()
+    
+     var indicatorView = { () -> UIActivityIndicatorView in
+        var view = UIActivityIndicatorView.init(style: .whiteLarge)
+        view.color = .gray
+        return view
+    }()
+    
+     var naviBarButton = { () -> UIBarButtonItem in
+        let button = UIBarButtonItem()
+        button.image = R.image.menu()!
+        button.style = .plain
+        return button
+    }()
+    
+    lazy var tableView = { () -> UITableView in
+        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.separatorStyle = .none
+        
+        let nib = UINib(resource: R.nib.postCardeTableViewCell)
+        tableView.register(nib, forCellReuseIdentifier: "P_Cell")
+        
+        let messageNib = UINib(resource: R.nib.postCardMessageCell)
+        tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
+        
+        return tableView
+    }()
 
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
@@ -69,52 +102,63 @@ class SeachResultViewCotroller: UIViewController {
     func changeCellObj() {}
     
     func initializeUI() {
-        setBarButton()
-        setIndicator()
-        setCoverView()
-        initializeTableView()
-        registCell()
+//        setBarButton()
+//        setIndicator()
+//        setCoverView()
+//        initializeTableView()
+        addUI()
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+//        registCell()
     }
     
-    func setIndicator() {
-        indicatorView.center = view.center
-        indicatorView.color = .gray
+    func addUI() {
         self.view.addSubview(indicatorView)
         self.view.bringSubviewToFront(indicatorView)
-    }
-    
-    func setCoverView() {
-        coverView = UIView(frame: self.view.frame)
-        coverView.backgroundColor = .white
-        coverView.alpha = 0.5
         self.view.addSubview(coverView)
         self.view.bringSubviewToFront(coverView)
-    }
-    
-    func setBarButton() {
-        naviBarButton = UIBarButtonItem()
-        naviBarButton.image = R.image.menu()!
-        naviBarButton.style = .plain
         self.navigationItem.rightBarButtonItem = naviBarButton
-    }
-    
-    func initializeTableView() {
-        let tableView = UITableView(frame: self.view.bounds, style: .plain)
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        tableView.tableFooterView = UIView(frame: .zero)
-        tableView.separatorStyle = .none
         self.view.addSubview(tableView)
-        self.tableView = tableView
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
-    func registCell() {
-          let nib = UINib(resource: R.nib.postCardeTableViewCell)
-          tableView.register(nib, forCellReuseIdentifier: "P_Cell")
-          
-          let messageNib = UINib(resource: R.nib.postCardMessageCell)
-          tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
-      }
+//    func setIndicator() {
+//        indicatorView.center = view.center
+//        indicatorView.color = .gray
+//        self.view.addSubview(indicatorView)
+//        self.view.bringSubviewToFront(indicatorView)
+//    }
+    
+//    func setCoverView() {
+//        coverView = UIView(frame: self.view.frame)
+//        coverView.backgroundColor = .white
+//        coverView.alpha = 0.5
+//        self.view.addSubview(coverView)
+//        self.view.bringSubviewToFront(coverView)
+//    }
+    
+//    func setBarButton() {
+//        naviBarButton = UIBarButtonItem()
+//        naviBarButton.image = R.image.menu()!
+//        naviBarButton.style = .plain
+//        self.navigationItem.rightBarButtonItem = naviBarButton
+//    }
+    
+//    func initializeTableView() {
+//        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+//        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        tableView.tableFooterView = UIView(frame: .zero)
+//        tableView.separatorStyle = .none
+//        self.view.addSubview(tableView)
+//        self.tableView = tableView
+////        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+//    }
+    
+//    func registCell() {
+//          let nib = UINib(resource: R.nib.postCardeTableViewCell)
+//          tableView.register(nib, forCellReuseIdentifier: "P_Cell")
+//
+//          let messageNib = UINib(resource: R.nib.postCardMessageCell)
+//          tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
+//      }
     
     
      func bind() {

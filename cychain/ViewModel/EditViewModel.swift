@@ -6,6 +6,7 @@ struct EditViewModel {
     
     let userdefault: SetUserDefault?
     let firebase: SetFirebase?
+    private let model = EditModel.shared
     private let disposeBag = DisposeBag()
     
       init(ud: SetUserDefault = SetUserDefault(), fb: SetFirebase = SetFirebase()) {
@@ -28,6 +29,9 @@ struct EditViewModel {
         }
         
         struct Output {
+            let SwitchUIHiden: Driver<Bool>
+            let NoData: Observable<Void>
+            let initialScreenData: Observable<Texts>
             let onIcButtonClickEvent: Observable<Void>
             let messageTapp: Observable<Void>
             let selectedImage: Observable<UIImage>
@@ -37,6 +41,27 @@ struct EditViewModel {
         }
         
         func transform(input: Input) -> Output {
+            //データが表示されるまでIndicatorを回す為のPropaty
+            let SwitchUIHiden = model.data
+            .skip(1)
+                .withLatestFrom(self.model.noData)
+                .map{ _ in false}
+                .startWith(true)
+                .asDriver(onErrorDriveWith: Driver.empty())
+                .debug()
+            
+            //表示用データが無かった時用（通常はあり得ない）
+            let NoData = model.noData
+                .skip(1)
+                .do(onNext: { self.model.deletePostData(data: $0) })
+                .map{_ in ()}
+                .debug()
+            
+            //表示用データ
+            let initialScreenData = model.data
+                .compactMap{$0}
+                .skip(1)
+                .debug()
             
             //　① PostDataを纏めTextsへ
             let substitutionToTexts = Observable
@@ -60,7 +85,10 @@ struct EditViewModel {
                 .map{ return $0.count > 0 }
                 .asDriver(onErrorDriveWith: Driver.empty())
             
-            return Output(onIcButtonClickEvent: input.iconButtontapped,
+            return Output(SwitchUIHiden: SwitchUIHiden,
+                          NoData: NoData,
+                          initialScreenData: initialScreenData,
+                          onIcButtonClickEvent: input.iconButtontapped,
                           messageTapp: input.messageTapped.asObservable(),
                           selectedImage: input.imageSelected,
                           iconButtonImage: input.imageCropped.asDriver(onErrorDriveWith: Driver.empty()),
