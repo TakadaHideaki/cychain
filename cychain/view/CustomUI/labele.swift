@@ -1,16 +1,6 @@
-//
-//  labele.swift
-//  abcd
-//
-//  Created by takadahideaki007 on 2019/05/10.
-//  Copyright © 2019 高田英明. All rights reserved.
-//
-
 import UIKit
 
 @IBDesignable
-
-
 class labele: UILabel {
     
     override func drawText(in rect: CGRect) {

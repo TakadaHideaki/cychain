@@ -34,8 +34,8 @@ extension SettingViewModel: ViewModelType {
             .do(onNext: { self.cellTapEvent(indexPath: $0)})
             .compactMap { Settings(index: $0) }
         
-        let logOut = model.logOutEvent.skip(1)
-        let signOut = model.signOutEvent.skip(1)
+        let logOut = model.logOutEvent
+        let signOut = model.signOutEvent
 
         return Output(cellObj: cellObj.asObservable(),
                       selectedCellEvent: menu,
@@ -77,15 +77,4 @@ extension SettingViewModel: ViewModelType {
         case .inquiry, .terms, .privacy: break
         }
     }
-    
-    
-    
-    
-    
-    
-    
 }
-
-
-
-

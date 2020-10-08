@@ -1,17 +1,8 @@
-//
-//  textField.swift
-//  abcd
-//
-//  Created by takadahideaki007 on 2019/06/10.
-//  Copyright © 2019 高田英明. All rights reserved.
-//
-
 import UIKit
 
 class textField: UITextField {
     
     private var maxLengths = [UITextField: Int]()
-    
     
         @IBInspectable var maxLength: Int {
             get {
@@ -25,7 +16,6 @@ class textField: UITextField {
                 addTarget(self, action: #selector(limitLength), for: .editingChanged)
             }
         }
-    
     
     // 枠線の色
     @IBInspectable var borderColor: UIColor? {

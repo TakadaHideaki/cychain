@@ -16,8 +16,14 @@ extension MatchListViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let cellObj = BehaviorRelay<[MultipleSectionModel]>(value: [MultipleSectionModel(
-            items: model.values)])
+        
+        var ids: [[String]] = []
+        self.model.matchdata.data.forEach{ ids += [[$0.0]] }
+               
+        let cellObj =
+            BehaviorRelay<[MultipleSectionModel]>(value:
+                [MultipleSectionModel(items: ids)])
+ 
                 
         let selectCellObj = input.onSelectedCell
             .map{ $0.row }

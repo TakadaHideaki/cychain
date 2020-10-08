@@ -1,0 +1,1 @@
+class Terms: PolicyViewController {}

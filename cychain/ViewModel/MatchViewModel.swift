@@ -6,26 +6,23 @@ protocol BaseViewModel {
     var cellObj: BehaviorRelay<[MatchSectionModel]> {get}
 }
 
-class SingleMatchViewModel: BaseViewModel  {
-    
-    var cellObj: BehaviorRelay<[MatchSectionModel]> {
-           return
-            BehaviorRelay<[MatchSectionModel]>(value:
-                [MatchSectionModel(sectionTitle: model.sectionTitle[0],
-                                         items: [model.singleMatch!]),
-
-                       MatchSectionModel(sectionTitle: model.sectionTitle[1],
-                                         items: [model.singleMatch!]
-                   )
-               ]
-           )
-       }
+class MatchViewModel: BaseViewModel  {
     
     private let model = MatchModel.shared
     let disposeBag = DisposeBag()
+    
+    var cellObj: BehaviorRelay<[MatchSectionModel]> {
+        return
+            BehaviorRelay<[MatchSectionModel]>(value:
+                [MatchSectionModel(sectionTitle: model.sectionTitle[0],
+                                   items: [self.model.matchData]),
+                 
+                 MatchSectionModel(sectionTitle: model.sectionTitle[1],
+                                   items: [self.model.matchData] )])
+    }
 }
 
-extension SingleMatchViewModel: ViewModelType {
+extension MatchViewModel: ViewModelType {
   
     struct Input {
         let naviBarButtonTaaped: Observable<Void>
@@ -37,7 +34,7 @@ extension SingleMatchViewModel: ViewModelType {
         let cellObj: Observable<[MatchSectionModel]>
         let naviBarButtonEvent: Observable<Void>
         let reportObj: Observable<[String: String]>
-        let blockID: Observable<String>
+        let blockID: Observable<Void>
         let indicator: Driver<Bool>
     }
     
@@ -48,18 +45,14 @@ extension SingleMatchViewModel: ViewModelType {
             .startWith(true)
             .asDriver(onErrorDriveWith: Driver.empty())
 
+        let reportDataTapped = input.reportTapped.withLatestFrom(model.report)
         
-        let report = Observable.from(optional: model.reportData)
-        let reportDataTapped = input.reportTapped.withLatestFrom(report)
-        
-        let blockTapped = input.blockTapped
-            .skip(1)
-            .withLatestFrom(model.blockID!)
+        let blockTapped = input.blockTapped.debug()
+            .withLatestFrom(model.blockID)
+            .do(onNext: { self.model.registBlockID(blockID: $0) })
+            .map{ _ in () }
 
-//            .do(onNext: { self.model.registBlockID(blockID: $0)})
-
-        
-        return Output(cellObj: cellObj.asObservable(),
+         return Output(cellObj: cellObj.asObservable(),
                       naviBarButtonEvent: input.naviBarButtonTaaped,
                       reportObj: reportDataTapped,
                       blockID: blockTapped,

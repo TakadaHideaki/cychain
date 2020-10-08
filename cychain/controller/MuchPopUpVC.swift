@@ -5,8 +5,6 @@ import Lottie
 
 class MuchPopUpVC: UIViewController {
     
-
-    
     @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var contentView: contentView!
     @IBOutlet weak var dismissButton: UIButton!
@@ -42,39 +40,17 @@ class MuchPopUpVC: UIViewController {
         let output = viewModel.transform(input: input)
         
         //バツボタンタップ
-        output.nextVC.subscribe(onNext: {
-            self.dismiss(animated: false, completion: nil)
-        })
+        output.nextVC
+            .bind(onNext: { self.dismiss(animated: false, completion: nil) })
             .disposed(by: disposeBag)
           //マッチボタンタップ
-        output.dismiss.subscribe(onNext: {
-            self.matchCount = 0
-            self.dismiss(animated: false, completion: nil)
-        })
+        output.dismiss
+            .bind(onNext: {
+                self.matchCount = 0
+                self.dismiss(animated: false, completion: nil)
+            })
             .disposed(by: disposeBag)
         
     }
-    
-  
-    
-    
-
-//
-//    @IBAction func dismissButton(_ sender: Any) {
-//        numberOfMatching = .dissmiss
-//        self.dismiss(animated: true, completion: nil)
-//    }
-//
-//    @IBAction func nextView(_ sender: Any) {
-//
-//        let matchData = MatchData.shared
-//
-//        if matchData.muchData?.count == 1{
-//            numberOfMatching = .oneMatch
-//        } else {
-//            numberOfMatching = .multipleMatch
-//        }
-//        self.dismiss(animated: true, completion: nil)
-//    }
     
 }

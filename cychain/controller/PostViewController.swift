@@ -4,14 +4,7 @@ import RxCocoa
 import TextFieldEffects
 import RSKImageCropper
 
-class PostViewController: UIViewController, ScrollKeyBoard {
-    
-    @IBOutlet weak var myNameTextField: UITextField!
-    @IBOutlet weak var targetNameTextField: UITextField!
-    @IBOutlet weak var messageTextView: UITextView!
-    @IBOutlet weak var iconRegistButton: UIButton!
-    @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var postButton: Button!
+class PostViewController: UIViewController {
     
     final private let viewModel = PostViewModel()
     let postResurlModel = postResultModel.shared
@@ -19,46 +12,49 @@ class PostViewController: UIViewController, ScrollKeyBoard {
     let defaultIcon = R.image.user10()
     let iconSet = ImagePickerController()
     let imageCrop = ImageCrop()
-   
-    //TextViewのpropaty
-    let maxLength = 6
-    var previousText = ""
-    var lastReplaceRange: NSRange!
-    var lastReplacementString = ""
-    
+    var profileView: ProfileView!
+
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        delegateSet()
         initializeUI()
+        customNavigationBar()
+        delegateSet()
         bind()
+        bindScrollTextFieldWhenShowKeyboard()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        profileView.profileBaseView.frame = self.view.bounds
+        view.addSubview(profileView.profileBaseView)
     }
     
     func delegateSet() {
-        myNameTextField.delegate = self
-        targetNameTextField.delegate = self
-        messageTextView.delegate = self
+        profileView.msgTextView.delegate = self
         iconSet.delegate = self
         imageCrop.delegate = self
     }
     
     func initializeUI() {
-        messageTextView.keyBoardtoolBar(textView: messageTextView)
-        self.iconRegistButton.setImage(self.defaultIcon, for: .normal)
-        customNavigationBar()
+        profileView = ProfileView()
+        profileView.msgTextView.keyBoardtoolBar(textView: profileView.msgTextView)
+        //textFieldを２つ設置した時に発生するLayoutConstraintエラー(バグ?)対応
+        profileView.myNameTextField.autocorrectionType = .no
+        profileView.targetNameTextField.autocorrectionType = .no
+        
     }
     
      func bind() {
         let input = PostViewModel.Input(
-            postButtontapped: postButton.rx.tap.asObservable(),
-            iconButtontapped: iconRegistButton.rx.tap.asObservable(),
-            messageTapped: messageTextView.rx.didBeginEditing.asObservable(),
-            myNameRelay: myNameTextField.rx.text.orEmpty.map{( $0.deleteSpace())},
-            targetRelay: targetNameTextField.rx.text.orEmpty.map{( $0.deleteSpace())},
-            messageRelay: messageTextView.rx.text.orEmpty.asObservable(),
-            imageSelected: iconSet.selectedImage,
+            postButtontapped: profileView.postButton.rx.tap.asObservable(),
+            iconButtontapped: profileView.iconButton.rx.tap.asObservable().share(),
+            myNameRelay: profileView.myNameTextField.rx.text.orEmpty.map{( $0.deleteSpace())},
+            targetRelay: profileView.targetNameTextField.rx.text.orEmpty.map{( $0.deleteSpace())},
+            messageRelay: profileView.msgTextView.rx.text.orEmpty.asObservable(),
+            imageSelected: iconSet.selectedImage.share(),
             imageCropped: imageCrop.croppedImage
         )
         
@@ -66,63 +62,50 @@ class PostViewController: UIViewController, ScrollKeyBoard {
         
         //アイコンボタンタップ（フォトライブラリへ遷移）
         output.onIcButtonClickEvent
-            .subscribe(onNext: { [weak self]  in
-                self?.iconSet.iconButtonTapped()})
+            .bind(onNext: { self.iconSet.iconButtonTapped() })
             .disposed(by: disposeBag)
-      
         
-        //viewModelから選択画像を受け取りCropVCへ渡す
+        //PhotoLiblalyから選択画像を受け取り画像切り抜きClass(CropVC)へ渡す
         output.selectedImage
-            .subscribe(onNext: { [weak self]  value in
-                self?.imageCrop.RSKImageCropVC(image: value)})
+            .bind(onNext: { self.imageCrop.RSKImageCropVC(image: $0) })
             .disposed(by: disposeBag)
         
         //ViewModelから切り抜き画像のEventを受け取り、アイコンボタンにセット
         output.iconButtonImage
             .skip(1)
-            .drive(iconRegistButton.rx.image())
+            .drive(profileView.iconButton.rx.image())
             .disposed(by: disposeBag)
         
         //textField.Text >14 or 0 _Alert
         output.characterCountOverrun
-            .subscribe(onNext: { [weak self]  in
-                self?.charactorErrorAlert()})
-            .disposed(by: disposeBag)
+        .bind(onNext: { self.charactorErrorAlert() })
+        .disposed(by: disposeBag)
         
         //投稿数>10_Alert
         output.postsCountOver
-            .filter{ !$0 }
-            .map { _ in () }
-            .subscribe(onNext: { [weak self]  in
-                self?.RegistationOverAlert(vc: R.storyboard.main.list()!)})
+            .bind(onNext: { self.RegistationOverAlert(vc: R.storyboard.main.list()!)})
+
             .disposed(by: disposeBag)
         
         //messageTextViewのLabelの表示/非表示
         output.messageLabelEnable
-            .drive( self.messageLabel.rx.isHidden)
+            .drive( profileView.msgLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
-        //messageTextView_Tapp
-     /*   output.messageTapp
-              .subscribe(onNext: { [weak self]  in
-                  self?.configureObserver()
-              })
-                .disposed(by: disposeBag)*/
-
         //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
         output.nextVC
-            .subscribe(onNext: {
-                self.messageTextView.resignFirstResponder()
-//                self.configureObserver()
-                let sb = R.storyboard.main()
-                let vc = sb.instantiateViewController(withIdentifier: "PostResultViewController") as? PostResultViewController
+            .bind(onNext: {
+                self.profileView.msgTextView.resignFirstResponder()
                 self.postResurlModel.dataSet(data: $0)
-                self.navigationController?.pushViewController(vc!, animated: true)
+                self.pushVC(vc: R.storyboard.main.PostResultViewController()!, animation: true)
             })
             .disposed(by: disposeBag)
     }
     
-    
+
+
+}
+extension PostViewController: UITextViewDelegate {
     
     func numberOfLines(orgTextView: UITextView, newText: String) -> Int {
         
@@ -143,52 +126,11 @@ class PostViewController: UIViewController, ScrollKeyBoard {
         }
         return numberOfLines
     }
-}
-    
-extension PostViewController: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(_ textField: UITextField)  {
-        messageTextView.isSelectable = false
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        messageTextView.isSelectable = true
-        messageTextView.isEditable = true
-        myNameTextField.resignFirstResponder()
-        targetNameTextField.resignFirstResponder()
-        return  true
-    }
-    
-}
-
-extension PostViewController: UITextViewDelegate {
-    
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        configureObserver()
-        return  true
-    }
-    
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        self.previousText = myNameTextField.text!
-        self.lastReplaceRange = range
-        self.lastReplacementString = text
-        return true
-    }
     
     //メッセージを６行に制限
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let newText: String = (messageTextView.text! as NSString).replacingCharacters(in: range, with: text)
+        let maxLength = 6
+        let newText: String = (profileView.msgTextView.text! as NSString).replacingCharacters(in: range, with: text)
         return numberOfLines(orgTextView: textView, newText: newText) <= maxLength
     }
-    
-    
-    
 }
-
-
-    
-
-
-
-
-

@@ -6,11 +6,8 @@ import RSKImageCropper
 class ImageCrop: NSObject {
     
     weak var delegate: UIViewController?
-    //output
     private let image = BehaviorRelay<UIImage>(value: R.image.user12()!)
-    var croppedImage: Observable<UIImage> {
-        return image.asObservable()
-    }
+    var croppedImage: Observable<UIImage> { return image.asObservable() }
     
     //切り抜き画面呼び出し
     func RSKImageCropVC(image: UIImage) {

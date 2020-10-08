@@ -5,7 +5,7 @@ struct MultipleSectionModel {
     var items: [Item]
 }
 extension MultipleSectionModel: SectionModelType {
-    typealias Item = [String: Any]
+    typealias Item = [String]
     
     init(original: MultipleSectionModel, items: [Item] ) {
         self = original

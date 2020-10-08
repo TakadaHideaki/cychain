@@ -5,9 +5,9 @@ import RxCocoa
 struct PostListViewModel {
     let userdefault: SetUserDefault?
     let firebase: SetFirebase?
-//    let model = PostListModel()
     private let disposeBag = DisposeBag()
     private let key = Name.KeyName.uniqueNmame.rawValue
+    
     init(ud: SetUserDefault = SetUserDefault(), fb: SetFirebase = SetFirebase()) {
           self.userdefault = ud
           self.firebase = fb
@@ -17,27 +17,21 @@ struct PostListViewModel {
 extension PostListViewModel: ViewModelType {
 
     struct Input {
-        let onDeleteCell: Observable<IndexPath> //Cell削除が押された
-        let onSelectedCell: Observable<IndexPath> //Cellが選択された
+        let onDeleteCell: Observable<IndexPath>
+        let onSelectedCell: Observable<IndexPath>
     }
     
     struct Output {
-        let cellObj: Observable<[PostListSectionModel]>? //表示用データ
-        let selectedPairName: Observable<[String:String]>? //　セルタップでラップした名前を返す
-        let deleteCompleted: Observable<Void> //　セル削除の処理が完了
+        let cellObj: Observable<[PostListSectionModel]>?
+        let selectedPairName: Observable<[String:String]>?
+        let deleteCompleted: Observable<Void>
      }
     
     func transform(input: Input) -> Output {
         
         var cellObj = BehaviorRelay<[PostListSectionModel]>(value: [])
-        //damyData
-        // self.postListRelay.accept([PostListSectionModel(items: [["a": "b"], ["c": "d"],["v": "v"]])])
-        
-//        model.observeUserDefault(complete: { complete in
-//        cellObj.accept([PostListSectionModel(items: complete)])
-
         //cell表示用データをuserDefaultから取得
-        UD.rx.observe([[String: String]].self, self.key)
+        userdefault?.postListCellObj
             .subscribe(onNext: {
                 if let value = $0 {
                     cellObj.accept([PostListSectionModel(items: value)])
@@ -65,23 +59,3 @@ extension PostListViewModel: ViewModelType {
                       deleteCompleted: resetCellObj )
     }
 }
-
-
-
-                //Cell削除→ 表示用Cellデータから該当データ(名前)を削除
-        //        let resetpostList = { (udData : [[String: String]]) -> Observable<[[String: String]]> in
-        //            //            postList = Observable.just([PostListSectionModel(items: udData)])
-        //            let a = cellObj.value
-        //            log.debug(a)
-        ////            cellObj.accept([PostListSectionModel(items: udData)])
-        //            return Observable.just(udData)
-        //        }
-        
-        
-//            .flatMap { //表示用CellDataセット
-//                return resetpostList($0)
-//        }
-//            .flatMap { //delete(firebase)
-//                return self.firebase!.delete(data: $0)
-//        }
-

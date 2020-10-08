@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="XLPagerTabView" customModule="cychain" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCP-Ue-6vX" customClass="Button" customModule="cychain" customModuleProvider="target">
+                    <rect key="frame" x="50" y="94" width="314" height="55"/>
+                    <color key="backgroundColor" red="0.082352941176470587" green="0.15294117647058825" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="314" id="ox2-0m-wMt"/>
+                        <constraint firstAttribute="height" constant="55" id="s3I-QO-DbF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <size key="titleShadowOffset" width="2" height="2"/>
+                    <state key="normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                            <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                            <real key="value" value="0.5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                            <size key="value" width="10" height="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6t2-Er-Gsy" customClass="Button" customModule="cychain" customModuleProvider="target">
+                    <rect key="frame" x="50" y="184" width="314" height="55"/>
+                    <color key="backgroundColor" red="0.082352941176470587" green="0.15294117647058825" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="sDH-xX-4MI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <size key="titleShadowOffset" width="2" height="2"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                            <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                            <size key="value" width="10" height="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                            <real key="value" value="0.5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.29411764705882354" green="0.54030418400000002" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <constraints>
+                <constraint firstItem="PCP-Ue-6vX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2ta-wZ-xzc"/>
+                <constraint firstItem="6t2-Er-Gsy" firstAttribute="top" secondItem="PCP-Ue-6vX" secondAttribute="bottom" constant="35" id="3p8-Ix-qms"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6t2-Er-Gsy" secondAttribute="trailing" constant="50" id="BC7-RG-ftT"/>
+                <constraint firstItem="PCP-Ue-6vX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="FZa-ji-l1d"/>
+                <constraint firstItem="6t2-Er-Gsy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="50" id="K0g-Xo-qJX"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PCP-Ue-6vX" secondAttribute="trailing" constant="50" id="MfQ-q5-ikb"/>
+                <constraint firstItem="PCP-Ue-6vX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="50" id="dxP-Fd-AbW"/>
+                <constraint firstItem="6t2-Er-Gsy" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="h8u-Xq-CXB"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <connections>
+                <outlet property="googleButton" destination="6t2-Er-Gsy" id="RJA-nZ-iOZ"/>
+                <outlet property="mailButton" destination="PCP-Ue-6vX" id="4j5-DH-YcK"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="132.58928571428572"/>
+        </view>
+    </objects>
+</document>

@@ -19,9 +19,6 @@ struct SearchWord {
     }
 }
 
-    
-
-
 struct SearchViewModel {
     private let userdefault = SetUserDefault()
     private let firebase = SetFirebase()
@@ -37,11 +34,11 @@ extension SearchViewModel: ViewModelType {
     }
     
     struct Output {
-        let ButtonEnabled: Driver<Bool>
+        let btnEnabled: Driver<Bool>
         let noMatch: Driver<Bool>
         let match: Observable<MatchData>
         let contolIndicator: Driver<Bool>
-        let hidden: Driver<Bool>
+        let matchUI: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -54,107 +51,63 @@ extension SearchViewModel: ViewModelType {
                                 )
             }
         // 文字数チェックしてButtonEnabled切り替え
-        let buttonEnabled = substitutionToText.map{$0.isvalid}.asDriver(onErrorDriveWith: Driver.empty())
+        let btnEnabled = substitutionToText.map{$0.isvalid}.asDriver(onErrorDriveWith: Driver.empty())
         //SearchButton →文字数チェック　→Fireaseで検索
         let searchStart = input.searchButtonTapped
             .withLatestFrom(substitutionToText)
             .do(onNext: { self.firebase.observe(value: $0)})
             .map{_ in true }
             .startWith(false)
-            .asDriver(onErrorDriveWith: Driver.empty())
 
-        // ① 検索結果、マッチ無し
-        let obseved_NoMatch = firebase.data.map{ $0 != nil}.filter{ $0 == false }
-        // ② 検索結果、マッチ有り
-        let obseved_match = firebase.data.flatMap{Observable.from(optional: $0)}
-        // ③ ユーザーがブロックしたIDを取得
+        // ① 検索結果、N/A
+        let obseved_NoMatch = firebase.serchResultdata.filter{$0 == nil}.map{ _ in false }
+        // ③ Block登録してあるIDを取得
         let blockID = self.userdefault.readBlockUaser()
-        // ④ ②に③が含まれるかチェック
-        let filter_BlockID = obseved_match.map { $0.filter { !blockID.contains($0.key) }}
-        // ⑤ ④の結果から、マッチ無しのみを抽出
-        let noData = filter_BlockID.map{ !$0.isEmpty }.filter{ $0 == false }
-        // ⑥ ①と⑤をMerge
+        // ④ マッチ結果からブロックIDを排除
+        let obseved_Match = firebase.serchResultdata
+            .compactMap{$0}
+            .map{ $0.filter{ a in !blockID.contains(a.key)}}
+        // ⑤ ④の結果マッチデータが１つもなくなったケースのみを抽出(⑥にfalseを送る為↓の記述)
+        let noData = obseved_Match.map{ !$0.isEmpty }.filter{ $0 == false }
+        // ⑥ ① & ⑤ Merge
         let noMatch = Observable
             .of(obseved_NoMatch, noData)
             .merge()
             .asDriver(onErrorDriveWith: Driver.empty())
-            .skip(1)
-            .startWith(true)
-            .do(onNext: {_ in log.debug("noMatch")})
-        
         //　⑦ MatchしたらMatchDataにマッチデータをセット
         let match = Observable
             .combineLatest(
                 substitutionToText,
-                filter_BlockID.skip(1).filter{ !$0.isEmpty }) { searchWord, value in
-                    MatchData(searchWord: searchWord,
-                               data: value)
+                obseved_Match.filter{ !$0.isEmpty }) { searchWord, value in
+                    MatchData(searchWord: searchWord, data: value)
         }
         // ⑧ machした時のUI表示/非表示切り替え(マッチしたらtrue)
-        let mach_UIhidden = match
+        let machUI = match
         .map{_ in true }
         .startWith(true)
         .asDriver(onErrorDriveWith: Driver.empty())
-        // ⑨ matchしたらfalseにする
-        let bool_match = obseved_match
-            .map{ _ in false }
-        // ⑩ ①と⑨をmeage
-        let merge_Match_NoMatch = Observable
-            .of(obseved_NoMatch, bool_match)
-            .merge()
-            .skip(1)
-            .asDriver(onErrorDriveWith: Driver.empty())
-        // ⑪ indicator表示/非表示
-        let indicator = Driver
-            .of(searchStart, merge_Match_NoMatch)
-            .merge()
-            .skip(1)
-            .asDriver(onErrorDriveWith: Driver.empty())
-            .do(onNext: {_ in log.debug("stopindicator")})
 
-        return Output( ButtonEnabled: buttonEnabled,
+        // ⑩ ①と⑨をmeage
+        let indicator = Observable
+            .of(searchStart,
+                obseved_NoMatch,
+                obseved_Match.map{ _ in false })
+            .merge()
+            .asDriver(onErrorDriveWith: Driver.empty())
+        
+        return Output( btnEnabled: btnEnabled,
                        noMatch: noMatch,
                        match: match,
                        contolIndicator: indicator,
-                       hidden: mach_UIhidden
+                       matchUI: machUI
         )
         
     }
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
  
     
     
+    
 }
-
-//        let mauch_stopindicator = match
-//        .skip(1)
-//        .map{_ in false }
-//        .asDriver(onErrorDriveWith: Driver.empty())
-        
-//        let stopindicator = Driver
-//            .of(searchStart, mauch_stopindicator)
-//            .merge()
-//            .map{_ in false }
-//            .asDriver(onErrorDriveWith: Driver.empty())
-//            .do(onNext: {_ in log.debug("stopindicator")})
-
-
-        
-
-
-//        let noMatc = firebase.data
-//            .filter{ $0 == nil}
-//            .map{ _ in false }
-//            .asDriver(onErrorDriveWith: Driver.empty())
-//            .startWith(true)
-        

@@ -7,20 +7,20 @@ struct EditModel {
     static let shared = EditModel()
     private init() {}
     
-    let dataRelay = BehaviorRelay<Texts>(value: Texts(my: "", target: "", message: "", iconImage: R.image.user10()!))
-    var data: Observable<Texts> { return dataRelay.asObservable() }
+    let dataRelay = PublishRelay<PostDatas>()
+    var data: Observable<PostDatas> { return dataRelay.asObservable() }
     
-    let noDetaRelay = BehaviorRelay<(m:String, t:String)>(value: ("", ""))
+    let noDetaRelay = PublishRelay<(m:String, t:String)>()
     var noData: Observable<(m:String, t:String)> { return noDetaRelay.asObservable() }
     
     func observe(value: [String: String]) {
         let my = value.map{$0.key}[0]
         let target = value.map{$0.value}[0]
-        let dafaultImg = R.image.user10()!
+        let dafaultImg = R.image.user12()!
         let ref: DatabaseReference =
             Database.database().reference().child("\(my)/\(target)/\(USER_ID!)")
         
-        var editData = Texts(my: my,
+        var editData = PostDatas(my: my,
                              target: target,
                              message: "",
                              iconImage: dafaultImg)
@@ -37,7 +37,7 @@ struct EditModel {
                     self.convertURLtoUIImage(stringImg: stringImg, { complete in
                         editData.iconImage = complete
                         self.dataRelay.accept(editData)
-                        log.debug(self.dataRelay)
+                        log.debug(complete)
                     })
                 } else {
                     self.dataRelay.accept(editData)

@@ -5,48 +5,44 @@ import RxDataSources
 import MessageUI
 import GoogleMobileAds
 
-class SeachResultViewCotroller: UIViewController {
-   
-    private let viewModel = SingleMatchViewModel()
-    var cellObject: BaseViewModel = SingleMatchViewModel()
+class MatchViewCotroller: UIViewController {
+    
+    private let viewModel = MatchViewModel()
+    var cellObject: BaseViewModel = MatchViewModel()
     let disposeBag = DisposeBag()
-//    let indicatorView = UIActivityIndicatorView.init(style: .whiteLarge)
-//    var coverView = UIView()
-//    var naviBarButton = UIBarButtonItem()
-//    var tableView = UITableView()
     let reportRelay = BehaviorRelay<Void>(value: ())
     var reportObservable: Observable<Void> { return reportRelay.asObservable() }
-    let blockRelay = BehaviorRelay<Void>(value: ())
+    let blockRelay = PublishRelay<Void>()
     var blockObservable: Observable<Void> { return blockRelay.asObservable() }
     
     private lazy var dataSource =
-          RxTableViewSectionedReloadDataSource<MatchSectionModel> (
-              configureCell: { [weak self] _, tableView, indexPath, item in
-
+        RxTableViewSectionedReloadDataSource<MatchSectionModel> (
+            configureCell: { [weak self] _, tableView, indexPath, item in
+                
                 switch indexPath.section {
                 case 0:
                     let profileCell = tableView.dequeueReusableCell(withIdentifier: "P_Cell", for: indexPath) as! ProfileCell
-
+                    
                     profileCell.mynameLabel.text = item.map{$0.1}[0]["user"] as? String
                     profileCell.targetLabel.text = item.map{$0.1}[0]["search"] as? String
                     profileCell.profileImage.image = item.map{$0.1}[0]["image"] as? UIImage
-
+                    
                     profileCell.mynameLabel.adjustsFontSizeToFitWidth = true
                     profileCell.targetLabel.adjustsFontSizeToFitWidth = true
                     profileCell.mynameLabel.minimumScaleFactor = 0.5
                     profileCell.targetLabel.minimumScaleFactor = 0.5
                     return profileCell
-
+                    
                 case 1:
                     let messagecell = tableView.dequeueReusableCell(withIdentifier: "M_Cell", for: indexPath) as! MessageCell
                     messagecell.messageLabel.text = item.map{$0.1}[0]["msg"] as? String
-
+                    
                     return messagecell
-
+                    
                 default: break
                 }
                 return UITableViewCell()
-        }
+            }
     )
     
     lazy var coverView: UIView = {
@@ -54,16 +50,20 @@ class SeachResultViewCotroller: UIViewController {
         view.frame = self.view.bounds
         view.backgroundColor = .white
         view.alpha = 0.5
+        self.view.addSubview(view)
+        self.view.bringSubviewToFront(view)
         return view
     }()
     
-     var indicatorView = { () -> UIActivityIndicatorView in
+    lazy var indicatorView = { () -> UIActivityIndicatorView in
         var view = UIActivityIndicatorView.init(style: .whiteLarge)
         view.color = .gray
+        self.view.addSubview(view)
+        self.view.bringSubviewToFront(view)
         return view
     }()
     
-     var naviBarButton = { () -> UIBarButtonItem in
+    var naviBarButton = { () -> UIBarButtonItem in
         let button = UIBarButtonItem()
         button.image = R.image.menu()!
         button.style = .plain
@@ -82,130 +82,73 @@ class SeachResultViewCotroller: UIViewController {
         let messageNib = UINib(resource: R.nib.postCardMessageCell)
         tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
         
+        self.view.addSubview(tableView)
+        
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
         return tableView
     }()
-
+    
     override func viewWillLayoutSubviews() {
         _ = self.initViewLayout
     }
     lazy var initViewLayout : Void = {
         admob()
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        changeCellObj()
-        initializeUI()
         bind()
-    }
-    
-    func changeCellObj() {}
-    
-    func initializeUI() {
-//        setBarButton()
-//        setIndicator()
-//        setCoverView()
-//        initializeTableView()
-        addUI()
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-//        registCell()
-    }
-    
-    func addUI() {
-        self.view.addSubview(indicatorView)
-        self.view.bringSubviewToFront(indicatorView)
-        self.view.addSubview(coverView)
-        self.view.bringSubviewToFront(coverView)
+        self.tableView.isScrollEnabled = false
         self.navigationItem.rightBarButtonItem = naviBarButton
-        self.view.addSubview(tableView)
     }
     
-//    func setIndicator() {
-//        indicatorView.center = view.center
-//        indicatorView.color = .gray
-//        self.view.addSubview(indicatorView)
-//        self.view.bringSubviewToFront(indicatorView)
-//    }
-    
-//    func setCoverView() {
-//        coverView = UIView(frame: self.view.frame)
-//        coverView.backgroundColor = .white
-//        coverView.alpha = 0.5
-//        self.view.addSubview(coverView)
-//        self.view.bringSubviewToFront(coverView)
-//    }
-    
-//    func setBarButton() {
-//        naviBarButton = UIBarButtonItem()
-//        naviBarButton.image = R.image.menu()!
-//        naviBarButton.style = .plain
-//        self.navigationItem.rightBarButtonItem = naviBarButton
-//    }
-    
-//    func initializeTableView() {
-//        let tableView = UITableView(frame: self.view.bounds, style: .plain)
-//        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        tableView.tableFooterView = UIView(frame: .zero)
-//        tableView.separatorStyle = .none
-//        self.view.addSubview(tableView)
-//        self.tableView = tableView
-////        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-//    }
-    
-//    func registCell() {
-//          let nib = UINib(resource: R.nib.postCardeTableViewCell)
-//          tableView.register(nib, forCellReuseIdentifier: "P_Cell")
-//
-//          let messageNib = UINib(resource: R.nib.postCardMessageCell)
-//          tableView.register(messageNib, forCellReuseIdentifier: "M_Cell")
-//      }
-    
-    
-     func bind() {
-        let input = SingleMatchViewModel.Input(
+    func bind() {
+        let input = MatchViewModel.Input(
             naviBarButtonTaaped: naviBarButton.rx.tap.asObservable(),
             reportTapped: self.reportObservable,
             blockTapped: self.blockObservable
         )
         
         let output = viewModel.transform(input: input)
-
+        
         //cellData
         cellObject.cellObj
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
-                    .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
         
         //indicaotr & CoverView
         output.indicator.drive(self.indicatorView.rx.isAnimating).disposed(by: disposeBag)
-        output.indicator.asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.coverView.isHidden = true
-            })
-            .disposed(by: disposeBag)
-
+        output.indicator.drive(self.indicatorView.rx.isHidden).disposed(by: disposeBag)
+//
         //NavBarBtnTap(Repot or Block)
         output.naviBarButtonEvent
-            .subscribe(onNext: { [weak self] _ in
-                self?.repotAction()
-            })
-        .disposed(by: disposeBag)
+            .bind(onNext: { self.repotAction() })
+            .disposed(by: disposeBag)
         
         //ReportTapp
-        output.reportObj.skip(1).subscribe(onNext: { [weak self] data in
-            self?.sendMailAction(user: data["user"]!, blockUser: data["search"]!, msg: data["msg"]! )
-        })
+        output.reportObj.skip(1)
+            .bind(onNext: { self.sendMailAction(user: $0["user"]!, blockUser: $0["search"]!, msg: $0["msg"]! ) })
             .disposed(by: disposeBag)
         
         //BlockTapp
-        output.blockID.skip(1).subscribe(onNext: { [weak self] _ in
-            self?.blockAction()
-        })
+        output.blockID.skip(1)
+            .bind(onNext: { self.blockAction() })
             .disposed(by: disposeBag)
     }
     
 }
 
-extension SeachResultViewCotroller: UITableViewDelegate {
+
+//extension Reactive where Base: UIControl {
+//    public var isHidden: Binder<Bool> {
+//        return Binder(self.base) { control, value in
+//            control.isHidden = value
+//        }
+//    }
+//}
+
+
+extension MatchViewCotroller: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
            return 210
@@ -223,7 +166,7 @@ extension SeachResultViewCotroller: UITableViewDelegate {
 }
 
 
-extension SeachResultViewCotroller: MFMailComposeViewControllerDelegate {
+extension MatchViewCotroller: MFMailComposeViewControllerDelegate {
      func repotAction() {
  
          //Definition_Alert
@@ -275,7 +218,7 @@ extension SeachResultViewCotroller: MFMailComposeViewControllerDelegate {
     }
     
     func blockAction() {
-        let alert = UIAlertController(title: "この投稿をしたユーザーをブロックしました", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "この投稿ユーザーをブロックしました", message: "", preferredStyle: .alert)
         self.present(alert, animated: true, completion: {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 alert.dismiss(animated: true)

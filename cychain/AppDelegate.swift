@@ -36,6 +36,7 @@ let log = XCGLogger.default
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
+
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -67,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             return GIDSignIn.sharedInstance().handle(url)
     }
     
-    //googleログイン処理
+//    //googleログイン処理
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             log.debug("Error: \(error.localizedDescription)")

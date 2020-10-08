@@ -23,6 +23,7 @@ enum LogOut {
     case success
     case error
 }
+
 enum SignOut {
     case success
     case error
@@ -34,22 +35,17 @@ class SettingModel {
     let account = ["ログアウト", "アカウント削除"]
     let other = ["問い合わせ", "利用規約", "プライバシーポリシー"]
     
-    var logOutRelay = BehaviorRelay<LogOut>(value: .error)
-    var logOutEvent: Observable<LogOut> {
-        return logOutRelay.asObservable()
-    }
-    let signOutRelay = BehaviorRelay<SignOut>(value: .error)
-    var signOutEvent: Observable<SignOut> {
-        return signOutRelay.asObservable()
-    }
-    
-
+    let logOutRelay = PublishRelay<LogOut>()
+    var logOutEvent: Observable<LogOut> { return logOutRelay.asObservable() }
+   
+    let signOutRelay = PublishRelay<SignOut>()
+    var signOutEvent: Observable<SignOut> { return signOutRelay.asObservable() }
     
     func logOut() {
         do {
             logOutRelay.accept(LogOut.success)
             try Auth.auth().signOut()
-            
+
         } catch _ as NSError {
             logOutRelay.accept(LogOut.error)
         }

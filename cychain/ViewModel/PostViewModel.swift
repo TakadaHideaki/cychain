@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct Texts {
+struct PostDatas {
     let my: String
     let target: String
     var message: String
@@ -31,7 +31,6 @@ extension PostViewModel: ViewModelType {
     struct Input {
         let postButtontapped: Observable<Void>
         let iconButtontapped: Observable<Void>
-        let messageTapped: Observable<Void>
         let myNameRelay: Observable<String>
         let targetRelay: Observable<String>
         let messageRelay: Observable<String>
@@ -41,52 +40,49 @@ extension PostViewModel: ViewModelType {
     
     struct Output {
         let onIcButtonClickEvent: Observable<Void>
-        let messageTapp: Observable<Void>
         let selectedImage: Observable<UIImage>
         let iconButtonImage: Driver<UIImage>
         let messageLabelEnable: Driver<Bool>
-        let postsCountOver: Observable<Bool>
+        let postsCountOver: Observable<Void>
         let characterCountOverrun: Observable<Void>
-        let nextVC: Observable<Texts>
+        let nextVC: Observable<PostDatas>
     }
     
     func transform(input: Input) -> Output {
         
-        //① 投稿数Check
+        //　投稿数Check
         var postsCheck: Observable<Bool> {
             return Observable.just(
                 UD.array(forKey: Name.KeyName.uniqueNmame.rawValue)!.count < 10
             )
         }
-        //② PostDataを纏めTextsへ
+        //　PostDataをTextsへ格納
         let substitutionToTexts = Observable
             .combineLatest(input.myNameRelay.asObservable(),
                            input.targetRelay.asObservable(),
                            input.messageRelay.asObservable(),
                            input.imageCropped.asObservable()) { my, target, message, iconImage  in
-                            Texts(my: my,
+                            PostDatas(my: my,
                                   target: target,
                                   message: message,
                                   iconImage: iconImage)
         }
+        .share()
         
-        //③ 投稿ボタン押下→投稿数クリア(①) →Textsに投稿データをセット(②)
-        let postButtonTap = input.postButtontapped
-            .withLatestFrom(postsCheck)
-            .filter { $0 }
-            .map { _ in () }
+        // 投稿数チェック
+        let postCountCheck = input.postButtontapped.withLatestFrom(postsCheck)
+        // 投稿数NG
+        let postsCountOver = postCountCheck .filter { !$0 }.map { _ in () }
+        // 投稿数OK　→　文字数チェック
+        let postsCountCleared = postCountCheck.filter { $0 }.map { _ in () }
             .withLatestFrom(substitutionToTexts) { _, texts in texts }
-       
-        // ③→ 文字数NG
-        let overrun = postButtonTap.filter { !$0.isValid }.map { _ in () }
-   
-        // ③→ 文字数OK
-        let apprppriate = postButtonTap.filter { $0.isValid }
+        // 文字数NG
+        let overrun = postsCountCleared.filter { !$0.isValid }.map { _ in () }
+        // 文字数OK
+        let cleared = postsCountCleared.filter { $0.isValid }
             .do(onNext: {
                 self.userdefault?.setUd(data: $0)
-                self.firebase?.set(data: $0)
-//                Observable.from(optional: $0)
-            })
+                self.firebase?.set(data: $0) })
         
         //Labelの表示/非表示制御
         let messageTextCountCheck = input.messageRelay
@@ -95,13 +91,12 @@ extension PostViewModel: ViewModelType {
         
         
         return Output(onIcButtonClickEvent: input.iconButtontapped,
-                      messageTapp: input.messageTapped,
                       selectedImage: input.imageSelected,
                       iconButtonImage: input.imageCropped.asDriver(onErrorDriveWith: Driver.empty()),
                       messageLabelEnable: messageTextCountCheck,
-                      postsCountOver: postsCheck,
+                      postsCountOver: postsCountOver,
                       characterCountOverrun: overrun,
-                      nextVC: apprppriate
+                      nextVC: cleared
         )
     }
 }

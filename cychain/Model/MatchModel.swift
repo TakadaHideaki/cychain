@@ -8,52 +8,38 @@ class MatchModel {
     static let shared = MatchModel()
     private init() {}
     
-    var singleMatch: [String: [String: Any]]?
-    var reportData: [String: String]?
-    var blockID: Observable<String>?
-    var data: [String: [String: Any]]?
-    var iDAray = [String]()
-    var values = [[String: Any]]()
+    var matchdata = MatchData(searchWord: SearchWord(userName: "", searchName: ""), data: ["" : ["" : ""]])
+    var matchData = [String: [String: Any]]()
+    var reportRelay = PublishRelay<[String: String]>()
+    var report: Observable<[String: String]> { return reportRelay.asObservable() }
+    let blockRelay = BehaviorRelay<String>(value: "")
+    var blockID: Observable<String> { return blockRelay.asObservable() }
     let sectionTitle = ["PostCard", "Message"]
+   
     
-    func setData(data: MatchData) {
+    func setData(data: MatchData, row: Int = 0) {
         
         let user = data.searchWord.userName
         let search = data.searchWord.searchName
-        let id = data.data.map{$0.0}[0]
-        let msg = data.data.map{$0.1}[0]["message"]as? String ?? ""
-        let icon = R.image.user12()!
+        let id = data.data.map{$0.0}[row]
+        let msg = data.data.map{$0.1}[row]["message"]as? String ?? ""
         
-        if let stringImage = data.data.map({$0.1})[0]["image"] as? String {
-            convertURLtoUIImage(stringImage: stringImage, { complete in
-                self.singleMatch = [id:["user": user, "search": search, "msg": msg, "image": complete]]
-            })
-        } else {
-            self.singleMatch = [id:["user": user, "search": search, "msg": msg, "image": icon]]
-        }
-        
-        self.reportData = ["user": user, "search": search, "msg": msg]
-        self.blockID = Observable.just(id)
-        
-        var data = data.data
-        data.forEach {
-            if let urlImage = $0.value["image"] as? String {
-                let id = $0.key
-                var img: UIImage?
-                convertURLtoUIImage(stringImage: urlImage, { complete in
-                    img = complete
-                })
-                data[id]!["image"] = img
-                self.iDAray += [id]
-                self.values += [data[id]!]
+        if let stringImage = data.data.map({$0.1})[row]["image"] as? String {
             
-            } else {
-                let id = $0.key
-                data[id]?["image"] = R.image.user12()!
-                self.iDAray += [id]
-                self.values += [data[id]!]
-            }
+            convertURLtoUIImage(stringImage: stringImage, { complete in
+                self.matchData = [id: ["user": user,
+                                         "search": search,
+                                         "msg": msg,
+                                         "image": complete]] })
+        } else {
+            self.matchData = [id: ["user": user,
+                                     "search": search,
+                                     "msg": msg,
+                                     "image": R.image.user12()!]]
         }
+        self.reportRelay.accept(["user": user, "search": search, "msg": msg])
+        self.blockRelay.accept(id)
+        
     }
     
     func convertURLtoUIImage(stringImage: String, _ complete: @escaping (UIImage) -> ()) {
@@ -71,6 +57,7 @@ class MatchModel {
         }
     }
     
+    
     func registBlockID(blockID: String) {
         var block = UD.array(forKey: Name.KeyName.block.rawValue) ?? []
         block += [blockID]
@@ -85,7 +72,7 @@ struct MatchSectionModel {
 
 extension MatchSectionModel: SectionModelType {
     
-    typealias Item = [String:[String: Any]]
+    typealias Item = [String: [String: Any]]
     
     init(original: MatchSectionModel, items: [Item] ) {
         self = original

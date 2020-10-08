@@ -29,39 +29,37 @@ struct EditViewModel {
         }
         
         struct Output {
-            let SwitchUIHiden: Driver<Bool>
+            let searchingUI: Driver<Bool>
             let NoData: Observable<Void>
-            let initialScreenData: Observable<Texts>
+            let initScreenData: Observable<PostDatas>
             let onIcButtonClickEvent: Observable<Void>
             let messageTapp: Observable<Void>
             let selectedImage: Observable<UIImage>
             let iconButtonImage: Driver<UIImage>
             let messageLabelEnable: Driver<Bool>
-            let nextVC: Observable<Texts>
+            let nextVC: Observable<PostDatas>
         }
         
         func transform(input: Input) -> Output {
             //データが表示されるまでIndicatorを回す為のPropaty
-            let SwitchUIHiden = model.data
-            .skip(1)
-                .withLatestFrom(self.model.noData)
-                .map{ _ in false}
+            let Applicable = model.data.map{ _ in false}
+            let NA = model.noData.map{ _ in false }
+            
+            let searchingUI = Observable
+                .of(Applicable, NA)
+                .merge()
                 .startWith(true)
                 .asDriver(onErrorDriveWith: Driver.empty())
-                .debug()
             
             //表示用データが無かった時用（通常はあり得ない）
             let NoData = model.noData
                 .skip(1)
                 .do(onNext: { self.model.deletePostData(data: $0) })
                 .map{_ in ()}
-                .debug()
             
             //表示用データ
-            let initialScreenData = model.data
+            let archive = model.data
                 .compactMap{$0}
-                .skip(1)
-                .debug()
             
             //　① PostDataを纏めTextsへ
             let substitutionToTexts = Observable
@@ -69,7 +67,7 @@ struct EditViewModel {
                                input.targetRelay.asObservable(),
                                input.messageRelay.asObservable(),
                                input.imageCropped.asObservable()) { my, target, msg, img  in
-                                Texts(my: my,
+                                PostDatas(my: my,
                                       target: target,
                                       message: msg,
                                       iconImage: img)
@@ -85,9 +83,9 @@ struct EditViewModel {
                 .map{ return $0.count > 0 }
                 .asDriver(onErrorDriveWith: Driver.empty())
             
-            return Output(SwitchUIHiden: SwitchUIHiden,
+            return Output(searchingUI: searchingUI,
                           NoData: NoData,
-                          initialScreenData: initialScreenData,
+                          initScreenData: archive,
                           onIcButtonClickEvent: input.iconButtontapped,
                           messageTapp: input.messageTapped.asObservable(),
                           selectedImage: input.imageSelected,
@@ -97,7 +95,3 @@ struct EditViewModel {
         }
         
     }
-
-
-
-

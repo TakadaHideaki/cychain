@@ -13,8 +13,8 @@ extension UIViewController {
     //アラートを出してviewを切り替える
     func sendInitialViewAlert(title:String,message:String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let sendButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{(action:UIAlertAction!) -> Void in
-            self.dismiss(animated: true, completion: nil)
+        let sendButton = UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+            self.dismiss(animated: true)
         })
         alert.addAction(sendButton)
         self.present(alert, animated: true)
@@ -37,10 +37,6 @@ extension UIViewController {
     
     func logOutAlert() {
         sendInitialViewAlert(title: "ログアウトしました", message: "")
-    }
-    
-    func editErrorAletr() {
-        sendInitialViewAlert(title: "Postデータがありませんでした", message: "")
     }
     
     func passwordresetSuccessAlert() {
@@ -70,7 +66,7 @@ extension UIViewController {
     }
     
     func passwordemptyAlert() {
-        self.alert(title: "メールをアドレスを入力して下さい", message: "", actiontitle: "OK")
+        self.alert(title: "メールアドレスの文字数が不足しています", message: "", actiontitle: "OK")
     }
     
     func registGoogleadressAlert() {
@@ -88,6 +84,11 @@ extension UIViewController {
     func charactorErrorAlert() {
          alert(title: "文字数Error", message: "", actiontitle: "OK")
      }
+    
+    func editErrorAletr() {
+        alert(title: "Postデータがありませんでした", message: "",  actiontitle: "OK")
+        self.navigationController?.popViewController(animated: true)
+    }
     
     
     
@@ -123,6 +124,7 @@ extension UIViewController {
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel)
         let sendList = UIAlertAction(title: "登録リストへ",style: .default, handler:{(action: UIAlertAction!) -> Void in
             self.pushVC(vc: vc, animation: true)
+
         })
         cansel_Send_Alert(title: "登録数オーバー", message: "リストから登録数を減らして下さい", actions: [cancel, sendList])
     }

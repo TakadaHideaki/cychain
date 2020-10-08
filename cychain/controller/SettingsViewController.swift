@@ -4,7 +4,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class SettingsViewController: UIViewController, UINavigationControllerDelegate  {
+class SettingsViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate  {
     
     private lazy var dataSource = RxTableViewSectionedReloadDataSource<SettingSectionModel> (
         configureCell: { [weak self] _, tableView, indexPath, item in
@@ -23,52 +23,41 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate  
             return datasouse.sectionModels[indexpath].sectionTitle
     }
     )
+    
+    lazy var tableView = { () -> UITableView in
+        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.view.addSubview(tableView)
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+        return tableView
+    }()
 
     private let viewModel = SettingViewModel()
     var model = SettingModel()
     let disposeBag = DisposeBag()
-    var tableView: UITableView!
-
- 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initializeUI()
-        bind()
-//        settingModel?.delegate = self
-    }
-    
-    func initializeUI() {
-        customNavigationBar()
-        setTableView()
-        registCell()
-    }
-    
-    func setTableView() {
-        let tableView = UITableView(frame: self.view.bounds, style: .plain)
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        tableView.tableFooterView = UIView(frame: .zero)
-        tableView.separatorStyle = .none
-        self.view.addSubview(tableView)
-        self.tableView = tableView
-        tableView.tableFooterView = UIView(frame: .zero)
-//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-    }
-    
-    func registCell() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+// 
+
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.tableView.isScrollEnabled = false
+        customNavigationBar()
+        bind()
+     }
+    
     func bind() {
         let input = SettingViewModel.Input(
-            didSelectedCell: tableView!.rx.itemSelected.asObservable())
+            didSelectedCell: tableView.rx.itemSelected.asObservable())
         
         let output = viewModel.transform(input: input)
         //表示用CellData
@@ -78,19 +67,19 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate  
         
         //cellTap
         output.selectedCellEvent
-            .subscribe(onNext: {
+            .bind(onNext: {
                 switch $0 {
                 case .logOut, .signOut: break
                 case .inquiry: self.sendMail()
-                case .terms: self.presentVC(vc: R.storyboard.main.terms1()!, animation: true)
-                case .privacy: self.presentVC(vc: R.storyboard.main.privacyPolicy()!, animation: true)
+                case .terms: self.pushVC(vc: R.storyboard.main.terms()! , animation: true)
+                case .privacy: self.pushVC(vc: R.storyboard.main.privacyPolicy()!, animation: true)
                 }
             })
             .disposed(by: disposeBag)
         
         //LOgOUt
         output.logOutEvent
-            .subscribe(onNext: {
+            .bind(onNext: {
                 switch $0 {
                 case .success: self.logOutAlert()
                 case .error: self.logOutErrorAlert()
@@ -100,7 +89,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate  
         
         //SignOut
         output.signOutEvent
-            .subscribe(onNext: {
+            .bind(onNext: {
                 switch $0 {
                 case .success: self.signOutAlert()
                 case .error:  self.signOutErrorAlert()

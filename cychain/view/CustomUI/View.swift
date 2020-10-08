@@ -1,17 +1,7 @@
-//
-//  customView.swift
-//  abcd
-//
-//  Created by takadahideaki007 on 2019/09/21.
-//  Copyright © 2019 高田英明. All rights reserved.
-//
-
 import UIKit
-
 
 @IBDesignable
 class View: UIView {
-    
     
     var gradientLayer: CAGradientLayer?
     
@@ -46,8 +36,6 @@ class View: UIView {
         layer.addSublayer(gradientLayer!)
         gradientLayer?.startPoint = CGPoint(x: 1, y: 0)
         gradientLayer?.endPoint = CGPoint(x: 0, y: 1)
-        
-        
     }
 
     

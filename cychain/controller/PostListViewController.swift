@@ -1,5 +1,4 @@
 import UIKit
-//import Firebase
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -7,24 +6,33 @@ import GoogleMobileAds
 
 
 class PostListViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate {
-    
-    @IBOutlet weak var tableView: UITableView!
-    
+        
     private lazy var dataSource =
         RxTableViewSectionedReloadDataSource<PostListSectionModel> (
             configureCell: {
                 [weak self] _, tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? inputDataListCell
-                item.forEach{ cell?.myName.text = $0.key }
-                item.forEach{ cell?.targetName.text = $0.value }
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? PostListTableViewCell
+                item.forEach{ cell?.userNameLabel.text = $0.key }
+                item.forEach{ cell?.targetNameLabel.text = $0.value }
                 return cell!
             }
     )
     
+    lazy var tableView = { () -> UITableView in
+        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableView.tableFooterView = UIView(frame: .zero)
+        let nib = UINib(nibName: "PostListTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "cell")
+        self.view.addSubview(tableView)
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+        return tableView
+    }()
+    
     private let disposeBag = DisposeBag()
     private let userDefaultClass = SetUserDefault()
-    var indicatorView = UIActivityIndicatorView()
-    var viewmodel = PostListViewModel()
+    private let indicatorView = UIActivityIndicatorView()
+    private let viewmodel = PostListViewModel()
     private let editModel = EditModel.shared
     
     override func viewWillLayoutSubviews() {
@@ -36,36 +44,17 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
+        navigationController?.setNavigationBarHidden(false, animated: true)
         tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         canSelectCell()
-        initializeUI()
+        customNavigationBar()
         bind()
      }
-    
-    func initializeUI() {
-        self.navigationItem.hidesBackButton = true
-        customNavigationBar()
-        settableView()
-    }
-    
-    func settableView() {
-//        let tableView = UITableView(frame: self.view.bounds, style: .plain)
-//        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        self.tableView = tableView
-//        self.view.addSubview(self.tableView!)
-        tableView.tableFooterView = UIView(frame: .zero)
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-    }
-    
-    func sregistCell() {
-        self.tableView.register(inputDataListCell.self, forCellReuseIdentifier: "cell")
-    }
-    
+
     func canSelectCell() {
         dataSource.canEditRowAtIndexPath = { dataSource, indexPath in
             return true
@@ -74,8 +63,8 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
     
     private func bind() {
         let input = PostListViewModel
-            .Input(onDeleteCell: tableView.rx.itemDeleted.asObservable(),
-                   onSelectedCell: tableView.rx.itemSelected.asObservable())
+            .Input( onDeleteCell: tableView.rx.itemDeleted.asObservable(),
+                    onSelectedCell: tableView.rx.itemSelected.asObservable())
         
         let output = viewmodel.transform(input: input)
         //表示用cellデータ
@@ -84,13 +73,14 @@ class PostListViewController: UIViewController, UINavigationControllerDelegate, 
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        //cellタップ
+        //cellタップ        
         output.selectedPairName?
-            .subscribe(onNext: { pair in
-                self.editModel.observe(value: pair)
-                self.pushVC(vc: R.storyboard.main.editNC()!, animation: false)
-            })
-            .disposed(by: disposeBag)
+                  .bind(onNext: { pair in
+                    self.editModel.observe(value: pair)
+                    self.presentVC(vc: R.storyboard.main.editNC()! , animation: true)
+//                      self.pushVC(vc: R.storyboard.main.editNC()! , animation: true)
+                  })
+                  .disposed(by: disposeBag)
         
         //Cell削除
         output.deleteCompleted.subscribe().disposed(by: disposeBag)

@@ -5,21 +5,14 @@ import RSKImageCropper
 import XCGLogger
 import Firebase
 
-
-
 extension UIViewController {
-    
     //viewの切り替え
-    
-    func presentVC(vc: UIViewController, animation: Bool) {
+    func pushVC(vc: UIViewController, animation: Bool) {
         self.navigationController?.pushViewController(vc, animated: animation)
     }
-    
-    
-    func pushVC(vc: UIViewController, animation: Bool) {
+    func presentVC(vc: UIViewController, animation: Bool) {
         self.present(vc, animated: animation)
     }
-    
 
     //問合せ
     func sendMail() {
@@ -37,17 +30,13 @@ extension UIViewController {
         }
     }
     
- 
-    
     func admob() {
         
         var admobView = GADBannerView()
         admobView = GADBannerView(adSize:kGADAdSizeBanner)
         admobView.adUnitID = ADMB_ID
 //        admobView.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - 80 - admobView.frame.height)
-        
         let safeAreaHeight = self.view.safeAreaInsets.bottom
-        
         admobView.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - safeAreaHeight - admobView.frame.height)
         admobView.frame.size = CGSize(width:self.view.frame.width, height:admobView.frame.height)
         admobView.rootViewController = self
@@ -55,28 +44,16 @@ extension UIViewController {
         self.view.addSubview(admobView)
     }
     
-    
-    //インディケーター
-    func indicator() {
-        let indicatorView = UIActivityIndicatorView()
-        indicatorView.center = view.center
-        indicatorView.style = .whiteLarge
-        indicatorView.color = .black
-        view.addSubview(indicatorView)
-    }
-    
-
-    //ナビゲーションバー
+//    //ナビゲーションバー
     func customNavigationBar() {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
+        navigationItem.hidesBackButton = true
         let bar = self.navigationController?.navigationBar
-        bar?.tintColor = .darkGray
+        bar?.barTintColor = .white
         bar?.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 0.1)),
                                     .kern: Float(2.0)]
-        bar?.setBackgroundImage(UIImage(), for: .default)
-        bar?.shadowImage = UIImage()
     }
+ 
 }
 
 
@@ -136,16 +113,5 @@ func setIconStorage(icon: UIImage, ref: StorageReference, complete: @escaping (S
         }
     }
 }
-
-
-
-    
-
-
-
-
-
-
-
 
 

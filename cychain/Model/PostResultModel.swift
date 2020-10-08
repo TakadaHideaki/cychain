@@ -7,17 +7,15 @@ struct postResultModel {
     static let shared = postResultModel()
     private init() {}
     
-    let sectionDataRelay = BehaviorRelay<[Texts]>( value: [Texts(my: "",
+    private let sectionDataRelay = BehaviorRelay<[PostDatas]>( value: [PostDatas(my: "",
                                               target: "",
                                               message: "",
                                               iconImage: R.image.user10()! )]
     )
+//    private let sectionDataRelay = PublishRelay<[PostDatas]>()
+    var sectionData: Observable<[PostDatas]> { return sectionDataRelay.asObservable() }
     
-    var sectionData: Observable<[Texts]> {
-        return sectionDataRelay.asObservable()
-    }
-    
-    func dataSet(data: Texts) {
+    func dataSet(data: PostDatas) {
         self.sectionDataRelay.accept([data])
     }
 }

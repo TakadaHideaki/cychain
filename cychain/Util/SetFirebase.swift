@@ -26,10 +26,10 @@ struct FirebaseObj {
 
 class SetFirebase {
     
-    var f = BehaviorRelay<[String:[String:Any]]?>(value: ["": ["": ""]])
-      var data: Observable<[String:[String:Any]]?> {
-          return f.asObservable()
-      }
+    let serchResultRelay = PublishRelay<[String:[String:Any]]?>()
+    var serchResultdata: Observable<[String:[String:Any]]?> {
+        return serchResultRelay.asObservable().share()
+    }
     
     /*     func set(data: Texts) -> Observable<Texts>  {
      return Observable.create { observer in
@@ -51,7 +51,7 @@ class SetFirebase {
      }
      }*/
     
-    func set(data: Texts)  {
+    func set(data: PostDatas)  {
         let datas = FirebaseObj.init(my: data.my,target: data.target,icon: data.iconImage)
         switch datas.icon {
         case R.image.user12():
@@ -114,17 +114,17 @@ class SetFirebase {
 //        )
 //        obj.observeRef.observeSingleEvent(of: .value, with: { dataSnapshot in
 //            if dataSnapshot.value is NSNull {
-//                self.f.accept(nil)
+//                self.serchResultRelay.accept(nil)
 //            } else {
 //                let mutchiUserData = dataSnapshot.value
-//                self.f.accept(mutchiUserData as? [String: [String : Any]])
+//                self.serchResultRelay.accept(mutchiUserData as? [String: [String : Any]])
 //            }
 //        })
         
         // SamyData
         
-//        self.f.accept(["TestIDA":["message": "TestMessage"], "TestIDB":["message": "Test"]])
-        self.f.accept(["TestIDA":["message": "TestMessage"]])
+        self.serchResultRelay.accept(["TestIDA":["message": "TestMessage"], "TestIDB":["message": "Test"]])
+//        self.serchResultRelay.accept(["TestIDA":["message": "TestMessage"]])
     }
 
 

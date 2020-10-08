@@ -4,249 +4,146 @@ import RxCocoa
 import TextFieldEffects
 import RSKImageCropper
 
-class EditViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate, ScrollKeyBoard {
-
-    @IBOutlet weak var myNameTextField: textField!
-    @IBOutlet weak var targetNameTextField: textField!
-    @IBOutlet weak var messageTextView: textView!
-    @IBOutlet weak var postButton: Button!
-    @IBOutlet weak var iconButton: UIButton!
-    @IBOutlet weak var messageLabel: UILabel!
+class EditViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate {
     
     private let viewModel = EditViewModel()
     private let postResurlModel = postResultModel.shared
     private let firebase = SetFirebase()
-    let disposeBag = DisposeBag()
-    let defaultIcon = R.image.user10()
-    let iconSet = ImagePickerController()
-    let imageCrop = ImageCrop()
+    private let disposeBag = DisposeBag()
+    private let defaultIcon = R.image.user12()!
+    private let iconSet = ImagePickerController()
+    private let imageCrop = ImageCrop()
+    private var profileView = ProfileView()
     
-    let maxLength = 6
-    var previousText = ""
-    var lastReplaceRange: NSRange!
-    var lastReplacementString = ""
-   
-    lazy var coverView: UIView = {
-        let view = UIView()
-        view.frame = self.view.bounds
-        view.backgroundColor = .white
-        view.alpha = 0.5
-        return view
-    }()
+    let waitingView = WatingView()
     
-    var indicatorView = { () -> UIActivityIndicatorView in
-        var view = UIActivityIndicatorView.init(style: .whiteLarge)
-        view.style = .whiteLarge
-        view.color = .gray
-        return view
-    }()
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        self.tabBarController?.tabBar.isHidden = true
-//    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        delegateSet()
         initialazeUI()
-        addUI()
+        delegateSet()
+        customNavigationBar()
         bind()
+        bindScrollTextFieldWhenShowKeyboard()
+   
     }
+    
+//    override func viewDidLayoutSubviews() {
+//        profileView.profileBaseView.frame = self.view.bounds
+//        view.addSubview(profileView.profileBaseView)
+//        waitingView.frame = self.view.bounds
+//        self.view.addSubview(waitingView)
+//      }
     
     override func viewDidDisappear(_ animated: Bool) {
-         super.viewDidDisappear(animated)
-         // TextViewフォーカス外す　＆キーボード閉じる＋View戻す
-         messageTextView.resignFirstResponder()
-         configureObserver()
-     }
+        super.viewDidDisappear(animated)
+        // TextViewからフォーカスを外してキーボード閉じ、Viewを戻す
+        profileView.msgTextView.resignFirstResponder()
+    }
     
     func delegateSet() {
-          myNameTextField.delegate = self
-          targetNameTextField.delegate = self
-          messageTextView.delegate = self
-          iconSet.delegate = self
-          imageCrop.delegate = self
-      }
+        profileView.msgTextView.delegate = self
+        iconSet.delegate = self
+        imageCrop.delegate = self
+    }
     
     func initialazeUI() {
+        profileView.profileBaseView.frame = self.view.bounds
+        waitingView.frame = self.view.bounds
+        view.addSubview(profileView.profileBaseView)
+        self.view.addSubview(waitingView)
         tabBarController?.tabBar.isHidden = true
-        messageTextView.keyBoardtoolBar(textView: messageTextView)
-        self.iconButton.setImage(self.defaultIcon, for: .normal)
-        customNavigationBar()
-    }
-    func addUI() {
-        self.view.addSubview(coverView)
-        self.view.bringSubviewToFront(coverView)
-        indicatorView.center = self.view.center
-        self.view.addSubview(indicatorView)
-        self.view.bringSubviewToFront(indicatorView)
+        profileView.msgTextView.keyBoardtoolBar(textView: profileView.msgTextView)
     }
     
     func bind() {
         let input = EditViewModel.Input(
-            iconButtontapped: iconButton.rx.tap.asObservable(),
-            postButtontapped: postButton.rx.tap.asObservable(),
-            messageTapped: messageTextView.rx.didBeginEditing.asObservable(),
-            myNameRelay: myNameTextField.rx.text.orEmpty.asObservable(),
-            targetRelay: targetNameTextField.rx.text.orEmpty.asObservable(),
-            messageRelay: messageTextView.rx.text.orEmpty.asObservable(),
+            iconButtontapped: profileView.iconButton.rx.tap.asObservable(),
+            postButtontapped: profileView.postButton.rx.tap.asObservable(),
+            messageTapped: profileView.msgTextView.rx.didBeginEditing.asObservable(),
+            myNameRelay: profileView.myNameTextField.rx.text.orEmpty.asObservable(),
+            targetRelay: profileView.targetNameTextField.rx.text.orEmpty.asObservable(),
+            messageRelay: profileView.msgTextView.rx.text.orEmpty.asObservable(),
             imageSelected: iconSet.selectedImage,
             imageCropped: imageCrop.croppedImage
         )
+        
         let output = viewModel.transform(input: input)
         
-        //switch_Indicator
-        output.SwitchUIHiden
-        .debug()
-            .drive(self.indicatorView.rx.isAnimating)
-            .disposed(by: disposeBag)
-       
-        // Switch_CovetView
-        output.SwitchUIHiden.asObservable()
-        .debug()
-        .skip(1)
-        .subscribe(onNext: { [weak self] _ in
-            self?.coverView.isHidden = true
-        })
-        .disposed(by: disposeBag)
+//        output.searchingUI.asObservable()
+//            .bind(onNext: { _ in self.addView() })
+//        .disposed(by: disposeBag)
         
-        //Post済みデータを表示
-        output.initialScreenData
-            .subscribe(onNext: { [weak self] data in
-                self?.iconButton.setImage(data.iconImage, for: .normal)
-                self?.myNameTextField.text = data.my
-                self?.targetNameTextField.text = data.target
-                self?.messageTextView.text = data.message
-            })
+        // Searching_Indicator
+        output.searchingUI
+            .drive(waitingView.indicatorView.rx.isAnimating)
+            .disposed(by: disposeBag)
+        // Searching_CovetView
+        output.searchingUI
+            .scan(true) { state, _ in !state}
+            .drive(waitingView.rx.isHidden)
+            .disposed(by: disposeBag)
+
+        //最初に画面にPostDataを表示する
+        output.initScreenData
+            .bind(to: profileView.rx.binder)
             .disposed(by: disposeBag)
         
         //PostDataError
         output.NoData
-            .subscribe(onNext: { [weak self] data in
-                self?.editErrorAletr()
-            })
+            .bind(onNext: { self.editErrorAletr() })
             .disposed(by: disposeBag)
- 
+        
         //アイコンボタンタップ（フォトライブラリへ遷移）
         output.onIcButtonClickEvent
-            .subscribe(onNext: { [weak self]  in
-                self?.iconSet.iconButtonTapped()})
+            .bind(onNext: { self.iconSet.iconButtonTapped()})
             .disposed(by: disposeBag)
         
         //viewModelから選択画像を受け取りCropVCへ渡す
         output.selectedImage
-            .subscribe(onNext: { [weak self]  value in
-                self?.imageCrop.RSKImageCropVC(image: value)})
+            .bind(onNext: { self.imageCrop.RSKImageCropVC(image: $0) })
             .disposed(by: disposeBag)
         
         //ViewModelから切り抜き画像のEventを受け取り、アイコンボタンにセット
         output.iconButtonImage
-            .skip(1)
-            .drive(iconButton.rx.image())
+            .drive(profileView.iconButton.rx.image())
             .disposed(by: disposeBag)
         
         //messageTextViewのLabelの表示/非表示
         output.messageLabelEnable
-            .drive( self.messageLabel.rx.isHidden)
+            .drive(profileView.msgLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
         //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
         output.nextVC
-            .subscribe(onNext: { [weak self] data in
-                self?.messageTextView.resignFirstResponder()
-                self?.postResurlModel.dataSet(data: data)
-                self?.firebase.set(data: data)
-                self?.pushVC(vc: R.storyboard.main.PostResultViewController()!, animation: true)
-//                self?.navigationController?.pushViewController(vc!, animated: true)
+            .bind(onNext: {
+                self.profileView.msgTextView.resignFirstResponder()
+                self.postResurlModel.dataSet(data: $0)
+                self.firebase.set(data: $0)
+                self.pushVC(vc: R.storyboard.main.PostResultViewController()!, animation: true)
             })
             .disposed(by: disposeBag)
     }
     
-    
-    
+//    func addView() {
+//        log.debug("addView")
+//        waitingView.frame = self.view.bounds
+//        self.view.addSubview(waitingView)
+//    }
+}
 
-    /*
-
-    var editUserData: [String: Any]?
-    var iconImage: UIImage?
-    
-    var pairName: [String: String]?
-    
- 
-    //UserDataを表示
-    func userDataSet() {
-        
-        guard let userData = EditData.sharedInstance.SingletonUserData else { return }
-        
-        editUserData = userData
-        
-        guard let myName = userData["my"] as? String,
-            let targetName = userData["target"] as? String
-            else { return }
-        
-        myNameTextField.text = myName
-        targetNameTextField.text = targetName
-        
-        
-        if let message = userData["message"] as? String {
-            if message != "" {
-                messageLabel.isHidden = true
-                messageTextView.text = message
-            } else {
-                messageLabel.isHidden = false
-            }
-        } else {
-            messageLabel.isHidden = false
-        }
-        
-        
-        if let imageUrl = userData["image"] {
-            let url = URL(string: imageUrl as! String)
-            // image変換
-            do {
-                let imageData = try Data(contentsOf: url!)
-                let image = UIImage(data:imageData as Data)
-                iconRegistButton.setImage(image, for: .normal)
-                iconImage = image
-                editUserData?["image"] = image
-            } catch {
-                log.debug("error")
-            }
-        } else {
-            iconRegistButton.setImage(R.image.user10(), for: .normal)
+extension Reactive where Base: ProfileView {
+    var binder: Binder<PostDatas> {
+        return Binder(self.base) { me, data in
+            me.myNameTextField.text = data.my
+            me.targetNameTextField.text = data.target
+            me.msgTextView.text = data.message
+            me.iconButton.setImage(data.iconImage, for: .normal)
         }
     }
-    
-    
-    @IBAction func iconButtonTapped(_ sender: Any) {
-//        iconSet?.iconButtonTapped()
-    }
-    
-    
-    @IBAction func senderData(_ sender: Any) {
-        
-        editUserData!["message"] = messageTextView.text ?? ""
-        editUserData?["image"]  = iconRegistButton.currentImage ?? R.image.user10()
-        
-//        let userDataModel = UserDataModel.sharead
-        
-//        userDataModel.setData(userData: editUserData!)// modelへ["message":メッセージ, "image" アイコンイメージ]
-//        userDataModel.setFirebase()//firebase更新
-        pushVC(vc: R.storyboard.main.PostResultViewController()!, animation: true)
-    }
-    
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        configureObserver()
-        messageLabel.isHidden = true
-        return  true
-    }
-    
-    */
-
 }
     
-   extension EditViewController: UITextFieldDelegate {
-
+extension EditViewController: UITextViewDelegate {
+    
     func numberOfLines(orgTextView: UITextView, newText: String) -> Int {
         
         let cloneTextView = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(try! NSKeyedArchiver.archivedData(withRootObject: orgTextView, requiringSecureCoding: false)) as! UITextView
@@ -266,26 +163,34 @@ class EditViewController: UIViewController, UINavigationControllerDelegate, UISc
         }
         return numberOfLines
     }
-}
-    
-extension EditViewController: UITextViewDelegate {
-    
-    func textViewDidChange(_ textView: UITextView) {
-        if myNameTextField.markedTextRange != nil {
-            return
-        }
-    }
-
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-           self.previousText = myNameTextField.text!
-           self.lastReplaceRange = range
-           self.lastReplacementString = text
-           return true
-       }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-         
-         let newText: String = (messageTextView.text! as NSString).replacingCharacters(in: range, with: text)
-         return numberOfLines(orgTextView: textView, newText: newText) <= 6
-     }
+        let maxLength = 6
+        let newText: String = (profileView.msgTextView.text! as NSString).replacingCharacters(in: range, with: text)
+        return numberOfLines(orgTextView: textView, newText: newText) <= maxLength
+    }
 }
+
+
+
+//    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+//        self.previousText = myNameTextField.text!
+//        self.lastReplaceRange = range
+//        self.lastReplacementString = text
+//        return true
+//    }
+    
+        
+
+
+//extension Reactive where Base: UIButton {
+//    var b: Binder<UIImage> {
+//    return Binder(self.base) { me, image in
+//        me.setImage(image, for: .normal)
+//    }
+//  }
+//}
+
+//       output.initialScreenData.map{$0.iconImage}
+//            .bind(to: self.iconButton.rx.image())
+//            .disposed(by: disposeBag)
