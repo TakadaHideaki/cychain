@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,45 +23,78 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="あなたの名前" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X9i-gX-I1u" customClass="MadokaTextField" customModule="TextFieldEffects">
-                    <rect key="frame" x="20" y="95" width="280" height="60"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="4qN-Cm-sz5"/>
-                        <constraint firstAttribute="width" constant="280" id="hBx-UB-d2y"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="done"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
-                            <real key="value" value="1"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                            <color key="value" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vn-GP-Mb5">
-                    <rect key="frame" x="25" y="28" width="57" height="57"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <accessibility key="accessibilityConfiguration" identifier="iconButton"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="57" id="iS2-Zb-DfY"/>
-                        <constraint firstAttribute="height" constant="57" id="jdN-md-anw"/>
-                    </constraints>
-                    <state key="normal" image="user10"/>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VfK-o8-a2f">
+                    <rect key="frame" x="10" y="21" width="300" height="197"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vn-GP-Mb5">
+                            <rect key="frame" x="0.0" y="0.0" width="57" height="57"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <accessibility key="accessibilityConfiguration" identifier="iconButton"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="57" id="iS2-Zb-DfY"/>
+                                <constraint firstAttribute="height" constant="57" id="jdN-md-anw"/>
+                            </constraints>
+                            <state key="normal" image="user10"/>
+                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7Qk-km-K2l">
+                            <rect key="frame" x="0.0" y="67" width="300" height="130"/>
+                            <subviews>
+                                <textField opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="あなたの名前" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X9i-gX-I1u" customClass="MadokaTextField" customModule="TextFieldEffects">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="4qN-Cm-sz5"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="done"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </textField>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="相手の名前" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FqC-z0-KKr" customClass="MadokaTextField" customModule="TextFieldEffects">
+                                    <rect key="frame" x="0.0" y="70" width="300" height="60"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="dcf-iH-KfR"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="done"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </textField>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="130" id="0DU-q2-pin"/>
+                                <constraint firstAttribute="width" constant="300" id="HiU-OX-fzw"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                </stackView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5" tag="123" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZ8-LQ-SxD">
-                    <rect key="frame" x="20" y="271" width="280" height="180"/>
+                    <rect key="frame" x="10" y="258" width="300" height="165"/>
                     <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="280" id="1sS-hJ-SCf"/>
-                        <constraint firstAttribute="height" constant="180" id="jdv-hR-8tM"/>
+                        <constraint firstAttribute="width" constant="300" id="KYf-8K-xbV"/>
+                        <constraint firstAttribute="height" constant="165" id="jdv-hR-8tM"/>
                     </constraints>
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -74,21 +106,20 @@
                     </userDefinedRuntimeAttributes>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jKY-SK-gMU">
-                    <rect key="frame" x="20" y="271" width="90" height="25"/>
+                    <rect key="frame" x="10" y="258" width="72.5" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="90" id="aGD-rU-Czw"/>
-                        <constraint firstAttribute="height" constant="25" id="rgI-ZG-Hn0"/>
+                        <constraint firstAttribute="height" constant="30" id="r80-mO-XLz"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3I-Om-Ve3" customClass="Button" customModule="cychain" customModuleProvider="target">
-                    <rect key="frame" x="20" y="479" width="280" height="45"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3I-Om-Ve3" customClass="Button" customModule="cychain" customModuleProvider="target">
+                    <rect key="frame" x="10" y="453" width="300" height="45"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <accessibility key="accessibilityConfiguration" identifier="sendButton"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="280" id="02h-AB-WV3"/>
+                        <constraint firstAttribute="width" constant="300" id="S0s-h3-pME"/>
                         <constraint firstAttribute="height" constant="45" id="bre-qT-jzp"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -122,45 +153,20 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </button>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="相手の名前" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FqC-z0-KKr" customClass="MadokaTextField" customModule="TextFieldEffects">
-                    <rect key="frame" x="20" y="173" width="280" height="60"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="dcf-iH-KfR"/>
-                        <constraint firstAttribute="width" constant="280" id="oY6-Ip-eiS"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="done"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
-                            <real key="value" value="1"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                            <color key="value" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </textField>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="L3I-Om-Ve3" firstAttribute="top" secondItem="cZ8-LQ-SxD" secondAttribute="bottom" constant="28" id="3j7-qW-WjD"/>
-                <constraint firstItem="FqC-z0-KKr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="5QD-NL-b4H"/>
-                <constraint firstItem="cZ8-LQ-SxD" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="A9r-yx-WDS"/>
-                <constraint firstItem="jKY-SK-gMU" firstAttribute="leading" secondItem="cZ8-LQ-SxD" secondAttribute="leading" id="R9P-I2-UED"/>
-                <constraint firstItem="X9i-gX-I1u" firstAttribute="top" secondItem="6vn-GP-Mb5" secondAttribute="bottom" constant="10" id="Roz-nT-z94"/>
-                <constraint firstItem="X9i-gX-I1u" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="UgT-6s-FDO"/>
-                <constraint firstItem="cZ8-LQ-SxD" firstAttribute="top" secondItem="FqC-z0-KKr" secondAttribute="bottom" constant="38" id="bww-OP-qmM"/>
-                <constraint firstItem="L3I-Om-Ve3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dib-cM-Bcz"/>
-                <constraint firstItem="6vn-GP-Mb5" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="guh-6g-ilO"/>
-                <constraint firstItem="jKY-SK-gMU" firstAttribute="top" secondItem="cZ8-LQ-SxD" secondAttribute="top" id="ibW-Fq-mH2"/>
-                <constraint firstItem="6vn-GP-Mb5" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="28" id="ui6-nP-Sa4"/>
-                <constraint firstItem="FqC-z0-KKr" firstAttribute="top" secondItem="X9i-gX-I1u" secondAttribute="bottom" constant="18" id="xgb-Lo-fdq"/>
+                <constraint firstItem="L3I-Om-Ve3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="DzF-2j-q2L"/>
+                <constraint firstItem="cZ8-LQ-SxD" firstAttribute="leading" secondItem="jKY-SK-gMU" secondAttribute="leading" id="J2K-Vk-FGv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="L3I-Om-Ve3" secondAttribute="bottom" constant="70" id="Kgq-o0-Ddq"/>
+                <constraint firstItem="L3I-Om-Ve3" firstAttribute="top" secondItem="cZ8-LQ-SxD" secondAttribute="bottom" constant="30" id="n8E-Cd-0Vd"/>
+                <constraint firstItem="cZ8-LQ-SxD" firstAttribute="top" secondItem="jKY-SK-gMU" secondAttribute="top" id="sS6-Cu-v7f"/>
+                <constraint firstItem="cZ8-LQ-SxD" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="svV-20-RuX"/>
+                <constraint firstItem="VfK-o8-a2f" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="utc-eC-0PW"/>
+                <constraint firstItem="cZ8-LQ-SxD" firstAttribute="top" secondItem="VfK-o8-a2f" secondAttribute="bottom" constant="40" id="zjH-RU-cZg"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="137.68115942028987" y="132.58928571428572"/>
+            <point key="canvasLocation" x="136.875" y="132.04225352112675"/>
         </view>
     </objects>
     <resources>
