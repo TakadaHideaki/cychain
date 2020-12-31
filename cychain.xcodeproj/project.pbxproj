@@ -51,6 +51,16 @@
 		8C48B7A624E4D249000346AB /* SetFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C48B7A224E4D249000346AB /* SetFirebase.swift */; };
 		8C4B052924E2688600FA724F /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B052824E2688600FA724F /* SearchViewModel.swift */; };
 		8C4B052A24E2688600FA724F /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B052824E2688600FA724F /* SearchViewModel.swift */; };
+		8C4CDBFB259CA1F6003E49F9 /* TermViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CDBFA259CA1F6003E49F9 /* TermViewController.swift */; };
+		8C4CDBFE259CA277003E49F9 /* Term_PolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CDBFD259CA277003E49F9 /* Term_PolicyView.swift */; };
+		8C4CDC01259CA84E003E49F9 /* initialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CDC00259CA84E003E49F9 /* initialViewModel.swift */; };
+		8C4CDC05259CAECF003E49F9 /* Terms_Policy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C4CDC04259CAECF003E49F9 /* Terms_Policy.storyboard */; };
+		8C4CDC09259D9662003E49F9 /* policy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8C4CDC07259D9661003E49F9 /* policy.txt */; };
+		8C4CDC0A259D9662003E49F9 /* policy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8C4CDC07259D9661003E49F9 /* policy.txt */; };
+		8C4CDC0B259D9662003E49F9 /* Term.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8C4CDC08259D9662003E49F9 /* Term.txt */; };
+		8C4CDC0C259D9662003E49F9 /* Term.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8C4CDC08259D9662003E49F9 /* Term.txt */; };
+		8C4CDC0F259D97CA003E49F9 /* InitialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CDC0E259D97CA003E49F9 /* InitialModel.swift */; };
+		8C4CDC10259D97CA003E49F9 /* InitialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CDC0E259D97CA003E49F9 /* InitialModel.swift */; };
 		8C4CF5AF24EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */; };
 		8C4CF5B024EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */; };
 		8C4CF5B224ECA30E002C8173 /* MatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4CF5B124ECA30E002C8173 /* MatchModel.swift */; };
@@ -61,7 +71,6 @@
 		8C50ACDC23928F5C00FAFBC4 /* SignUpSlectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCA23928F5C00FAFBC4 /* SignUpSlectViewController.swift */; };
 		8C50ACDE23928F5C00FAFBC4 /* MaillLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCC23928F5C00FAFBC4 /* MaillLoginViewController.swift */; };
 		8C50ACDF23928F5C00FAFBC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */; };
-		8C50ACE023928F5C00FAFBC4 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */; };
 		8C50ACE123928F5C00FAFBC4 /* MatchViewCotroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCF23928F5C00FAFBC4 /* MatchViewCotroller.swift */; };
 		8C50ACE423928F5C00FAFBC4 /* LoginSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD223928F5C00FAFBC4 /* LoginSelectViewController.swift */; };
 		8C50ACE523928F5C00FAFBC4 /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD323928F5C00FAFBC4 /* SelectViewController.swift */; };
@@ -92,8 +101,6 @@
 		8C5885CF2516364100671945 /* PostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5885CC2516364100671945 /* PostListTableViewCell.swift */; };
 		8C5885D02516364100671945 /* PostListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C5885CD2516364100671945 /* PostListTableViewCell.xib */; };
 		8C5885D12516364100671945 /* PostListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C5885CD2516364100671945 /* PostListTableViewCell.xib */; };
-		8C5C2504252435DB00F3900A /* Terms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5C2503252435DB00F3900A /* Terms.swift */; };
-		8C5C2505252435DB00F3900A /* Terms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5C2503252435DB00F3900A /* Terms.swift */; };
 		8C5C25072526E3DA00F3900A /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C5C25062526E3DA00F3900A /* ProfileView.xib */; };
 		8C5C25082526E3DA00F3900A /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C5C25062526E3DA00F3900A /* ProfileView.xib */; };
 		8C5C250D2527120100F3900A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5C250C2527120100F3900A /* ProfileView.swift */; };
@@ -153,7 +160,6 @@
 		8CF3AE8923F5571D00FC0648 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD923928F5C00FAFBC4 /* EditViewController.swift */; };
 		8CF3AE8C23F5571D00FC0648 /* PostResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD823928F5C00FAFBC4 /* PostResultViewController.swift */; };
 		8CF3AE8D23F5571D00FC0648 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACDB23928F5C00FAFBC4 /* SearchViewController.swift */; };
-		8CF3AE8F23F5571D00FC0648 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */; };
 		8CF3AE9223F5571D00FC0648 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD423928F5C00FAFBC4 /* PostListViewController.swift */; };
 		8CF3AE9423F5571D00FC0648 /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD323928F5C00FAFBC4 /* SelectViewController.swift */; };
 		8CF3AE9523F5571D00FC0648 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50ACD623928F5C00FAFBC4 /* PostViewController.swift */; };
@@ -212,6 +218,13 @@
 		8C48B7A124E4D249000346AB /* SetUserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUserDefault.swift; sourceTree = "<group>"; };
 		8C48B7A224E4D249000346AB /* SetFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetFirebase.swift; sourceTree = "<group>"; };
 		8C4B052824E2688600FA724F /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		8C4CDBFA259CA1F6003E49F9 /* TermViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermViewController.swift; sourceTree = "<group>"; };
+		8C4CDBFD259CA277003E49F9 /* Term_PolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Term_PolicyView.swift; sourceTree = "<group>"; };
+		8C4CDC00259CA84E003E49F9 /* initialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = initialViewModel.swift; sourceTree = "<group>"; };
+		8C4CDC04259CAECF003E49F9 /* Terms_Policy.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Terms_Policy.storyboard; sourceTree = "<group>"; };
+		8C4CDC07259D9661003E49F9 /* policy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = policy.txt; sourceTree = "<group>"; };
+		8C4CDC08259D9662003E49F9 /* Term.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Term.txt; sourceTree = "<group>"; };
+		8C4CDC0E259D97CA003E49F9 /* InitialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialModel.swift; sourceTree = "<group>"; };
 		8C4CF5AE24EAAA2E002C8173 /* MatchPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchPopupViewModel.swift; sourceTree = "<group>"; };
 		8C4CF5B124ECA30E002C8173 /* MatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchModel.swift; sourceTree = "<group>"; };
 		8C4CF5C024F6A6E1002C8173 /* MatchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchListViewModel.swift; sourceTree = "<group>"; };
@@ -219,7 +232,6 @@
 		8C50ACCA23928F5C00FAFBC4 /* SignUpSlectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpSlectViewController.swift; sourceTree = "<group>"; };
 		8C50ACCC23928F5C00FAFBC4 /* MaillLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaillLoginViewController.swift; sourceTree = "<group>"; };
 		8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
 		8C50ACCF23928F5C00FAFBC4 /* MatchViewCotroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchViewCotroller.swift; sourceTree = "<group>"; };
 		8C50ACD223928F5C00FAFBC4 /* LoginSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSelectViewController.swift; sourceTree = "<group>"; };
 		8C50ACD323928F5C00FAFBC4 /* SelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectViewController.swift; sourceTree = "<group>"; };
@@ -241,7 +253,6 @@
 		8C5885C92515FBCD00671945 /* MatchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchListViewController.swift; sourceTree = "<group>"; };
 		8C5885CC2516364100671945 /* PostListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListTableViewCell.swift; sourceTree = "<group>"; };
 		8C5885CD2516364100671945 /* PostListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostListTableViewCell.xib; sourceTree = "<group>"; };
-		8C5C2503252435DB00F3900A /* Terms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terms.swift; sourceTree = "<group>"; };
 		8C5C25062526E3DA00F3900A /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		8C5C250C2527120100F3900A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8C5C2512252D689C00F3900A /* WatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatingView.swift; sourceTree = "<group>"; };
@@ -330,6 +341,7 @@
 		8C4230322409F5CD00160A04 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8C4CDC0E259D97CA003E49F9 /* InitialModel.swift */,
 				8C303D67243879F500F080AB /* AuthModel.swift */,
 				8C3FCD5D24D3A09300ADC76B /* PostResultModel.swift */,
 				8C420CFE24540EB000769F01 /* PostListModel.swift */,
@@ -379,6 +391,8 @@
 				8C50ACBC239289AC00FAFBC4 /* inputDataListCell.swift */,
 				8C5885C1250DEE9900671945 /* XLPagerTabView.xib */,
 				8C5C2512252D689C00F3900A /* WatingView.swift */,
+				8C4CDBFD259CA277003E49F9 /* Term_PolicyView.swift */,
+				8C4CDC04259CAECF003E49F9 /* Terms_Policy.storyboard */,
 				8CE1B4AA2442EBF6009D8698 /* CustomUI */,
 			);
 			path = view;
@@ -402,8 +416,7 @@
 				8C50ACCF23928F5C00FAFBC4 /* MatchViewCotroller.swift */,
 				8C5885C92515FBCD00671945 /* MatchListViewController.swift */,
 				8C50ACCD23928F5C00FAFBC4 /* SettingsViewController.swift */,
-				8C50ACCE23928F5C00FAFBC4 /* PolicyViewController.swift */,
-				8C5C2503252435DB00F3900A /* Terms.swift */,
+				8C4CDBFA259CA1F6003E49F9 /* TermViewController.swift */,
 				8C70D346246157E900150E52 /* Onboarding.swift */,
 			);
 			path = controller;
@@ -446,6 +459,8 @@
 				8C8B07032425A6EC007F7494 /* muchpopAnimation.json */,
 				8C8B07062425A785007F7494 /* muchpopAnimation11.json */,
 				8C70D343246153D800150E52 /* Onboarding.json */,
+				8C4CDC07259D9661003E49F9 /* policy.txt */,
+				8C4CDC08259D9662003E49F9 /* Term.txt */,
 				8C7B1EC921D925BC00AFE846 /* Info.plist */,
 				8C7B1EC421D925BC00AFE846 /* Assets.xcassets */,
 				8CF3AE7823F5544E00FC0648 /* GoogleService-Info-Product */,
@@ -470,6 +485,7 @@
 		8CEA6A11247A9D7800A1B283 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8C4CDC00259CA84E003E49F9 /* initialViewModel.swift */,
 				8C5885B4250B2CAF00671945 /* SignUpSelectViewModel.swift */,
 				8C5885BD250B484400671945 /* MaillSignUpViewModel.swift */,
 				8C5885BA250B458700671945 /* MaillLogInViewModel.swift */,
@@ -609,13 +625,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C4CDC0B259D9662003E49F9 /* Term.txt in Resources */,
 				8C7B1EC821D925BC00AFE846 /* LaunchScreen.storyboard in Resources */,
 				8C70D344246153D800150E52 /* Onboarding.json in Resources */,
 				8C5C25072526E3DA00F3900A /* ProfileView.xib in Resources */,
 				8C5885C4250DEE9900671945 /* XLPagerTabView.xib in Resources */,
+				8C4CDC05259CAECF003E49F9 /* Terms_Policy.storyboard in Resources */,
 				8C750E03244711EC0003A82C /* PostCardMessageCell.xib in Resources */,
 				8CF3AE7A23F5544E00FC0648 /* GoogleService-Info.plist in Resources */,
 				8C303D742439CB0F00F080AB /* AuthView.xib in Resources */,
+				8C4CDC09259D9662003E49F9 /* policy.txt in Resources */,
 				8CE1B4C42443A2AB009D8698 /* PostCardeTableViewCell.xib in Resources */,
 				8CA19C9022EBC90200ED752F /* Main.storyboard in Resources */,
 				8C8B07042425A6EC007F7494 /* muchpopAnimation.json in Resources */,
@@ -641,8 +660,10 @@
 				8CF3AEA323F5571D00FC0648 /* Main.storyboard in Resources */,
 				8C8B07052425A6EC007F7494 /* muchpopAnimation.json in Resources */,
 				8C8B06F624238062007F7494 /* matchAnimateion.json in Resources */,
+				8C4CDC0A259D9662003E49F9 /* policy.txt in Resources */,
 				8C5885D12516364100671945 /* PostListTableViewCell.xib in Resources */,
 				8C8B07082425A785007F7494 /* muchpopAnimation11.json in Resources */,
+				8C4CDC0C259D9662003E49F9 /* Term.txt in Resources */,
 				8CF3AEA423F5571D00FC0648 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -833,6 +854,7 @@
 				8C420CFF24540EB000769F01 /* PostListModel.swift in Sources */,
 				8CE1B4C22443A2AB009D8698 /* ProfileCell.swift in Sources */,
 				8C5885BE250B484400671945 /* MaillSignUpViewModel.swift in Sources */,
+				8C4CDBFB259CA1F6003E49F9 /* TermViewController.swift in Sources */,
 				8C50ACC4239289AC00FAFBC4 /* inputDataListCell.swift in Sources */,
 				8C4CF5B224ECA30E002C8173 /* MatchModel.swift in Sources */,
 				8C5885B5250B2CAF00671945 /* SignUpSelectViewModel.swift in Sources */,
@@ -853,10 +875,10 @@
 				8CEA6A1624AB421100A1B283 /* PostResultViewModel.swift in Sources */,
 				8C4CF5AF24EAAA2E002C8173 /* MatchPopupViewModel.swift in Sources */,
 				8C420D05245E2A2500769F01 /* SettingModel.swift in Sources */,
-				8C50ACE023928F5C00FAFBC4 /* PolicyViewController.swift in Sources */,
 				8C303D68243879F500F080AB /* AuthModel.swift in Sources */,
 				8C5885AF25051EEB00671945 /* EditModel.swift in Sources */,
 				8C50ACE623928F5C00FAFBC4 /* PostListViewController.swift in Sources */,
+				8C4CDBFE259CA277003E49F9 /* Term_PolicyView.swift in Sources */,
 				8C50ACE523928F5C00FAFBC4 /* SelectViewController.swift in Sources */,
 				8C5885CA2515FBCD00671945 /* MatchListViewController.swift in Sources */,
 				8C46B63924FB7FC700D03827 /* MatchListModel.swift in Sources */,
@@ -875,15 +897,16 @@
 				8C5C2513252D689C00F3900A /* WatingView.swift in Sources */,
 				8C750E01244711EC0003A82C /* MessageCell.swift in Sources */,
 				8C5885CE2516364100671945 /* PostListTableViewCell.swift in Sources */,
+				8C4CDC0F259D97CA003E49F9 /* InitialModel.swift in Sources */,
 				8C46B63624FB7D2600D03827 /* MatchViewModel.swift in Sources */,
 				8CE1B4B22442EBF6009D8698 /* View.swift in Sources */,
-				8C5C2504252435DB00F3900A /* Terms.swift in Sources */,
 				8C70D347246157E900150E52 /* Onboarding.swift in Sources */,
 				8CE1B4B42442EBF6009D8698 /* labele.swift in Sources */,
 				8C4B052924E2688600FA724F /* SearchViewModel.swift in Sources */,
 				8CE1B4BC2442EBF6009D8698 /* contentView.swift in Sources */,
 				8C43513D24D5365B0035FDC4 /* ViewModelType.swift in Sources */,
 				8C50ACDE23928F5C00FAFBC4 /* MaillLoginViewController.swift in Sources */,
+				8C4CDC01259CA84E003E49F9 /* initialViewModel.swift in Sources */,
 				8C50ACE723928F5C00FAFBC4 /* MaillSignUpViewController.swift in Sources */,
 				8C4CF5C124F6A6E1002C8173 /* MatchListViewModel.swift in Sources */,
 			);
@@ -928,11 +951,11 @@
 				8C4230352409F5CD00160A04 /* ScrollKeyBoard.swift in Sources */,
 				8C5885B025051EEB00671945 /* EditModel.swift in Sources */,
 				8CF3AE8D23F5571D00FC0648 /* SearchViewController.swift in Sources */,
-				8CF3AE8F23F5571D00FC0648 /* PolicyViewController.swift in Sources */,
 				8C5885CB2515FBCD00671945 /* MatchListViewController.swift in Sources */,
 				8CBD3E2F245067AB00DA7FCE /* ImagePickerControllert.swift in Sources */,
 				8C46B63A24FB7FC700D03827 /* MatchListModel.swift in Sources */,
 				8CF3AE9223F5571D00FC0648 /* PostListViewController.swift in Sources */,
+				8C4CDC10259D97CA003E49F9 /* InitialModel.swift in Sources */,
 				8C303D69243879F500F080AB /* AuthModel.swift in Sources */,
 				8C43514124D537B10035FDC4 /* PostListViewModel.swift in Sources */,
 				8CB8DB5D2503AF2D005FFE45 /* EditViewModel.swift in Sources */,
@@ -947,7 +970,6 @@
 				8CF3AE9823F5571D00FC0648 /* SettingsViewController.swift in Sources */,
 				8C5885CF2516364100671945 /* PostListTableViewCell.swift in Sources */,
 				8C46B63724FB7D2600D03827 /* MatchViewModel.swift in Sources */,
-				8C5C2505252435DB00F3900A /* Terms.swift in Sources */,
 				8C70D348246157E900150E52 /* Onboarding.swift in Sources */,
 				8CF3AE9923F5571D00FC0648 /* InitialViewController.swift in Sources */,
 				8C4B052A24E2688600FA724F /* SearchViewModel.swift in Sources */,

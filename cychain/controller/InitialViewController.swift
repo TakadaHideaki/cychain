@@ -8,17 +8,17 @@ import XLPagerTabStrip
 class InitialViewController: ButtonBarPagerTabStripViewController  {
   
     @IBOutlet weak var label: LTMorphingLabel!
+    @IBOutlet weak var termsBtn: UIButton!
+    @IBOutlet weak var policyBtn: UIButton!
     
+    let viewModel = InitialViewModel()
+    let disposeBag = DisposeBag()
     var labelText = "c y c h a i n"
     var attributedText: NSMutableAttributedString?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
-//        customNavigationBar(color: .clear)
-//        self.navigationController?.navigationBar.barTintColor = .orange
-
-        //        confirmInitialLaunch()
         configureObserver()
     }
 
@@ -28,11 +28,28 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         super.viewDidLoad()
         initializeUI()
         LoggedIn()
+        bind()
     }
     
     func initializeUI() {
         label.text = labelText
         setNavigationBar()
+    }
+    func bind() {
+        let input = InitialViewModel.Input (
+            termsTap: self.termsBtn.rx.tap.asObservable(),
+            policyTap: self.policyBtn.rx.tap.asObservable()
+        )
+        let output = viewModel.transform(input: input)
+        
+        //利用規約タップ
+        output.termsTapEvent
+            .bind(onNext: { self.switchTerms_Policy(sentence: $0) })
+            .disposed(by: disposeBag)
+        //ポリシータップ
+        output.policyTapEvent
+            .bind(onNext: { self.switchTerms_Policy(sentence: $0) })
+            .disposed(by: disposeBag)
     }
     
     func setNavigationBar() {
@@ -108,6 +125,11 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         
 
 }
+
+//        customNavigationBar(color: .clear)
+//        self.navigationController?.navigationBar.barTintColor = .orange
+
+        //        confirmInitialLaunch()
     
 
 

@@ -13,6 +13,13 @@ extension UIViewController {
     func presentVC(vc: UIViewController, animation: Bool) {
         self.present(vc, animated: animation)
     }
+    
+    func switchTerms_Policy(sentence: Terms_Policy) {
+        let sb = UIStoryboard(name: "Terms_Policy", bundle: nil)
+        let vc = sb.instantiateViewController(identifier: "Terms_Policy") as? TermViewController
+        vc!.terms_Policy = sentence
+        self.navigationController?.pushViewController(vc!, animated: true)
+    }
 
     //問合せ
     func sendMail() {

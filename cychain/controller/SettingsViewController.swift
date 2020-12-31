@@ -71,8 +71,8 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
                 switch $0 {
                 case .logOut, .signOut: break
                 case .inquiry: self.sendMail()
-                case .terms: self.pushVC(vc: R.storyboard.main.terms()! , animation: true)
-                case .privacy: self.pushVC(vc: R.storyboard.main.privacyPolicy()!, animation: true)
+                case .terms: self.switchTerms_Policy(sentence: Terms_Policy.term)
+                case .privacy: self.switchTerms_Policy(sentence: Terms_Policy.policy)
                 }
             })
             .disposed(by: disposeBag)

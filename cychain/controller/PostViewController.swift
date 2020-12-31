@@ -95,6 +95,7 @@ class PostViewController: UIViewController {
         //投稿ボタンクリック（文字数と投稿数がokなら画面遷移）
         output.nextVC
             .bind(onNext: {
+                log.debug("nexyVC")
                 self.profileView.msgTextView.resignFirstResponder()
                 self.postResurlModel.dataSet(data: $0)
                 self.pushVC(vc: R.storyboard.main.PostResultViewController()!, animation: true)
