@@ -30,7 +30,7 @@ MarketApp is compatible with iOS 13.0+.
 **License** / LicensePlist
 
 **Logger** / 
-XCGLogger　　![Group(1)](https://github.com/DaveWoodCom/XCGLogger)
+XCGLogger　https://github.com/DaveWoodCom/XCGLogger
 
 **Advertisement** / Google AdMob
 
