@@ -27,24 +27,26 @@ MarketApp is compatible with iOS 13.0+.
 - Firebase Authentication
 - FireStorage
 
-**License** / LicensePlist
+**License** / 
+LicensePlist https://github.com/mono0926/LicensePlist
 
 **Logger** / 
 XCGLogger　https://github.com/DaveWoodCom/XCGLogger
 
 **Advertisement** / Google AdMob
 
-**Photo processing** / RSKImageCropper
+**Photo processing** / 
+RSKImageCropper https://github.com/ruslanskorb/RSKImageCropper
 
-**UX/UI** / XLPagerTabStrip
+**UX/UI** / XLPagerTabStrip https://github.com/xmartlabs/XLPagerTabStrip
 
 **GUIv** / SourceTree
 
 
 **Design**
-- LTMorphingLabel 
-- XLPagerTabStrip
-- NVActivityIndicatorView
+- LTMorphingLabel  https://github.com/lexrus/LTMorphingLabel
+- XLPagerTabStrip https://github.com/xmartlabs/XLPagerTabStrip
+- NVActivityIndicatorView https://github.com/ninjaprox/NVActivityIndicatorView
 
 **Deploy**
 - GoogleFormsAppStore
