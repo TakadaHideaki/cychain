@@ -27,7 +27,7 @@ MarketApp is compatible with iOS 13.0+.
 - Firebase Authentication
 - FireStorage
 
-**License** / 
+**License** /   
 LicensePlist https://github.com/mono0926/LicensePlist
 
 **Logger** / 
