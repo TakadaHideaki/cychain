@@ -1,5 +1,6 @@
-# cychain
-![](https://img.shields.io/static/v1?label=swift&message=5.3&color=green)
+# cychain <div style="text-align: right"> ![](https://img.shields.io/static/v1?label=swift&message=5.3&color=green) </div>
+
+
 
  
  新しい出会いではなく、過去に出会っているけど縁が切れてしまった人と再び繋がる為のマッチングアプリをリリースしました。
