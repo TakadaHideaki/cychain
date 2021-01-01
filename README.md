@@ -1,5 +1,5 @@
 # cychain
- -
+ 
  新しい出会いではなく、過去に出会っているけど縁が切れてしまった人と再び繋がる為のマッチングアプリをリリースしました。
 
 ![Group(1)](https://user-images.githubusercontent.com/56917581/75443708-547a5280-59a5-11ea-9abd-8e2095d6159c.png)
@@ -36,7 +36,6 @@ https://github.com/mono0926/LicensePlist
 XCGLogger  
 https://github.com/DaveWoodCom/XCGLogger
 
-
 **Photo processing**    
 RSKImageCropper  
 https://github.com/ruslanskorb/RSKImageCropper
@@ -45,7 +44,7 @@ https://github.com/ruslanskorb/RSKImageCropper
 XLPagerTabStrip  
 https://github.com/xmartlabs/XLPagerTabStrip
 
-**CodeManagementGUI** 
+**CodeManagementGUI**  
 SourceTree
 
 **Advertisement**  
