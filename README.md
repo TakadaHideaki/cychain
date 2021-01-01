@@ -28,7 +28,8 @@ MarketApp is compatible with iOS 13.0+.
 - FireStorage
 
 **License**   
-LicensePlist  https://github.com/mono0926/LicensePlist
+LicensePlist  
+https://github.com/mono0926/LicensePlist
 
 **Logger**   
 XCGLogger  https://github.com/DaveWoodCom/XCGLogger
