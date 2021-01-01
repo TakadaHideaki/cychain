@@ -15,9 +15,9 @@ password：testuser1
 
 ## Compatibility
 
-This project is written in Swift 5.1 and requires Xcode 11.1 to build and run.
+This project is written in Swift 5.3 and requires Xcode 12.3 to build and run.
 
-MarketApp is compatible with iOS 13.0+.
+MarketApp is compatible with iOS 14.2+.
 
 
 ## Technologies
