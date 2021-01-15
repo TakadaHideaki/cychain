@@ -1,11 +1,12 @@
-# cychain ![](https://img.shields.io/static/v1?label=swift&message=5.3&color=green) 
+# App introduction ![](https://img.shields.io/static/v1?label=swift&message=5.3&color=green) 
 
-
-
- 
  新しい出会いではなく、過去に出会っているけど縁が切れてしまった人と再び繋がる為のマッチングアプリをリリースしました。
 
 ![Group(1)](https://user-images.githubusercontent.com/56917581/75443708-547a5280-59a5-11ea-9abd-8e2095d6159c.png)
+
+## App Name
+サービス名称は、中国語の再会「サイチェン」の響きから
+Cyber + Chain = cychain と命名しました
 
 
 ## Usage
