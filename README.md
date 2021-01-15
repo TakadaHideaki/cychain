@@ -37,7 +37,7 @@ MarketApp is compatible with iOS 14.2+.
 
 **Architecture**  
     MVVM - RxSwif  
-    thttps://github.com/ReactiveX/RxSwift
+    https://github.com/ReactiveX/RxSwift
 
 **mBaaS**  
 Firebase
