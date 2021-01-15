@@ -5,11 +5,12 @@
 ![Group(1)](https://user-images.githubusercontent.com/56917581/75443708-547a5280-59a5-11ea-9abd-8e2095d6159c.png)
 
 ## App Name
-サービス名称は、中国語の再会「サイチェン」の響きから
+サービス名称は、中国語の再会「サイチェン」の響きから  
 Cyber + Chain = cychain と命名しました
-
-## Introduction Some function by gif
+  
+## Introduction Some function 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/56917581/104749492-3886c780-5796-11eb-9584-cfe046e0f769.gif)
+![image](https://user-images.githubusercontent.com/56917581/104788508-af8f8080-57d5-11eb-8eba-2285d8840696.png)
 
 
 
