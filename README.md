@@ -8,6 +8,9 @@
 サービス名称は、中国語の再会「サイチェン」の響きから
 Cyber + Chain = cychain と命名しました
 
+## Introduction Some function by gif
+
+
 
 ## Usage
 開発用TARGET：cychain copy  
