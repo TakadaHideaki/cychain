@@ -83,9 +83,9 @@ https://github.com/ninjaprox/NVActivityIndicatorView
 
 ## Functions list
 - Auth 
-  - SignUp/Login (UserEmailAdress, GoogleAcount) 
-  - パスワード忘れ再設定  
-  - SignOut/LogOut
+ - SignUp/Login (UserEmailAdress, GoogleAcount) 
+ - SignOut/LogOut
+ - パスワード忘れ再設定  
 - 投稿 
    - 投稿リスト表示  
    - 投稿データ編集  
