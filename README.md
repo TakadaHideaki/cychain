@@ -88,6 +88,7 @@ https://github.com/ninjaprox/NVActivityIndicatorView
  - パスワード忘れ再設定
   
  **投稿**  
+ - 投稿（Text + Img）
  - 投稿リスト表示  
  - 投稿データ編集 
   
