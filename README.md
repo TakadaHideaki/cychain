@@ -93,11 +93,11 @@ Google AdMob
 
 **Design**
 - LTMorphingLabel(labelAnimation)  
-https://github.com/lexrus/LTMorphingLabel
-- XLPagerTabStrip(Signup/Login切り替え)
-https://github.com/xmartlabs/XLPagerTabStrip
-- NVActivityIndicatorView(indicator)
-https://github.com/ninjaprox/NVActivityIndicatorView
+https://github.com/lexrus/LTMorphingLabel  
+- XLPagerTabStrip(Signup/Login切り替え)  
+https://github.com/xmartlabs/XLPagerTabStrip  
+- NVActivityIndicatorView(indicator)  
+https://github.com/ninjaprox/NVActivityIndicatorView  
 
 **Deploy**
 - GoogleFormsAppStore
