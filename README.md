@@ -16,10 +16,10 @@
 ```
 サービス名称は、中国語の再会「サイチェン」の響きから、Cyber + Chain = cychain と命名しました
 ```
-### Appeal
+### AppealPoint
 ```
 技術面
-アーキテクチャにMVVMを採用しRxSwiftを利用しました。
+・ArchitectureにMVVMを採用し、RxSwiftを利用しました。
 
 UI/UX
 ① signup/Loginの切り替えをスライドで切り替えられる仕様にしました。
