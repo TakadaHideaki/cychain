@@ -87,14 +87,14 @@ https://github.com/ninjaprox/NVActivityIndicatorView
  - SignOut/LogOut
  - パスワード忘れ再設定  
 **投稿** 
-   - 投稿リスト表示  
-   - 投稿データ編集  
+ - 投稿リスト表示  
+ - 投稿データ編集  
 **検索**  
 **ユーザーブロック機能**  
 **お問い合わせ**
 **Ather**
-   - Privacy policy 
-   - Terms of service
+ - Privacy policy 
+ - Terms of service
 
 
 
