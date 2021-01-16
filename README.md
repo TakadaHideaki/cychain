@@ -65,9 +65,9 @@ MarketApp is compatible with iOS 14.2+.
 
 **mBaaS**  
 Firebase
- - RealtimeDataBase
- - Firebase Authentication
- - FireStorage
+ - RealtimeDataBase(textData, imagurl)
+ - Firebase Authentication(UserEmailAdress + GoogleAccount)
+ - FireStorage(imgData)
 
 **License**   
 LicensePlist  
@@ -92,11 +92,11 @@ SourceTree
 Google AdMob
 
 **Design**
-- LTMorphingLabel  
+- LTMorphingLabel(labelAnimation)  
 https://github.com/lexrus/LTMorphingLabel
-- XLPagerTabStrip  
+- XLPagerTabStrip(Signup/Login切り替え)
 https://github.com/xmartlabs/XLPagerTabStrip
-- NVActivityIndicatorView  
+- NVActivityIndicatorView(indicator)
 https://github.com/ninjaprox/NVActivityIndicatorView
 
 **Deploy**
