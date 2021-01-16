@@ -81,6 +81,21 @@ https://github.com/ninjaprox/NVActivityIndicatorView
 - MakeAppIcon
 - GitHubPages
 
+## Functions list
+- Auth
+ - SignUp/Login (UserEmailAdress, GoogleAcount) 
+ - パスワード忘れ再設定  
+ - SignOut/LogOut
+- 投稿  
+ - 投稿リスト表示  
+ - 投稿データ編集  
+- 検索  
+- ユーザーブロック機能  
+- お問い合わせ 
+- Ather
+ - Privacy policy 
+ - Terms of service
+
 
 
 ## author
