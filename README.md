@@ -37,6 +37,8 @@
 ## Introduction Some function 
 //![ezgif com-gif-maker](https://user-images.githubusercontent.com/56917581/104749492-3886c780-5796-11eb-9584-cfe046e0f769.gif)
 
+![画面収録-2021-01-18-23 11 50](https://user-images.githubusercontent.com/56917581/104927376-b3ddb880-59e4-11eb-8956-f43c650ab670.gif)
+
 
 
 <br />
