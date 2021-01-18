@@ -36,7 +36,7 @@
   
 ## Introduction Some function 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/56917581/104749492-3886c780-5796-11eb-9584-cfe046e0f769.gif)
-https://user-images.githubusercontent.com/56917581/104926001-ec7c9280-59e2-11eb-8b78-854863fb5e41.mov
+
 
 <br />
 <br />
