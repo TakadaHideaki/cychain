@@ -1,7 +1,5 @@
 # App introduction ![](https://img.shields.io/static/v1?label=swift&message=5.3&color=green) 
 
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/56917581/104929002-b3deb800-59e6-11eb-88a0-f44eb47dd17d.gif)
-
  ```
  過去に出会っているけど縁が切れてしまった人と、再び繋がる為のマッチングアプリです
  ```
@@ -37,7 +35,7 @@
 <br />
   
 ## Introduction Some function 
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/56917581/104749492-3886c780-5796-11eb-9584-cfe046e0f769.gif)
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/56917581/104929002-b3deb800-59e6-11eb-88a0-f44eb47dd17d.gif)
 
 <br />
 <br />
