@@ -31,10 +31,6 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         bind()
     }
     
-    func initializeUI() {
-        label.text = labelText
-        setNavigationBar()
-    }
     func bind() {
         let input = InitialViewModel.Input (
             termsTap: self.termsBtn.rx.tap.asObservable(),
@@ -50,6 +46,11 @@ class InitialViewController: ButtonBarPagerTabStripViewController  {
         output.policyTapEvent
             .bind(onNext: { self.switchTerms_Policy(sentence: $0) })
             .disposed(by: disposeBag)
+    }
+    
+    func initializeUI() {
+        label.text = labelText
+        setNavigationBar()
     }
     
     func setNavigationBar() {

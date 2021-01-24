@@ -708,7 +708,7 @@
         <!--Post Card-->
         <scene sceneID="A7f-9e-e0L">
             <objects>
-                <viewController storyboardIdentifier="SeachResultVC" title="Post Card" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="Gsz-BR-pK6" customClass="MatchViewCotroller" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SeachResultVC" title="Post Card" modalPresentationStyle="fullScreen" id="Gsz-BR-pK6" customClass="MatchViewCotroller" customModule="cychain" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZxU-4t-eKT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
