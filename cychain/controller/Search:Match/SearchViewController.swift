@@ -22,7 +22,8 @@ class SearchViewController: UIViewController {
     private let muchPopUpVC = R.storyboard.main.muchPopUpVC()
     
     lazy var indicatorView = { () -> UIActivityIndicatorView in
-        var view = UIActivityIndicatorView.init(style: .whiteLarge)
+        var view = UIActivityIndicatorView()
+        view.style = .large
         view.color = .gray
         view.center = self.view.center
         self.view.addSubview(view)
@@ -48,6 +49,7 @@ class SearchViewController: UIViewController {
         searchNameTextField.text = ""
     }
     
+    //AdNob
      override func viewWillLayoutSubviews() {
      _ = self.initViewLayout
      }
@@ -61,6 +63,7 @@ class SearchViewController: UIViewController {
         //ポップアップの[結果を見る]押下は結果VCへ遷移、[×]押下はdismiss
         guard let presented = self.presentedViewController else { return }
         if type(of: presented) == MuchPopUpVC.self {
+            log.debug(muchPopUpVC?.matchCount)
             switch muchPopUpVC?.matchCount {
             case 0: break
             case 1: pushVC(vc: R.storyboard.main.seachResultVC()!, animation: false)
@@ -104,6 +107,7 @@ class SearchViewController: UIViewController {
         
         output.match.take(1).subscribe(onNext: { [weak self] value in
             let count = value.data.count
+            //マッチ数によって表示画面が違うのでポップ画面にマッチ数を送る
             self?.muchPopUpVC?.matchCount = count
             self?.mutchAction()
             switch count {

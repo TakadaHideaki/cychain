@@ -12,11 +12,10 @@ class MuchPopUpVC: UIViewController {
     
     private let viewModel = MatchPopupViewModel()
     private let disposeBag = DisposeBag()
-    
     var matchCount: Int?
     
     override func viewWillAppear(_ animated: Bool) {
-         super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
         animationView.loopMode = .loop
         animationView.play()
     }
@@ -27,9 +26,9 @@ class MuchPopUpVC: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-            super.viewDidDisappear(animated)
-         animationView.stop()
-     }
+        super.viewDidDisappear(animated)
+        animationView.stop()
+    }
     
     private func bind() {
         
@@ -41,16 +40,15 @@ class MuchPopUpVC: UIViewController {
         
         //バツボタンタップ
         output.nextVC
-            .bind(onNext: { self.dismiss(animated: false, completion: nil) })
+            .bind(onNext: { self.dismiss(animated: false) })
             .disposed(by: disposeBag)
           //マッチボタンタップ
         output.dismiss
             .bind(onNext: {
                 self.matchCount = 0
-                self.dismiss(animated: false, completion: nil)
+                self.dismiss(animated: false)
             })
             .disposed(by: disposeBag)
-        
     }
     
 }
